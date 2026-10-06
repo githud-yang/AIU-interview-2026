@@ -1,32 +1,25 @@
-"""
-聊天相关路由
-============
-只负责HTTP请求解析和响应返回，业务逻辑全部委托给服务层。
-"""
-from __future__ import annotations
-
-from fastapi import APIRouter, Request
+import httpx
+from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
-
+from pydantic import BaseModel, Field
 from src.web.services.chat_service import AdventureChatService
-
 router = APIRouter()
 chat_service = AdventureChatService()
-
+class Turn(BaseModel):
+    user: str = Field(max_length=4000)
+    ai: str = Field(max_length=12000)
+class ChatRequest(BaseModel):
+    message: str = Field(min_length=1, max_length=4000)
+    history: list[Turn] = Field(default_factory=list, max_length=10)
 
 @router.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    """首页：返回文字冒险游戏页面"""
-    templates = request.app.state.templates
-    return templates.TemplateResponse(request, "index.html")
-
+def index(request: Request):
+    return request.app.state.templates.TemplateResponse(request=request, name="index.html")
 
 @router.post("/api/chat")
-async def api_chat(request: Request):
-    """聊天接口：接收用户消息和历史，返回AI回复"""
-    body = await request.json()
-    user_text = body.get("message", "")
-    history = body.get("history", [])
-
-    reply = chat_service.chat(user_text, history)
-    return {"reply": reply}
+def api_chat(body: ChatRequest):
+    if not body.message.strip(): raise HTTPException(422, "消息不能为空")
+    try:
+        return {"reply": chat_service.chat(body.message, [turn.model_dump() for turn in body.history])}
+    except httpx.HTTPError:
+        raise HTTPException(503, "模型服务不可用，请确认 Ollama 已启动且模型已下载")

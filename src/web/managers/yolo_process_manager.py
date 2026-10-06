@@ -1,55 +1,74 @@
-"""
-YOLO进程管理器
-==============
-统一管理YOLO检测子进程的启动、停止和状态查询，与路由层完全解耦。
-"""
-from __future__ import annotations
-
-import subprocess
+"""单个后台推理线程共享最新帧，启停与网页视频流使用同一摄像头。"""
+import os
+import threading
+import time
 from pathlib import Path
-
+ROOT = Path(__file__).resolve().parents[3]
 
 class YoloProcessManager:
-    """单例模式管理YOLO摄像头检测进程"""
-
-    def __init__(self) -> None:
-        self._proc: subprocess.Popen | None = None
-        project_root = Path(__file__).resolve().parents[3]
-        self._yolo_script = project_root / "src" / "yolo" / "detect_realtime.py"
+    def __init__(self):
+        self._thread = None
+        self._stop = threading.Event()
+        self._lock = threading.Lock()
+        self._control = threading.Lock()
+        self.frame = None
+        self.error = ""
 
     @property
-    def is_running(self) -> bool:
-        """检测当前是否有运行中的YOLO进程"""
-        return self._proc is not None and self._proc.poll() is None
+    def is_running(self):
+        return self._thread is not None and self._thread.is_alive() and not self._stop.is_set()
 
-    def start(self) -> dict:
-        """启动YOLO检测进程，返回操作结果"""
-        if self.is_running:
-            return {"ok": True, "msg": "检测已经在运行中"}
+    def start(self):
+        with self._control:
+            if self.is_running: return {"ok": True, "msg": "检测已经在运行"}
+            if self._thread and self._thread.is_alive(): return {"ok": False, "msg": "正在释放摄像头，请稍后重试"}
+            weights = Path(os.getenv("YOLO_WEIGHTS", "assets/models/best.pt"))
+            if not weights.is_absolute(): weights = ROOT / weights
+            if not weights.is_file(): return {"ok": False, "msg": "缺少训练权重，请先执行 src/yolo/train.py"}
+            try:
+                import cv2
+                from ultralytics import YOLO
+                model = YOLO(str(weights))
+                cap = cv2.VideoCapture(int(os.getenv("YOLO_CAMERA", "0")))
+                if not cap.isOpened():
+                    cap.release()
+                    return {"ok": False, "msg": "无法打开摄像头，请检查设备和系统权限"}
+            except Exception as exc:
+                return {"ok": False, "msg": str(exc)}
+            self._stop.clear()
+            self.error = ""
+            self.frame = None
+            def run():
+                try:
+                    while not self._stop.is_set():
+                        ok, frame = cap.read()
+                        if not ok: raise RuntimeError("摄像头读取失败")
+                        if frame.mean() < 2:
+                            self.error = "摄像头画面接近全黑，请检查遮挡、隐私开关或光照"
+                        else:
+                            self.error = ""
+                        result = model(frame, verbose=False)[0]
+                        ok, jpeg = cv2.imencode(".jpg", result.plot())
+                        if ok:
+                            with self._lock: self.frame = jpeg.tobytes()
+                except Exception as exc: self.error = str(exc)
+                finally:
+                    cap.release()
+                    self._stop.set()
+            self._thread = threading.Thread(target=run, daemon=True)
+            self._thread.start()
+            return {"ok": True, "msg": "检测已启动"}
 
-        try:
-            self.stop()  # 先清理残留进程
-            self._proc = subprocess.Popen(
-                ["conda", "run", "-n", "yolo", "python", str(self._yolo_script)],
-                cwd=str(Path(__file__).resolve().parents[3]),
-            )
-            return {"ok": True, "msg": "已启动摄像头检测窗口"}
-        except Exception as e:  # noqa: BLE001
-            self._proc = None
-            return {"ok": False, "msg": f"启动失败：{str(e)}"}
+    def stop(self):
+        with self._control:
+            self._stop.set()
+            if self._thread: self._thread.join(timeout=5)
+            with self._lock: self.frame = None
+            return {"ok": True, "msg": "已发送停止指令"}
 
-    def stop(self) -> dict:
-        """停止YOLO检测进程，返回操作结果"""
-        if not self.is_running:
-            self._proc = None
-            return {"ok": True, "msg": "当前没有运行中的检测"}
-
-        try:
-            subprocess.run(
-                ["taskkill", "/PID", str(self._proc.pid), "/T", "/F"],
-                capture_output=True
-            )
-            self._proc = None
-            return {"ok": True, "msg": "已停止检测"}
-        except Exception as e:  # noqa: BLE001
-            return {"ok": False, "msg": f"停止失败：{str(e)}"}
+    def frames(self):
+        while self.is_running:
+            with self._lock: frame = self.frame
+            if frame:
+                yield b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame + b"\r\n"
+            time.sleep(0.05)

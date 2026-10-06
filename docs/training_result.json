@@ -1,0 +1,20 @@
+{
+  "parameters": {
+    "model": "yolo11n.pt",
+    "data": "coco8.yaml",
+    "epochs": 30,
+    "imgsz": 640,
+    "batch": 4,
+    "device": "0"
+  },
+  "run_dir": "D:\\01_个人资料\\学习与生活\\AIU二面\\runs\\detect\\coco8_baseline",
+  "weights": "assets/models/best.pt",
+  "metrics": {
+    "metrics/precision(B)": 0.5690197412857655,
+    "metrics/recall(B)": 0.8666666666666667,
+    "metrics/mAP50(B)": 0.8875000000000001,
+    "metrics/mAP50-95(B)": 0.6418548850574711,
+    "fitness": 0.6418548850574711
+  },
+  "note": "coco8 仅用于流程验证，不能代表真实场景泛化能力"
+}

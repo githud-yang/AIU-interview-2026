@@ -6,6 +6,8 @@ Agent工具注册表模块
 from __future__ import annotations
 
 import time
+import ast
+import operator
 from pathlib import Path
 
 
@@ -16,18 +18,33 @@ def tool_get_time() -> str:
 
 def tool_calculate(expr: str) -> str:
     """安全计算数学表达式，带字符白名单校验"""
-    allowed = set("0123456789+-*/().%^ ")
-    if not set(expr).issubset(allowed):
-        return "错误：表达式包含非法字符"
+    operations = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
+                  ast.Div: operator.truediv, ast.Mod: operator.mod, ast.Pow: operator.pow}
+    def visit(node):
+        if isinstance(node, ast.Constant) and type(node.value) in (int, float):
+            if abs(node.value) > 1e12: raise ValueError("数值过大")
+            return node.value
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
+            return visit(node.operand) * (-1 if isinstance(node.op, ast.USub) else 1)
+        if isinstance(node, ast.BinOp) and type(node.op) in operations:
+            left, right = visit(node.left), visit(node.right)
+            if isinstance(node.op, ast.Pow) and abs(right) > 12: raise ValueError("指数过大")
+            result = operations[type(node.op)](left, right)
+            if isinstance(result, complex) or abs(result) > 1e100: raise ValueError("结果超出范围")
+            return result
+        raise ValueError("仅支持数字及加减乘除、取余和幂")
     try:
-        return str(eval(expr, {"__builtins__": {}}, {}))  # noqa: S307
-    except Exception as e:  # noqa: BLE001
-        return f"计算失败：{e}"
+        if len(expr) > 200: raise ValueError("表达式过长")
+        return str(visit(ast.parse(expr.replace("^", "**"), mode="eval").body))
+    except Exception as exc:
+        return f"计算失败：{exc}"
+
 
 
 def tool_note(content: str) -> str:
     """将笔记内容追加写入本地文件"""
-    note_path = Path(__file__).resolve().parents[2] / "agent_notes.txt"
+    note_path = Path(__file__).resolve().parents[3] / "logs" / "agent_notes.txt"
+    note_path.parent.mkdir(parents=True, exist_ok=True)
     with open(note_path, "a", encoding="utf-8") as f:
         f.write(f"[{tool_get_time()}] {content}\n")
     return f"已记录：{content}"

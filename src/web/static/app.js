@@ -21,7 +21,10 @@ const history = [];
 function addMessage(text, who) {
   const div = document.createElement("div");
   div.className = `msg ${who}`;
-  div.innerHTML = `<p>${text.replace(/</g, "&lt;")}</p>`;
+  const paragraph = document.createElement("p");
+  paragraph.textContent = text;
+  paragraph.style.whiteSpace = "pre-wrap";
+  div.appendChild(paragraph);
   chat.appendChild(div);
   chat.scrollTop = chat.scrollHeight;
 }
@@ -40,11 +43,11 @@ form.addEventListener("submit", async (e) => {
 
   try {
     // 调用API层
-    const reply = await sendChatMessage(text, history);
+    const reply = await sendChatMessage(text, history.slice(-10));
     history.push({ user: text, ai: reply });
     addMessage(reply, "ai");
   } catch (err) {
-    addMessage("⚠️ 连不上后端，请确认服务已启动。", "ai");
+    addMessage("请求失败：" + err.message, "ai");
   } finally {
     btn.disabled = false;
     input.focus();

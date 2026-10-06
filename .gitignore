@@ -42,3 +42,6 @@ desktop.ini
 logs/
 
 *.part
+
+# 本机摄像头核验图不提交
+docs/evidence/yolo-camera.jpg

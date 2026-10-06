@@ -26,7 +26,7 @@ def _load_env() -> None:
         if not line or line.startswith("#") or "=" not in line:
             continue
         k, v = line.split("=", 1)
-        os.environ.setdefault(k.strip(), v.strip())
+        os.environ.setdefault(k.strip(), v.strip().strip("\"'"))
 
 
 _load_env()
@@ -37,12 +37,12 @@ def _get_provider_config() -> dict:
     provider = os.getenv("LLM_PROVIDER", "ollama").lower()
     if provider == "deepseek":
         return {
-            "base_url": os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").rstrip("/") + "/v1",
+            "base_url": os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com/v1").rstrip("/"),
             "model": os.getenv("DEEPSEEK_MODEL", "deepseek-chat"),
             "api_key": os.getenv("DEEPSEEK_API_KEY", ""),
         }
     return {
-        "base_url": os.getenv("OLLAMA_BASE_URL", "http://localhost:11434").rstrip("/") + "/v1",
+        "base_url": os.getenv("OLLAMA_BASE_URL", "http://127.0.0.1:11434").rstrip("/") + "/v1",
         "model": os.getenv("OLLAMA_MODEL", "qwen2.5:7b"),
         "api_key": os.getenv("OLLAMA_API_KEY", "ollama"),
     }
@@ -78,6 +78,7 @@ class LocalLLMAgent:
             json=payload,
             headers=self._headers(),
             timeout=120,
+            trust_env=False,
         )
         r.raise_for_status()
         return r.json()["choices"][0]["message"]
@@ -101,8 +102,11 @@ class LocalLLMAgent:
             # 执行工具调用并把结果回传给模型
             for call in resp["tool_calls"]:
                 name = call["function"]["name"]
-                args = json.loads(call["function"]["arguments"] or "{}")
-                observation = TOOLS[name]["fn"](**args)
+                try:
+                    args = json.loads(call["function"]["arguments"] or "{}")
+                    observation = TOOLS[name]["fn"](**args)
+                except (KeyError, TypeError, ValueError) as exc:
+                    observation = f"工具调用失败：{exc}"
                 messages.append({
                     "role": "tool",
                     "tool_call_id": call["id"],
@@ -111,3 +115,25 @@ class LocalLLMAgent:
                 })
 
         return self._chat_completion(messages).get("content", "")
+
+
+def main():
+    agent = LocalLLMAgent(system_prompt="你是中文助手，时间、计算和记录笔记需要调用工具。")
+    history = []
+    print("本地智能体（输入 exit 退出，/reset 清空对话）")
+    while True:
+        try:
+            text = input("你> ").strip()
+            if text.lower() in {"exit", "quit"}: break
+            if text == "/reset":
+                history.clear()
+                continue
+            if not text: continue
+            reply = agent.chat(text, history[-20:])
+            print("助手>", reply)
+            history.extend([{"role":"user","content":text},{"role":"assistant","content":reply}])
+        except (EOFError, KeyboardInterrupt): break
+        except Exception as exc: print("请求失败：", exc)
+
+if __name__ == "__main__":
+    main()

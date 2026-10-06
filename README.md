@@ -1,76 +1,79 @@
-# AIU 创智部二面 · 综合项目
+# AIU 创智部二面：终端迷局
 
-> 本地大模型智能体 + YOLO实时检测 + AI文字冒险网页游戏，全链路本地可复现。
+以根目录《人工智能协会创智部二面题目（实战部分）》为要求，完成本地模型智能体、YOLO 与网页创意作品。保留一个 FastAPI 服务和原生网页，避免为了展示堆叠框架。
 
-## 完成情况对照题目
+## 要求与交付
 
-| 题目要求 | 完成状态 | 实现说明 |
-|----------|----------|----------|
-| 一、本地大模型部署 | ✅ | Ollama + qwen2.5:7b（Q4量化），OpenAI兼容接口 |
-| 一、搭建智能体 | ✅ | 自研工具调用循环Agent，支持时间/计算/笔记工具 |
-| 一、API接入应用（CLI） | ✅ | `python -m src.agent.core.llm_agent` 命令行对话 |
-| 一、API接入应用（Web） | ✅ | FastAPI后端 + 原生前端，AI文字冒险游戏 |
-| 二、YOLO完整训练 | ✅ | ultralytics coco8数据集，30 epochs，mAP50=0.858 |
-| 二、YOLO实时推理 | ✅ | 摄像头实时检测，Web MJPEG视频流推送 |
-| 二、YOLO接入应用 | ✅ | Web页面内嵌实时检测画面，支持远程启停 |
-| 三、硬件结合 | ⏭️ | 无单片机硬件，按题目"进阶"定位跳过 |
-| 四、Harness搭建 | ✅ | 参考pi-agent架构，在基础Agent上加了规划/记忆/工具编排层 |
-| 五、创意作品 | ✅ | **大冒险·AI文字冒险游戏**：本地大模型实时生成剧情 |
-| 工程规范 | ✅ | 干净目录 / README / 工程日志 / Git版本控制 |
+| PDF 要求 | 实现及证据 |
+| --- | --- |
+| 本地部署大模型 | Ollama + qwen2.5:7b，使用本机 OpenAI 兼容 API；`scripts/verify.py --live` 验证真实调用 |
+| 智能体、API 接入应用 | 自研工具调用循环，时间、计算、笔记三个工具；CLI 与 `/api/chat` |
+| Ultralytics 一次训练 | `src/yolo/train.py`，30 epochs、batch 4、imgsz 640、seed 42；真实结果见 `docs/training_result.json` |
+| YOLO 实时部署、接入应用 | CLI 推理与 `/yolo` 网页 MJPEG 视频；单线程持有摄像头，网页共享帧 |
+| 创意作品 | “终端迷局”文字冒险，模型根据玩家行动继续剧情，保留最近十轮 |
+| 工程结构、日志、Git | 本文件、`docs/progress.md`、`docs/demo.md`；提交及云端同步须以 Git 实际记录为准 |
+| 硬件（进阶） | 未做，没有单片机；不作为基础任务完成项 |
+| Harness（进阶） | 仅保留会话外壳原型，未完成 pi-agent 架构复现，不计为完成 |
 
-## 实现思路（为什么这么做）
+`exam1/` 和 `exam2/` 为以前的 C++ / ROS 练习，与本 PDF 无关，保留原件，不纳入本次完成情况。未提供超纲任务附件，不虚构相关成果。
 
-面试官更关心思路不是代码细节，这里说清楚取舍：
+## 从零复现
 
-1. **模型选型做减法**：本机只有8GB显存，不追求大参数模型，选Q4量化的7B qwen2.5，显存占6GB左右，响应速度够快，日常对话和工具调用完全够用。Ollama一键拉起，把大模型变成标准HTTP服务。
-2. **不堆重型框架**：没有上Docker版Dify、LangChain这类重框架，直接写了一个透明的工具调用循环——逻辑自己掌控、好调试、没黑盒。同时Ollama本身是OpenAI兼容接口，以后想接Dify/n8n/扣子直接填地址就行，不绑定。
-3. **YOLO走标准管线**：先用ultralytics自带coco8数据集把"训练→出权重→实时推理"整条链路跑通，参数自己定，真实数据集来了只要换个yaml配置就能用。
-4. **工程分层做规范**：后端按路由/服务/管理器三层拆分，主入口只做组装；前端抽独立API层，不直接写业务fetch——这样面试官一看就知道你懂工程化，不是临时堆脚本。
-5. **创意选最贴题的**：创意作品选"文字冒险游戏"，刚好把本地大模型的能力展示出来——不是套个壳调API，是真的让模型实时生成剧情、做工具调用。YOLO单独做一个演示页面，不硬凑到游戏里。
+推荐 Python 3.11，同一环境同时安装网页与 YOLO 依赖：
 
-## 快速启动
-
-### 前置依赖
-1. 安装 [Ollama](https://ollama.com/)，拉取模型：`ollama pull qwen2.5:7b`
-2. 创建conda环境：`conda create -n yolo python=3.10 && conda activate yolo`
-3. 安装Python依赖：`pip install -r requirements.txt`
-
-### 启动Web服务（游戏 + YOLO演示）
 ```powershell
-python -m uvicorn src.web.main:app --port 8000 --reload
+conda create -n aiu python=3.11
+conda activate aiu
+python -m pip install -r requirements-yolo.txt
+ollama pull qwen2.5:7b
+Copy-Item configs/.env.example configs/.env
 ```
-浏览器打开：http://127.0.0.1:8000/
 
-### 其他启动方式
+Ollama 桌面程序需正在运行；默认地址 `http://127.0.0.1:11434`。在 `configs/.env` 更换模型、权重或摄像头编号。没有 GPU 时使用 CPU；CUDA 版 PyTorch 应根据设备单独安装，不从文档猜测版本。
+
 ```powershell
+# GPU 训练：有兼容 CUDA 的 PyTorch 时使用 --device 0
+python src/yolo/train.py --epochs 30 --device cpu
+# 离线检查 / 真实大模型检查
+python scripts/verify.py
+python scripts/verify.py --live
+# 启动网页，打开 http://127.0.0.1:8000
+python -m uvicorn src.web.main:app --host 127.0.0.1 --port 8000
 # 命令行智能体
 python -m src.agent.core.llm_agent
-
-# YOLO实时检测
+# 独立摄像头窗口（先停止网页检测，避免占用冲突）
 python src/yolo/detect_realtime.py
 ```
 
-## 目录结构
+本机已准备好 `D:/Anaconda3/envs/yolo/python.exe`，可用 `./scripts/start.ps1 -Python D:/Anaconda3/envs/yolo/python.exe` 启动。
 
-```
-.
-├── src/                    # 源代码
-│   ├── agent/              # LLM智能体模块（核心+工具注册表）
-│   ├── web/               # Web服务模块（路由/服务/管理器分层）
-│   └── yolo/              # YOLO训练与实时推理
-├── configs/               # 配置文件（.env，不入库）
-├── scripts/               # Windows一键启动脚本
-├── assets/models/         # 统一存放模型权重
-├── logs/                  # 运行日志
-├── docs/                  # 工程日志（progress.md）
-└── requirements.txt        # Python依赖
-```
+## 训练与演示说明
 
-## AI使用情况说明
+训练输出位于 `runs/detect/coco8_baseline*`，脚本复制最佳权重到 `assets/models/best.pt`，提交用参数和指标保存到 `docs/training_result.json`。coco8 只有 4 张训练图、4 张验证图，这次训练只证明管线可复现，不声称真实场景准确率。大权重不进 Git，下载预训练模型并重跑训练即可还原。
 
-代码骨架、调试与文档在本地完成；编写过程中使用AI辅助生成样板代码并逐段核对运行结果。所有命令、模型、路径均为本机真实执行环境，可按上面步骤复现。
+本机摄像头启停与编码已通过，但当前摄像头画面全黑，物体识别现场演示仍需检查遮挡、隐私开关和光照。详情见 `docs/verification.md`。
 
-## 可扩展方向
-- YOLO权重导出ONNX/TensorRT提速
-- 给游戏接入摄像头视觉输入，识别物体作为剧情道具
-- 拿到ESP32后补硬件题：AI控制点灯、调PID
+网页检测使用运行服务器的摄像头。启动后显示带框画面，停止后释放设备；模型或摄像头缺失会返回明确提示。关闭网页不会自动停止摄像头，需点停止；关闭服务会清理。实时推理帧率取决于设备，没有测量就不声明性能数字。
+
+## 结构与思路
+
+- `src/agent/`：API 请求、工具循环和工具注册；执行至多五轮工具后请求总结。
+- `src/yolo/`：标准 Ultralytics 训练、CLI 推理。
+- `src/web/`：页面、对话服务、共享摄像头管理。
+- `configs/`：公开配置示例；真实 `.env` 和密钥不提交。
+- `scripts/`：启动和验证；`docs/`：工程日志、真实指标和演示步骤。
+- `assets/models/`、`runs/`、`logs/`：本机产物，Git 忽略。
+
+模型负责生成和选择工具；工具在 Python 执行，再将结果交回模型。计算器使用受限 AST，笔记写入 `logs/agent_notes.txt`。YOLO 页面不另起 conda 子进程，避免两路检测抢占同一个摄像头。同步推理与聊天运行于 FastAPI 线程池，避免阻塞异步事件循环。
+
+## AI 使用情况
+
+原始骨架由豆包辅助生成；2026-10-07 使用 Codex 对照 PDF 检查、修复代码、补训练脚本与配置、重做文档和运行验证。此前文档的“全部完成”和旧 mAP 数值缺乏本目录证据，已撤下。提交者需要能解释调用链、训练参数、样例数据的局限及工具执行机制，不把 AI 生成文档当运行证据。
+
+## 参考
+
+- [Ollama 工具调用](https://ollama.com/blog/tool-support)
+- [Ultralytics 训练](https://docs.ultralytics.com/modes/train/)
+- [Ultralytics 推理](https://docs.ultralytics.com/modes/predict/)
+
+面试演示顺序见 `docs/demo.md`。云端仓库为 https://github.com/githud-yang/AIU-interview-2026 ，推送完成情况以 `git status` 和远端提交核验为准。

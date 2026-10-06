@@ -1,44 +1,15 @@
-# 工程日志（progress）
+# 工程日志
 
-记录项目的进度、卡点和思路变化，方便他人快速上手。
+## 2026-10-07：对照 PDF 修复
 
-## 2026-10-01 环境勘察
+原 README 和旧日志声称项目全量完成、mAP50=0.858，但工作区没有训练脚本、权重或结果文件支持这些说法。旧日志作为来源不可靠的说明被重写，没有将它的环境版本和性能数据继续当事实引用。
 
-- 机器：Windows，RTX 5070（8GB 显存，CUDA 13.1），D 盘剩余 185GB。
-- 已有：Python 3.14 / Anaconda，conda 环境 `yolo`、`pest-yolo`、`labelimg`，`torch 2.11.0+cu128`、`opencv`。
-- 结论：硬件够跑 7B/8B 量化模型和 YOLO；YOLO 直接复用已有 conda 环境。
+检查到的问题：CLI 没有主入口；训练和实时推理脚本缺失；配置示例缺失；网页没有视频元素；网页流和子进程各自打开摄像头；顶层导入 cv2 导致未装视觉依赖时首页也不可用；聊天同步请求阻塞异步路由；工具异常直接中断请求；“长期记忆”只是内存列表。
 
-## 2026-10-01 方案取舍
+修复：补齐训练、CLI、配置、启动入口；YOLO 改为单个后台线程共享帧；关闭应用释放设备；增加输入类型和长度校验；工具异常返回观察结果；计算使用 AST 并限制数值；修正文档中的夸大说法，进阶项按未完成注明。
 
-- **模型大小**：8GB 显存决定选 `qwen2.5:7b`（Q4 约 4.7GB），不贪大模型。
-- **智能体框架**：没上 Docker 版 Dify（重、起容器麻烦），改为写一个透明的工具调用 Agent；Ollama 本身是 OpenAI 兼容接口，需要时可直接填进 Dify/n8n/扣子。做减法。
-- **应用形态**：同时给 CLI（题目最基础档）和 Web（创意作品，加分档）。
-- **硬件题（第三题）**：没有单片机，按题目"进阶"定位跳过，README 如实说明。
-- **创意作品**：选"AI 文字冒险网页游戏"，长在本地大模型上，另把 YOLO 实时流做成第二个网页。
+实际环境：Ollama 列出 qwen2.5:7b（4.7 GB）；YOLO 环境为 Python 3.11、torch 2.9.1+cu128、RTX 5070 Laptop 8151 MiB，ultralytics 8.4.170。网页依赖已安装到同一 yolo 环境。
 
-## 卡点 1：Ollama 静默安装参数
+卡点：首次对 localhost 的 httpx 调用得到 502；改成 127.0.0.1 且禁用环境代理后，真实模型计算返回 644.0。首次 YOLO 训练需要下载预训练权重，之后复用本机 coco8 数据。参数和指标以 training_result.json 为准。
 
-- 第一次用 `/VERYSILENT`（MSI 风格），安装没落地。
-- 原因：OllamaSetup 是 NSIS 包，静默参数是大写 `/S`。改正后安装成功。
-
-## 2026-10-01 落地顺序
-
-1. 搭干净目录（llm-agent / yolo / webapp / docs）。
-2. 装 Ollama → `ollama pull qwen2.5:7b`。
-3. 写 Agent + CLI。
-4. YOLO：`python train.py`（coco8，30 epoch）→ 实时推理。
-5. FastAPI 把大模型和 YOLO 接进网页。
-6. Git 初始化、写文档、推送 GitHub。
-
-## 2026-10-01 实际跑通结果
-
-- **本地模型**：winget 装 Ollama 0.35.0，`ollama pull qwen2.5:7b`（4.7GB）成功；调用 `get_time` 工具正常返回当前时间。
-- **YOLO**：在 conda `yolo` 环境（torch 2.9.1+cu128，RTX 5070 Laptop）跑 coco8 训练 30 epoch，**mAP50=0.858**，best.pt 已落在 `yolo/runs/detect/coco8_baseline/weights/`，离线推理验证通过。
-- **Web**：FastAPI 启动后首页 200，`/api/chat` 能调用本地模型生成剧情回复。
-- **双 provider**：`llm-agent/.env.example` 留了 DeepSeek key 位置，切换 `LLM_PROVIDER` 即可在本地/云端间切换。
-
-## 后续可优化
-
-- YOLO 权重导出 ONNX/TensorRT 提速；
-- 给游戏接 YOLO 视觉输入（用摄像头识别物体作为剧情道具）；
-- 若拿到 ESP32，补第三题 AI 控制点灯。
+验证记录在 verification.md。硬件、完整 Harness 及超纲任务不计为完成；社交交流只能由提交者真实补充，不捏造交流记录。

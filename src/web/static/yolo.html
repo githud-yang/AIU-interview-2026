@@ -12,11 +12,12 @@
     <nav><a href="/">← 返回 AI 文字冒险</a></nav>
   </header>
   <main class="center">
-    <p class="tip">点击按钮启动/停止摄像头检测（首次需授权摄像头）</p>
+    <p class="tip">点击按钮启动/停止摄像头检测（使用本机摄像头）</p>
     <div style="border:1px dashed #2a2f55;border-radius:12px;padding:40px;color:#8a90c9;display:flex;gap:16px;justify-content:center;">
       <button id="start-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;">📷 启动检测</button>
       <button id="stop-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;background:#c0392b;">■ 停止检测</button>
     </div>
+    <img id="video" alt="检测画面" hidden style="max-width:100%;margin-top:20px" />
     <p id="yolo-msg" style="margin-top:14px;font-size:13px;color:#7fd4ff;"></p>
   </main>
   <script>
@@ -24,13 +25,22 @@
     document.getElementById("start-btn").onclick = async () => {
       msg.textContent = "启动中...";
       const r = await fetch("/yolo/start", { method: "POST" });
-      msg.textContent = (await r.json()).msg;
+      const result = await r.json();
+      msg.textContent = result.msg;
+      const video = document.getElementById("video");
+      if (result.ok) { video.hidden = false; video.src = "/yolo/stream?t=" + Date.now(); }
     };
     document.getElementById("stop-btn").onclick = async () => {
       msg.textContent = "停止中...";
       const r = await fetch("/yolo/stop", { method: "POST" });
       msg.textContent = (await r.json()).msg;
+      const video = document.getElementById("video"); video.hidden = true; video.removeAttribute("src");
     };
+    setInterval(async () => {
+      try { const state = await (await fetch("/yolo/status")).json();
+        if (state.error) msg.textContent = state.error;
+      } catch { msg.textContent = "后端连接中断"; }
+    }, 3000);
   </script>
 </body>
 </html>

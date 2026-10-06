@@ -19,8 +19,8 @@ export async function sendChatMessage(message, history) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message, history }),
   });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const data = await res.json();
+  if (!res.ok) throw new Error(typeof data.detail === "string" ? data.detail : `请求参数错误 (${res.status})`);
   return data.reply;
 }
 

@@ -6,6 +6,7 @@ Web应用主入口
 """
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 import threading
 import webbrowser
 from pathlib import Path
@@ -23,7 +24,12 @@ PROJECT_ROOT = BASE_DIR.parents[2]
 
 def create_app() -> FastAPI:
     """应用工厂函数，创建并配置FastAPI实例"""
-    app = FastAPI(title="AIU 创智部二面 · 综合演示")
+    @asynccontextmanager
+    async def lifespan(app):
+        yield
+        yolo_routes.yolo_manager.stop()
+
+    app = FastAPI(lifespan=lifespan, title="AIU 创智部二面 · 综合演示")
 
     # 挂载静态文件和模板
     static_dir = BASE_DIR / "static"
