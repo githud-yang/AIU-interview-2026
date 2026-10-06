@@ -1,0 +1,12 @@
+# 根依赖（Web 应用 + 智能体，建议 Python 3.10/3.11）
+# 安装：pip install -r requirements.txt
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+httpx==0.28.1
+pydantic==2.10.4
+jinja2==3.1.5
+python-multipart==0.0.20
+
+# YOLO 部分建议在已有的 conda 环境 `yolo` 中安装/使用：
+#   pip install ultralytics opencv-python
+# ultralytics 会自动拉取 torch（本机已装 torch 2.11+cu128）

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI 文字冒险 · 本地大模型驱动</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>🖥️ 终端迷局 <span>· 本地大模型文字冒险</span></h1>
+    <nav><a href="/yolo">进入 YOLO 实时检测 →</a></nav>
+  </header>
+
+  <main>
+    <div id="chat">
+      <div class="msg ai">
+        <p>你在一间摆满旧电脑的实验室醒来。桌上的终端闪着光标，屏幕上正跑着一个本地大模型……<br/><em>（在下方输入你想做的事，例如：看看终端屏幕 / 推开那扇门）</em></p>
+      </div>
+    </div>
+
+    <form id="input-form">
+      <input id="input" type="text" placeholder="你想做什么？" autocomplete="off" required />
+      <button type="submit">发送</button>
+    </form>
+  </main>
+
+  <script type="module" src="/static/app.js"></script>
+</body>
+</html>

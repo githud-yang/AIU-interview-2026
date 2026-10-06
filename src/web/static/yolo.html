@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>YOLO 实时检测</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>🎥 YOLO 实时物体检测</h1>
+    <nav><a href="/">← 返回 AI 文字冒险</a></nav>
+  </header>
+  <main class="center">
+    <p class="tip">点击按钮启动/停止摄像头检测（首次需授权摄像头）</p>
+    <div style="border:1px dashed #2a2f55;border-radius:12px;padding:40px;color:#8a90c9;display:flex;gap:16px;justify-content:center;">
+      <button id="start-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;">📷 启动检测</button>
+      <button id="stop-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;background:#c0392b;">■ 停止检测</button>
+    </div>
+    <p id="yolo-msg" style="margin-top:14px;font-size:13px;color:#7fd4ff;"></p>
+  </main>
+  <script>
+    const msg = document.getElementById("yolo-msg");
+    document.getElementById("start-btn").onclick = async () => {
+      msg.textContent = "启动中...";
+      const r = await fetch("/yolo/start", { method: "POST" });
+      msg.textContent = (await r.json()).msg;
+    };
+    document.getElementById("stop-btn").onclick = async () => {
+      msg.textContent = "停止中...";
+      const r = await fetch("/yolo/stop", { method: "POST" });
+      msg.textContent = (await r.json()).msg;
+    };
+  </script>
+</body>
+</html>
