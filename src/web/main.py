@@ -19,7 +19,7 @@ from src.web.routes import chat_routes, yolo_routes
 
 # 路径常量
 BASE_DIR = Path(__file__).resolve().parent
-PROJECT_ROOT = BASE_DIR.parents[2]
+PROJECT_ROOT = BASE_DIR.parents[1]
 
 
 def create_app() -> FastAPI:
@@ -40,6 +40,10 @@ def create_app() -> FastAPI:
     # 注册路由模块
     app.include_router(chat_routes.router)
     app.include_router(yolo_routes.router)
+
+    @app.get("/api/health")
+    def health():
+        return {"model": chat_routes.chat_service.agent.health(), "yolo": yolo_routes.yolo_status()}
 
     return app
 

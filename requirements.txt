@@ -7,6 +7,4 @@ pydantic==2.10.4
 jinja2==3.1.5
 python-multipart==0.0.20
 
-# YOLO 部分建议在已有的 conda 环境 `yolo` 中安装/使用：
-#   pip install ultralytics opencv-python
-# ultralytics 会自动拉取 torch（本机已装 torch 2.11+cu128）
+# 视觉模块用 requirements-yolo.txt；CUDA 版 PyTorch 根据设备单独安装。

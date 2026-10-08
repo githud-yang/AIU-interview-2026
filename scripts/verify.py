@@ -1,6 +1,7 @@
 """不占用摄像头的回归检查；--live 额外调用真实 Ollama。"""
 import argparse
 import sys
+import subprocess
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from fastapi.testclient import TestClient
@@ -10,6 +11,7 @@ from src.agent.core.llm_agent import LocalLLMAgent
 
 def main():
     p = argparse.ArgumentParser(); p.add_argument("--live", action="store_true"); a = p.parse_args()
+    subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"], cwd=Path(__file__).resolve().parents[1], check=True)
     with TestClient(app) as c:
         for path in ["/", "/yolo", "/static/app.js", "/yolo/status"]:
             assert c.get(path).status_code == 200, path

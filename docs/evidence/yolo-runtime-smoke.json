@@ -1,0 +1,33 @@
+{
+  "source": "installed ultralytics/assets/bus.jpg",
+  "network": "127.0.0.1 only",
+  "physical_camera_opened": false,
+  "public_image": {
+    "status": {
+      "running": true,
+      "state": "running",
+      "msg": "检测正在运行",
+      "error": "",
+      "warning": "",
+      "source": "demo",
+      "source_label": "公开 bus.jpg 静态样例",
+      "model": "best.pt",
+      "frame_count": 1,
+      "fps": 0.0,
+      "started_at": "2026-10-08T03:34:17.070022+00:00",
+      "last_frame_at": "2026-10-08T03:34:27.422135+00:00"
+    },
+    "clients": 2,
+    "jpeg_bytes_per_client": [
+      237696,
+      237696
+    ],
+    "stream_ended_after_stop": true
+  },
+  "local_video": {
+    "frame_count": 3,
+    "state": "finished",
+    "source": "3-frame AVI generated from public bus.jpg, no camera",
+    "capture_released": true
+  }
+}

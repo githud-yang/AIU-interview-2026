@@ -2,45 +2,47 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YOLO 实时检测</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark" />
+  <title>视觉检测 · AIU Lab</title>
   <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
-  <header>
-    <h1>🎥 YOLO 实时物体检测</h1>
-    <nav><a href="/">← 返回 AI 文字冒险</a></nav>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="AIU Lab 首页"><span class="brand-mark" aria-hidden="true">A</span><span>AIU <b>LAB</b></span></a>
+    <nav class="page-nav" aria-label="功能导航"><a href="/">文字冒险</a><a href="/yolo" aria-current="page">视觉检测</a></nav>
+    <span class="header-note">创智 · 综合演示</span>
   </header>
-  <main class="center">
-    <p class="tip">点击按钮启动/停止摄像头检测（使用本机摄像头）</p>
-    <div style="border:1px dashed #2a2f55;border-radius:12px;padding:40px;color:#8a90c9;display:flex;gap:16px;justify-content:center;">
-      <button id="start-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;">📷 启动检测</button>
-      <button id="stop-btn" style="font-size:16px;padding:14px 28px;cursor:pointer;background:#c0392b;">■ 停止检测</button>
-    </div>
-    <img id="video" alt="检测画面" hidden style="max-width:100%;margin-top:20px" />
-    <p id="yolo-msg" style="margin-top:14px;font-size:13px;color:#7fd4ff;"></p>
+  <main id="main" class="workspace detection-layout">
+    <aside class="sidebar">
+      <p class="eyebrow">COMPUTER VISION</p>
+      <h1>看见世界<span class="accent">.</span></h1>
+      <p class="description">通过 YOLO 识别画面中的物体，查看预测框、类别与置信度。</p>
+      <section class="side-card" aria-label="检测控制">
+        <label class="card-label" for="source-select">画面来源</label>
+        <select id="source-select" disabled><option>读取可用来源中…</option></select>
+        <p id="source-help" class="muted small source-help">启动前选择要检测的来源。</p>
+        <div class="control-buttons"><button id="start-btn" class="button button-primary" type="button" disabled>启动检测 <span aria-hidden="true">▶</span></button><button id="stop-btn" class="button button-quiet" type="button" disabled>停止</button></div>
+      </section>
+      <section class="side-card" aria-label="运行信息">
+        <p class="card-label">运行信息</p>
+        <dl class="runtime-details"><div><dt>检测模型</dt><dd id="detection-model">—</dd></div><div><dt>当前来源</dt><dd id="active-source">—</dd></div></dl>
+        <button id="refresh-btn" class="text-button" type="button">刷新状态</button>
+      </section>
+      <p class="sidebar-footer">摄像头由当前运行应用的电脑提供。离开此页后检测仍会运行，请用“停止”结束。</p>
+    </aside>
+    <section class="vision-panel" aria-label="检测预览">
+      <div class="panel-toolbar"><strong>检测画面</strong><span id="detection-status" class="status-badge" data-tone="neutral">连接中</span></div>
+      <div class="video-stage">
+        <div id="video-placeholder" class="video-placeholder"><span class="viewfinder" aria-hidden="true">＋</span><h2 id="placeholder-title">准备好开始检测</h2><p id="placeholder-description">选择画面来源，然后点击“启动检测”。</p></div>
+        <img id="video" alt="YOLO 物体检测结果，画面上显示预测框和类别" hidden />
+        <span id="source-overlay" class="source-overlay" hidden></span>
+      </div>
+      <div class="metrics"><div><span>处理帧率</span><strong id="fps">—</strong></div><div><span>已处理帧</span><strong id="frame-count">0</strong></div><div><span>运行时间</span><strong id="elapsed">—</strong></div></div>
+      <div class="vision-notices"><p id="yolo-msg" class="notice" role="status">正在连接检测服务…</p><p id="yolo-warning" class="notice notice-warning" role="status" hidden></p></div>
+    </section>
   </main>
-  <script>
-    const msg = document.getElementById("yolo-msg");
-    document.getElementById("start-btn").onclick = async () => {
-      msg.textContent = "启动中...";
-      const r = await fetch("/yolo/start", { method: "POST" });
-      const result = await r.json();
-      msg.textContent = result.msg;
-      const video = document.getElementById("video");
-      if (result.ok) { video.hidden = false; video.src = "/yolo/stream?t=" + Date.now(); }
-    };
-    document.getElementById("stop-btn").onclick = async () => {
-      msg.textContent = "停止中...";
-      const r = await fetch("/yolo/stop", { method: "POST" });
-      msg.textContent = (await r.json()).msg;
-      const video = document.getElementById("video"); video.hidden = true; video.removeAttribute("src");
-    };
-    setInterval(async () => {
-      try { const state = await (await fetch("/yolo/status")).json();
-        if (state.error) msg.textContent = state.error;
-      } catch { msg.textContent = "后端连接中断"; }
-    }, 3000);
-  </script>
+  <script type="module" src="/static/yolo.js"></script>
 </body>
 </html>

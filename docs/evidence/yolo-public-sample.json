@@ -1,0 +1,35 @@
+{
+  "recorded_at": "2026-10-08T03:38:48.555107+00:00",
+  "source": "ultralytics 8.4.170 bundled public assets/bus.jpg",
+  "weights": "assets/models/best.pt",
+  "weights_sha256": "1b1a2bc998c40351f7278d29a42b3b1c4b32f59a854f8ced2b651dfa5a7ab16d",
+  "device": "cpu",
+  "frames": 1,
+  "elapsed_seconds": 6.641,
+  "detections": [
+    {
+      "class": "bus",
+      "confidence": 0.9308
+    },
+    {
+      "class": "person",
+      "confidence": 0.897
+    },
+    {
+      "class": "person",
+      "confidence": 0.8831
+    },
+    {
+      "class": "person",
+      "confidence": 0.863
+    },
+    {
+      "class": "person",
+      "confidence": 0.6151
+    }
+  ],
+  "image": "docs/evidence/yolo-public-sample.jpg",
+  "image_sha256": "5bbfaf2c1b0fa65b358aa9574ed7965f8602b789b4d76a6df0c0b29ca2d3a8d6",
+  "physical_camera_opened": false,
+  "note": "Observed CLI smoke output; elapsed_seconds includes first prediction warm-up and is not steady-state FPS."
+}

@@ -3,6 +3,7 @@ from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 from src.web.services.chat_service import AdventureChatService
+from src.agent.core.llm_agent import ModelResponseError
 router = APIRouter()
 chat_service = AdventureChatService()
 class Turn(BaseModel):
@@ -23,3 +24,5 @@ def api_chat(body: ChatRequest):
         return {"reply": chat_service.chat(body.message, [turn.model_dump() for turn in body.history])}
     except httpx.HTTPError:
         raise HTTPException(503, "模型服务不可用，请确认 Ollama 已启动且模型已下载")
+    except ModelResponseError as exc:
+        raise HTTPException(502, str(exc))

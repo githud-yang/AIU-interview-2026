@@ -8,6 +8,8 @@ from __future__ import annotations
 import time
 import ast
 import operator
+import math
+import threading
 from pathlib import Path
 
 
@@ -17,12 +19,12 @@ def tool_get_time() -> str:
 
 
 def tool_calculate(expr: str) -> str:
-    """安全计算数学表达式，带字符白名单校验"""
+    """只解析数值算式，限制长度、指数与结果范围。"""
     operations = {ast.Add: operator.add, ast.Sub: operator.sub, ast.Mult: operator.mul,
                   ast.Div: operator.truediv, ast.Mod: operator.mod, ast.Pow: operator.pow}
     def visit(node):
         if isinstance(node, ast.Constant) and type(node.value) in (int, float):
-            if abs(node.value) > 1e12: raise ValueError("数值过大")
+            if not math.isfinite(node.value) or abs(node.value) > 1e12: raise ValueError("数值过大")
             return node.value
         if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.UAdd, ast.USub)):
             return visit(node.operand) * (-1 if isinstance(node.op, ast.USub) else 1)
@@ -30,22 +32,27 @@ def tool_calculate(expr: str) -> str:
             left, right = visit(node.left), visit(node.right)
             if isinstance(node.op, ast.Pow) and abs(right) > 12: raise ValueError("指数过大")
             result = operations[type(node.op)](left, right)
-            if isinstance(result, complex) or abs(result) > 1e100: raise ValueError("结果超出范围")
+            if isinstance(result, complex) or not math.isfinite(result) or abs(result) > 1e100: raise ValueError("结果超出范围")
             return result
         raise ValueError("仅支持数字及加减乘除、取余和幂")
     try:
-        if len(expr) > 200: raise ValueError("表达式过长")
+        if not isinstance(expr, str) or len(expr) > 200: raise ValueError("表达式必须是 200 字符以内的文本")
         return str(visit(ast.parse(expr.replace("^", "**"), mode="eval").body))
     except Exception as exc:
         return f"计算失败：{exc}"
 
 
 
+_note_lock = threading.Lock()
+
+
 def tool_note(content: str) -> str:
     """将笔记内容追加写入本地文件"""
+    if not isinstance(content, str) or not content.strip() or len(content) > 4000:
+        raise ValueError("笔记长度必须在 1 到 4000 字符之间")
     note_path = Path(__file__).resolve().parents[3] / "logs" / "agent_notes.txt"
     note_path.parent.mkdir(parents=True, exist_ok=True)
-    with open(note_path, "a", encoding="utf-8") as f:
+    with _note_lock, open(note_path, "a", encoding="utf-8") as f:
         f.write(f"[{tool_get_time()}] {content}\n")
     return f"已记录：{content}"
 

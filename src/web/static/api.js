@@ -1,51 +1,36 @@
-/**
- * API请求层
- * ==========
- * 统一封装所有后端接口调用，前端其他模块不直接写fetch，只调用这里暴露的方法。
- * 后端接口路径变更只需修改这一个文件。
- */
+/** Shared same-origin API client. Network failures and responses are checked here. */
+async function request(path, { method = "GET", body, timeout = 15000 } = {}) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeout);
+  try {
+    const response = await fetch(path, {
+      method, signal: controller.signal, cache: "no-store",
+      headers: body === undefined ? {} : { "Content-Type": "application/json" },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+    let data;
+    try { data = await response.json(); }
+    catch { throw new Error(`服务返回了无法读取的响应（${response.status}）`); }
+    if (!response.ok) {
+      const detail = typeof data.detail === "string" ? data.detail : data.error || data.msg;
+      throw new Error(detail || `请求失败（${response.status}），请稍后重试`);
+    }
+    return data;
+  } catch (error) {
+    if (error.name === "AbortError") throw new Error("等待服务响应超时，请检查连接后重试");
+    if (error instanceof TypeError) throw new Error("无法连接服务，请确认应用已经启动");
+    throw error;
+  } finally { clearTimeout(timer); }
+}
 
-const API_BASE = "";
-
-/**
- * 发送聊天消息
- * @param {string} message 用户输入
- * @param {Array} history 对话历史
- * @returns {Promise<string>} AI回复
- */
 export async function sendChatMessage(message, history) {
-  const res = await fetch(`${API_BASE}/api/chat`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message, history }),
-  });
-  const data = await res.json();
-  if (!res.ok) throw new Error(typeof data.detail === "string" ? data.detail : `请求参数错误 (${res.status})`);
+  const data = await request("/api/chat", { method: "POST", body: { message, history }, timeout: 180000 });
+  if (typeof data.reply !== "string" || !data.reply.trim()) throw new Error("模型没有返回有效回复，请重试");
   return data.reply;
 }
-
-/**
- * 启动YOLO检测
- * @returns {Promise<Object>} 操作结果
- */
-export async function startYolo() {
-  const res = await fetch(`${API_BASE}/yolo/start`, { method: "POST" });
-  return res.json();
-}
-
-/**
- * 停止YOLO检测
- * @returns {Promise<Object>} 操作结果
- */
-export async function stopYolo() {
-  const res = await fetch(`${API_BASE}/yolo/stop`, { method: "POST" });
-  return res.json();
-}
-
-/**
- * 获取YOLO视频流地址
- * @returns {string} 视频流URL
- */
-export function getYoloStreamUrl() {
-  return `${API_BASE}/yolo/stream`;
-}
+export const getHealth = () => request("/api/health", { timeout: 12000 });
+export const getYoloSources = () => request("/yolo/sources");
+export const getYoloStatus = () => request("/yolo/status");
+export const startYolo = (source) => request("/yolo/start", { method: "POST", body: { source }, timeout: 60000 });
+export const stopYolo = () => request("/yolo/stop", { method: "POST", timeout: 15000 });
+export const getYoloStreamUrl = () => `/yolo/stream?t=${Date.now()}`;
