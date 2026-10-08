@@ -2,6 +2,8 @@
 
 范围：按 PDF 修复基础项目和现有原型，优化演示，交付 Harness 实施计划。Harness 完整实现单独按计划推进，不把计划当作实现。
 
+- [x] ✓ 新一轮 Harness 调研：核对 Pi、Deep Agents、OpenHands SDK 三个官方方案及源码快照，形成取长补短的新版设计。来源：harness-design-v2.md。设计已交付，依赖安装与实现验收未执行。
+
 - [x] ✓ 读取 PDF 与现有代码，区分基础、进阶及无关历史练习。来源：PDF、README。
 - [x] ✓ 上次真实训练 30 轮并保留指标。来源：training_result.json 与其 evidence_dir 中的真实 CSV。
 - [x] ✓ 智能体参数校验、调用数量/轮次限制、上下文预算、响应异常和健康检查已修复；12 项核心/网页测试通过，真实模型计算和游戏 API 已通过。来源：tests/test_agent.py、scripts/verify.py --live。
@@ -15,4 +17,4 @@
 - [ ] 用户现场打开摄像头遮挡/隐私开关后完成物体识别演示。当前历史证据为全黑帧，软件无法代替这个实物验证。
 - [ ] 单片机进阶：未提供硬件，不虚构点灯或 PID 成果。
 
-下一项：现场摄像头与浏览器可视验证；Harness 后续功能按 harness-plan.md 的阶段 1 起实施，当前未执行该计划。
+下一项：新版 Harness 设计已供审阅；后续实现从 harness-design-v2.md 的阶段 A 起。现场摄像头与浏览器可视验证仍独立待完成。

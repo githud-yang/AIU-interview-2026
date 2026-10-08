@@ -7,3 +7,4 @@
 - demo.md：面试演示流程
 - checklist.md：主进度清单，区分代码与实物验证
 - harness-plan.md：Pi 架构参考与六阶段实施/验收
+- harness-design-v2.md：Pi、Deep Agents、OpenHands 官方调研及新版视觉实验助手设计，当前为设计稿

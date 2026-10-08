@@ -28,3 +28,11 @@ Harness 参考 Pi 固定提交，计划采用 Python/FastAPI + SQLite，分六�
 运行结果：30 项离线 Python 检查及 4 项前端模拟检查通过；默认跳过的真实 YOLO 测试另行运行通过；真实 Ollama 工具与游戏 API 通过，HTTP 双视频流共享与停止通过，三帧本地视频播放完自动释放。详细证据和限制见 verification.md，下一步以 checklist.md 为主。
 
 收尾复核补了两项证据校验：权重哈希变化时不继承旧指标；当前数据快照保持归档来源标签。补了页面离开后的异步回复守卫，避免旧请求重新连接视频。所有新增回归均通过。
+
+## 2026-10-08：三个 Harness 方案调研与新版设计
+
+再次核对 PDF 第 3 页：明确要求参考 Pi 架构，专业/兴趣方向自由，自动科研为参考案例。联网阅读 Pi、LangChain Deep Agents/LangGraph、OpenHands SDK 的官方文档与源码，并用 git ls-remote 固定三个参考仓库的 HEAD；参考提交及具体链接见 harness-design-v2.md。
+
+新版选择“华小牛·本地视觉实验助手”：Pi 的分层与上下文投影、Deep Agents 的任务清单和长结果管理、OpenHands 的 Action/Observation 契约，底层只采用 LangGraph 执行和 SQLite 检查点。补充任务完成依据、报告事实核查、工具账本、跨库中断窗口、文件导出恢复、资源协调、实施阶段和真实模型验收。
+
+本次只新增设计并同步入口和主清单，没有安装新依赖或修改运行代码。设计审阅与链接检查不计为 Harness 运行测试。旧 harness-plan.md 已标为初稿，后续技术选型与推进阶段以新版为准。
