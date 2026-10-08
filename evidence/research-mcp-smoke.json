@@ -1,0 +1,26 @@
+{
+  "transport": "real_stdio",
+  "tool_names": [
+    "research_capabilities",
+    "research_list_runs",
+    "research_get_run",
+    "research_events",
+    "research_start",
+    "research_cancel",
+    "research_resume",
+    "research_artifact"
+  ],
+  "run_count": 2,
+  "resource_limits": {
+    "max_seconds": "unset_by_default",
+    "model_calls": "unset_by_default",
+    "max_trials": "unset_by_default"
+  },
+  "path_traversal_rejected": true,
+  "verified_artifact": {
+    "name": "arxiv_broadened_raw.xml",
+    "url": "http://127.0.0.1:8000/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/f2f01e998b31d4e72cee7020",
+    "size_bytes": 15020,
+    "sha256": "66641be2088f4a32b6bdf2e12480a354fa2a0e48e51f85990773ab011d2816a1"
+  }
+}

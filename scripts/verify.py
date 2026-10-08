@@ -2,19 +2,23 @@
 import argparse
 import sys
 import subprocess
+import tempfile
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from fastapi.testclient import TestClient
-from src.web.main import app
+from src.web.main import create_app
 from src.agent.tools.registry import tool_calculate
 from src.agent.core.llm_agent import LocalLLMAgent
 
 def main():
     p = argparse.ArgumentParser(); p.add_argument("--live", action="store_true"); a = p.parse_args()
-    subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "tests", "-v"], cwd=Path(__file__).resolve().parents[1], check=True)
-    with TestClient(app) as c:
-        for path in ["/", "/yolo", "/static/app.js", "/yolo/status"]:
+    subprocess.run([sys.executable, "-X", "utf8", "-m", "unittest", "discover", "-s", "tests", "-v"], cwd=Path(__file__).resolve().parents[1], check=True)
+    with tempfile.TemporaryDirectory() as temporary, TestClient(create_app(research_root=Path(temporary))) as c:
+        for path in ["/", "/yolo", "/research", "/static/app.js", "/static/research.js", "/yolo/status"]:
             assert c.get(path).status_code == 200, path
+        settings = c.get("/api/research/writer-settings")
+        if settings.status_code == 200:
+            assert "api_key" not in settings.json()
         assert c.post("/api/chat", json={"message":""}).status_code == 422
         assert c.post("/api/chat", json={"message":"x", "history":[{"role":"system"}]}).status_code == 422
         assert c.get("/yolo/stream").status_code == 409

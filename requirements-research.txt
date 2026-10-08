@@ -1,0 +1,7 @@
+# Research workspace; install in an independent .venv.
+-r requirements-yolo.txt
+langgraph==1.2.14
+langgraph-checkpoint-sqlite==3.1.1
+scikit-learn==1.9.1
+reportlab==4.5.1
+pypdf==6.19.0

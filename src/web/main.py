@@ -15,19 +15,33 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src.web.routes import chat_routes, yolo_routes
+from src.web.routes import chat_routes, yolo_routes, research_routes
 
 # 路径常量
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = BASE_DIR.parents[1]
 
 
-def create_app() -> FastAPI:
+def create_app(*, research_root: Path | None = None) -> FastAPI:
     """应用工厂函数，创建并配置FastAPI实例"""
     @asynccontextmanager
     async def lifespan(app):
-        yield
-        yolo_routes.yolo_manager.stop()
+        try:
+            from src.research.runtime import ResearchService
+        except ImportError as exc:
+            app.state.research = None
+            app.state.research_error = str(exc)
+        else:
+            app.state.research = ResearchService(research_root or PROJECT_ROOT / "logs" / "research")
+            from src.research.settings import DeepSeekSettings
+            app.state.research.writer_settings = DeepSeekSettings(PROJECT_ROOT / "configs" / ".env", app.state.research)
+            await app.state.research.start()
+        try:
+            yield
+        finally:
+            if app.state.research:
+                await app.state.research.shutdown()
+            yolo_routes.yolo_manager.stop()
 
     app = FastAPI(lifespan=lifespan, title="AIU 创智部二面 · 综合演示")
 
@@ -40,6 +54,7 @@ def create_app() -> FastAPI:
     # 注册路由模块
     app.include_router(chat_routes.router)
     app.include_router(yolo_routes.router)
+    app.include_router(research_routes.router)
 
     @app.get("/api/health")
     def health():

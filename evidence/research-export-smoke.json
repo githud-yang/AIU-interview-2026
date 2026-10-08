@@ -1,0 +1,547 @@
+{
+  "run_id": "dd98c3f59cc34e73b7d2be3e3ec36899",
+  "status": "completed",
+  "export": {
+    "revision": 4,
+    "originals_preserved": true,
+    "new_model_calls": 0,
+    "new_model_fits": 0,
+    "experiment_reused": "frozen raw CSV and existing analysis",
+    "duration_seconds": 0.578,
+    "discussion": {
+      "status": "numeric_tokens_checked",
+      "checked_tokens": [
+        "87.78",
+        "37.69",
+        "50.09",
+        "0.39089",
+        "0.87712",
+        "97.50",
+        "95.19",
+        "2.31",
+        "0.97498",
+        "0.95166"
+      ],
+      "unknown_tokens": [],
+      "semantic_review": "not_external_review; numeric membership does not establish sentence correctness"
+    },
+    "bundle": {
+      "id": "edc38216aaf549b9d06ce345",
+      "name": "research_bundle.zip",
+      "kind": "zip",
+      "path": "export_v4/research_bundle.zip",
+      "sha256": "0efc32eb8a929c2264fdc64c505d603384671c1266778dea35dbe95fb807c05e",
+      "size_bytes": 3039541,
+      "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/edc38216aaf549b9d06ce345"
+    }
+  },
+  "new_model_calls": 0,
+  "new_model_fits": 0,
+  "old_artifacts_preserved": 67,
+  "verified_downloads": [
+    {
+      "path": "literature/literature/arxiv_broadened_raw.xml",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_raw.xml",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/crossref_raw.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/search.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_1905.08633v1.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_1905.08633v1.pages.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_2105.05496v2.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_2105.05496v2.pages.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/full_text.json",
+      "hash_matches": true
+    },
+    {
+      "path": "question.json",
+      "hash_matches": true
+    },
+    {
+      "path": "research_protocol.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/splits.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/data_protocol.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/baseline_validation.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/baseline.json",
+      "hash_matches": true
+    },
+    {
+      "path": "method/recipe.json",
+      "hash_matches": true
+    },
+    {
+      "path": "method/registered_runner.py",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/environment.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/fixed_runner.py",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/metrics_search.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/predictions_search.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/protocol.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/recipe.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/requirements-reproduce.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/selection.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/search.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/metrics.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/predictions.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/robustness.png",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/experiment.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "analysis.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "review.json",
+      "hash_matches": true
+    },
+    {
+      "path": "submission_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "action_observation.jsonl",
+      "hash_matches": true
+    },
+    {
+      "path": "intervention_log.json",
+      "hash_matches": true
+    },
+    {
+      "path": "project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "research_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/discussion_audit.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v3/export_record.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v3/research_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/discussion_audit.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v4/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v4/export_record.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v4/research_bundle.zip",
+      "hash_matches": true
+    }
+  ],
+  "manuscript": {
+    "ok": true,
+    "status": "completed",
+    "title": "A Reproducible Digits Classification Study under Gaussian Corruption",
+    "revision": 4,
+    "input_sha256": "6746226217369098cfaa20d0362f1b081b0462a165f4b092b039cbb349915153",
+    "created_utc": "2026-10-08T15:44:04.486119+00:00",
+    "quality": {
+      "status": "candidate_report",
+      "numeric_integrity": "verified_against_raw_csv",
+      "data_hash_verified": true,
+      "novelty": "novelty_unverified",
+      "external_review": "not_evaluated",
+      "submission": "not_submitted",
+      "target_format": "generic preparation bundle; no venue-specific compliance asserted",
+      "pdf": {
+        "status": "generated",
+        "backend": "reportlab",
+        "tex_compiled": false,
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.pdf",
+        "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+      },
+      "latex": {
+        "status": "source_generated_not_compiled"
+      },
+      "model_analysis": "raw source retained; numeric-checked discussion is interpretation, not new empirical evidence",
+      "discussion": {
+        "status": "numeric_tokens_checked",
+        "checked_tokens": [
+          "87.78",
+          "37.69",
+          "50.09",
+          "0.39089",
+          "0.87712",
+          "97.50",
+          "95.19",
+          "2.31",
+          "0.97498",
+          "0.95166"
+        ],
+        "unknown_tokens": [],
+        "semantic_review": "not_external_review; numeric membership does not establish sentence correctness"
+      }
+    },
+    "pdf": {
+      "status": "generated",
+      "backend": "reportlab",
+      "tex_compiled": false,
+      "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.pdf",
+      "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+    },
+    "summary": [
+      {
+        "model": "baseline",
+        "condition": "clean",
+        "accuracy_mean": 0.975,
+        "accuracy_sd": 0.0,
+        "macro_f1_mean": 0.9749763601137866,
+        "seeds_completed": 3
+      },
+      {
+        "model": "baseline",
+        "condition": "gaussian_noise",
+        "accuracy_mean": 0.3768518518518518,
+        "accuracy_sd": 0.011226255234242739,
+        "macro_f1_mean": 0.3908869777317926,
+        "seeds_completed": 3
+      },
+      {
+        "model": "selected_candidate",
+        "condition": "clean",
+        "accuracy_mean": 0.9518518518518518,
+        "accuracy_sd": 0.005782405554072632,
+        "macro_f1_mean": 0.9516553874708368,
+        "seeds_completed": 3
+      },
+      {
+        "model": "selected_candidate",
+        "condition": "gaussian_noise",
+        "accuracy_mean": 0.8777777777777778,
+        "accuracy_sd": 0.004811252243246864,
+        "macro_f1_mean": 0.87712018091651,
+        "seeds_completed": 3
+      },
+      {
+        "model": "ablation_no_augmentation",
+        "condition": "clean",
+        "accuracy_mean": 0.975,
+        "accuracy_sd": 0.0,
+        "macro_f1_mean": 0.9749763601137866,
+        "seeds_completed": 3
+      },
+      {
+        "model": "ablation_no_augmentation",
+        "condition": "gaussian_noise",
+        "accuracy_mean": 0.3768518518518518,
+        "accuracy_sd": 0.011226255234242739,
+        "macro_f1_mean": 0.3908869777317926,
+        "seeds_completed": 3
+      }
+    ],
+    "difference_corrupted_accuracy": 0.500925925925926,
+    "artifacts": [
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\discussion_audit.json",
+        "sha256": "149de2ff6595d20f7000232413e003c28403d00650e8c8ed3361cae39d4d7b1f",
+        "size_bytes": 347
+      },
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\model_analysis_unverified.json",
+        "sha256": "6685f19a4e95c66c1aa4eba5e46d004880ab77a17b7812687b995732173a1221",
+        "size_bytes": 1823
+      },
+      {
+        "kind": "html",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.html",
+        "sha256": "44af5a4de78d10aaaf24f21518e9b0a3442a2e999d58c0b70cf72f77a3668b33",
+        "size_bytes": 53686
+      },
+      {
+        "kind": "md",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.md",
+        "sha256": "6e11babd007c1d6396f1af2802eeee898fb7ec77b8bb629898318d8fd9bd8ea0",
+        "size_bytes": 9758
+      },
+      {
+        "kind": "pdf",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.pdf",
+        "sha256": "c78e84a67a4bd7b4241455abef2c8657101c23ce8e03e4d8336a011c3a141d87",
+        "size_bytes": 124774
+      },
+      {
+        "kind": "tex",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\paper.tex",
+        "sha256": "ddc03adb4a4480a9dfe2518c2082f50d992484eddff62a651dab96b2317e05da",
+        "size_bytes": 9795
+      },
+      {
+        "kind": "txt",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\project_goal.txt",
+        "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+        "size_bytes": 139
+      },
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\quality_status.json",
+        "sha256": "c919eac1298a6ae06ca08ae083b2a21ff30be1d0b627b6246efd37ff54e6ea2c",
+        "size_bytes": 1228
+      },
+      {
+        "kind": "zip",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\submission_bundle.zip",
+        "sha256": "5d646fade3e04c2c77b485293d05d8d46d04e070179d871b68f762b21eb0933a",
+        "size_bytes": 2559287
+      }
+    ],
+    "manifest": {
+      "kind": "manuscript_manifest",
+      "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v4\\manuscript.json",
+      "sha256": "c217601e21facb5576840fa7ee542a1c303764f440a279ed72ef2826c5d67c4f",
+      "size_bytes": 6172
+    },
+    "analysis": {
+      "interpretation": "Across three seeds per model on the bundled digits dataset, the selected candidate achieved 87.78% accuracy under synthetic Gaussian noise versus 37.69% for the baseline, a gain of 50.09 percentage points. Noise macro-F1 increased from 0.39089 to 0.87712. Clean accuracy decreased from 97.50% to 95.19%, a loss of 2.31 percentage points; clean macro-F1 decreased from 0.97498 to 0.95166. These measurements support a robustness–clean-performance tradeoff in this tested setting. Baseline and ablation_no_augmentation are aliases for one control, not independent evidence.",
+      "limitations": [
+        "Evidence is limited to the bundled digits benchmark and the tested synthetic Gaussian corruption; the dataset itself is real.",
+        "Three seeds share one held-out sample set. Seed standard deviations describe seed variability, not confidence intervals or statistical significance.",
+        "Augmentation doubles training examples, so an equal-compute advantage is not established.",
+        "Summary measurements do not establish manuscript quality, citation accuracy, source coverage, novelty, or venue compliance. Review assertions about artifact verification were not independently verified in this revision."
+      ],
+      "follow_up": [
+        "Revise the report to present the 50.09-percentage-point noise-accuracy gain alongside the 2.31-percentage-point clean-accuracy loss.",
+        "Describe baseline and ablation_no_augmentation as one control alias and remove any claim of independent corroboration.",
+        "Limit conclusions to the supplied measurements, without significance or novelty claims; conduct no new final-test experiment for this revision."
+      ]
+    }
+  },
+  "intervention_count": 0,
+  "budget": {
+    "max_seconds": 1200,
+    "model_calls": 12,
+    "max_trials": 18,
+    "elapsed_seconds": 454.031,
+    "used_model_calls": 7,
+    "used_trials": 18
+  }
+}

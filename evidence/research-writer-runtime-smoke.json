@@ -1,0 +1,2635 @@
+{
+  "run": {
+    "id": "dd98c3f59cc34e73b7d2be3e3ec36899",
+    "goal": "Study whether Gaussian training augmentation improves digit classification under noisy inputs while measuring its clean accuracy trade-off.",
+    "domain": "digits_robustness",
+    "mode": "autonomous",
+    "status": "completed",
+    "stage": "submission",
+    "created_at": "2026-10-08T15:18:41.799543+00:00",
+    "updated_at": "2026-10-08T15:26:15.846803+00:00",
+    "progress": 100,
+    "budget": {
+      "max_seconds": 1200,
+      "model_calls": 12,
+      "max_trials": 18,
+      "elapsed_seconds": 454.031,
+      "used_model_calls": 7,
+      "used_trials": 18
+    },
+    "stages": [
+      {
+        "id": "literature",
+        "label": "文献发现",
+        "status": "completed",
+        "summary": "检索到 12 条真实书目；覆盖范围受公开接口限制"
+      },
+      {
+        "id": "reading",
+        "label": "全文获取与阅读",
+        "status": "completed",
+        "summary": "解析 2 篇开放全文；其余按元数据阅读范围标记"
+      },
+      {
+        "id": "ideation",
+        "label": "选题与反证",
+        "status": "completed",
+        "summary": "选题与反证产物已保存"
+      },
+      {
+        "id": "protocol",
+        "label": "实验设计",
+        "status": "completed",
+        "summary": "已冻结数据、候选范围、三种子和拟合预算；最终测试不参与选参"
+      },
+      {
+        "id": "data",
+        "label": "数据准备",
+        "status": "completed",
+        "summary": "数据准备产物已保存"
+      },
+      {
+        "id": "baseline",
+        "label": "基线复现",
+        "status": "completed",
+        "summary": "基线验证完成，未开启测试集"
+      },
+      {
+        "id": "method",
+        "label": "方法实现",
+        "status": "completed",
+        "summary": "候选算法配方与代码快照已保存；执行边界已校验"
+      },
+      {
+        "id": "experiments",
+        "label": "候选实验",
+        "status": "completed",
+        "summary": "候选验证与选参已冻结，未开启测试集"
+      },
+      {
+        "id": "validation",
+        "label": "复验与消融",
+        "status": "completed",
+        "summary": "固定配置三种子测试与匹配消融完成"
+      },
+      {
+        "id": "manuscript",
+        "label": "分析与论文",
+        "status": "completed",
+        "summary": "按原始CSV核对数值，生成PDF、Markdown、HTML、TeX及复现包"
+      },
+      {
+        "id": "review",
+        "label": "核查与修改",
+        "status": "completed",
+        "summary": "内部核查与第二版材料生成完成；外部评审未完成"
+      },
+      {
+        "id": "submission",
+        "label": "投稿材料",
+        "status": "completed",
+        "summary": "投稿准备完成；当前候选研究未对外提交"
+      }
+    ],
+    "outputs": {
+      "literature": {
+        "ok": true,
+        "status": "completed",
+        "query": "Gaussian training augmentation impact on digit classification accuracy under noisy inputs",
+        "sources": [
+          {
+            "source": "crossref",
+            "status": "success",
+            "http_status": 200,
+            "filter": "type:journal-article"
+          },
+          {
+            "source": "arxiv",
+            "status": "success",
+            "http_status": 200,
+            "query_used": "(all:\"classification\") AND (all:\"Gaussian\" OR all:\"training\" OR all:\"augmentation\" OR all:\"impact\" OR all:\"on\" OR all:\"digit\" OR all:\"accuracy\" OR all:\"under\" OR all:\"noisy\" OR all:\"inputs\")",
+            "broadened_query": true
+          }
+        ],
+        "records": [
+          {
+            "id": "doi:10.5373/jardcs/v11i12/20193216",
+            "source": "crossref",
+            "doi": "10.5373/jardcs/v11i12/20193216",
+            "arxiv_id": null,
+            "title": "Effectiveness of Data Augmentation on Handwritten Digit Classification",
+            "authors": [
+              "Vijaya Kumar Reddy R",
+              "Srinivasa Rao B",
+              "Shaik Subhani",
+              "Ravi Prakash"
+            ],
+            "year": 2019,
+            "url": "https://doi.org/10.5373/jardcs/v11i12/20193216",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1609/aaai.v40i30.39695",
+            "source": "crossref",
+            "doi": "10.1609/aaai.v40i30.39695",
+            "arxiv_id": null,
+            "title": "QAPNet: A Quantum-Attentive Patchwise Network for Robust Medical Image Classification Under Noisy Inputs",
+            "authors": [
+              "Maqsudur Rahman",
+              "Jun Zhuang"
+            ],
+            "year": 2026,
+            "url": "https://doi.org/10.1609/aaai.v40i30.39695",
+            "abstract": "Robust medical image classification under input corruption and bag-level annotation remains a critical challenge in clinical AI applications. We propose QAPNet, a Quantum- Attentive Patchwise Network that integrates quantum neural encoding, additive attention-based instance reweighting, and prototype-contrastive regularization for reliable diagnosis from degraded inputs. Our framework uses a sliding-window strategy to divide each MRI medical Image into overlapping patches, where each is encoded via an 8-qubit quantum circuit using RY -based noise-sensitive layers for yielding expressive low-dimensional representations without relying on classical CNNs. A lightweight additive attention mechanism computes instance-wise importance weights that enable interpretable and noise-aware bag-level aggregation. To enhance robustness, we apply a contrastive loss that aligns clean and noisy embeddings and enforce prototype-guided clustering via class-wise centroids. We evaluate QAPNet across seven benchmark medical imaging datasets under three levels of additive Gaussian noise (σ ∈ {5%, 10%, 30%}). QAPNet consistently outperforms eight strong baselines and achieves up to +20.8% higher accuracy in OASIS (with 30% noise), +17.7% in PathMNIST, and maintains stable performance (&lt; 4% degradation) in all settings. Ablation studies confirm the critical role of quantum encoding, attention-based aggregation, and prototype contrastive learning. These results suggest that QAPNet offers a scalable and interpretable architecture for noisy medical imaging tasks in the real world to bridge the quantum representation learning with robust clinical prediction.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1088/1742-6596/1922/1/012007",
+            "source": "crossref",
+            "doi": "10.1088/1742-6596/1922/1/012007",
+            "arxiv_id": null,
+            "title": "Augmentation on CNNs for Handwritten Digit Classification in a Small Training Sample Size Situation",
+            "authors": [
+              "Y Mitani",
+              "Y Fujita",
+              "Y Hamamoto"
+            ],
+            "year": 2021,
+            "url": "https://doi.org/10.1088/1742-6596/1922/1/012007",
+            "abstract": "Abstract In general, a deep learning needs a lot of samples. However, in a practical pattern recognition problem, the number of training samples is usually limited. We investigate the effect of an image data augmentation by a perspective transformation on a convolution neural network(CNN) for handwritten digit classification in a small training sample size situation. The experimental results show the effectiveness of the image data augmentation by the perspective transformation on the CNN for handwritten digit classification particularly in the small training sample size situation.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1038/s41598-026-44320-y",
+            "source": "crossref",
+            "doi": "10.1038/s41598-026-44320-y",
+            "arxiv_id": null,
+            "title": "Impact of data space augmentation strategy on model accuracy and generalization in thin-section rock classification",
+            "authors": [
+              "Magdalena Habrat",
+              "Mariusz Młynarczuk"
+            ],
+            "year": 2026,
+            "url": "https://doi.org/10.1038/s41598-026-44320-y",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1587/transinf.2023edp7008",
+            "source": "crossref",
+            "doi": "10.1587/transinf.2023edp7008",
+            "arxiv_id": null,
+            "title": "On Gradient Descent Training Under Data Augmentation with On-Line Noisy Copies",
+            "authors": [
+              "Katsuyuki HAGIWARA"
+            ],
+            "year": 2023,
+            "url": "https://doi.org/10.1587/transinf.2023edp7008",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1007/s00357-011-9083-y",
+            "source": "crossref",
+            "doi": "10.1007/s00357-011-9083-y",
+            "arxiv_id": null,
+            "title": "Classification and Categorical Inputs with Treed Gaussian Process Models",
+            "authors": [
+              "Tamara Broderick",
+              "Robert B. Gramacy"
+            ],
+            "year": 2011,
+            "url": "https://doi.org/10.1007/s00357-011-9083-y",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:1809.04019v1",
+            "source": "arxiv",
+            "doi": null,
+            "arxiv_id": "1809.04019v1",
+            "title": "Training and Prediction Data Discrepancies: Challenges of Text Classification with Noisy, Historical Data",
+            "authors": [
+              "Emilia Apostolova",
+              "R. Andrew Kreek"
+            ],
+            "year": 2018,
+            "url": "https://arxiv.org/abs/1809.04019v1",
+            "abstract": "Industry datasets used for text classification are rarely created for that purpose. In most cases, the data and target predictions are a by-product of accumulated historical data, typically fraught with noise, present in both the text-based document, as well as in the targeted labels. In this work, we address the question of how well performance metrics computed on noisy, historical data reflect the performance on the intended future machine learning model input. The results demonstrate the utility of dirty training datasets used to build prediction models for cleaner (and different) prediction inputs.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:2212.00479v2",
+            "source": "arxiv",
+            "doi": "10.1007/978-3-031-17027-0_8",
+            "arxiv_id": "2212.00479v2",
+            "title": "Noisy Label Classification using Label Noise Selection with Test-Time Augmentation Cross-Entropy and NoiseMix Learning",
+            "authors": [
+              "Hansang Lee",
+              "Haeil Lee",
+              "Helen Hong",
+              "Junmo Kim"
+            ],
+            "year": 2022,
+            "url": "https://arxiv.org/abs/2212.00479v2",
+            "abstract": "As the size of the dataset used in deep learning tasks increases, the noisy label problem, which is a task of making deep learning robust to the incorrectly labeled data, has become an important task. In this paper, we propose a method of learning noisy label data using the label noise selection with test-time augmentation (TTA) cross-entropy and classifier learning with the NoiseMix method. In the label noise selection, we propose TTA cross-entropy by measuring the cross-entropy to predict the test-time augmented training data. In the classifier learning, we propose the NoiseMix method based on MixUp and BalancedMix methods by mixing the samples from the noisy and the clean label data. In experiments on the ISIC-18 public skin lesion diagnosis dataset, the proposed TTA cross-entropy outperformed the conventional cross-entropy and the TTA uncertainty in detecting label noise data in the label noise selection process. Moreover, the proposed NoiseMix not only outperformed the state-of-the-art methods in the classification performance but also showed the most robustness to the label noise in the classifier learning.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:1905.08633v1",
+            "source": "arxiv",
+            "doi": null,
+            "arxiv_id": "1905.08633v1",
+            "title": "Fonts-2-Handwriting: A Seed-Augment-Train framework for universal digit classification",
+            "authors": [
+              "Vinay Uday Prabhu",
+              "Sanghyun Han",
+              "Dian Ang Yap",
+              "Mihail Douhaniaris",
+              "Preethi Seshadri",
+              "John Whaley"
+            ],
+            "year": 2019,
+            "url": "https://arxiv.org/abs/1905.08633v1",
+            "abstract": "In this paper, we propose a Seed-Augment-Train/Transfer (SAT) framework that contains a synthetic seed image dataset generation procedure for languages with different numeral systems using freely available open font file datasets. This seed dataset of images is then augmented to create a purely synthetic training dataset, which is in turn used to train a deep neural network and test on held-out real world handwritten digits dataset spanning five Indic scripts, Kannada, Tamil, Gujarati, Malayalam, and Devanagari. We showcase the efficacy of this approach both qualitatively, by training a Boundary-seeking GAN (BGAN) that generates realistic digit images in the five languages, and also quantitatively by testing a CNN trained on the synthetic data on the real-world datasets. This establishes not only an interesting nexus between the font-datasets-world and transfer learning but also provides a recipe for universal-digit classification in any script.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:1809.04967v3",
+            "source": "arxiv",
+            "doi": "10.1109/LSP.2019.2906929",
+            "arxiv_id": "1809.04967v3",
+            "title": "Gaussian process classification using posterior linearisation",
+            "authors": [
+              "Ángel F. García-Fernández",
+              "Filip Tronarp",
+              "Simo Särkkä"
+            ],
+            "year": 2018,
+            "url": "https://arxiv.org/abs/1809.04967v3",
+            "abstract": "This paper proposes a new algorithm for Gaussian process classification based on posterior linearisation (PL). In PL, a Gaussian approximation to the posterior density is obtained iteratively using the best possible linearisation of the conditional mean of the labels and accounting for the linearisation error. PL has some theoretical advantages over expectation propagation (EP): all calculated covariance matrices are positive definite and there is a local convergence theorem. In experimental data, PL has better performance than EP with the noisy threshold likelihood and the parallel implementation of the algorithms.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:2105.05496v2",
+            "source": "arxiv",
+            "doi": "10.1109/ICIP42928.2021.9506236",
+            "arxiv_id": "2105.05496v2",
+            "title": "A Consensual Collaborative Learning Method for Remote Sensing Image Classification Under Noisy Multi-Labels",
+            "authors": [
+              "Ahmet Kerem Aksoy",
+              "Mahdyar Ravanbakhsh",
+              "Tristan Kreuziger",
+              "Begum Demir"
+            ],
+            "year": 2021,
+            "url": "https://arxiv.org/abs/2105.05496v2",
+            "abstract": "Collecting a large number of reliable training images annotated by multiple land-cover class labels in the framework of multi-label classification is time-consuming and costly in remote sensing (RS). To address this problem, publicly available thematic products are often used for annotating RS images with zero-labeling-cost. However, such an approach may result in constructing a training set with noisy multi-labels, distorting the learning process. To address this problem, we propose a Consensual Collaborative Multi-Label Learning (CCML) method. The proposed CCML identifies, ranks and corrects training images with noisy multi-labels through four main modules: 1) discrepancy module; 2) group lasso module; 3) flipping module; and 4) swap module. The discrepancy module ensures that the two networks learn diverse features, while obtaining the same predictions. The group lasso module detects the potentially noisy labels by estimating the label uncertainty based on the aggregation of two collaborative networks. The flipping module corrects the identified noisy labels, whereas the swap module exchanges the ranking information between the two networks. The experimental results confirm the success of the proposed CCML under high (synthetically added) multi-label noise rates. The code of the proposed method is publicly available at https://noisy-labels-in-rs.org",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:2509.11168v1",
+            "source": "arxiv",
+            "doi": "10.5281/zenodo.17251589",
+            "arxiv_id": "2509.11168v1",
+            "title": "An Entropy-Guided Curriculum Learning Strategy for Data-Efficient Acoustic Scene Classification under Domain Shift",
+            "authors": [
+              "Peihong Zhang",
+              "Yuxuan Liu",
+              "Zhixin Li",
+              "Rui Sang",
+              "Yiqiang Cai",
+              "Yizhou Tan",
+              "Shengchen Li"
+            ],
+            "year": 2025,
+            "url": "https://arxiv.org/abs/2509.11168v1",
+            "abstract": "Acoustic Scene Classification (ASC) faces challenges in generalizing across recording devices, particularly when labeled data is limited. The DCASE 2024 Challenge Task 1 highlights this issue by requiring models to learn from small labeled subsets recorded on a few devices. These models need to then generalize to recordings from previously unseen devices under strict complexity constraints. While techniques such as data augmentation and the use of pre-trained models are well-established for improving model generalization, optimizing the training strategy represents a complementary yet less-explored path that introduces no additional architectural complexity or inference overhead. Among various training strategies, curriculum learning offers a promising paradigm by structuring the learning process from easier to harder examples. In this work, we propose an entropy-guided curriculum learning strategy to address the domain shift problem in data-efficient ASC. Specifically, we quantify the uncertainty of device domain predictions for each training sample by computing the Shannon entropy of the device posterior probabilities estimated by an auxiliary domain classifier. Using entropy as a proxy for domain invariance, the curriculum begins with high-entropy samples and gradually incorporates low-entropy, domain-specific ones to facilitate the learning of generalizable representations. Experimental results on multiple DCASE 2024 ASC baselines demonstrate that our strategy effectively mitigates domain shift, particularly under limited labeled data conditions. Our strategy is architecture-agnostic and introduces no additional inference cost, making it easily integrable into existing ASC baselines and offering a practical solution to domain shift.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          }
+        ],
+        "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+        "duration_seconds": 13.359000000000378,
+        "coverage": "bounded Crossref/arXiv search; not an exhaustive novelty search; metadata is not full-text reading",
+        "artifacts": [
+          {
+            "kind": "literature_source",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_broadened_raw.xml",
+            "sha256": "66641be2088f4a32b6bdf2e12480a354fa2a0e48e51f85990773ab011d2816a1",
+            "size_bytes": 15020
+          },
+          {
+            "kind": "literature_source",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_raw.xml",
+            "sha256": "dc31e0f549f8e7e05b73ccf9babd9072bd0fb1f3cece9ea741beeff5c0ef7c99",
+            "size_bytes": 1133
+          },
+          {
+            "kind": "literature_source",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\crossref_raw.json",
+            "sha256": "e972165cd21e1f33d799c99ca26ba5129d565051d292363f6849b747e455d25c",
+            "size_bytes": 79731
+          },
+          {
+            "kind": "literature_source",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\search.json",
+            "sha256": "b4c7d0a405c4e828ccfda458fa554c84cab2a75de1ce5af142a41b92d31b2a23",
+            "size_bytes": 17284
+          }
+        ],
+        "query_plan": {
+          "query": "Gaussian training augmentation impact on digit classification accuracy under noisy inputs",
+          "rationale": "This query aims to explore the effect of Gaussian training augmentation on the accuracy of digit classification models, particularly in scenarios where the input data is noisy. It seeks to understand the trade-off between clean and noisy data accuracy."
+        },
+        "stage_summary": "检索到 12 条真实书目；覆盖范围受公开接口限制"
+      },
+      "reading": {
+        "ok": true,
+        "status": "completed",
+        "attempted": 2,
+        "parsed": 2,
+        "records": [
+          {
+            "id": "doi:10.1088/1742-6596/1922/1/012007",
+            "source": "crossref",
+            "doi": "10.1088/1742-6596/1922/1/012007",
+            "arxiv_id": null,
+            "title": "Augmentation on CNNs for Handwritten Digit Classification in a Small Training Sample Size Situation",
+            "authors": [
+              "Y Mitani",
+              "Y Fujita",
+              "Y Hamamoto"
+            ],
+            "year": 2021,
+            "url": "https://doi.org/10.1088/1742-6596/1922/1/012007",
+            "abstract": "Abstract In general, a deep learning needs a lot of samples. However, in a practical pattern recognition problem, the number of training samples is usually limited. We investigate the effect of an image data augmentation by a perspective transformation on a convolution neural network(CNN) for handwritten digit classification in a small training sample size situation. The experimental results show the effectiveness of the image data augmentation by the perspective transformation on the CNN for handwritten digit classification particularly in the small training sample size situation.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "arxiv:1905.08633v1",
+            "source": "arxiv",
+            "doi": null,
+            "arxiv_id": "1905.08633v1",
+            "title": "Fonts-2-Handwriting: A Seed-Augment-Train framework for universal digit classification",
+            "authors": [
+              "Vinay Uday Prabhu",
+              "Sanghyun Han",
+              "Dian Ang Yap",
+              "Mihail Douhaniaris",
+              "Preethi Seshadri",
+              "John Whaley"
+            ],
+            "year": 2019,
+            "url": "https://arxiv.org/abs/1905.08633v1",
+            "abstract": "In this paper, we propose a Seed-Augment-Train/Transfer (SAT) framework that contains a synthetic seed image dataset generation procedure for languages with different numeral systems using freely available open font file datasets. This seed dataset of images is then augmented to create a purely synthetic training dataset, which is in turn used to train a deep neural network and test on held-out real world handwritten digits dataset spanning five Indic scripts, Kannada, Tamil, Gujarati, Malayalam, and Devanagari. We showcase the efficacy of this approach both qualitatively, by training a Boundary-seeking GAN (BGAN) that generates realistic digit images in the five languages, and also quantitatively by testing a CNN trained on the synthetic data on the real-world datasets. This establishes not only an interesting nexus between the font-datasets-world and transfer learning but also provides a recipe for universal-digit classification in any script.",
+            "reading_scope": "full_text_extracted",
+            "full_text_status": "parsed",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "pdf_path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_1905.08633v1.pdf",
+            "pdf_sha256": "8108c5eac662dc25d144049b4905c80ace382b584b3cb986a766018ab52c798f",
+            "extracted_characters": 21330,
+            "pages": 11,
+            "page_text_path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_1905.08633v1.pages.json",
+            "extraction_warning": "PDF text extraction may lose formulas/tables; page numbers retained, no OCR or semantic correctness guarantee"
+          },
+          {
+            "id": "doi:10.5373/jardcs/v11i12/20193216",
+            "source": "crossref",
+            "doi": "10.5373/jardcs/v11i12/20193216",
+            "arxiv_id": null,
+            "title": "Effectiveness of Data Augmentation on Handwritten Digit Classification",
+            "authors": [
+              "Vijaya Kumar Reddy R",
+              "Srinivasa Rao B",
+              "Shaik Subhani",
+              "Ravi Prakash"
+            ],
+            "year": 2019,
+            "url": "https://doi.org/10.5373/jardcs/v11i12/20193216",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "doi:10.1609/aaai.v40i30.39695",
+            "source": "crossref",
+            "doi": "10.1609/aaai.v40i30.39695",
+            "arxiv_id": null,
+            "title": "QAPNet: A Quantum-Attentive Patchwise Network for Robust Medical Image Classification Under Noisy Inputs",
+            "authors": [
+              "Maqsudur Rahman",
+              "Jun Zhuang"
+            ],
+            "year": 2026,
+            "url": "https://doi.org/10.1609/aaai.v40i30.39695",
+            "abstract": "Robust medical image classification under input corruption and bag-level annotation remains a critical challenge in clinical AI applications. We propose QAPNet, a Quantum- Attentive Patchwise Network that integrates quantum neural encoding, additive attention-based instance reweighting, and prototype-contrastive regularization for reliable diagnosis from degraded inputs. Our framework uses a sliding-window strategy to divide each MRI medical Image into overlapping patches, where each is encoded via an 8-qubit quantum circuit using RY -based noise-sensitive layers for yielding expressive low-dimensional representations without relying on classical CNNs. A lightweight additive attention mechanism computes instance-wise importance weights that enable interpretable and noise-aware bag-level aggregation. To enhance robustness, we apply a contrastive loss that aligns clean and noisy embeddings and enforce prototype-guided clustering via class-wise centroids. We evaluate QAPNet across seven benchmark medical imaging datasets under three levels of additive Gaussian noise (σ ∈ {5%, 10%, 30%}). QAPNet consistently outperforms eight strong baselines and achieves up to +20.8% higher accuracy in OASIS (with 30% noise), +17.7% in PathMNIST, and maintains stable performance (&lt; 4% degradation) in all settings. Ablation studies confirm the critical role of quantum encoding, attention-based aggregation, and prototype contrastive learning. These results suggest that QAPNet offers a scalable and interpretable architecture for noisy medical imaging tasks in the real world to bridge the quantum representation learning with robust clinical prediction.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "arxiv:2105.05496v2",
+            "source": "arxiv",
+            "doi": "10.1109/ICIP42928.2021.9506236",
+            "arxiv_id": "2105.05496v2",
+            "title": "A Consensual Collaborative Learning Method for Remote Sensing Image Classification Under Noisy Multi-Labels",
+            "authors": [
+              "Ahmet Kerem Aksoy",
+              "Mahdyar Ravanbakhsh",
+              "Tristan Kreuziger",
+              "Begum Demir"
+            ],
+            "year": 2021,
+            "url": "https://arxiv.org/abs/2105.05496v2",
+            "abstract": "Collecting a large number of reliable training images annotated by multiple land-cover class labels in the framework of multi-label classification is time-consuming and costly in remote sensing (RS). To address this problem, publicly available thematic products are often used for annotating RS images with zero-labeling-cost. However, such an approach may result in constructing a training set with noisy multi-labels, distorting the learning process. To address this problem, we propose a Consensual Collaborative Multi-Label Learning (CCML) method. The proposed CCML identifies, ranks and corrects training images with noisy multi-labels through four main modules: 1) discrepancy module; 2) group lasso module; 3) flipping module; and 4) swap module. The discrepancy module ensures that the two networks learn diverse features, while obtaining the same predictions. The group lasso module detects the potentially noisy labels by estimating the label uncertainty based on the aggregation of two collaborative networks. The flipping module corrects the identified noisy labels, whereas the swap module exchanges the ranking information between the two networks. The experimental results confirm the success of the proposed CCML under high (synthetically added) multi-label noise rates. The code of the proposed method is publicly available at https://noisy-labels-in-rs.org",
+            "reading_scope": "full_text_extracted",
+            "full_text_status": "parsed",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "pdf_path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_2105.05496v2.pdf",
+            "pdf_sha256": "9066057cc6fe1d913564460ee5dc999aad6d0e615115c36b8125ccf2a4de7748",
+            "extracted_characters": 29219,
+            "pages": 5,
+            "page_text_path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_2105.05496v2.pages.json",
+            "extraction_warning": "PDF text extraction may lose formulas/tables; page numbers retained, no OCR or semantic correctness guarantee"
+          },
+          {
+            "id": "arxiv:2212.00479v2",
+            "source": "arxiv",
+            "doi": "10.1007/978-3-031-17027-0_8",
+            "arxiv_id": "2212.00479v2",
+            "title": "Noisy Label Classification using Label Noise Selection with Test-Time Augmentation Cross-Entropy and NoiseMix Learning",
+            "authors": [
+              "Hansang Lee",
+              "Haeil Lee",
+              "Helen Hong",
+              "Junmo Kim"
+            ],
+            "year": 2022,
+            "url": "https://arxiv.org/abs/2212.00479v2",
+            "abstract": "As the size of the dataset used in deep learning tasks increases, the noisy label problem, which is a task of making deep learning robust to the incorrectly labeled data, has become an important task. In this paper, we propose a method of learning noisy label data using the label noise selection with test-time augmentation (TTA) cross-entropy and classifier learning with the NoiseMix method. In the label noise selection, we propose TTA cross-entropy by measuring the cross-entropy to predict the test-time augmented training data. In the classifier learning, we propose the NoiseMix method based on MixUp and BalancedMix methods by mixing the samples from the noisy and the clean label data. In experiments on the ISIC-18 public skin lesion diagnosis dataset, the proposed TTA cross-entropy outperformed the conventional cross-entropy and the TTA uncertainty in detecting label noise data in the label noise selection process. Moreover, the proposed NoiseMix not only outperformed the state-of-the-art methods in the classification performance but also showed the most robustness to the label noise in the classifier learning.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested_budget",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1038/s41598-026-44320-y",
+            "source": "crossref",
+            "doi": "10.1038/s41598-026-44320-y",
+            "arxiv_id": null,
+            "title": "Impact of data space augmentation strategy on model accuracy and generalization in thin-section rock classification",
+            "authors": [
+              "Magdalena Habrat",
+              "Mariusz Młynarczuk"
+            ],
+            "year": 2026,
+            "url": "https://doi.org/10.1038/s41598-026-44320-y",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "doi:10.1587/transinf.2023edp7008",
+            "source": "crossref",
+            "doi": "10.1587/transinf.2023edp7008",
+            "arxiv_id": null,
+            "title": "On Gradient Descent Training Under Data Augmentation with On-Line Noisy Copies",
+            "authors": [
+              "Katsuyuki HAGIWARA"
+            ],
+            "year": 2023,
+            "url": "https://doi.org/10.1587/transinf.2023edp7008",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "arxiv:2509.11168v1",
+            "source": "arxiv",
+            "doi": "10.5281/zenodo.17251589",
+            "arxiv_id": "2509.11168v1",
+            "title": "An Entropy-Guided Curriculum Learning Strategy for Data-Efficient Acoustic Scene Classification under Domain Shift",
+            "authors": [
+              "Peihong Zhang",
+              "Yuxuan Liu",
+              "Zhixin Li",
+              "Rui Sang",
+              "Yiqiang Cai",
+              "Yizhou Tan",
+              "Shengchen Li"
+            ],
+            "year": 2025,
+            "url": "https://arxiv.org/abs/2509.11168v1",
+            "abstract": "Acoustic Scene Classification (ASC) faces challenges in generalizing across recording devices, particularly when labeled data is limited. The DCASE 2024 Challenge Task 1 highlights this issue by requiring models to learn from small labeled subsets recorded on a few devices. These models need to then generalize to recordings from previously unseen devices under strict complexity constraints. While techniques such as data augmentation and the use of pre-trained models are well-established for improving model generalization, optimizing the training strategy represents a complementary yet less-explored path that introduces no additional architectural complexity or inference overhead. Among various training strategies, curriculum learning offers a promising paradigm by structuring the learning process from easier to harder examples. In this work, we propose an entropy-guided curriculum learning strategy to address the domain shift problem in data-efficient ASC. Specifically, we quantify the uncertainty of device domain predictions for each training sample by computing the Shannon entropy of the device posterior probabilities estimated by an auxiliary domain classifier. Using entropy as a proxy for domain invariance, the curriculum begins with high-entropy samples and gradually incorporates low-entropy, domain-specific ones to facilitate the learning of generalizable representations. Experimental results on multiple DCASE 2024 ASC baselines demonstrate that our strategy effectively mitigates domain shift, particularly under limited labeled data conditions. Our strategy is architecture-agnostic and introduces no additional inference cost, making it easily integrable into existing ASC baselines and offering a practical solution to domain shift.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested_budget",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "doi:10.1007/s00357-011-9083-y",
+            "source": "crossref",
+            "doi": "10.1007/s00357-011-9083-y",
+            "arxiv_id": null,
+            "title": "Classification and Categorical Inputs with Treed Gaussian Process Models",
+            "authors": [
+              "Tamara Broderick",
+              "Robert B. Gramacy"
+            ],
+            "year": 2011,
+            "url": "https://doi.org/10.1007/s00357-011-9083-y",
+            "abstract": "",
+            "reading_scope": "metadata_only",
+            "full_text_status": "metadata_only",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00",
+            "full_text_error": "No implemented public full-text route for this Crossref record; publisher access is not assumed."
+          },
+          {
+            "id": "arxiv:1809.04967v3",
+            "source": "arxiv",
+            "doi": "10.1109/LSP.2019.2906929",
+            "arxiv_id": "1809.04967v3",
+            "title": "Gaussian process classification using posterior linearisation",
+            "authors": [
+              "Ángel F. García-Fernández",
+              "Filip Tronarp",
+              "Simo Särkkä"
+            ],
+            "year": 2018,
+            "url": "https://arxiv.org/abs/1809.04967v3",
+            "abstract": "This paper proposes a new algorithm for Gaussian process classification based on posterior linearisation (PL). In PL, a Gaussian approximation to the posterior density is obtained iteratively using the best possible linearisation of the conditional mean of the labels and accounting for the linearisation error. PL has some theoretical advantages over expectation propagation (EP): all calculated covariance matrices are positive definite and there is a local convergence theorem. In experimental data, PL has better performance than EP with the noisy threshold likelihood and the parallel implementation of the algorithms.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested_budget",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          },
+          {
+            "id": "arxiv:1809.04019v1",
+            "source": "arxiv",
+            "doi": null,
+            "arxiv_id": "1809.04019v1",
+            "title": "Training and Prediction Data Discrepancies: Challenges of Text Classification with Noisy, Historical Data",
+            "authors": [
+              "Emilia Apostolova",
+              "R. Andrew Kreek"
+            ],
+            "year": 2018,
+            "url": "https://arxiv.org/abs/1809.04019v1",
+            "abstract": "Industry datasets used for text classification are rarely created for that purpose. In most cases, the data and target predictions are a by-product of accumulated historical data, typically fraught with noise, present in both the text-based document, as well as in the targeted labels. In this work, we address the question of how well performance metrics computed on noisy, historical data reflect the performance on the intended future machine learning model input. The results demonstrate the utility of dirty training datasets used to build prediction models for cleaner (and different) prediction inputs.",
+            "reading_scope": "metadata_and_abstract",
+            "full_text_status": "not_requested_budget",
+            "retrieved_utc": "2026-10-08T15:18:51.269921+00:00"
+          }
+        ],
+        "artifacts": [
+          {
+            "kind": "source_pdf",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_1905.08633v1.pdf",
+            "sha256": "8108c5eac662dc25d144049b4905c80ace382b584b3cb986a766018ab52c798f",
+            "size_bytes": 2175499
+          },
+          {
+            "kind": "source_page_text",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_1905.08633v1.pages.json",
+            "sha256": "b5e784704307c1425073e875b75ab3535efca7069f36fc518602b0ad349bcf23",
+            "size_bytes": 22534
+          },
+          {
+            "kind": "source_pdf",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_2105.05496v2.pdf",
+            "sha256": "9066057cc6fe1d913564460ee5dc999aad6d0e615115c36b8125ccf2a4de7748",
+            "size_bytes": 272342
+          },
+          {
+            "kind": "source_page_text",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\arxiv_2105.05496v2.pages.json",
+            "sha256": "35b9118c3ed7700aace1464e1f679176ea577f1b255e0dfd4af8a1426ddb7ca0",
+            "size_bytes": 30701
+          },
+          {
+            "kind": "full_text_manifest",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\literature\\literature\\full_text.json",
+            "sha256": "9c2c07da688face4697f44c9deab9a71801878c2bfb59af7a178970fe815ee41",
+            "size_bytes": 19967
+          }
+        ],
+        "coverage": "arXiv public PDFs only; unavailable/metadata-only entries remain explicit",
+        "selection_policy": "Title/abstract relevance ranking for digits/handwriting/image/vision; no novelty assessment inferred",
+        "stage_summary": "解析 2 篇开放全文；其余按元数据阅读范围标记"
+      },
+      "ideation": {
+        "title": "Gaussian augmentation for small digit classification",
+        "hypothesis": "Training augmentation may improve noise robustness at a cost to clean accuracy.",
+        "motivation": "Evaluate a controlled reproducible robustness trade-off.",
+        "research_query": "digit classification Gaussian augmentation robustness",
+        "novelty_status": "unverified",
+        "limitations": [
+          "Known augmentation family; no algorithmic novelty established.",
+          "Small synthetic benchmark."
+        ],
+        "implemented_scope": "Registered digits Gaussian-augmentation experiment; no arbitrary code synthesis",
+        "artifacts": [
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\question.json",
+            "kind": "question"
+          }
+        ]
+      },
+      "question": {
+        "title": "Gaussian augmentation for small digit classification",
+        "hypothesis": "Training augmentation may improve noise robustness at a cost to clean accuracy.",
+        "motivation": "Evaluate a controlled reproducible robustness trade-off.",
+        "research_query": "digit classification Gaussian augmentation robustness",
+        "novelty_status": "unverified",
+        "limitations": [
+          "Known augmentation family; no algorithmic novelty established.",
+          "Small synthetic benchmark."
+        ],
+        "implemented_scope": "Registered digits Gaussian-augmentation experiment; no arbitrary code synthesis",
+        "artifacts": [
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\question.json",
+            "kind": "question"
+          }
+        ]
+      },
+      "protocol": {
+        "recipe": {
+          "dataset": "sklearn_digits",
+          "seeds": [
+            13,
+            37,
+            73
+          ],
+          "evaluation_noise_std": 0.25,
+          "candidates": [
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.15,
+              "trees": 64,
+              "max_depth": 12
+            },
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.3,
+              "trees": 64,
+              "max_depth": 12
+            }
+          ]
+        },
+        "execution": {
+          "allowed": true,
+          "runner": "digits_robustness",
+          "mode": "fixed_runner",
+          "recipe": {
+            "dataset": "sklearn_digits",
+            "seeds": [
+              13,
+              37,
+              73
+            ],
+            "evaluation_noise_std": 0.25,
+            "candidates": [
+              {
+                "algorithm": "logistic_regression",
+                "regularization_c": 1.0,
+                "standardize": true,
+                "augmentation_std": 0.15,
+                "trees": 64,
+                "max_depth": 12
+              },
+              {
+                "algorithm": "logistic_regression",
+                "regularization_c": 1.0,
+                "standardize": true,
+                "augmentation_std": 0.3,
+                "trees": 64,
+                "max_depth": 12
+              }
+            ]
+          },
+          "allowed_root": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research",
+          "paths": {
+            "workdir": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899"
+          },
+          "arbitrary_code_execution": false,
+          "notice": "固定领域runner，未启用任意模型生成代码沙箱"
+        },
+        "required_fits": 18,
+        "selection": "validation only; final test frozen",
+        "stage_summary": "已冻结数据、候选范围、三种子和拟合预算；最终测试不参与选参",
+        "artifacts": [
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\research_protocol.json",
+            "kind": "protocol"
+          }
+        ]
+      },
+      "data": {
+        "ok": true,
+        "status": "completed",
+        "dataset": "sklearn_digits",
+        "samples": 1797,
+        "features": 64,
+        "classes": 10,
+        "dataset_sha256": "5889d26819cf830d070975af3c711419825fa0a078137b3d80b8e7d06bd58da0",
+        "seeds": [
+          13,
+          37,
+          73
+        ],
+        "split_sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+        "train_sizes": {
+          "13": 1078,
+          "37": 1078,
+          "73": 1078
+        },
+        "validation_sizes": {
+          "13": 359,
+          "37": 359,
+          "73": 359
+        },
+        "test_sizes": {
+          "13": 360,
+          "37": 360,
+          "73": 360
+        },
+        "test_opened": false,
+        "source": "https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html",
+        "split_seed": 2026,
+        "data_policy": "bundled sklearn digits; no network download; one fixed stratified split shared by model/augmentation/corruption seeds; no final test metrics yet",
+        "artifacts": [
+          {
+            "kind": "data_splits",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\splits.json",
+            "sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+            "size_bytes": 67023
+          },
+          {
+            "kind": "data_protocol",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\data_protocol.json",
+            "sha256": "f2e233b3abd29da9967cfb56b949c9192d5d2ab17de47e3028961ae29971753d",
+            "size_bytes": 854
+          }
+        ]
+      },
+      "baseline": {
+        "ok": true,
+        "status": "completed",
+        "error": null,
+        "fit_count": 3,
+        "seeds": [
+          13,
+          37,
+          73
+        ],
+        "evaluation_noise_std": 0.25,
+        "role": "preliminary_fixed_logistic_baseline_validation",
+        "test_opened": false,
+        "configuration": {
+          "algorithm": "logistic_regression",
+          "regularization_c": 1.0,
+          "standardize": true,
+          "augmentation": false
+        },
+        "validation_noise_accuracy_mean": 0.3844011142061281,
+        "duration_seconds": 0.06300000000010186,
+        "artifacts": [
+          {
+            "kind": "baseline_validation_csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline_validation.csv",
+            "sha256": "c6b688250d3a4be5cd0304fa98d5393749e8571b159a35b00f232a6ed67a1552",
+            "size_bytes": 400
+          }
+        ],
+        "manifest": {
+          "kind": "baseline_manifest",
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline.json",
+          "sha256": "c006dd84aadb2121b633063d035c0347c65bf27eb4602e4597848506738bc5a9",
+          "size_bytes": 849
+        },
+        "reused": false,
+        "stage_summary": "基线验证完成，未开启测试集"
+      },
+      "method": {
+        "scope": "Declarative implementation using registered trusted runner",
+        "arbitrary_code_execution": false,
+        "artifacts": [
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\method\\recipe.json",
+            "kind": "json"
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\method\\registered_runner.py",
+            "kind": "py"
+          }
+        ],
+        "stage_summary": "候选算法配方与代码快照已保存；执行边界已校验"
+      },
+      "experiments": {
+        "ok": true,
+        "status": "completed",
+        "error": null,
+        "phase": "search",
+        "domain": "digits_classification_robustness",
+        "execution_scope": "fixed bounded sklearn runner, declarative configurations; no generated Python or arbitrary repository execution",
+        "recipe": {
+          "dataset": "sklearn_digits",
+          "seeds": [
+            13,
+            37,
+            73
+          ],
+          "evaluation_noise_std": 0.25,
+          "candidates": [
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.15,
+              "trees": 64,
+              "max_depth": 12
+            },
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.3,
+              "trees": 64,
+              "max_depth": 12
+            }
+          ]
+        },
+        "dataset_sha256": "5889d26819cf830d070975af3c711419825fa0a078137b3d80b8e7d06bd58da0",
+        "selected_index": 1,
+        "test_opened": false,
+        "test_policy": "candidate configuration and selected index frozen before any test predictions; each model evaluated once per seed and condition",
+        "fit_count": 9,
+        "summary": [],
+        "plot_status": "not_generated",
+        "warnings": [],
+        "novelty_status": "novelty_unverified",
+        "external_quality": "not_evaluated",
+        "limitations": [
+          "Small benchmark, synthetic corruption, CPU experiments, limited recipe search.",
+          "Seeds share one held-out sample set: reported seed SD is descriptive and not an independent statistical confidence interval.",
+          "Augmentation doubles training examples; fit times and train counts are reported, so this is not equal-compute proof.",
+          "No global novelty or publication quality assessment."
+        ],
+        "duration_seconds": 0.375,
+        "artifacts": [
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline.json",
+            "sha256": "c006dd84aadb2121b633063d035c0347c65bf27eb4602e4597848506738bc5a9",
+            "size_bytes": 849
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline_validation.csv",
+            "sha256": "c6b688250d3a4be5cd0304fa98d5393749e8571b159a35b00f232a6ed67a1552",
+            "size_bytes": 400
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\data_protocol.json",
+            "sha256": "f2e233b3abd29da9967cfb56b949c9192d5d2ab17de47e3028961ae29971753d",
+            "size_bytes": 854
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\environment.json",
+            "sha256": "a795de7e5e1f9947266b408d73a47a1d369548b12aee8cd0f0353e52d766780c",
+            "size_bytes": 315
+          },
+          {
+            "kind": "py",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\fixed_runner.py",
+            "sha256": "53a3682a8797ef3bbf74a18375102dd520f5dbc9792165431a824b7970bd26d7",
+            "size_bytes": 27357
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\metrics_search.csv",
+            "sha256": "e2d0e613a9c280b18c04607d51c1c4d7e2892995d7c77dbe5c398b759d43c0f1",
+            "size_bytes": 2549
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\predictions_search.csv",
+            "sha256": "bacde851c19614340e6122a3b68fe139c1118558a2dc3ff609a6c84b60b8b344",
+            "size_bytes": 416791
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\protocol.json",
+            "sha256": "c28e08ff5a3b4d1c31a9a8242dd944ff1e684d617d6a07ed52ce4be5ad67c3be",
+            "size_bytes": 2295
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\recipe.json",
+            "sha256": "d1e83e011561cf8efcef82be62850a84e70f08e6a5f098aa2cd4f7973db72c29",
+            "size_bytes": 525
+          },
+          {
+            "kind": "txt",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\requirements-reproduce.txt",
+            "sha256": "2deceb5653f1379619253712bf62b2bb79a097aa6750998a30d2f35d5782efc7",
+            "size_bytes": 88
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\selection.json",
+            "sha256": "e45f939d04c12944d8d7fe78dae58fc5ee8d2def39154d0b2e79813077159052",
+            "size_bytes": 448
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\splits.json",
+            "sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+            "size_bytes": 67023
+          }
+        ],
+        "manifest": {
+          "kind": "experiment_manifest",
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\search.json",
+          "sha256": "b2df3e6260bc46f66eee98c76772286e714dc2bfbc8044a0f2302a1169d3db37",
+          "size_bytes": 5429
+        },
+        "reused": false,
+        "stage_summary": "候选验证与选参已冻结，未开启测试集"
+      },
+      "validation": {
+        "ok": true,
+        "status": "completed",
+        "error": null,
+        "phase": "confirm",
+        "domain": "digits_classification_robustness",
+        "execution_scope": "fixed bounded sklearn runner, declarative configurations; no generated Python or arbitrary repository execution",
+        "recipe": {
+          "dataset": "sklearn_digits",
+          "seeds": [
+            13,
+            37,
+            73
+          ],
+          "evaluation_noise_std": 0.25,
+          "candidates": [
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.15,
+              "trees": 64,
+              "max_depth": 12
+            },
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.3,
+              "trees": 64,
+              "max_depth": 12
+            }
+          ]
+        },
+        "dataset_sha256": "5889d26819cf830d070975af3c711419825fa0a078137b3d80b8e7d06bd58da0",
+        "selected_index": 1,
+        "test_opened": true,
+        "test_policy": "candidate configuration and selected index frozen before any test predictions; each model evaluated once per seed and condition",
+        "fit_count": 6,
+        "summary": [
+          {
+            "model": "baseline",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "baseline",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.39088697773179254,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "clean",
+            "accuracy_mean": 0.9518518518518517,
+            "accuracy_sd": 0.005782405554072632,
+            "macro_f1_mean": 0.9516553874708369,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.8777777777777778,
+            "accuracy_sd": 0.004811252243246865,
+            "macro_f1_mean": 0.87712018091651,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.39088697773179254,
+            "seeds_completed": 3
+          }
+        ],
+        "plot_status": "generated",
+        "warnings": [],
+        "novelty_status": "novelty_unverified",
+        "external_quality": "not_evaluated",
+        "limitations": [
+          "Small benchmark, synthetic corruption, CPU experiments, limited recipe search.",
+          "Seeds share one held-out sample set: reported seed SD is descriptive and not an independent statistical confidence interval.",
+          "Augmentation doubles training examples; fit times and train counts are reported, so this is not equal-compute proof.",
+          "No global novelty or publication quality assessment."
+        ],
+        "duration_seconds": 0.7029999999995198,
+        "artifacts": [
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline.json",
+            "sha256": "c006dd84aadb2121b633063d035c0347c65bf27eb4602e4597848506738bc5a9",
+            "size_bytes": 849
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline_validation.csv",
+            "sha256": "c6b688250d3a4be5cd0304fa98d5393749e8571b159a35b00f232a6ed67a1552",
+            "size_bytes": 400
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\data_protocol.json",
+            "sha256": "f2e233b3abd29da9967cfb56b949c9192d5d2ab17de47e3028961ae29971753d",
+            "size_bytes": 854
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\environment.json",
+            "sha256": "a795de7e5e1f9947266b408d73a47a1d369548b12aee8cd0f0353e52d766780c",
+            "size_bytes": 315
+          },
+          {
+            "kind": "py",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\fixed_runner.py",
+            "sha256": "53a3682a8797ef3bbf74a18375102dd520f5dbc9792165431a824b7970bd26d7",
+            "size_bytes": 27357
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\metrics.csv",
+            "sha256": "8d8536bd8d2abd3d20858d9e7a6f4e551387fdfc3c2fd38d60c00a66c7291d1b",
+            "size_bytes": 1838
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\metrics_search.csv",
+            "sha256": "e2d0e613a9c280b18c04607d51c1c4d7e2892995d7c77dbe5c398b759d43c0f1",
+            "size_bytes": 2549
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\predictions.csv",
+            "sha256": "b2dc3aa1e5c72e2ff1de2d5323236ce7098732acf7169f08464c65be8162d6ed",
+            "size_bytes": 295273
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\predictions_search.csv",
+            "sha256": "bacde851c19614340e6122a3b68fe139c1118558a2dc3ff609a6c84b60b8b344",
+            "size_bytes": 416791
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\protocol.json",
+            "sha256": "c28e08ff5a3b4d1c31a9a8242dd944ff1e684d617d6a07ed52ce4be5ad67c3be",
+            "size_bytes": 2295
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\recipe.json",
+            "sha256": "d1e83e011561cf8efcef82be62850a84e70f08e6a5f098aa2cd4f7973db72c29",
+            "size_bytes": 525
+          },
+          {
+            "kind": "txt",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\requirements-reproduce.txt",
+            "sha256": "2deceb5653f1379619253712bf62b2bb79a097aa6750998a30d2f35d5782efc7",
+            "size_bytes": 88
+          },
+          {
+            "kind": "png",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\robustness.png",
+            "sha256": "4c2fff6cc574d843725c09c377e50518310b9ce259c0d3b7686fad3a656f05dc",
+            "size_bytes": 32408
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\selection.json",
+            "sha256": "e45f939d04c12944d8d7fe78dae58fc5ee8d2def39154d0b2e79813077159052",
+            "size_bytes": 448
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\splits.json",
+            "sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+            "size_bytes": 67023
+          }
+        ],
+        "manifest": {
+          "kind": "experiment_manifest",
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\experiment.json",
+          "sha256": "cdd78a10da45e78f285610eed2d990ea01d406fb83315023d1dc9690dea8d762",
+          "size_bytes": 7750
+        },
+        "reused": false,
+        "stage_summary": "固定配置三种子测试与匹配消融完成"
+      },
+      "experiment": {
+        "ok": true,
+        "status": "completed",
+        "error": null,
+        "phase": "confirm",
+        "domain": "digits_classification_robustness",
+        "execution_scope": "fixed bounded sklearn runner, declarative configurations; no generated Python or arbitrary repository execution",
+        "recipe": {
+          "dataset": "sklearn_digits",
+          "seeds": [
+            13,
+            37,
+            73
+          ],
+          "evaluation_noise_std": 0.25,
+          "candidates": [
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.15,
+              "trees": 64,
+              "max_depth": 12
+            },
+            {
+              "algorithm": "logistic_regression",
+              "regularization_c": 1.0,
+              "standardize": true,
+              "augmentation_std": 0.3,
+              "trees": 64,
+              "max_depth": 12
+            }
+          ]
+        },
+        "dataset_sha256": "5889d26819cf830d070975af3c711419825fa0a078137b3d80b8e7d06bd58da0",
+        "selected_index": 1,
+        "test_opened": true,
+        "test_policy": "candidate configuration and selected index frozen before any test predictions; each model evaluated once per seed and condition",
+        "fit_count": 6,
+        "summary": [
+          {
+            "model": "baseline",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "baseline",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.39088697773179254,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "clean",
+            "accuracy_mean": 0.9518518518518517,
+            "accuracy_sd": 0.005782405554072632,
+            "macro_f1_mean": 0.9516553874708369,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.8777777777777778,
+            "accuracy_sd": 0.004811252243246865,
+            "macro_f1_mean": 0.87712018091651,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.39088697773179254,
+            "seeds_completed": 3
+          }
+        ],
+        "plot_status": "generated",
+        "warnings": [],
+        "novelty_status": "novelty_unverified",
+        "external_quality": "not_evaluated",
+        "limitations": [
+          "Small benchmark, synthetic corruption, CPU experiments, limited recipe search.",
+          "Seeds share one held-out sample set: reported seed SD is descriptive and not an independent statistical confidence interval.",
+          "Augmentation doubles training examples; fit times and train counts are reported, so this is not equal-compute proof.",
+          "No global novelty or publication quality assessment."
+        ],
+        "duration_seconds": 0.7029999999995198,
+        "artifacts": [
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline.json",
+            "sha256": "c006dd84aadb2121b633063d035c0347c65bf27eb4602e4597848506738bc5a9",
+            "size_bytes": 849
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\baseline_validation.csv",
+            "sha256": "c6b688250d3a4be5cd0304fa98d5393749e8571b159a35b00f232a6ed67a1552",
+            "size_bytes": 400
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\data_protocol.json",
+            "sha256": "f2e233b3abd29da9967cfb56b949c9192d5d2ab17de47e3028961ae29971753d",
+            "size_bytes": 854
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\environment.json",
+            "sha256": "a795de7e5e1f9947266b408d73a47a1d369548b12aee8cd0f0353e52d766780c",
+            "size_bytes": 315
+          },
+          {
+            "kind": "py",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\fixed_runner.py",
+            "sha256": "53a3682a8797ef3bbf74a18375102dd520f5dbc9792165431a824b7970bd26d7",
+            "size_bytes": 27357
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\metrics.csv",
+            "sha256": "8d8536bd8d2abd3d20858d9e7a6f4e551387fdfc3c2fd38d60c00a66c7291d1b",
+            "size_bytes": 1838
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\metrics_search.csv",
+            "sha256": "e2d0e613a9c280b18c04607d51c1c4d7e2892995d7c77dbe5c398b759d43c0f1",
+            "size_bytes": 2549
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\predictions.csv",
+            "sha256": "b2dc3aa1e5c72e2ff1de2d5323236ce7098732acf7169f08464c65be8162d6ed",
+            "size_bytes": 295273
+          },
+          {
+            "kind": "csv",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\predictions_search.csv",
+            "sha256": "bacde851c19614340e6122a3b68fe139c1118558a2dc3ff609a6c84b60b8b344",
+            "size_bytes": 416791
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\protocol.json",
+            "sha256": "c28e08ff5a3b4d1c31a9a8242dd944ff1e684d617d6a07ed52ce4be5ad67c3be",
+            "size_bytes": 2295
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\recipe.json",
+            "sha256": "d1e83e011561cf8efcef82be62850a84e70f08e6a5f098aa2cd4f7973db72c29",
+            "size_bytes": 525
+          },
+          {
+            "kind": "txt",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\requirements-reproduce.txt",
+            "sha256": "2deceb5653f1379619253712bf62b2bb79a097aa6750998a30d2f35d5782efc7",
+            "size_bytes": 88
+          },
+          {
+            "kind": "png",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\robustness.png",
+            "sha256": "4c2fff6cc574d843725c09c377e50518310b9ce259c0d3b7686fad3a656f05dc",
+            "size_bytes": 32408
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\selection.json",
+            "sha256": "e45f939d04c12944d8d7fe78dae58fc5ee8d2def39154d0b2e79813077159052",
+            "size_bytes": 448
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\splits.json",
+            "sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+            "size_bytes": 67023
+          }
+        ],
+        "manifest": {
+          "kind": "experiment_manifest",
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\experiments\\experiment.json",
+          "sha256": "cdd78a10da45e78f285610eed2d990ea01d406fb83315023d1dc9690dea8d762",
+          "size_bytes": 7750
+        },
+        "reused": false,
+        "stage_summary": "固定配置三种子测试与匹配消融完成"
+      },
+      "manuscript": {
+        "ok": true,
+        "status": "completed",
+        "title": "A Reproducible Digits Classification Study under Gaussian Corruption",
+        "revision": 2,
+        "created_utc": "2026-10-08T15:26:15.490914+00:00",
+        "quality": {
+          "status": "candidate_report",
+          "numeric_integrity": "verified_against_raw_csv",
+          "data_hash_verified": true,
+          "novelty": "novelty_unverified",
+          "external_review": "not_evaluated",
+          "submission": "not_submitted",
+          "target_format": "generic preparation bundle; no venue-specific compliance asserted",
+          "pdf": {
+            "status": "generated",
+            "backend": "reportlab",
+            "tex_compiled": false,
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+            "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+          },
+          "latex": {
+            "status": "source_generated_not_compiled"
+          },
+          "model_analysis": "preserved separately; not used as empirical evidence"
+        },
+        "pdf": {
+          "status": "generated",
+          "backend": "reportlab",
+          "tex_compiled": false,
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+          "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+        },
+        "summary": [
+          {
+            "model": "baseline",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "baseline",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.3908869777317926,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "clean",
+            "accuracy_mean": 0.9518518518518518,
+            "accuracy_sd": 0.005782405554072632,
+            "macro_f1_mean": 0.9516553874708368,
+            "seeds_completed": 3
+          },
+          {
+            "model": "selected_candidate",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.8777777777777778,
+            "accuracy_sd": 0.004811252243246864,
+            "macro_f1_mean": 0.87712018091651,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "clean",
+            "accuracy_mean": 0.975,
+            "accuracy_sd": 0.0,
+            "macro_f1_mean": 0.9749763601137866,
+            "seeds_completed": 3
+          },
+          {
+            "model": "ablation_no_augmentation",
+            "condition": "gaussian_noise",
+            "accuracy_mean": 0.3768518518518518,
+            "accuracy_sd": 0.011226255234242739,
+            "macro_f1_mean": 0.3908869777317926,
+            "seeds_completed": 3
+          }
+        ],
+        "difference_corrupted_accuracy": 0.500925925925926,
+        "artifacts": [
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\model_analysis_unverified.json",
+            "sha256": "6685f19a4e95c66c1aa4eba5e46d004880ab77a17b7812687b995732173a1221",
+            "size_bytes": 1823
+          },
+          {
+            "kind": "html",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.html",
+            "sha256": "e1353daef73b6ece359239b05df46972f370f7a7a8ef28c424d942a79b3bea79",
+            "size_bytes": 52486
+          },
+          {
+            "kind": "md",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.md",
+            "sha256": "1819270db9a6653241be7bedabc75a0ed47fe0376ac2b21188287a5206a7c4ee",
+            "size_bytes": 8563
+          },
+          {
+            "kind": "pdf",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+            "sha256": "da1b7b82f446a267ba1c1332677de79a10dca0aba930f6987b5d598fc854aa1e",
+            "size_bytes": 124098
+          },
+          {
+            "kind": "tex",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.tex",
+            "sha256": "22b94a0a2af88e4e9c97d6229ab087dfb898ada4886593902638534e454f9875",
+            "size_bytes": 8588
+          },
+          {
+            "kind": "txt",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\project_goal.txt",
+            "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+            "size_bytes": 139
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\quality_status.json",
+            "sha256": "38ec86de04c690701de5b5ff00e296c1de4fbad0160f6261d14b9164ae8258a4",
+            "size_bytes": 789
+          },
+          {
+            "kind": "zip",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\submission_bundle.zip",
+            "sha256": "b0322d91d7618c666736beb1875f978bb74881c572cba603834fdbd2e8215aab",
+            "size_bytes": 2556759
+          }
+        ],
+        "manifest": {
+          "kind": "manuscript_manifest",
+          "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\manuscript.json",
+          "sha256": "026def625f6353ece1804fad360fdfcc27eef529e6c2674b1486f5febdf3bebe",
+          "size_bytes": 5303
+        },
+        "analysis": {
+          "interpretation": "Across three seeds per model on the bundled digits dataset, the selected candidate achieved 87.78% accuracy under synthetic Gaussian noise versus 37.69% for the baseline, a gain of 50.09 percentage points. Noise macro-F1 increased from 0.39089 to 0.87712. Clean accuracy decreased from 97.50% to 95.19%, a loss of 2.31 percentage points; clean macro-F1 decreased from 0.97498 to 0.95166. These measurements support a robustness–clean-performance tradeoff in this tested setting. Baseline and ablation_no_augmentation are aliases for one control, not independent evidence.",
+          "limitations": [
+            "Evidence is limited to the bundled digits benchmark and the tested synthetic Gaussian corruption; the dataset itself is real.",
+            "Three seeds share one held-out sample set. Seed standard deviations describe seed variability, not confidence intervals or statistical significance.",
+            "Augmentation doubles training examples, so an equal-compute advantage is not established.",
+            "Summary measurements do not establish manuscript quality, citation accuracy, source coverage, novelty, or venue compliance. Review assertions about artifact verification were not independently verified in this revision."
+          ],
+          "follow_up": [
+            "Revise the report to present the 50.09-percentage-point noise-accuracy gain alongside the 2.31-percentage-point clean-accuracy loss.",
+            "Describe baseline and ablation_no_augmentation as one control alias and remove any claim of independent corroboration.",
+            "Limit conclusions to the supplied measurements, without significance or novelty claims; conduct no new final-test experiment for this revision."
+          ]
+        }
+      },
+      "analysis": {
+        "interpretation": "Across three seeds per model on the bundled digits dataset, the selected candidate achieved 87.78% accuracy under synthetic Gaussian noise versus 37.69% for the baseline, a gain of 50.09 percentage points. Noise macro-F1 increased from 0.39089 to 0.87712. Clean accuracy decreased from 97.50% to 95.19%, a loss of 2.31 percentage points; clean macro-F1 decreased from 0.97498 to 0.95166. These measurements support a robustness–clean-performance tradeoff in this tested setting. Baseline and ablation_no_augmentation are aliases for one control, not independent evidence.",
+        "limitations": [
+          "Evidence is limited to the bundled digits benchmark and the tested synthetic Gaussian corruption; the dataset itself is real.",
+          "Three seeds share one held-out sample set. Seed standard deviations describe seed variability, not confidence intervals or statistical significance.",
+          "Augmentation doubles training examples, so an equal-compute advantage is not established.",
+          "Summary measurements do not establish manuscript quality, citation accuracy, source coverage, novelty, or venue compliance. Review assertions about artifact verification were not independently verified in this revision."
+        ],
+        "follow_up": [
+          "Revise the report to present the 50.09-percentage-point noise-accuracy gain alongside the 2.31-percentage-point clean-accuracy loss.",
+          "Describe baseline and ablation_no_augmentation as one control alias and remove any claim of independent corroboration.",
+          "Limit conclusions to the supplied measurements, without significance or novelty claims; conduct no new final-test experiment for this revision."
+        ]
+      },
+      "review": {
+        "status": "candidate_only",
+        "checks": {
+          "artifact_hashes": 40,
+          "numeric_integrity": "verified_against_raw_csv",
+          "test_selection": "frozen_before_test",
+          "negative_outcomes": "preserved",
+          "novelty": "unverified",
+          "external_review": "not_evaluated"
+        },
+        "model_review": {
+          "issues": [
+            "Only summary measurements and status metadata were supplied; manuscript quality, citation accuracy, and source coverage cannot be assessed.",
+            "Three seeds share one held-out sample set; seed standard deviations do not establish confidence intervals or statistical significance.",
+            "The identical no-augmentation ablation and baseline provide no independent corroboration.",
+            "Augmentation doubles training examples; an equal-compute advantage is not established.",
+            "Evidence is limited to a small benchmark and synthetic corruption. The 50.09-percentage-point noise-accuracy gain accompanies a 2.31-percentage-point clean-accuracy loss.",
+            "Known augmentation is not a novel algorithm; novelty remains unverified and external review has not been evaluated.",
+            "The PDF was generated with ReportLab; LaTeX compilation and venue-specific compliance are not established."
+          ],
+          "verdict": "Candidate report with supplied numeric integrity verified against raw CSV and data hash reported verified. The measurements support a robustness–clean-performance tradeoff in the tested setting. Publication quality and novelty are not established; no submission has occurred."
+        },
+        "fixes": [
+          "Measured facts generated directly from CSV; speculative model prose isolated",
+          "Limitations, dependent seed SD, extra augmentation compute and no-submission status explicitly recorded",
+          "审阅意见驱动第二版分析；重新按同一原始CSV生成独立版本，原稿保留"
+        ],
+        "stage_summary": "内部核查与第二版材料生成完成；外部评审未完成",
+        "revised_manuscript": {
+          "ok": true,
+          "status": "completed",
+          "title": "A Reproducible Digits Classification Study under Gaussian Corruption",
+          "revision": 2,
+          "created_utc": "2026-10-08T15:26:15.490914+00:00",
+          "quality": {
+            "status": "candidate_report",
+            "numeric_integrity": "verified_against_raw_csv",
+            "data_hash_verified": true,
+            "novelty": "novelty_unverified",
+            "external_review": "not_evaluated",
+            "submission": "not_submitted",
+            "target_format": "generic preparation bundle; no venue-specific compliance asserted",
+            "pdf": {
+              "status": "generated",
+              "backend": "reportlab",
+              "tex_compiled": false,
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+              "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+            },
+            "latex": {
+              "status": "source_generated_not_compiled"
+            },
+            "model_analysis": "preserved separately; not used as empirical evidence"
+          },
+          "pdf": {
+            "status": "generated",
+            "backend": "reportlab",
+            "tex_compiled": false,
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+            "unicode_bibliography": "Embedded Unicode Latin font; originals retained"
+          },
+          "summary": [
+            {
+              "model": "baseline",
+              "condition": "clean",
+              "accuracy_mean": 0.975,
+              "accuracy_sd": 0.0,
+              "macro_f1_mean": 0.9749763601137866,
+              "seeds_completed": 3
+            },
+            {
+              "model": "baseline",
+              "condition": "gaussian_noise",
+              "accuracy_mean": 0.3768518518518518,
+              "accuracy_sd": 0.011226255234242739,
+              "macro_f1_mean": 0.3908869777317926,
+              "seeds_completed": 3
+            },
+            {
+              "model": "selected_candidate",
+              "condition": "clean",
+              "accuracy_mean": 0.9518518518518518,
+              "accuracy_sd": 0.005782405554072632,
+              "macro_f1_mean": 0.9516553874708368,
+              "seeds_completed": 3
+            },
+            {
+              "model": "selected_candidate",
+              "condition": "gaussian_noise",
+              "accuracy_mean": 0.8777777777777778,
+              "accuracy_sd": 0.004811252243246864,
+              "macro_f1_mean": 0.87712018091651,
+              "seeds_completed": 3
+            },
+            {
+              "model": "ablation_no_augmentation",
+              "condition": "clean",
+              "accuracy_mean": 0.975,
+              "accuracy_sd": 0.0,
+              "macro_f1_mean": 0.9749763601137866,
+              "seeds_completed": 3
+            },
+            {
+              "model": "ablation_no_augmentation",
+              "condition": "gaussian_noise",
+              "accuracy_mean": 0.3768518518518518,
+              "accuracy_sd": 0.011226255234242739,
+              "macro_f1_mean": 0.3908869777317926,
+              "seeds_completed": 3
+            }
+          ],
+          "difference_corrupted_accuracy": 0.500925925925926,
+          "artifacts": [
+            {
+              "kind": "json",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\model_analysis_unverified.json",
+              "sha256": "6685f19a4e95c66c1aa4eba5e46d004880ab77a17b7812687b995732173a1221",
+              "size_bytes": 1823
+            },
+            {
+              "kind": "html",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.html",
+              "sha256": "e1353daef73b6ece359239b05df46972f370f7a7a8ef28c424d942a79b3bea79",
+              "size_bytes": 52486
+            },
+            {
+              "kind": "md",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.md",
+              "sha256": "1819270db9a6653241be7bedabc75a0ed47fe0376ac2b21188287a5206a7c4ee",
+              "size_bytes": 8563
+            },
+            {
+              "kind": "pdf",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+              "sha256": "da1b7b82f446a267ba1c1332677de79a10dca0aba930f6987b5d598fc854aa1e",
+              "size_bytes": 124098
+            },
+            {
+              "kind": "tex",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.tex",
+              "sha256": "22b94a0a2af88e4e9c97d6229ab087dfb898ada4886593902638534e454f9875",
+              "size_bytes": 8588
+            },
+            {
+              "kind": "txt",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\project_goal.txt",
+              "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+              "size_bytes": 139
+            },
+            {
+              "kind": "json",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\quality_status.json",
+              "sha256": "38ec86de04c690701de5b5ff00e296c1de4fbad0160f6261d14b9164ae8258a4",
+              "size_bytes": 789
+            },
+            {
+              "kind": "zip",
+              "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\submission_bundle.zip",
+              "sha256": "b0322d91d7618c666736beb1875f978bb74881c572cba603834fdbd2e8215aab",
+              "size_bytes": 2556759
+            }
+          ],
+          "manifest": {
+            "kind": "manuscript_manifest",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\manuscript.json",
+            "sha256": "026def625f6353ece1804fad360fdfcc27eef529e6c2674b1486f5febdf3bebe",
+            "size_bytes": 5303
+          },
+          "analysis": {
+            "interpretation": "Across three seeds per model on the bundled digits dataset, the selected candidate achieved 87.78% accuracy under synthetic Gaussian noise versus 37.69% for the baseline, a gain of 50.09 percentage points. Noise macro-F1 increased from 0.39089 to 0.87712. Clean accuracy decreased from 97.50% to 95.19%, a loss of 2.31 percentage points; clean macro-F1 decreased from 0.97498 to 0.95166. These measurements support a robustness–clean-performance tradeoff in this tested setting. Baseline and ablation_no_augmentation are aliases for one control, not independent evidence.",
+            "limitations": [
+              "Evidence is limited to the bundled digits benchmark and the tested synthetic Gaussian corruption; the dataset itself is real.",
+              "Three seeds share one held-out sample set. Seed standard deviations describe seed variability, not confidence intervals or statistical significance.",
+              "Augmentation doubles training examples, so an equal-compute advantage is not established.",
+              "Summary measurements do not establish manuscript quality, citation accuracy, source coverage, novelty, or venue compliance. Review assertions about artifact verification were not independently verified in this revision."
+            ],
+            "follow_up": [
+              "Revise the report to present the 50.09-percentage-point noise-accuracy gain alongside the 2.31-percentage-point clean-accuracy loss.",
+              "Describe baseline and ablation_no_augmentation as one control alias and remove any claim of independent corroboration.",
+              "Limit conclusions to the supplied measurements, without significance or novelty claims; conduct no new final-test experiment for this revision."
+            ]
+          }
+        },
+        "artifacts": [
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\model_analysis_unverified.json",
+            "sha256": "6685f19a4e95c66c1aa4eba5e46d004880ab77a17b7812687b995732173a1221",
+            "size_bytes": 1823
+          },
+          {
+            "kind": "html",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.html",
+            "sha256": "e1353daef73b6ece359239b05df46972f370f7a7a8ef28c424d942a79b3bea79",
+            "size_bytes": 52486
+          },
+          {
+            "kind": "md",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.md",
+            "sha256": "1819270db9a6653241be7bedabc75a0ed47fe0376ac2b21188287a5206a7c4ee",
+            "size_bytes": 8563
+          },
+          {
+            "kind": "pdf",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.pdf",
+            "sha256": "da1b7b82f446a267ba1c1332677de79a10dca0aba930f6987b5d598fc854aa1e",
+            "size_bytes": 124098
+          },
+          {
+            "kind": "tex",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\paper.tex",
+            "sha256": "22b94a0a2af88e4e9c97d6229ab087dfb898ada4886593902638534e454f9875",
+            "size_bytes": 8588
+          },
+          {
+            "kind": "txt",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\project_goal.txt",
+            "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+            "size_bytes": 139
+          },
+          {
+            "kind": "json",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\quality_status.json",
+            "sha256": "38ec86de04c690701de5b5ff00e296c1de4fbad0160f6261d14b9164ae8258a4",
+            "size_bytes": 789
+          },
+          {
+            "kind": "zip",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\submission_bundle.zip",
+            "sha256": "b0322d91d7618c666736beb1875f978bb74881c572cba603834fdbd2e8215aab",
+            "size_bytes": 2556759
+          },
+          {
+            "kind": "manuscript_manifest",
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\manuscript_v2\\manuscript.json",
+            "sha256": "026def625f6353ece1804fad360fdfcc27eef529e6c2674b1486f5febdf3bebe",
+            "size_bytes": 5303
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\review.json",
+            "kind": "review"
+          }
+        ]
+      },
+      "submission": {
+        "status": "not_submitted",
+        "preparation": "completed",
+        "venue": "unconfigured",
+        "reason": "尚无目标渠道、作者声明和投稿凭据；候选稿的新颖性仍需验证",
+        "required_action": "达到论文质量门槛后选择目标渠道并填写真实作者信息",
+        "stage_summary": "投稿准备完成；当前候选研究未对外提交",
+        "artifacts": [
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\submission_status.json",
+            "kind": "journal"
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\action_observation.jsonl",
+            "kind": "journal"
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\intervention_log.json",
+            "kind": "journal"
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\project_goal.txt",
+            "kind": "journal"
+          },
+          {
+            "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\dd98c3f59cc34e73b7d2be3e3ec36899\\research_bundle.zip",
+            "kind": "zip"
+          }
+        ]
+      }
+    },
+    "artifacts": [
+      {
+        "id": "f2f01e998b31d4e72cee7020",
+        "name": "arxiv_broadened_raw.xml",
+        "kind": "literature_source",
+        "path": "literature/literature/arxiv_broadened_raw.xml",
+        "sha256": "66641be2088f4a32b6bdf2e12480a354fa2a0e48e51f85990773ab011d2816a1",
+        "size_bytes": 15020,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/f2f01e998b31d4e72cee7020"
+      },
+      {
+        "id": "317479bbbc78ce7e312524ed",
+        "name": "arxiv_raw.xml",
+        "kind": "literature_source",
+        "path": "literature/literature/arxiv_raw.xml",
+        "sha256": "dc31e0f549f8e7e05b73ccf9babd9072bd0fb1f3cece9ea741beeff5c0ef7c99",
+        "size_bytes": 1133,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/317479bbbc78ce7e312524ed"
+      },
+      {
+        "id": "26baef60c6f7f30bae663ee6",
+        "name": "crossref_raw.json",
+        "kind": "literature_source",
+        "path": "literature/literature/crossref_raw.json",
+        "sha256": "e972165cd21e1f33d799c99ca26ba5129d565051d292363f6849b747e455d25c",
+        "size_bytes": 79731,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/26baef60c6f7f30bae663ee6"
+      },
+      {
+        "id": "f30ad8a1c217e83832634288",
+        "name": "search.json",
+        "kind": "literature_source",
+        "path": "literature/literature/search.json",
+        "sha256": "b4c7d0a405c4e828ccfda458fa554c84cab2a75de1ce5af142a41b92d31b2a23",
+        "size_bytes": 17284,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/f30ad8a1c217e83832634288"
+      },
+      {
+        "id": "16ca48b57ab1a08ba0d400e9",
+        "name": "arxiv_1905.08633v1.pdf",
+        "kind": "source_pdf",
+        "path": "literature/literature/arxiv_1905.08633v1.pdf",
+        "sha256": "8108c5eac662dc25d144049b4905c80ace382b584b3cb986a766018ab52c798f",
+        "size_bytes": 2175499,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/16ca48b57ab1a08ba0d400e9"
+      },
+      {
+        "id": "1c8a9dfc14ef9eec84493957",
+        "name": "arxiv_1905.08633v1.pages.json",
+        "kind": "source_page_text",
+        "path": "literature/literature/arxiv_1905.08633v1.pages.json",
+        "sha256": "b5e784704307c1425073e875b75ab3535efca7069f36fc518602b0ad349bcf23",
+        "size_bytes": 22534,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/1c8a9dfc14ef9eec84493957"
+      },
+      {
+        "id": "233497d32bf8eddb86011bfb",
+        "name": "arxiv_2105.05496v2.pdf",
+        "kind": "source_pdf",
+        "path": "literature/literature/arxiv_2105.05496v2.pdf",
+        "sha256": "9066057cc6fe1d913564460ee5dc999aad6d0e615115c36b8125ccf2a4de7748",
+        "size_bytes": 272342,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/233497d32bf8eddb86011bfb"
+      },
+      {
+        "id": "09aee0fcf8b4d5bac7b77caa",
+        "name": "arxiv_2105.05496v2.pages.json",
+        "kind": "source_page_text",
+        "path": "literature/literature/arxiv_2105.05496v2.pages.json",
+        "sha256": "35b9118c3ed7700aace1464e1f679176ea577f1b255e0dfd4af8a1426ddb7ca0",
+        "size_bytes": 30701,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/09aee0fcf8b4d5bac7b77caa"
+      },
+      {
+        "id": "1c7221909d21a0e3517f25f8",
+        "name": "full_text.json",
+        "kind": "full_text_manifest",
+        "path": "literature/literature/full_text.json",
+        "sha256": "9c2c07da688face4697f44c9deab9a71801878c2bfb59af7a178970fe815ee41",
+        "size_bytes": 19967,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/1c7221909d21a0e3517f25f8"
+      },
+      {
+        "id": "760a8e53550108535bbeef65",
+        "name": "question.json",
+        "kind": "question",
+        "path": "question.json",
+        "sha256": "886499b149ae68eee5187d81f8fd6de1b4a478727a8986d101ec8d6d0e6da636",
+        "size_bytes": 599,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/760a8e53550108535bbeef65"
+      },
+      {
+        "id": "c4c2322b6a4493c8e2abc953",
+        "name": "research_protocol.json",
+        "kind": "protocol",
+        "path": "research_protocol.json",
+        "sha256": "f4a44cf121a8f713d4fcd8d673416428e104adcd5a719b64087dd4a44548682a",
+        "size_bytes": 1895,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/c4c2322b6a4493c8e2abc953"
+      },
+      {
+        "id": "dc64dfdc7ecac3d5ecb94670",
+        "name": "splits.json",
+        "kind": "data_splits",
+        "path": "experiments/splits.json",
+        "sha256": "0de56f0aabab7c9f76a812c6c16daa46e58cf23a0309cf24da7c427e0b3ef4d7",
+        "size_bytes": 67023,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/dc64dfdc7ecac3d5ecb94670"
+      },
+      {
+        "id": "77212a3a1d3c3f148dc2e0a8",
+        "name": "data_protocol.json",
+        "kind": "data_protocol",
+        "path": "experiments/data_protocol.json",
+        "sha256": "f2e233b3abd29da9967cfb56b949c9192d5d2ab17de47e3028961ae29971753d",
+        "size_bytes": 854,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/77212a3a1d3c3f148dc2e0a8"
+      },
+      {
+        "id": "fa1fa8c740b3a8e792b2f800",
+        "name": "baseline_validation.csv",
+        "kind": "baseline_validation_csv",
+        "path": "experiments/baseline_validation.csv",
+        "sha256": "c6b688250d3a4be5cd0304fa98d5393749e8571b159a35b00f232a6ed67a1552",
+        "size_bytes": 400,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/fa1fa8c740b3a8e792b2f800"
+      },
+      {
+        "id": "2d83fbd96bbe472c44d9f2a4",
+        "name": "baseline.json",
+        "kind": "baseline_manifest",
+        "path": "experiments/baseline.json",
+        "sha256": "c006dd84aadb2121b633063d035c0347c65bf27eb4602e4597848506738bc5a9",
+        "size_bytes": 849,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/2d83fbd96bbe472c44d9f2a4"
+      },
+      {
+        "id": "04f0db03e76c2f4db6531343",
+        "name": "recipe.json",
+        "kind": "json",
+        "path": "method/recipe.json",
+        "sha256": "d1e83e011561cf8efcef82be62850a84e70f08e6a5f098aa2cd4f7973db72c29",
+        "size_bytes": 525,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/04f0db03e76c2f4db6531343"
+      },
+      {
+        "id": "82d0429ca1a3331ce8645295",
+        "name": "registered_runner.py",
+        "kind": "py",
+        "path": "method/registered_runner.py",
+        "sha256": "53a3682a8797ef3bbf74a18375102dd520f5dbc9792165431a824b7970bd26d7",
+        "size_bytes": 27357,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/82d0429ca1a3331ce8645295"
+      },
+      {
+        "id": "9b79bb676778fdc7c0d1a5bd",
+        "name": "environment.json",
+        "kind": "json",
+        "path": "experiments/environment.json",
+        "sha256": "a795de7e5e1f9947266b408d73a47a1d369548b12aee8cd0f0353e52d766780c",
+        "size_bytes": 315,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/9b79bb676778fdc7c0d1a5bd"
+      },
+      {
+        "id": "2389d5cd365d74ea2512dd5f",
+        "name": "fixed_runner.py",
+        "kind": "py",
+        "path": "experiments/fixed_runner.py",
+        "sha256": "53a3682a8797ef3bbf74a18375102dd520f5dbc9792165431a824b7970bd26d7",
+        "size_bytes": 27357,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/2389d5cd365d74ea2512dd5f"
+      },
+      {
+        "id": "5042414579527e7898e8103e",
+        "name": "metrics_search.csv",
+        "kind": "csv",
+        "path": "experiments/metrics_search.csv",
+        "sha256": "e2d0e613a9c280b18c04607d51c1c4d7e2892995d7c77dbe5c398b759d43c0f1",
+        "size_bytes": 2549,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/5042414579527e7898e8103e"
+      },
+      {
+        "id": "22df0067e6bef52dd5a353dc",
+        "name": "predictions_search.csv",
+        "kind": "csv",
+        "path": "experiments/predictions_search.csv",
+        "sha256": "bacde851c19614340e6122a3b68fe139c1118558a2dc3ff609a6c84b60b8b344",
+        "size_bytes": 416791,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/22df0067e6bef52dd5a353dc"
+      },
+      {
+        "id": "5a09b5dc379c110c5ed11117",
+        "name": "protocol.json",
+        "kind": "json",
+        "path": "experiments/protocol.json",
+        "sha256": "c28e08ff5a3b4d1c31a9a8242dd944ff1e684d617d6a07ed52ce4be5ad67c3be",
+        "size_bytes": 2295,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/5a09b5dc379c110c5ed11117"
+      },
+      {
+        "id": "4818dd4aa94225b93828e5e3",
+        "name": "recipe.json",
+        "kind": "json",
+        "path": "experiments/recipe.json",
+        "sha256": "d1e83e011561cf8efcef82be62850a84e70f08e6a5f098aa2cd4f7973db72c29",
+        "size_bytes": 525,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/4818dd4aa94225b93828e5e3"
+      },
+      {
+        "id": "07ab27e1c0b3e17ff371f5a2",
+        "name": "requirements-reproduce.txt",
+        "kind": "txt",
+        "path": "experiments/requirements-reproduce.txt",
+        "sha256": "2deceb5653f1379619253712bf62b2bb79a097aa6750998a30d2f35d5782efc7",
+        "size_bytes": 88,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/07ab27e1c0b3e17ff371f5a2"
+      },
+      {
+        "id": "a5dd847a35b1a347cb0618b4",
+        "name": "selection.json",
+        "kind": "json",
+        "path": "experiments/selection.json",
+        "sha256": "e45f939d04c12944d8d7fe78dae58fc5ee8d2def39154d0b2e79813077159052",
+        "size_bytes": 448,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/a5dd847a35b1a347cb0618b4"
+      },
+      {
+        "id": "0488e0697875c0b06eb7b648",
+        "name": "search.json",
+        "kind": "experiment_manifest",
+        "path": "experiments/search.json",
+        "sha256": "b2df3e6260bc46f66eee98c76772286e714dc2bfbc8044a0f2302a1169d3db37",
+        "size_bytes": 5429,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/0488e0697875c0b06eb7b648"
+      },
+      {
+        "id": "2ca0bd6e2c2c4875cfc186fb",
+        "name": "metrics.csv",
+        "kind": "csv",
+        "path": "experiments/metrics.csv",
+        "sha256": "8d8536bd8d2abd3d20858d9e7a6f4e551387fdfc3c2fd38d60c00a66c7291d1b",
+        "size_bytes": 1838,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/2ca0bd6e2c2c4875cfc186fb"
+      },
+      {
+        "id": "99c479fdd58e154a2f9f94b2",
+        "name": "predictions.csv",
+        "kind": "csv",
+        "path": "experiments/predictions.csv",
+        "sha256": "b2dc3aa1e5c72e2ff1de2d5323236ce7098732acf7169f08464c65be8162d6ed",
+        "size_bytes": 295273,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/99c479fdd58e154a2f9f94b2"
+      },
+      {
+        "id": "7ff3a5c8f4656f7238a9e98a",
+        "name": "robustness.png",
+        "kind": "png",
+        "path": "experiments/robustness.png",
+        "sha256": "4c2fff6cc574d843725c09c377e50518310b9ce259c0d3b7686fad3a656f05dc",
+        "size_bytes": 32408,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/7ff3a5c8f4656f7238a9e98a"
+      },
+      {
+        "id": "caee2589e368f6bcbe924dd4",
+        "name": "experiment.json",
+        "kind": "experiment_manifest",
+        "path": "experiments/experiment.json",
+        "sha256": "cdd78a10da45e78f285610eed2d990ea01d406fb83315023d1dc9690dea8d762",
+        "size_bytes": 7750,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/caee2589e368f6bcbe924dd4"
+      },
+      {
+        "id": "b904c93514457daf9d289b28",
+        "name": "model_analysis_unverified.json",
+        "kind": "json",
+        "path": "manuscript/model_analysis_unverified.json",
+        "sha256": "00d728986cfa1356c6cf8178b406385ad35edd8fb7ad6c6521fd5ee12c469d18",
+        "size_bytes": 1569,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/b904c93514457daf9d289b28"
+      },
+      {
+        "id": "b677d0f060ff71dd30594aec",
+        "name": "paper.html",
+        "kind": "html",
+        "path": "manuscript/paper.html",
+        "sha256": "e1353daef73b6ece359239b05df46972f370f7a7a8ef28c424d942a79b3bea79",
+        "size_bytes": 52486,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/b677d0f060ff71dd30594aec"
+      },
+      {
+        "id": "6ebb18480b81afc8156ba8f1",
+        "name": "paper.md",
+        "kind": "md",
+        "path": "manuscript/paper.md",
+        "sha256": "1819270db9a6653241be7bedabc75a0ed47fe0376ac2b21188287a5206a7c4ee",
+        "size_bytes": 8563,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/6ebb18480b81afc8156ba8f1"
+      },
+      {
+        "id": "6cf42a39ae12b4d69b7d2c00",
+        "name": "paper.pdf",
+        "kind": "pdf",
+        "path": "manuscript/paper.pdf",
+        "sha256": "904182aa1339b7ae9f85a24a64da297d0837412388765fd653555cb7468f3661",
+        "size_bytes": 124098,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/6cf42a39ae12b4d69b7d2c00"
+      },
+      {
+        "id": "51792c40d93b896ba6854e17",
+        "name": "paper.tex",
+        "kind": "tex",
+        "path": "manuscript/paper.tex",
+        "sha256": "22b94a0a2af88e4e9c97d6229ab087dfb898ada4886593902638534e454f9875",
+        "size_bytes": 8588,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/51792c40d93b896ba6854e17"
+      },
+      {
+        "id": "ada88a7ea3928e65a9c5219e",
+        "name": "project_goal.txt",
+        "kind": "txt",
+        "path": "manuscript/project_goal.txt",
+        "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+        "size_bytes": 139,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/ada88a7ea3928e65a9c5219e"
+      },
+      {
+        "id": "369cfeb6262543a3e76b84a5",
+        "name": "quality_status.json",
+        "kind": "json",
+        "path": "manuscript/quality_status.json",
+        "sha256": "e975b502195e3799e4bc7329b9a7344674224913a3eeb4c59977d18fd53aa267",
+        "size_bytes": 786,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/369cfeb6262543a3e76b84a5"
+      },
+      {
+        "id": "24af12ae64705866eef39ba3",
+        "name": "submission_bundle.zip",
+        "kind": "zip",
+        "path": "manuscript/submission_bundle.zip",
+        "sha256": "cbe2a1acb8f9cbb88d6e4f0ba4e82c591df7d256850992053d66bc6786931e23",
+        "size_bytes": 2556621,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/24af12ae64705866eef39ba3"
+      },
+      {
+        "id": "fa706e1305009a13893de942",
+        "name": "analysis.json",
+        "kind": "analysis",
+        "path": "analysis.json",
+        "sha256": "2e1380f4d9906642f06fb1ca59551234a73268c4aaed35c3c823fdda75e799ea",
+        "size_bytes": 1430,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/fa706e1305009a13893de942"
+      },
+      {
+        "id": "97c17b382eb6c68ed756cee4",
+        "name": "manuscript.json",
+        "kind": "manuscript_manifest",
+        "path": "manuscript/manuscript.json",
+        "sha256": "20abd3406e2f34be13da7dc0c6f3a587b782543c3a3035e1463c2fa41c75861c",
+        "size_bytes": 5273,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/97c17b382eb6c68ed756cee4"
+      },
+      {
+        "id": "fbabff127c5aeedefb9be4cf",
+        "name": "model_analysis_unverified.json",
+        "kind": "json",
+        "path": "manuscript_v2/model_analysis_unverified.json",
+        "sha256": "6685f19a4e95c66c1aa4eba5e46d004880ab77a17b7812687b995732173a1221",
+        "size_bytes": 1823,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/fbabff127c5aeedefb9be4cf"
+      },
+      {
+        "id": "d6394e24b391e2d10034fe0f",
+        "name": "paper.html",
+        "kind": "html",
+        "path": "manuscript_v2/paper.html",
+        "sha256": "e1353daef73b6ece359239b05df46972f370f7a7a8ef28c424d942a79b3bea79",
+        "size_bytes": 52486,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/d6394e24b391e2d10034fe0f"
+      },
+      {
+        "id": "1e5904585ea092b31bcb7206",
+        "name": "paper.md",
+        "kind": "md",
+        "path": "manuscript_v2/paper.md",
+        "sha256": "1819270db9a6653241be7bedabc75a0ed47fe0376ac2b21188287a5206a7c4ee",
+        "size_bytes": 8563,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/1e5904585ea092b31bcb7206"
+      },
+      {
+        "id": "d0fe1124c2863b3c458189a5",
+        "name": "paper.pdf",
+        "kind": "pdf",
+        "path": "manuscript_v2/paper.pdf",
+        "sha256": "da1b7b82f446a267ba1c1332677de79a10dca0aba930f6987b5d598fc854aa1e",
+        "size_bytes": 124098,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/d0fe1124c2863b3c458189a5"
+      },
+      {
+        "id": "1b153eded7b30433309f7b23",
+        "name": "paper.tex",
+        "kind": "tex",
+        "path": "manuscript_v2/paper.tex",
+        "sha256": "22b94a0a2af88e4e9c97d6229ab087dfb898ada4886593902638534e454f9875",
+        "size_bytes": 8588,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/1b153eded7b30433309f7b23"
+      },
+      {
+        "id": "ff128a853847dc85bee0120e",
+        "name": "project_goal.txt",
+        "kind": "txt",
+        "path": "manuscript_v2/project_goal.txt",
+        "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+        "size_bytes": 139,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/ff128a853847dc85bee0120e"
+      },
+      {
+        "id": "92033780461c43f992b8e061",
+        "name": "quality_status.json",
+        "kind": "json",
+        "path": "manuscript_v2/quality_status.json",
+        "sha256": "38ec86de04c690701de5b5ff00e296c1de4fbad0160f6261d14b9164ae8258a4",
+        "size_bytes": 789,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/92033780461c43f992b8e061"
+      },
+      {
+        "id": "035b19bd1d7b02014587f014",
+        "name": "submission_bundle.zip",
+        "kind": "zip",
+        "path": "manuscript_v2/submission_bundle.zip",
+        "sha256": "b0322d91d7618c666736beb1875f978bb74881c572cba603834fdbd2e8215aab",
+        "size_bytes": 2556759,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/035b19bd1d7b02014587f014"
+      },
+      {
+        "id": "775e7095e733026735a2ec2e",
+        "name": "manuscript.json",
+        "kind": "manuscript_manifest",
+        "path": "manuscript_v2/manuscript.json",
+        "sha256": "026def625f6353ece1804fad360fdfcc27eef529e6c2674b1486f5febdf3bebe",
+        "size_bytes": 5303,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/775e7095e733026735a2ec2e"
+      },
+      {
+        "id": "431815cb6c26a6d1ab51d147",
+        "name": "review.json",
+        "kind": "review",
+        "path": "review.json",
+        "sha256": "5a78d39ebf80ac9921fff11a458e26c25cd430727b9ed1ae62c618be3da3e735",
+        "size_bytes": 12412,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/431815cb6c26a6d1ab51d147"
+      },
+      {
+        "id": "c673ccb50b8fa8ac4ac65301",
+        "name": "submission_status.json",
+        "kind": "journal",
+        "path": "submission_status.json",
+        "sha256": "7c6fe753bf428433269816f0895305020855f8dccc407b756df82460f408b55f",
+        "size_bytes": 369,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/c673ccb50b8fa8ac4ac65301"
+      },
+      {
+        "id": "3821cd699ef60c65eb916e9e",
+        "name": "action_observation.jsonl",
+        "kind": "journal",
+        "path": "action_observation.jsonl",
+        "sha256": "b20a36f82d163e5aae0f0e3017ca7b52c3a552a237707f22ebace4f009650770",
+        "size_bytes": 11538,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/3821cd699ef60c65eb916e9e"
+      },
+      {
+        "id": "2cc7f61982bee63182ee9544",
+        "name": "intervention_log.json",
+        "kind": "journal",
+        "path": "intervention_log.json",
+        "sha256": "b97f8f89100b6ef00ab78fd5c894c54d15c0450e5832df2a9360d34b5513dbe3",
+        "size_bytes": 754,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/2cc7f61982bee63182ee9544"
+      },
+      {
+        "id": "b4518f68dcadcf06e4ab5a0e",
+        "name": "project_goal.txt",
+        "kind": "journal",
+        "path": "project_goal.txt",
+        "sha256": "bb59bdfb9bbcd14be42af4380b206f2be15cd4ed3c8e7e1718ab2dc6d7de9934",
+        "size_bytes": 139,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/b4518f68dcadcf06e4ab5a0e"
+      },
+      {
+        "id": "462994c6c1bccf06e3ab97a0",
+        "name": "research_bundle.zip",
+        "kind": "zip",
+        "path": "research_bundle.zip",
+        "sha256": "57cfc89ab9da93e67c4ddeb60460522cc919e253a846deaab7108b8ecf5224ac",
+        "size_bytes": 7831153,
+        "url": "/api/research/runs/dd98c3f59cc34e73b7d2be3e3ec36899/artifacts/462994c6c1bccf06e3ab97a0"
+      }
+    ],
+    "interventions": [],
+    "intervention_count": 0,
+    "automatic_recoveries": 1,
+    "quality_status": "candidate_report_novelty_unverified",
+    "summary": "研究流程完成，候选稿件与复现包已生成；新颖性未验证，尚未投稿",
+    "error": "",
+    "cancel_requested": false,
+    "model_mode": "mixed_with_recorded_fallback",
+    "request_id": "940901e359b24fccbf02e16e4506bf6d"
+  },
+  "verified_downloads": [
+    {
+      "name": "arxiv_broadened_raw.xml",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "arxiv_raw.xml",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "crossref_raw.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "search.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "arxiv_1905.08633v1.pdf",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "arxiv_1905.08633v1.pages.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "arxiv_2105.05496v2.pdf",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "arxiv_2105.05496v2.pages.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "full_text.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "question.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "research_protocol.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "splits.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "data_protocol.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "baseline_validation.csv",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "baseline.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "recipe.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "registered_runner.py",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "environment.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "fixed_runner.py",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "metrics_search.csv",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "predictions_search.csv",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "protocol.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "recipe.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "requirements-reproduce.txt",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "selection.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "search.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "metrics.csv",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "predictions.csv",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "robustness.png",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "experiment.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "model_analysis_unverified.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.html",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.md",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.pdf",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.tex",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "project_goal.txt",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "quality_status.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "submission_bundle.zip",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "analysis.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "manuscript.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "model_analysis_unverified.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.html",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.md",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.pdf",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "paper.tex",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "project_goal.txt",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "quality_status.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "submission_bundle.zip",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "manuscript.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "review.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "submission_status.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "action_observation.jsonl",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "intervention_log.json",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "project_goal.txt",
+      "http_status": 200,
+      "hash_matches": true
+    },
+    {
+      "name": "research_bundle.zip",
+      "http_status": 200,
+      "hash_matches": true
+    }
+  ],
+  "model_calls_actual": 7,
+  "human_interventions_actual": 0,
+  "limitations": [
+    "Registered digits recipe study only",
+    "No novelty, external review or publication asserted"
+  ]
+}

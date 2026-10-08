@@ -1,0 +1,20 @@
+{
+  "transport": "real_http",
+  "status_http": 200,
+  "public_settings": {
+    "provider": "codex",
+    "model": "Codex CLI default (isolated config)",
+    "configured_provider": "auto",
+    "key_configured": false,
+    "base_url": "https://api.deepseek.com/v1",
+    "deepseek_model": "deepseek-flash",
+    "editable": true,
+    "busy": false
+  },
+  "page_contains_key_input": true,
+  "empty_key_http": 400,
+  "cross_origin_http": 403,
+  "openapi_request_body": true,
+  "credentials_modified": false,
+  "live_deepseek": "not_attempted_without_user_key"
+}

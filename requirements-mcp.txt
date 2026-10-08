@@ -1,0 +1,3 @@
+# Optional MCP bridge, isolated from the application's pinned Pydantic version.
+mcp==2.3.0
+httpx==0.28.1

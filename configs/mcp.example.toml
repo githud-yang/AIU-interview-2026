@@ -1,0 +1,7 @@
+# Replace the two paths with absolute paths to this checkout.
+[mcp_servers.aiu-research]
+command = 'D:\path\to\AIU\.venv-mcp\Scripts\python.exe'
+args = ['-X', 'utf8', '-m', 'src.research.mcp_server']
+cwd = 'D:\path\to\AIU'
+startup_timeout_sec = 20
+tool_timeout_sec = 20

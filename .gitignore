@@ -6,8 +6,11 @@ __pycache__/
 .Python
 venv/
 .venv/
+.venv-mcp/
+.codex/config.toml
 env/
 .env
+.env.*.tmp
 *.egg-info/
 .pytest_cache/
 .ipynb_checkpoints/
