@@ -1,0 +1,2 @@
+# Preserve exported source bytes so recorded hashes survive Git checkout.
+* -text

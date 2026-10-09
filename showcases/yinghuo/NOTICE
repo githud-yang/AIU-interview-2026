@@ -1,0 +1,7 @@
+# Third-party data
+
+## 高考 3500 词表（本地知识库）
+
+- **来源**: 项目 [pluto0x0/word3500](https://github.com/pluto0x0/word3500) 衍生数据，MIT License（见原仓库 `LICENSE`）。
+- **本仓库使用方式**: 通过 `npm run build:gaokao3500` 读取 `3500_az.csv`（字段 `word, ipa, zh`），生成 `src/data/gaokao3500.generated.json`，运行时灌入 IndexedDB `vocabKnowledge` 表（`source: gaokao3500`），并与手写预置词（`source: preset`）合并，同词以手写预置为准。
+- **版权声明**: Copyright (c) 2019 pluto0x0 — 使用、复制、修改须保留 MIT 许可声明。

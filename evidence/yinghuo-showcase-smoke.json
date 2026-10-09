@@ -1,0 +1,253 @@
+{
+  "checkedAt": "2026-10-10T01:22:58.4264986+08:00",
+  "project": "萤火 · AIU第五项创意作品",
+  "source": "D:/03_项目与代码/创作项目/荧火",
+  "snapshot": "showcases/yinghuo",
+  "exportedFileCount": 91,
+  "runtime": {
+    "url": "http://127.0.0.1:4318/notebook",
+    "healthHttp": 200,
+    "pageHttp": 200,
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
+    "keySavedByUser": true,
+    "apiKeyIncluded": false
+  },
+  "independentSnapshotInstall": {
+    "command": "npm ci --ignore-scripts --no-audit --no-fund",
+    "exitCode": 0,
+    "platform": "same Windows host",
+    "newMachineClaim": false
+  },
+  "checks": {
+    "tests": 47,
+    "passed": 46,
+    "failed": 0,
+    "skipped": 1,
+    "skipReason": "Windows file symlink privilege",
+    "directoryJunctionCheck": "passed",
+    "lintErrors": 0,
+    "lintWarnings": 0,
+    "typecheck": "passed",
+    "build": "passed",
+    "remainingBuildWarning": "vocabulary chunk over 500kB"
+  },
+  "realCloud": {
+    "requestsByThisVerification": 5,
+    "allCompleted": true,
+    "fictionalInputOnly": true,
+    "personalNotesRead": false,
+    "results": [
+      {
+        "type": "analyzeWord",
+        "id": "ec12b45e-0ecd-4c2a-8ad5-5847ec401560",
+        "elapsedMs": 532,
+        "status": "completed",
+        "result": {
+          "word": "serendipity",
+          "partOfSpeech": "n.",
+          "meaning": "意外发现珍奇事物的运气；机缘巧合",
+          "collocations": [
+            "a moment of serendipity",
+            "by pure serendipity",
+            "serendipity in science"
+          ]
+        }
+      },
+      {
+        "type": "analyzeSelectedText",
+        "id": "2514bf2e-da91-49bd-a7dd-ee3bb0a3c159",
+        "elapsedMs": 1593,
+        "status": "completed",
+        "result": {
+          "id": "77e346d4-702a-4251-a9c4-042d2f1a3989",
+          "noteId": "fictional-verification-note",
+          "source": "manual",
+          "original": "普通的一天也藏着新的发现。",
+          "english": "An ordinary day also hides new discoveries.",
+          "vocabulary": [
+            {
+              "word": "ordinary",
+              "partOfSpeech": "adj.",
+              "meaning": "普通的，平常的",
+              "collocations": [
+                "ordinary day",
+                "ordinary people",
+                "ordinary life"
+              ]
+            },
+            {
+              "word": "hide",
+              "partOfSpeech": "v.",
+              "meaning": "隐藏，藏有",
+              "collocations": [
+                "hide from",
+                "hide away",
+                "hide the truth"
+              ]
+            },
+            {
+              "word": "discovery",
+              "partOfSpeech": "n.",
+              "meaning": "发现",
+              "collocations": [
+                "make a discovery",
+                "scientific discovery",
+                "new discovery"
+              ]
+            }
+          ],
+          "grammarAnalysis": "句子结构为“主语+也+谓语+宾语”，其中“普通的一天”是主语，“藏着”是谓语，“新的发现”是宾语。副词“也”表示强调，说明不仅特殊的日子，普通的日子同样有新的发现。整体为陈述句，表达一种哲理。",
+          "advancedRewrite": "Even in the most ordinary of days, new discoveries lie hidden.",
+          "scenarios": [
+            "作文",
+            "日记",
+            "哲理短文"
+          ]
+        }
+      },
+      {
+        "type": "analyzeNote",
+        "id": "0b2698b4-6b3e-4139-b907-d0e7ba7657c9",
+        "elapsedMs": 3085,
+        "status": "completed",
+        "result": {
+          "translation": "After the rain stopped, Xiaohe walked slowly along the campus path. Water droplets on the leaves reflected the setting sun; even an ordinary day hides new discoveries. She wrote this sentence in her notebook, reminding herself to keep a bit of curiosity amid busyness.",
+          "goldenSentences": [
+            {
+              "id": "544c1b06-1c2b-4e46-8643-3cac8558eef3",
+              "noteId": "fictional-verification-note",
+              "source": "auto",
+              "original": "树叶上的水珠映着夕阳，普通的一天也藏着新的发现。",
+              "english": "Water droplets on the leaves reflected the setting sun; even an ordinary day hides new discoveries.",
+              "vocabulary": [
+                {
+                  "word": "droplet",
+                  "partOfSpeech": "n.",
+                  "meaning": "小滴，水珠",
+                  "collocations": [
+                    "water droplet",
+                    "tiny droplet"
+                  ]
+                },
+                {
+                  "word": "reflect",
+                  "partOfSpeech": "v.",
+                  "meaning": "反射，映出",
+                  "collocations": [
+                    "reflect light",
+                    "reflect on"
+                  ]
+                },
+                {
+                  "word": "ordinary",
+                  "partOfSpeech": "adj.",
+                  "meaning": "普通的，平凡的",
+                  "collocations": [
+                    "ordinary day",
+                    "ordinary people"
+                  ]
+                }
+              ],
+              "grammarAnalysis": "该句由两个并列分句构成，中间用分号连接。第一个分句是主谓宾结构，'Water droplets on the leaves' 为主语，'reflected' 为谓语，'the setting sun' 为宾语；第二个分句 'even an ordinary day hides new discoveries' 中，'even' 用于强调，'hides' 为谓语，'new discoveries' 为宾语。整体句式简洁，对仗工整，富有诗意。",
+              "advancedRewrite": "Even the most ordinary day conceals fresh discoveries, as water droplets on the leaves mirror the setting sun.",
+              "scenarios": [
+                "作文",
+                "随笔",
+                "日记"
+              ]
+            },
+            {
+              "id": "a48dc668-4ee4-4c0d-bd84-30a116621aee",
+              "noteId": "fictional-verification-note",
+              "source": "auto",
+              "original": "她把这句话记在本子上，提醒自己在忙碌中留一点好奇心。",
+              "english": "She wrote this sentence in her notebook, reminding herself to keep a bit of curiosity amid busyness.",
+              "vocabulary": [
+                {
+                  "word": "remind",
+                  "partOfSpeech": "v.",
+                  "meaning": "提醒，使想起",
+                  "collocations": [
+                    "remind sb of sth",
+                    "remind sb to do sth"
+                  ]
+                },
+                {
+                  "word": "curiosity",
+                  "partOfSpeech": "n.",
+                  "meaning": "好奇心",
+                  "collocations": [
+                    "arouse curiosity",
+                    "out of curiosity"
+                  ]
+                },
+                {
+                  "word": "busyness",
+                  "partOfSpeech": "n.",
+                  "meaning": "忙碌",
+                  "collocations": [
+                    "daily busyness",
+                    "the busyness of life"
+                  ]
+                }
+              ],
+              "grammarAnalysis": "句子主干为 'She wrote this sentence in her notebook'，现在分词短语 'reminding herself to keep a bit of curiosity amid busyness' 作伴随状语，表示同时发生的动作。'remind oneself to do sth' 意为'提醒自己做某事'，'amid' 为介词，表示'在……之中'。",
+              "advancedRewrite": "She transcribed this sentence into her notebook as a reminder to preserve a spark of curiosity amidst the hustle and bustle.",
+              "scenarios": [
+                "作文",
+                "随笔",
+                "日记"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "generateAgentProfile",
+        "id": "3f640a36-1772-40fc-b233-0d850dbd4d78",
+        "elapsedMs": 1693,
+        "status": "completed",
+        "result": {
+          "name": "流萤",
+          "personality": "在重复日常中捕捉微小诗意，以安静的好奇心对抗忙碌，习惯用纸笔留存瞬间感悟，温和而自省。",
+          "profile": {
+            "traits": [
+              "对日常细节保持敏感",
+              "用记录抵抗遗忘",
+              "内省而克制",
+              "在重复中寻找新意",
+              "温和的自我提醒"
+            ],
+            "tone": "温润低语",
+            "favoriteThemes": [
+              "雨后",
+              "夕阳",
+              "校园",
+              "日常观察",
+              "好奇心"
+            ],
+            "representativeQuotes": [
+              "树叶上的水珠映着夕阳，普通的一天也藏着新的发现。",
+              "她把这句话记在本子上，提醒自己在忙碌中留一点好奇心。"
+            ],
+            "summary": "流萤是一个在重复日常中保持安静好奇的观察者。雨后沿校园小路慢走，从水珠与夕阳里发现普通日子的新意，并习惯把感悟记在本子上，提醒自己在忙碌中留一点好奇心。文字温润低回，自省而克制。"
+          }
+        }
+      },
+      {
+        "type": "getAgentReply",
+        "id": "c1ed23a6-ee88-4795-a845-b2a8ee0b9afd",
+        "elapsedMs": 731,
+        "status": "completed",
+        "result": "小禾，很高兴你学会了这件事。普通的一天里，水珠、夕阳、书页翻动的声音，都值得被记下。"
+      }
+    ]
+  },
+  "actualBrowser": {
+    "userSavedSettings": true,
+    "fullEditorPersistenceAndVisualReview": "not independently verified",
+    "unitIndexedDB": "fake-indexeddb with actual Dexie",
+    "privateBrowserDatabaseAccessed": false
+  }
+}

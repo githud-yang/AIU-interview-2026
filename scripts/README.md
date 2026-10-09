@@ -13,5 +13,6 @@
 - `run_research.py`：通过公共API启动或观察研究，`--run-id`只观察已有运行。
 - `export_research.py`：从冻结测量导出新稿件，不增加模型调用/训练。
 - `verify_research_mcp.py`：真实stdio连接和只读证据验证。
+- `sync-yinghuo-showcase.ps1`：将独立萤火源码同步到`showcases/yinghuo`，排除凭据与运行数据。
 
 完整参数和证据目录见`../docs/research-workbench.md`；运行新研究时使用新的证据路径，保留历史记录。

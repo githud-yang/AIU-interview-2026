@@ -7,7 +7,7 @@
 - [verification.md](verification.md)：回归、真实运行和人工页面验收及其限制。
 - [training_result.json](training_result.json)：YOLO 真实训练参数、指标及归档位置。
 - [demo.md](demo.md)：面试演示顺序。
-- [yinghuo-assessment.md](yinghuo-assessment.md)：萤火独立创意作品候选的快速评估、构建检查及优先补项。
+- [yinghuo-assessment.md](yinghuo-assessment.md)：萤火创意作品评估、工程补齐、源码入口与真实AI验收。
 - [submission-readiness.md](submission-readiness.md)：原题逐项核对、硬件完成记录、交付收尾及自动科研剩余目标。
 - [yolo-ideas-and-venues.md](yolo-ideas-and-venues.md)：三个YOLO想法、三本期刊官方要求与来源，当前为首批资料。
 - [editor-inquiry-draft.md](editor-inquiry-draft.md)：编辑咨询草稿，尚未发送。

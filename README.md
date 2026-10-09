@@ -2,7 +2,7 @@
 
 本项目按面试题组织：本地大模型与智能体、YOLO训练/实时推理、创意应用，以及进阶科研Harness。硬件已由本人于2026-10-10确认完成，按实际项目展示。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
-创意作品新增候选：[萤火随笔与英语学习应用](docs/yinghuo-assessment.md)，作为独立项目登记，类型检查与构建已通过，AI接口后端化及现场演示待收尾。
+创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
 
 ## 启动
 
@@ -24,7 +24,7 @@ Copy-Item configs/.env.example configs/.env
 ./scripts/start.ps1 -Background
 ```
 
-基础网页/智能体可只安装`requirements.txt`，视觉模块用`requirements-yolo.txt`，科研完整环境用`requirements-research.txt`；CUDA版PyTorch按设备配置。YOLO权重不进Git，新机器按[视觉模块说明](src/yolo/README.md)与[训练记录](docs/training_result.json)恢复。前端无npm构建步骤。
+基础网页/智能体可只安装`requirements.txt`，视觉模块用`requirements-yolo.txt`，科研完整环境用`requirements-research.txt`；CUDA版PyTorch按设备配置。YOLO权重不进Git，新机器按[视觉模块说明](src/yolo/README.md)与[训练记录](docs/training_result.json)恢复。主工作台前端无npm构建步骤；萤火独立使用Node，启动见[创意作品说明](showcases/README.md)。
 
 | 入口 | 功能与分类 |
 | --- | --- |
@@ -33,6 +33,7 @@ Copy-Item configs/.env.example configs/.env
 | [科研工作台](http://127.0.0.1:8000/research) | Harness进阶，两个注册科研任务 |
 | [研究策划](http://127.0.0.1:8000/research/strategy) | 用户额外要求的灵感与期刊资料，探索功能 |
 | [接口文档](http://127.0.0.1:8000/docs) | HTTP与事件订阅接口 |
+| [萤火随笔](http://127.0.0.1:4318/notebook) | 独立创意作品，需单独启动 |
 
 CLI：`./.venv/Scripts/python.exe -m src.agent.cli`。前台服务：`./scripts/start.ps1`，Ctrl+C停止。
 
@@ -56,6 +57,7 @@ docs/          要求核对、工程日志、演示与训练证据
 evidence/      可提交的科研运行摘要
 assets/        本机模型资源，二进制不进Git
 archive/legacy/ 旧C++/ROS2练习和已替代原型
+showcases/yinghuo/ 萤火独立创意作品源码快照（Node/React）
 ```
 
 每个功能目录有短README。前端提交指令、订阅SSE/MJPEG并显示结果；模型调用、训练推理、指标计算、阶段推进、文件与Key保存全部在后端。传输适配独立封装。初始化、清理和健康检查不在主入口实现。结构说明见[src/README.md](src/README.md)。
