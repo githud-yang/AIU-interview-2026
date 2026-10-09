@@ -1,0 +1,176 @@
+{
+  "checkedAt": "2026-10-09T18:46:03.505491+00:00",
+  "scope": "Yinghuo day/night UI themes and stage day preview",
+  "originalProject": "D:\\03_项目与代码\\创作项目\\荧火",
+  "snapshot": {
+    "files": 96,
+    "sourceAndExportHashesMatch": true,
+    "manifestSha256": "688c45fe0cdf9599ee423a20278ae7a7cc56af16687ee8ec150801798748c9f9"
+  },
+  "checks": [
+    {
+      "url": "http://127.0.0.1:4318/",
+      "status": 200,
+      "sha256": "03d6a9d63bf69f43fcd85b693cfd6f26c7c32c19bd03d3ae8ce78914f4de5e36",
+      "bytes": 2119
+    },
+    {
+      "url": "http://127.0.0.1:4318/notebook",
+      "status": 200,
+      "sha256": "03d6a9d63bf69f43fcd85b693cfd6f26c7c32c19bd03d3ae8ce78914f4de5e36",
+      "bytes": 2119
+    },
+    {
+      "url": "http://127.0.0.1:4318/notebook?theme=day",
+      "status": 200,
+      "sha256": "03d6a9d63bf69f43fcd85b693cfd6f26c7c32c19bd03d3ae8ce78914f4de5e36",
+      "bytes": 2119
+    },
+    {
+      "url": "http://127.0.0.1:4318/notebook?theme=night",
+      "status": 200,
+      "sha256": "03d6a9d63bf69f43fcd85b693cfd6f26c7c32c19bd03d3ae8ce78914f4de5e36",
+      "bytes": 2119
+    },
+    {
+      "url": "http://127.0.0.1:8000/showcase",
+      "status": 200,
+      "sha256": "c99fbe1f845c561dcb8127eefb3cef628978d3e6467e71efd82a5115d689ad50",
+      "bytes": 12558
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/aiService-BBkyFDpF.js",
+      "status": 200,
+      "sha256": "45153525e95c9d30f55f0d6b9d61446dd589df6a8ded446190a22d2ba17214b6",
+      "bytes": 1957
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/aiService-CgeKmb4r.js",
+      "status": 200,
+      "sha256": "f824a3a7ec71e3582332b2c8a7abf99a686b6f5f5c9b41683e208d34c814850b",
+      "bytes": 78
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/chunk-BEqpzyXh.js",
+      "status": 200,
+      "sha256": "2c4bd028f943e20fbbed928c46af1b2b9310c60818d9eea70b5859796f63c300",
+      "bytes": 817
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/index-BEX-ZVjK.js",
+      "status": 200,
+      "sha256": "b9f1c82ced866d703d4df7ce6816137e781de5feba9b0f4ea0d4c7596dcea277",
+      "bytes": 181108
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/index-D9sfciyF.css",
+      "status": 200,
+      "sha256": "6b9fbe99509a2a51b3d0252a2842d97dd7d1823ae7cd97a088320ad60880317b",
+      "bytes": 31611
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/jsx-runtime-B1-PFr6Z.js",
+      "status": 200,
+      "sha256": "6f90aa4ee060aa800323960dee0436876d67bc89f72fbe59181d77ab1ac29dd8",
+      "bytes": 49166
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/LandingPage-CKvO5Az7.js",
+      "status": 200,
+      "sha256": "ddfc2d1d995afc8c0aba26c744a1d886723cf3da91f88b969499ecf6e3c0c6fa",
+      "bytes": 6015
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/NotebookPage-Ccw_6Wez.js",
+      "status": 200,
+      "sha256": "e66336c7134abbc84863367f0b9605d2a2d8748678f50da0bf0410a9b410f0d2",
+      "bytes": 454758
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/react-dom-Bg-FuqZj.js",
+      "status": 200,
+      "sha256": "34f189dc138f2aa2b3a3c440d1f2ea8ef00ea058f2f64340bb829aface435ebd",
+      "bytes": 3579
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/ThemeToggle-C4sb24Fe.js",
+      "status": 200,
+      "sha256": "7f51c9175cda7ed42be6b734716843512d58d71891d251df990a8dd147e67a11",
+      "bytes": 122992
+    },
+    {
+      "url": "http://127.0.0.1:4318/assets/vocabKnowledge-BLKMkket.js",
+      "status": 200,
+      "sha256": "f67d440f76b34ffec14a07ae2e506fc87b86c9c8f2abb55e33d712a3a56813bb",
+      "bytes": 672487
+    }
+  ],
+  "offlineVerification": {
+    "original": {
+      "typecheckAndBuild": true,
+      "lintErrors": 0,
+      "lintWarnings": 0,
+      "nodeTests": 53,
+      "passed": 52,
+      "skipped": 1
+    },
+    "snapshot": {
+      "typecheckAndBuild": true,
+      "lintErrors": 0,
+      "lintWarnings": 0,
+      "nodeTests": 53,
+      "passed": 52,
+      "skipped": 1
+    },
+    "skipReason": "Existing Windows file symlink permission limitation; junction check passes",
+    "buildWarning": "Existing vocabKnowledge chunk exceeds 500 kB",
+    "themeBehaviorChecks": 6,
+    "themeVariablesDefined": 133,
+    "themeVariablesReferenced": 132,
+    "undefinedThemeVariables": [],
+    "bootstrapBeforeMainModule": true,
+    "contrastCalculationOnly": [
+      {
+        "role": "body",
+        "foreground": "#3f3428",
+        "background": "#faf7f0",
+        "ratio": 11.32
+      },
+      {
+        "role": "secondary",
+        "foreground": "#62513d",
+        "background": "#f7f2e8",
+        "ratio": 6.81
+      },
+      {
+        "role": "muted",
+        "foreground": "#75654f",
+        "background": "#f7f2e8",
+        "ratio": 5.04
+      },
+      {
+        "role": "accent",
+        "foreground": "#795518",
+        "background": "#f7f2e8",
+        "ratio": 6.02
+      },
+      {
+        "role": "solid-button",
+        "foreground": "#fffdf9",
+        "background": "#795518",
+        "ratio": 6.61
+      }
+    ]
+  },
+  "boundaries": {
+    "browserVisualVerified": false,
+    "projectionVerified": false,
+    "cloudModelRequests": 0,
+    "backendConfigChanged": false,
+    "personalNotesRead": false,
+    "browserDatabaseModifiedByVerification": false,
+    "originalRepositoryCommitted": false,
+    "previewDoesNotPersistPreference": true,
+    "manualTogglePersistsOnlyThemePreference": true
+  }
+}

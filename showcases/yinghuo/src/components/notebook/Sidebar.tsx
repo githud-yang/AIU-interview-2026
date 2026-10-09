@@ -78,45 +78,45 @@ export default function Sidebar() {
       style={{
         width: 240,
         minWidth: 240,
-        background: 'rgba(10,10,26,0.95)',
-        borderRight: '1px solid rgba(212,175,55,0.12)',
+        background: 'var(--yh-sidebar)',
+        borderRight: '1px solid var(--yh-line-012)',
       }}
     >
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-4"
-        style={{ borderBottom: '1px solid rgba(212,175,55,0.1)' }}>
-        <Flame size={16} style={{ color: '#d4af37' }} />
-        <span style={{ color: '#d4af37', fontFamily: 'Georgia, serif', fontSize: '0.95rem', letterSpacing: '0.1em' }}>
+        style={{ borderBottom: '1px solid var(--yh-line-010)' }}>
+        <Flame size={16} style={{ color: 'var(--yh-accent)' }} />
+        <span style={{ color: 'var(--yh-accent)', fontFamily: 'Georgia, serif', fontSize: '0.95rem', letterSpacing: '0.1em' }}>
           萤火
         </span>
       </div>
 
-      {error && <p role="alert" className="px-4 py-2" style={{ color: '#f1a59d', fontSize: '0.7rem' }}>{error}</p>}
+      {error && <p role="alert" className="px-4 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-07)' }}>{error}</p>}
 
       {/* Progress / Level */}
-      <div className="px-4 py-4" style={{ borderBottom: '1px solid rgba(212,175,55,0.35)' }}>
+      <div className="px-4 py-4" style={{ borderBottom: '1px solid var(--yh-line-035)' }}>
         <div className="flex items-center justify-between mb-2">
-          <span style={{ color: '#d4af37', fontSize: '0.8rem', letterSpacing: '0.15em', fontFamily: 'Georgia, serif' }}>
+          <span style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-08)', letterSpacing: '0.15em', fontFamily: 'Georgia, serif' }}>
             {currentLevel.name}
           </span>
-          <span style={{ color: 'rgba(212,175,55,0.4)', fontSize: '0.65rem' }}>
+          <span style={{ color: 'var(--yh-ink-040)', fontSize: 'var(--yh-font-065)' }}>
             {projectNoteCount} 篇
           </span>
         </div>
         <ProgressBar percentage={progress.percentage} height={3} />
         {nextLevel && (
-          <p className="mt-1" style={{ color: 'rgba(212,175,55,0.3)', fontSize: '0.6rem', letterSpacing: '0.05em' }}>
+          <p className="mt-1" style={{ color: 'var(--yh-ink-030)', fontSize: 'var(--yh-font-06)', letterSpacing: '0.05em' }}>
             再写 {nextLevel.minNotes - projectNoteCount} 篇解锁「{nextLevel.name}」
           </p>
         )}
-        <p className="mt-1" style={{ color: 'rgba(232,220,200,0.3)', fontSize: '0.6rem', fontStyle: 'italic' }}>
+        <p className="mt-1" style={{ color: 'var(--yh-text-030)', fontSize: 'var(--yh-font-06)', fontStyle: 'italic' }}>
           {currentLevel.description}
         </p>
       </div>
 
       {/* Projects header */}
       <div className="flex items-center justify-between px-4 py-2.5">
-        <span style={{ color: '#d4af37', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.2em' }}>
+        <span style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-072)', fontWeight: 700, letterSpacing: '0.2em' }}>
           日记集
         </span>
         <button
@@ -124,7 +124,7 @@ export default function Sidebar() {
           aria-label="新建日记集"
           onClick={() => setShowNewProject(true)}
           className="p-1 rounded opacity-50 hover:opacity-100 transition-opacity"
-          style={{ color: '#d4af37' }}
+          style={{ color: 'var(--yh-accent)' }}
         >
           <Plus size={13} />
         </button>
@@ -145,10 +145,10 @@ export default function Sidebar() {
                 className="flex items-center gap-1.5 px-2 py-2 rounded-lg cursor-pointer transition-all"
                 style={{
                   background: activeProjectId === project.id
-                    ? 'rgba(212,175,55,0.1)'
+                    ? 'var(--yh-tint-010)'
                     : 'transparent',
                   border: activeProjectId === project.id
-                    ? '1px solid rgba(212,175,55,0.2)'
+                    ? '1px solid var(--yh-tint-020)'
                     : '1px solid transparent',
                 }}
                 onClick={() => setActiveProject(project.id)}
@@ -167,14 +167,14 @@ export default function Sidebar() {
                     }}
                     onClick={e => e.stopPropagation()}
                     className="flex-1 bg-transparent outline-none"
-                    style={{ color: '#d4af37', fontSize: '0.8rem' }}
+                    style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-08)' }}
                   />
                 ) : (
                   <>
                     <ChevronRight
                       size={10}
                       style={{
-                        color: 'rgba(212,175,55,0.4)',
+                        color: 'var(--yh-ink-040)',
                         flexShrink: 0,
                         transform: activeProjectId === project.id ? 'rotate(90deg)' : 'none',
                         transition: 'transform 0.2s',
@@ -183,8 +183,8 @@ export default function Sidebar() {
                     <span
                       className="flex-1 truncate flex items-center gap-1"
                       style={{
-                        color: activeProjectId === project.id ? '#d4af37' : 'rgba(232,220,200,0.6)',
-                        fontSize: '0.82rem',
+                        color: activeProjectId === project.id ? 'var(--yh-accent)' : 'var(--yh-text-060)',
+                        fontSize: 'var(--yh-font-082)',
                       }}
                     >
                       {project.name}
@@ -193,13 +193,13 @@ export default function Sidebar() {
                           title={`知己「${project.agentName}」已觉醒`}
                           style={{ lineHeight: 1, flexShrink: 0 }}
                         >
-                          <Flame size={9} style={{ color: 'rgba(212,175,55,0.6)' }} />
+                          <Flame size={9} style={{ color: 'var(--yh-ink-060)' }} />
                         </span>
                       )}
                     </span>
                     {/* Project action buttons — visible on hover */}
                     <div
-                      className="flex gap-1"
+                      className="project-actions flex gap-1"
                       style={{
                         opacity: hoveredProjectId === project.id ? 1 : 0,
                         pointerEvents: hoveredProjectId === project.id ? 'auto' : 'none',
@@ -209,7 +209,7 @@ export default function Sidebar() {
                       <button
                         onClick={e => { e.stopPropagation(); setRenamingId(project.id); setRenameValue(project.name); }}
                         className="p-0.5 rounded"
-                        style={{ color: 'rgba(212,175,55,0.5)' }}
+                        style={{ color: 'var(--yh-ink-050)' }}
                         title="重命名"
                       >
                         <Edit3 size={10} />
@@ -217,7 +217,7 @@ export default function Sidebar() {
                       <button
                         onClick={e => { e.stopPropagation(); setDeleteConfirmId(project.id); }}
                         className="p-0.5 rounded"
-                        style={{ color: 'rgba(212,175,55,0.5)' }}
+                        style={{ color: 'var(--yh-ink-050)' }}
                         title="删除日记集"
                       >
                         <Trash2 size={10} />
@@ -247,24 +247,24 @@ export default function Sidebar() {
                         key={note.id}
                         className="flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-all"
                         style={{
-                          background: isActive ? 'rgba(212,175,55,0.08)' : 'transparent',
-                          borderLeft: isActive ? '2px solid rgba(212,175,55,0.5)' : '2px solid transparent',
+                          background: isActive ? 'var(--yh-tint-008)' : 'transparent',
+                          borderLeft: isActive ? '2px solid var(--yh-line-050)' : '2px solid transparent',
                         }}
                         onClick={() => setActiveNote(note.id)}
                         onMouseEnter={() => setHoveredNoteId(note.id)}
                         onMouseLeave={() => setHoveredNoteId(null)}
                       >
-                        <span style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', flexShrink: 0, lineHeight: 1 }}>
+                        <span style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', flexShrink: 0, lineHeight: 1 }}>
                           {circled}
                         </span>
-                        <span style={{ color: 'rgba(212,175,55,0.28)', fontSize: '0.58rem', flexShrink: 0 }}>
+                        <span style={{ color: 'var(--yh-ink-028)', fontSize: 'var(--yh-font-058)', flexShrink: 0 }}>
                           {dateStr}
                         </span>
                         <span
                           className="truncate flex-1"
                           style={{
-                            color: isActive ? 'rgba(232,220,200,0.85)' : 'rgba(232,220,200,0.45)',
-                            fontSize: '0.75rem',
+                            color: isActive ? 'var(--yh-text-085)' : 'var(--yh-text-045)',
+                            fontSize: 'var(--yh-font-075)',
                           }}
                         >
                           {preview}
@@ -273,7 +273,7 @@ export default function Sidebar() {
                           onClick={e => { e.stopPropagation(); void deleteNote(note.id).catch(() => setError('删除随笔失败，请重试。')); }}
                           className="transition-opacity p-0.5 rounded shrink-0"
                           style={{
-                            color: 'rgba(212,175,55,0.6)',
+                            color: 'var(--yh-ink-060)',
                             opacity: isHovered ? 1 : 0.25,
                             pointerEvents: 'auto',
                           }}
@@ -293,8 +293,8 @@ export default function Sidebar() {
                 disabled={!!creatingForProject}
                 className="flex items-center gap-1.5 px-2 py-1 w-full rounded transition-all"
                 style={{
-                  color: creatingForProject === project.id ? 'rgba(212,175,55,0.3)' : 'rgba(212,175,55,0.4)',
-                  fontSize: '0.7rem',
+                  color: creatingForProject === project.id ? 'var(--yh-ink-030)' : 'var(--yh-ink-040)',
+                  fontSize: 'var(--yh-font-07)',
                   cursor: creatingForProject ? 'not-allowed' : 'pointer',
                   marginLeft: '1rem',
                   marginTop: '2px',
@@ -309,7 +309,7 @@ export default function Sidebar() {
 
         {projects.length === 0 && (
           <div className="px-4 py-8 text-center">
-            <p style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.75rem', lineHeight: 1.8, fontStyle: 'italic' }}>
+            <p style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-075)', lineHeight: 1.8, fontStyle: 'italic' }}>
               点击 + 创建<br />你的第一个日记集
             </p>
           </div>
@@ -319,7 +319,7 @@ export default function Sidebar() {
       {/* New Project Modal */}
       <Modal open={showNewProject} onClose={() => setShowNewProject(false)} title="新建日记集">
         <div className="flex flex-col gap-3">
-          {error && <p role="alert" style={{ color: '#f1a59d', fontSize: '0.75rem' }}>{error}</p>}
+          {error && <p role="alert" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-075)' }}>{error}</p>}
           <input
             aria-label="日记集名称"
             autoFocus
@@ -329,8 +329,8 @@ export default function Sidebar() {
             placeholder="日记集名称…"
             className="w-full px-3 py-2.5 rounded-lg bg-transparent outline-none"
             style={{
-              border: '1px solid rgba(212,175,55,0.25)',
-              color: '#e8dcc8',
+              border: '1px solid var(--yh-line-025)',
+              color: 'var(--yh-text)',
               fontSize: '0.9rem',
               fontFamily: 'Georgia, serif',
             }}
@@ -340,10 +340,10 @@ export default function Sidebar() {
             disabled={!newProjectName.trim() || creatingProject}
             className="py-2.5 rounded-lg transition-all"
             style={{
-              background: newProjectName.trim() ? 'rgba(212,175,55,0.15)' : 'rgba(212,175,55,0.05)',
-              border: '1px solid rgba(212,175,55,0.3)',
-              color: newProjectName.trim() ? '#d4af37' : 'rgba(212,175,55,0.3)',
-              fontSize: '0.85rem',
+              background: newProjectName.trim() ? 'var(--yh-tint-015)' : 'var(--yh-tint-005)',
+              border: '1px solid var(--yh-line-030)',
+              color: newProjectName.trim() ? 'var(--yh-accent)' : 'var(--yh-ink-030)',
+              fontSize: 'var(--yh-font-085)',
               letterSpacing: '0.1em',
               cursor: newProjectName.trim() ? 'pointer' : 'default',
             }}
@@ -355,16 +355,16 @@ export default function Sidebar() {
 
       {/* Delete Project Confirm Modal */}
       <Modal open={!!deleteConfirmId} onClose={() => setDeleteConfirmId(null)} title="删除日记集">
-        {error && <p role="alert" style={{ color: '#f1a59d', fontSize: '0.75rem' }}>{error}</p>}
-        <p style={{ color: 'rgba(232,220,200,0.7)', fontSize: '0.85rem', marginBottom: '1rem', lineHeight: 1.7 }}>
+        {error && <p role="alert" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-075)' }}>{error}</p>}
+        <p style={{ color: 'var(--yh-text-070)', fontSize: 'var(--yh-font-085)', marginBottom: '1rem', lineHeight: 1.7 }}>
           确认删除「{projects.find(p => p.id === deleteConfirmId)?.name}」？<br />
-          <span style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.78rem' }}>其中所有随笔将被永久删除。</span>
+          <span style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-078)' }}>其中所有随笔将被永久删除。</span>
         </p>
         <div className="flex gap-3">
           <button
             onClick={() => setDeleteConfirmId(null)}
             className="flex-1 py-2 rounded-lg"
-            style={{ border: '1px solid rgba(212,175,55,0.2)', color: 'rgba(212,175,55,0.6)', fontSize: '0.82rem', cursor: 'pointer' }}
+            style={{ border: '1px solid var(--yh-line-020)', color: 'var(--yh-ink-060)', fontSize: 'var(--yh-font-082)', cursor: 'pointer' }}
           >
             取消
           </button>
@@ -380,10 +380,10 @@ export default function Sidebar() {
             }}
             className="flex-1 py-2 rounded-lg"
             style={{
-              background: 'rgba(200,50,50,0.15)',
-              border: '1px solid rgba(200,50,50,0.3)',
-              color: 'rgba(220,100,100,0.9)',
-              fontSize: '0.82rem',
+              background: 'var(--yh-danger-fill)',
+              border: '1px solid var(--yh-danger-border)',
+              color: 'var(--yh-danger-ink)',
+              fontSize: 'var(--yh-font-082)',
               cursor: 'pointer',
             }}
           >

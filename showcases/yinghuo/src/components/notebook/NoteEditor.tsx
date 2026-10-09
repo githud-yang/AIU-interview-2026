@@ -31,8 +31,8 @@ function getChineseDateString(now: Date): string {
 /** 方盒呼吸：0 上鼻吸 → 1 右屏息 → 2 下鼻呼 → 3 左屏息 */
 const MEDITATION_EDGE_LABELS = ['鼻吸', '屏息', '鼻呼', '屏息'] as const;
 
-const dimEdge = 'rgba(100, 85, 60, 0.38)';
-const brightEdge = 'rgba(255, 240, 220, 0.85)';
+const dimEdge = 'var(--yh-meditation-dim)';
+const brightEdge = 'var(--yh-meditation-bright)';
 
 export default function NoteEditor() {
   const { activeNoteId, notes, failedDrafts, updateNote, updateNoteTitle, saveNoteAnalysis, setAnalyzing, isAnalyzing, addManualGoldenSentence } = useNoteStore();
@@ -252,9 +252,9 @@ export default function NoteEditor() {
   if (!activeNote) {
     return (
       <div className="flex-1 flex items-center justify-center h-full">
-        <div className="text-center" style={{ color: 'rgba(212,175,55,0.2)' }}>
-          <Flame size={36} style={{ color: 'rgba(212,175,55,0.2)', marginBottom: '1rem' }} />
-          <p style={{ fontSize: '0.85rem', letterSpacing: '0.2em', fontStyle: 'italic' }}>
+        <div className="text-center" style={{ color: 'var(--yh-ink-020)' }}>
+          <Flame size={36} style={{ color: 'var(--yh-ink-020)', marginBottom: '1rem' }} />
+          <p style={{ fontSize: 'var(--yh-font-085)', letterSpacing: '0.2em', fontStyle: 'italic' }}>
             选择或创建一篇随笔
           </p>
         </div>
@@ -276,7 +276,7 @@ export default function NoteEditor() {
       {/* Top Bar — 冥想时四边蛇形流光：上→右→下→左，每边 4s */}
       <div
         className="relative shrink-0 mx-2 mt-1 rounded"
-        style={meditationMode ? { borderRadius: 3 } : { border: '1px solid rgba(212,175,55,0.22)', borderRadius: 2 }}
+        style={meditationMode ? { borderRadius: 3 } : { border: '1px solid var(--yh-line-022)', borderRadius: 2 }}
       >
         {meditationMode && (
           <div className="pointer-events-none absolute inset-0 z-0 rounded-[3px]" aria-hidden>
@@ -305,21 +305,21 @@ export default function NoteEditor() {
         <div
           className={
             meditationMode
-              ? 'relative z-10 flex items-center justify-between px-6 py-2.5'
-              : 'flex items-center justify-between px-6 py-2.5'
+              ? 'editor-toolbar relative z-10 flex items-center justify-between px-6 py-2.5'
+              : 'editor-toolbar flex items-center justify-between px-6 py-2.5'
           }
-          style={meditationMode ? { margin: 2, background: '#08081a', borderRadius: 2 } : undefined}
+          style={meditationMode ? { margin: 2, background: 'var(--yh-bg)', borderRadius: 2 } : undefined}
         >
         <span
           className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:gap-2"
-          style={{ color: 'rgba(212,175,55,0.4)', fontSize: '0.7rem', letterSpacing: '0.15em', fontFamily: 'Georgia, serif' }}
+          style={{ color: 'var(--yh-ink-040)', fontSize: 'var(--yh-font-07)', letterSpacing: '0.15em', fontFamily: 'Georgia, serif' }}
         >
           {dateStr}
           {meditationMode && (
             <span
               style={{
-                color: 'rgba(212,175,55,0.5)',
-                fontSize: '0.62rem',
+                color: 'var(--yh-ink-050)',
+                fontSize: 'var(--yh-font-062)',
                 letterSpacing: '0.12em',
               }}
             >
@@ -341,10 +341,10 @@ export default function NoteEditor() {
             }
             className="flex items-center gap-1 px-2.5 py-1 rounded-full transition-all"
             style={{
-              background: meditationMode ? 'rgba(212,175,55,0.12)' : 'transparent',
-              border: `1px solid ${meditationMode ? 'rgba(212,175,55,0.45)' : 'rgba(212,175,55,0.16)'}`,
-              color: meditationMode ? '#d4af37' : 'rgba(212,175,55,0.4)',
-              fontSize: '0.68rem',
+              background: meditationMode ? 'var(--yh-tint-012)' : 'transparent',
+              border: `1px solid ${meditationMode ? 'var(--yh-line-045)' : 'var(--yh-line-016)'}`,
+              color: meditationMode ? 'var(--yh-accent)' : 'var(--yh-ink-040)',
+              fontSize: 'var(--yh-font-068)',
               letterSpacing: '0.1em',
               cursor: 'pointer',
             }}
@@ -376,9 +376,9 @@ export default function NoteEditor() {
                 title={meditationVibrate ? '已开：每 4 秒短震（依设备）' : '开启：每 4 秒短震一次'}
                 className="flex items-center justify-center w-7 h-7 rounded-full transition-all overflow-hidden"
                 style={{
-                  border: `1px solid ${meditationVibrate ? 'rgba(212,175,55,0.5)' : 'rgba(212,175,55,0.2)'}`,
-                  color: meditationVibrate ? '#d4af37' : 'rgba(212,175,55,0.3)',
-                  background: meditationVibrate ? 'rgba(212,175,55,0.1)' : 'transparent',
+                  border: `1px solid ${meditationVibrate ? 'var(--yh-line-050)' : 'var(--yh-line-020)'}`,
+                  color: meditationVibrate ? 'var(--yh-accent)' : 'var(--yh-ink-030)',
+                  background: meditationVibrate ? 'var(--yh-tint-010)' : 'transparent',
                 }}
               >
                 {meditationVibrate ? <Vibrate size={12} /> : <VibrateOff size={12} />}
@@ -394,10 +394,10 @@ export default function NoteEditor() {
             title={markMode ? '退出标记模式' : '标记金句：开启后框选文字即可标记'}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all"
             style={{
-              background: markMode ? 'rgba(212,175,55,0.18)' : 'transparent',
-              border: `1px solid ${markMode ? 'rgba(212,175,55,0.55)' : 'rgba(212,175,55,0.2)'}`,
-              color: markMode ? '#d4af37' : 'rgba(212,175,55,0.45)',
-              fontSize: '0.72rem',
+              background: markMode ? 'var(--yh-tint-018)' : 'transparent',
+              border: `1px solid ${markMode ? 'var(--yh-line-055)' : 'var(--yh-line-020)'}`,
+              color: markMode ? 'var(--yh-accent)' : 'var(--yh-ink-045)',
+              fontSize: 'var(--yh-font-072)',
               letterSpacing: '0.08em',
               cursor: 'pointer',
             }}
@@ -424,10 +424,10 @@ export default function NoteEditor() {
             whileTap={!isAnalyzing ? { scale: 0.97 } : {}}
             className="flex items-center gap-2 px-4 py-1.5 rounded-full transition-all"
             style={{
-              background: isAnalyzing ? 'rgba(212,175,55,0.05)' : 'rgba(212,175,55,0.1)',
-              border: '1px solid rgba(212,175,55,0.25)',
-              color: isAnalyzing ? 'rgba(212,175,55,0.4)' : '#d4af37',
-              fontSize: '0.75rem',
+              background: isAnalyzing ? 'var(--yh-tint-005)' : 'var(--yh-tint-010)',
+              border: '1px solid var(--yh-line-025)',
+              color: isAnalyzing ? 'var(--yh-ink-040)' : 'var(--yh-accent)',
+              fontSize: 'var(--yh-font-075)',
               letterSpacing: '0.1em',
               cursor: isAnalyzing ? 'not-allowed' : 'pointer',
             }}
@@ -449,14 +449,14 @@ export default function NoteEditor() {
         </div>
       </div>
 
-      {operationError && <div role="alert" className="px-8 py-2" style={{ color: '#f1a59d', fontSize: '0.75rem' }}>
+      {operationError && <div role="alert" className="px-8 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-075)' }}>
         {operationError}
         {retryAction && <button type="button" disabled={isAnalyzing || markingGS} className="ml-3 underline" onClick={() => {
           if (retryAction === 'analyze') void handleAnalyze();
           else if (selectedForRetryRef.current) void markText(selectedForRetryRef.current.id, selectedForRetryRef.current.text);
         }}>重试</button>}
       </div>}
-      {saveError && <div role="alert" className="px-8 py-2" style={{ color: '#f1a59d', fontSize: '0.75rem' }}>{saveError}<button type="button" className="ml-3 underline" onClick={() => void flushPending().catch(() => undefined)}>重试保存</button></div>}
+      {saveError && <div role="alert" className="px-8 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-075)' }}>{saveError}<button type="button" className="ml-3 underline" onClick={() => void flushPending().catch(() => undefined)}>重试保存</button></div>}
 
       {/* Mark mode hint bar */}
       <AnimatePresence>
@@ -467,12 +467,12 @@ export default function NoteEditor() {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
             style={{
-              background: 'rgba(212,175,55,0.06)',
-              borderBottom: '1px solid rgba(212,175,55,0.15)',
+              background: 'var(--yh-tint-006)',
+              borderBottom: '1px solid var(--yh-line-015)',
               overflow: 'hidden',
             }}
           >
-            <p className="px-8 py-1.5" style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.08em' }}>
+            <p className="px-8 py-1.5" style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.08em' }}>
               ✦ 标记模式已开启 · 框选文字后松开即可标记为金句
             </p>
           </motion.div>
@@ -488,14 +488,14 @@ export default function NoteEditor() {
           placeholder="写个标题…"
           className="w-full bg-transparent outline-none"
           style={{
-            color: '#e8dcc8',
+            color: 'var(--yh-text)',
             fontSize: '1.4rem',
             fontFamily: 'Georgia, "Noto Serif SC", serif',
             letterSpacing: '0.04em',
             border: 'none',
           }}
         />
-        <div style={{ height: 1, background: 'linear-gradient(90deg, rgba(212,175,55,0.45), rgba(212,175,55,0.08) 70%, transparent)', marginTop: 8 }} />
+        <div style={{ height: 1, background: 'linear-gradient(90deg, var(--yh-tint-045), var(--yh-tint-008) 70%, transparent)', marginTop: 8 }} />
       </div>
 
       {/* Editor */}
@@ -511,12 +511,12 @@ export default function NoteEditor() {
       {/* Bottom Bar */}
       <div
         className="flex items-center justify-between px-8 py-2 shrink-0"
-        style={{ borderTop: '1px solid rgba(212,175,55,0.06)' }}
+        style={{ borderTop: '1px solid var(--yh-line-006)' }}
       >
-        <span style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.62rem', letterSpacing: '0.1em' }}>
+        <span style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-062)', letterSpacing: '0.1em' }}>
           自动保存
         </span>
-        <span style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.62rem' }}>
+        <span style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-062)' }}>
           {charCount} 字
         </span>
       </div>

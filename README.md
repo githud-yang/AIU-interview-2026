@@ -36,7 +36,7 @@ Copy-Item configs/.env.example configs/.env
 | [科研工作台](http://127.0.0.1:8000/research) | Harness进阶，两个注册科研任务 |
 | [研究策划](http://127.0.0.1:8000/research/strategy) | 用户额外要求的灵感与期刊资料，探索功能 |
 | [接口文档](http://127.0.0.1:8000/docs) | HTTP与事件订阅接口 |
-| [萤火随笔](http://127.0.0.1:4318/notebook) | 独立创意作品，需单独启动 |
+| [萤火随笔·白天展示](http://127.0.0.1:4318/notebook?theme=day) | 独立创意作品，需单独启动；顶部可切换夜间 |
 
 CLI：`./.venv/Scripts/python.exe -m src.agent.cli`。前台服务：`./scripts/start.ps1`，Ctrl+C停止。
 

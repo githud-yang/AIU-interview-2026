@@ -86,7 +86,7 @@ export default function NotebookBackup() {
           disabled={busy}
           title="导出全部日记到 JSON 文件"
           className="p-1.5 rounded transition-opacity opacity-40 hover:opacity-90"
-          style={{ color: '#d4af37' }}
+          style={{ color: 'var(--yh-accent)' }}
         >
           <Download size={14} />
         </button>
@@ -97,12 +97,12 @@ export default function NotebookBackup() {
           disabled={busy}
           title="从 JSON 文件导入"
           className="p-1.5 rounded transition-opacity opacity-40 hover:opacity-90"
-          style={{ color: '#d4af37' }}
+          style={{ color: 'var(--yh-accent)' }}
         >
           <Upload size={14} />
         </button>
       </div>
-      {error && !pendingJson && <p role="alert" style={{ color: '#f1a59d', fontSize: '0.7rem', maxWidth: 240 }}>{error} 可再次点击导出或重新选择文件。</p>}
+      {error && !pendingJson && <p role="alert" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-07)', maxWidth: 240 }}>{error} 可再次点击导出或重新选择文件。</p>}
       <input
         ref={fileRef}
         type="file"
@@ -112,11 +112,11 @@ export default function NotebookBackup() {
       />
 
       <Modal open={!!pendingJson} onClose={() => !busy && setPendingJson(null)} title="导入备份">
-        <p style={{ color: 'rgba(232,220,200,0.7)', fontSize: '0.82rem', lineHeight: 1.7, marginBottom: '1rem' }}>
+        <p style={{ color: 'var(--yh-text-070)', fontSize: 'var(--yh-font-082)', lineHeight: 1.7, marginBottom: '1rem' }}>
           请选择导入方式。建议先使用「导出」保存当前数据。
         </p>
         <div className="flex flex-col gap-2 mb-4">
-          <label className="flex items-center gap-2 cursor-pointer" style={{ color: 'rgba(232,220,200,0.85)', fontSize: '0.8rem' }}>
+          <label className="flex items-center gap-2 cursor-pointer" style={{ color: 'var(--yh-text-085)', fontSize: 'var(--yh-font-08)' }}>
             <input
               type="radio"
               name="importMode"
@@ -125,7 +125,7 @@ export default function NotebookBackup() {
             />
             替换本地数据（清空后导入备份中的全部内容）
           </label>
-          <label className="flex items-center gap-2 cursor-pointer" style={{ color: 'rgba(232,220,200,0.85)', fontSize: '0.8rem' }}>
+          <label className="flex items-center gap-2 cursor-pointer" style={{ color: 'var(--yh-text-085)', fontSize: 'var(--yh-font-08)' }}>
             <input
               type="radio"
               name="importMode"
@@ -136,7 +136,7 @@ export default function NotebookBackup() {
           </label>
         </div>
         {error && (
-          <p role="alert" style={{ color: 'rgba(255,120,100,0.9)', fontSize: '0.78rem', marginBottom: '0.75rem' }}>{error}</p>
+          <p role="alert" style={{ color: 'var(--yh-error-strong)', fontSize: 'var(--yh-font-078)', marginBottom: '0.75rem' }}>{error}</p>
         )}
         <div className="flex justify-end gap-2">
           <button
@@ -144,7 +144,7 @@ export default function NotebookBackup() {
             disabled={busy}
             onClick={() => setPendingJson(null)}
             className="px-4 py-2 rounded-lg text-sm"
-            style={{ color: 'rgba(212,175,55,0.5)', background: 'transparent' }}
+            style={{ color: 'var(--yh-ink-050)', background: 'transparent' }}
           >
             取消
           </button>
@@ -154,8 +154,8 @@ export default function NotebookBackup() {
             onClick={runImport}
             className="px-4 py-2 rounded-lg text-sm"
             style={{
-              color: '#080818',
-              background: busy ? 'rgba(212,175,55,0.3)' : '#d4af37',
+              color: busy ? 'var(--yh-ink-040)' : 'var(--yh-on-accent)',
+              background: busy ? 'var(--yh-tint-030)' : 'var(--yh-accent)',
               cursor: busy ? 'not-allowed' : 'pointer',
             }}
           >

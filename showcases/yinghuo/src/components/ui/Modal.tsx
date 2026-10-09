@@ -46,7 +46,7 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
         >
           <motion.div
             className="absolute inset-0"
-            style={{ background: 'rgba(4,4,12,0.8)', backdropFilter: 'blur(6px)' }}
+            style={{ background: 'var(--yh-backdrop)', backdropFilter: 'blur(6px)' }}
             onClick={onClose}
           />
           <motion.div
@@ -58,9 +58,9 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
             tabIndex={-1}
             className="relative w-full max-w-md rounded-2xl p-6 z-10"
             style={{
-              background: 'rgba(15,15,35,0.95)',
-              border: '1px solid rgba(212,175,55,0.2)',
-              boxShadow: '0 0 40px rgba(212,175,55,0.1)',
+              background: 'var(--yh-dialog)',
+              border: '1px solid var(--yh-line-020)',
+              boxShadow: '0 0 40px var(--yh-tint-010)',
             }}
             initial={{ scale: 0.92, y: 20, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -69,11 +69,11 @@ export default function Modal({ open, onClose, title, children }: ModalProps) {
           >
             {title && (
               <div className="flex items-center justify-between mb-4">
-                <h3 id={titleId} style={{ color: '#d4af37', fontSize: '1rem', letterSpacing: '0.1em', fontFamily: 'Georgia, serif' }}>
+                <h3 id={titleId} style={{ color: 'var(--yh-accent)', fontSize: '1rem', letterSpacing: '0.1em', fontFamily: 'Georgia, serif' }}>
                   {title}
                 </h3>
                 <button type="button" aria-label="关闭对话框" onClick={onClose} className="p-1 rounded opacity-50 hover:opacity-100 transition-opacity"
-                  style={{ color: '#d4af37' }}>
+                  style={{ color: 'var(--yh-accent)' }}>
                   <X size={16} />
                 </button>
               </div>

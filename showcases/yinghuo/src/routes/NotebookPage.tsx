@@ -10,6 +10,7 @@ import ChatDialog from '../components/notebook/ChatDialog';
 import AgentProfile from '../components/notebook/AgentProfile';
 import NotebookBackup from '../components/notebook/NotebookBackup';
 import AISettings from '../components/notebook/AISettings';
+import ThemeToggle from '../components/ui/ThemeToggle';
 import { DEMO_PROJECT_ID, importDemoCollection } from '../services/demoData';
 import { useNoteStore } from '../stores/useNoteStore';
 
@@ -52,13 +53,13 @@ export default function NotebookPage() {
   return (
     <div
       className="flex h-screen w-screen overflow-hidden"
-      style={{ background: '#080818' }}
+      style={{ background: 'var(--yh-workspace)' }}
     >
       {/* Subtle background gradient */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 20% 50%, rgba(212,175,55,0.03) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(150,120,80,0.02) 0%, transparent 50%)',
+          background: 'radial-gradient(ellipse at 20% 50%, var(--yh-tint-003) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, var(--yh-wash) 0%, transparent 50%)',
         }}
       />
 
@@ -68,32 +69,33 @@ export default function NotebookPage() {
       {/* Main Editor Area */}
       <main
         className="flex-1 flex flex-col min-w-0 relative"
-        style={{ borderRight: '1px solid rgba(212,175,55,0.08)' }}
+        style={{ borderRight: '1px solid var(--yh-line-008)' }}
       >
         {/* Top Nav */}
         <div
-          className="flex items-center justify-between px-6 py-3 shrink-0"
-          style={{ borderBottom: '1px solid rgba(212,175,55,0.07)' }}
+          className="notebook-topbar flex items-center justify-between px-6 py-3 shrink-0"
+          style={{ borderBottom: '1px solid var(--yh-line-007)' }}
         >
           <button
             onClick={() => navigate('/')}
             className="flex items-center gap-1.5 opacity-30 hover:opacity-70 transition-opacity"
-            style={{ color: '#d4af37', fontSize: '0.72rem', letterSpacing: '0.1em' }}
+            style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-072)', letterSpacing: '0.1em' }}
           >
             <ChevronLeft size={13} />
             萤火
           </button>
-          <div style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.62rem', letterSpacing: '0.2em' }}>
+          <div style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-062)', letterSpacing: '0.2em' }}>
             {activeProjectId ? '' : '· 请先选择日记集 ·'}
           </div>
-          <div className="flex items-center gap-4">
-            <button type="button" disabled={loadingDemo} onClick={() => void openDemo()} style={{ color: '#d4af37', fontSize: '0.72rem' }}>{loadingDemo ? '准备演示…' : '虚构演示集'}</button>
+          <div className="notebook-actions flex items-center gap-4">
+            <ThemeToggle />
+            <button type="button" disabled={loadingDemo} onClick={() => void openDemo()} style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-072)' }}>{loadingDemo ? '准备演示…' : '虚构演示集'}</button>
             <AISettings />
             <NotebookBackup />
           </div>
         </div>
 
-        {(pageError || storageError) && <div role="alert" className="px-6 py-2" style={{ color: '#f1a59d', fontSize: '0.75rem' }}>
+        {(pageError || storageError) && <div role="alert" className="px-6 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-075)' }}>
           {pageError || storageError}
           <button type="button" className="ml-3 underline" onClick={() => {
             void (async () => {
@@ -108,7 +110,7 @@ export default function NotebookPage() {
             })();
           }}>重试本地保存与读取</button>
         </div>}
-        {activeProjectId === DEMO_PROJECT_ID && <p role="status" className="px-6 py-2" style={{ color: '#e0c580', fontSize: '0.72rem', background: 'rgba(212,175,55,0.06)' }}>虚构演示集 · 50 篇示例随笔；现有译文、金句和画像为预先编写的样例，未调用 AI。点击提炼、生成画像或发送消息才会请求 DeepSeek。</p>}
+        {activeProjectId === DEMO_PROJECT_ID && <p role="status" className="px-6 py-2" style={{ color: 'var(--yh-notice)', fontSize: 'var(--yh-font-072)', background: 'var(--yh-tint-006)' }}>虚构演示集 · 50 篇示例随笔；现有译文、金句和画像为预先编写的样例，未调用 AI。点击提炼、生成画像或发送消息才会请求 DeepSeek。</p>}
         <NoteEditor key={activeNoteId ?? 'empty'} />
       </main>
 
@@ -117,7 +119,7 @@ export default function NotebookPage() {
         className="flex flex-col shrink-0"
         style={{
           width: 360,
-          background: 'rgba(10,10,24,0.97)',
+          background: 'var(--yh-panel)',
         }}
       >
         {/* Agent Profile */}
@@ -126,7 +128,7 @@ export default function NotebookPage() {
         {/* Tab Switcher */}
         <div
           className="flex shrink-0"
-          style={{ borderBottom: '1px solid rgba(212,175,55,0.08)' }}
+          style={{ borderBottom: '1px solid var(--yh-line-008)' }}
         >
           {([
             { id: 'analysis' as RightTab, label: '金句分析', icon: Sparkles },
@@ -140,9 +142,9 @@ export default function NotebookPage() {
                 onClick={() => setRightTab(tab.id)}
                 className="flex-1 flex items-center justify-center gap-1.5 py-3 transition-all"
                 style={{
-                  color: isActive ? '#d4af37' : 'rgba(212,175,55,0.35)',
-                  borderBottom: isActive ? '1px solid rgba(212,175,55,0.5)' : '1px solid transparent',
-                  fontSize: '0.72rem',
+                  color: isActive ? 'var(--yh-accent)' : 'var(--yh-ink-035)',
+                  borderBottom: isActive ? '1px solid var(--yh-line-050)' : '1px solid transparent',
+                  fontSize: 'var(--yh-font-072)',
                   letterSpacing: '0.1em',
                   cursor: 'pointer',
                   background: 'transparent',
@@ -182,7 +184,7 @@ export default function NotebookPage() {
                   <ChatDialog key={activeProjectId} projectId={activeProjectId} />
                 ) : (
                   <div className="flex items-center justify-center h-full">
-                    <p style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.75rem', fontStyle: 'italic' }}>
+                    <p style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-075)', fontStyle: 'italic' }}>
                       请先选择笔记集
                     </p>
                   </div>

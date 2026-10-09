@@ -74,11 +74,11 @@ export default function ChatDialog({ projectId }: Props) {
       {/* Header */}
       <div
         className="flex items-center justify-between px-5 py-3 shrink-0"
-        style={{ borderBottom: '1px solid rgba(212,175,55,0.08)' }}
+        style={{ borderBottom: '1px solid var(--yh-line-008)' }}
       >
         <div className="flex items-center gap-2">
-          <MessageCircle size={13} style={{ color: 'rgba(212,175,55,0.5)' }} />
-          <span style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+          <MessageCircle size={13} style={{ color: 'var(--yh-ink-050)' }} />
+          <span style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             与 {agentName} 对话
           </span>
         </div>
@@ -91,7 +91,7 @@ export default function ChatDialog({ projectId }: Props) {
               if (window.confirm('确认清空当前日记集的对话？随笔不会删除。')) void clearChat(projectId).then(() => { setError(''); setFailedRequest(null); }).catch(() => setError('清空对话失败，请重试。'));
             }}
             className="p-1 opacity-30 hover:opacity-70 transition-opacity"
-            style={{ color: '#d4af37' }}
+            style={{ color: 'var(--yh-accent)' }}
           >
             <Trash2 size={12} />
           </button>
@@ -103,27 +103,27 @@ export default function ChatDialog({ projectId }: Props) {
         {isLocked ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center px-6">
-              <Flame size={28} style={{ color: 'rgba(212,175,55,0.2)', marginBottom: '0.75rem' }} />
-              <p style={{ color: 'rgba(212,175,55,0.3)', fontSize: '0.75rem', lineHeight: 1.8, fontStyle: 'italic' }}>
+              <Flame size={28} style={{ color: 'var(--yh-ink-020)', marginBottom: '0.75rem' }} />
+              <p style={{ color: 'var(--yh-ink-030)', fontSize: 'var(--yh-font-075)', lineHeight: 1.8, fontStyle: 'italic' }}>
                 写满 50 篇随笔<br />
                 唤醒你的专属知己<br />
-                <span style={{ fontSize: '0.65rem', color: 'rgba(212,175,55,0.2)' }}>
+                <span style={{ fontSize: 'var(--yh-font-065)', color: 'var(--yh-ink-020)' }}>
                   高山流水遇知音
                 </span>
               </p>
               <div
                 className="mt-4 mx-auto h-1 rounded-full overflow-hidden"
-                style={{ width: 80, background: 'rgba(212,175,55,0.08)' }}
+                style={{ width: 80, background: 'var(--yh-tint-008)' }}
               >
                 <div
                   className="h-full rounded-full"
                   style={{
                     width: `${(noteCount / 50) * 100}%`,
-                    background: 'linear-gradient(90deg, rgba(212,175,55,0.4), rgba(212,175,55,0.8))',
+                    background: 'linear-gradient(90deg, var(--yh-tint-040), var(--yh-tint-080))',
                   }}
                 />
               </div>
-              <p style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.6rem', marginTop: '0.4rem' }}>
+              <p style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-06)', marginTop: '0.4rem' }}>
                 {noteCount} / 50
               </p>
             </div>
@@ -138,15 +138,15 @@ export default function ChatDialog({ projectId }: Props) {
               >
                 <div
                   className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-                  style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.25)' }}
+                  style={{ background: 'var(--yh-tint-012)', border: '1px solid var(--yh-line-025)' }}
                 >
-                  <span style={{ fontSize: '0.55rem', color: '#d4af37' }}>✦</span>
+                  <span style={{ fontSize: 'var(--yh-font-055)', color: 'var(--yh-accent)' }}>✦</span>
                 </div>
                 <div
                   className="rounded-2xl rounded-tl-none px-3 py-2.5 max-w-xs"
-                  style={{ background: 'rgba(212,175,55,0.07)', border: '1px solid rgba(212,175,55,0.12)' }}
+                  style={{ background: 'var(--yh-tint-007)', border: '1px solid var(--yh-line-012)' }}
                 >
-                  <p style={{ color: 'rgba(232,220,200,0.7)', fontSize: '0.78rem', lineHeight: 1.65 }}>
+                  <p style={{ color: 'var(--yh-text-070)', fontSize: 'var(--yh-font-078)', lineHeight: 1.65 }}>
                     你好，我是{agentName}。发送消息后，我会参考当前日记集的近期随笔与你交流。
                   </p>
                 </div>
@@ -165,23 +165,23 @@ export default function ChatDialog({ projectId }: Props) {
                   {msg.role === 'agent' && (
                     <div
                       className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                      style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.25)' }}
+                      style={{ background: 'var(--yh-tint-012)', border: '1px solid var(--yh-line-025)' }}
                     >
-                      <span style={{ fontSize: '0.55rem', color: '#d4af37' }}>✦</span>
+                      <span style={{ fontSize: 'var(--yh-font-055)', color: 'var(--yh-accent)' }}>✦</span>
                     </div>
                   )}
                   <div
                     className={`rounded-2xl px-3 py-2.5 max-w-xs ${msg.role === 'user' ? 'rounded-br-none' : 'rounded-bl-none'}`}
                     style={{
                       background: msg.role === 'user'
-                        ? 'rgba(212,175,55,0.12)'
-                        : 'rgba(212,175,55,0.06)',
-                      border: `1px solid ${msg.role === 'user' ? 'rgba(212,175,55,0.2)' : 'rgba(212,175,55,0.1)'}`,
+                        ? 'var(--yh-tint-012)'
+                        : 'var(--yh-tint-006)',
+                      border: `1px solid ${msg.role === 'user' ? 'var(--yh-line-020)' : 'var(--yh-line-010)'}`,
                     }}
                   >
                     <p style={{
-                      color: msg.role === 'user' ? '#d4af37' : 'rgba(232,220,200,0.75)',
-                      fontSize: '0.78rem',
+                      color: msg.role === 'user' ? 'var(--yh-accent)' : 'var(--yh-text-075)',
+                      fontSize: 'var(--yh-font-078)',
                       lineHeight: 1.65,
                       whiteSpace: 'pre-wrap',
                     }}>
@@ -200,20 +200,20 @@ export default function ChatDialog({ projectId }: Props) {
               >
                 <div
                   className="w-6 h-6 rounded-full flex items-center justify-center shrink-0"
-                  style={{ background: 'rgba(212,175,55,0.12)', border: '1px solid rgba(212,175,55,0.25)' }}
+                  style={{ background: 'var(--yh-tint-012)', border: '1px solid var(--yh-line-025)' }}
                 >
-                  <span style={{ fontSize: '0.55rem', color: '#d4af37' }}>✦</span>
+                  <span style={{ fontSize: 'var(--yh-font-055)', color: 'var(--yh-accent)' }}>✦</span>
                 </div>
                 <div
                   className="rounded-2xl rounded-bl-none px-4 py-3"
-                  style={{ background: 'rgba(212,175,55,0.06)', border: '1px solid rgba(212,175,55,0.1)' }}
+                  style={{ background: 'var(--yh-tint-006)', border: '1px solid var(--yh-line-010)' }}
                 >
                   <div className="flex items-center gap-1.5">
                     {[0, 1, 2].map(i => (
                       <motion.div
                         key={i}
                         className="w-1.5 h-1.5 rounded-full"
-                        style={{ background: 'rgba(212,175,55,0.5)' }}
+                        style={{ background: 'var(--yh-tint-050)' }}
                         animate={{ opacity: [0.3, 1, 0.3] }}
                         transition={{ duration: 1.2, repeat: Infinity, delay: i * 0.2 }}
                       />
@@ -231,14 +231,14 @@ export default function ChatDialog({ projectId }: Props) {
       {!isLocked && (
         <div
           className="shrink-0 px-4 py-3"
-          style={{ borderTop: '1px solid rgba(212,175,55,0.08)' }}
+          style={{ borderTop: '1px solid var(--yh-line-008)' }}
         >
-          {error && <p role="alert" style={{ color: '#f1a59d', fontSize: '0.72rem', marginBottom: 8 }}>{error}
+          {error && <p role="alert" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-072)', marginBottom: 8 }}>{error}
             {failedRequest && <button type="button" disabled={replying} className="ml-2 underline" onClick={() => void sendMessage(failedRequest.message, !failedRequest.userSaved)}>重试这条消息</button>}
           </p>}
           <div
             className="flex items-end gap-2 rounded-xl px-3 py-2"
-            style={{ background: 'rgba(212,175,55,0.04)', border: '1px solid rgba(212,175,55,0.12)' }}
+            style={{ background: 'var(--yh-tint-004)', border: '1px solid var(--yh-line-012)' }}
           >
             <textarea
               aria-label="发送给知己的消息"
@@ -254,8 +254,8 @@ export default function ChatDialog({ projectId }: Props) {
               rows={1}
               className="flex-1 bg-transparent outline-none resize-none"
               style={{
-                color: '#e8dcc8',
-                fontSize: '0.8rem',
+                color: 'var(--yh-text)',
+                fontSize: 'var(--yh-font-08)',
                 lineHeight: 1.6,
                 maxHeight: 96,
                 fontFamily: 'Georgia, serif',
@@ -270,15 +270,15 @@ export default function ChatDialog({ projectId }: Props) {
               whileTap={input.trim() && !replying ? { scale: 0.9 } : {}}
               className="p-1.5 rounded-lg shrink-0 transition-all"
               style={{
-                background: input.trim() && !replying ? 'rgba(212,175,55,0.15)' : 'transparent',
-                color: input.trim() && !replying ? '#d4af37' : 'rgba(212,175,55,0.2)',
+                background: input.trim() && !replying ? 'var(--yh-tint-015)' : 'transparent',
+                color: input.trim() && !replying ? 'var(--yh-accent)' : 'var(--yh-ink-020)',
                 cursor: input.trim() && !replying ? 'pointer' : 'default',
               }}
             >
               {replying ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
             </motion.button>
           </div>
-          <p style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.58rem', marginTop: '0.4rem', textAlign: 'right' }}>
+          <p style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-058)', marginTop: '0.4rem', textAlign: 'right' }}>
             Enter 发送 · Shift+Enter 换行
           </p>
         </div>

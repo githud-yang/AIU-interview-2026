@@ -6,11 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>萤火 · 随笔成诗</title>
     <meta name="description" content="萤火 - 随笔成诗，萤光相伴。将中文随笔提炼为英文金句，多维度分析，成就语言之美。" />
+    <!-- 首帧先应用主题；与 services/theme.ts 的偏好规则由契约检查保持一致。 -->
+    <script id="theme-prepaint">
+      (() => {
+        let theme = 'night';
+        const preview = new URLSearchParams(location.search).get('theme');
+        if (preview === 'day' || preview === 'night') theme = preview;
+        else {
+          try {
+            const saved = localStorage.getItem('yinghuo-ui-theme');
+            if (saved === 'day' || saved === 'night') theme = saved;
+          } catch { /* 禁用存储时保留夜间默认。 */ }
+        }
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme === 'day' ? 'light' : 'dark';
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-      html { background: #08081a; }
+      html { background: var(--yh-bg, #08081a); }
+      html[data-theme="day"] { background: var(--yh-bg, #faf7f0); }
     </style>
   </head>
   <body>

@@ -1,7 +1,4 @@
 {
-  "source": "D:\\03_项目与代码\\创作项目\\荧火",
-  "name": "萤火二面源码快照",
-  "exportedAt": "2026-10-10T01:26:58.9846729+08:00",
   "files": [
     {
       "path": ".env.example",
@@ -21,7 +18,7 @@
     },
     {
       "path": "docs/interview-demo.md",
-      "sha256": "663597bc7fdfcf424c8c455ef221b50c7b5604a3af49d6a62cb452144e96dec7"
+      "sha256": "f29b3f8d05681fa5478d5690c535dd73ac28a51e292784baada1887974b275ec"
     },
     {
       "path": "docs/README.md",
@@ -37,7 +34,7 @@
     },
     {
       "path": "index.html",
-      "sha256": "6a4344302a46843a21004ea938e83771ec0e3f81bfeaff24597183da283f61ea"
+      "sha256": "90a972394f25455ff795f623db85e2a402ac03fcba4d5244715f7ea33860f5ca"
     },
     {
       "path": "NOTICE",
@@ -69,7 +66,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "ec498a7077852cde1e951669b2c809f8cb7569c06d34b7219196928929b6d867"
+      "sha256": "6c32a528f3d02d6bc2d11e06adaea3e2755c839782364f5706cdc8402f0d384d"
     },
     {
       "path": "scripts/build-gaokao3500.mjs",
@@ -129,7 +126,7 @@
     },
     {
       "path": "src/App.tsx",
-      "sha256": "870eb32059fee83cc60e00192cb3c3d811e532bfbaa2e1e5e4012a636d2c03b8"
+      "sha256": "460d13e4500bc4fc1d873f1b6c53917851cf1aa2ba284b49f4c63a4bfc17c976"
     },
     {
       "path": "src/assets/hero.png",
@@ -149,7 +146,7 @@
     },
     {
       "path": "src/components/landing/FireflyCanvas.tsx",
-      "sha256": "cf6a4a3c2e6da8213244917dfa7c8eec2f42a563feb02b380279ce053b0d7c16"
+      "sha256": "de1bda6d8610ede5ab0f158768d7bf9bbeb15bb44b5c196e193683db4286f07f"
     },
     {
       "path": "src/components/landing/README.md",
@@ -161,27 +158,27 @@
     },
     {
       "path": "src/components/notebook/AgentProfile.tsx",
-      "sha256": "1f96a3f77582a433ab6fdc5d1da913c2bcf5f52b8978b18978ba87f11cc57afd"
+      "sha256": "e59249770da1d1b76df07d0765d94b3d6e96e7ba2faf11dc54421670a1dd8a92"
     },
     {
       "path": "src/components/notebook/AISettings.tsx",
-      "sha256": "0a6c0281840f5ea1b6b67a2ae5c5edb0baa0f1aa6a75564ae3e1738d6881ffc3"
+      "sha256": "e7b1f8566742d6ecb3392367e4ae51d66413bc75edeefa88ee5dd0012bbe5557"
     },
     {
       "path": "src/components/notebook/ChatDialog.tsx",
-      "sha256": "cdf23e7796a6fc67ebfb67d3613a303f5a67463fa95d9758e1c9f5973d63e88c"
+      "sha256": "4a9367a611564e0bd34d41c746bf31705cf5ea2237374ed217341470c84ee1f6"
     },
     {
       "path": "src/components/notebook/GoldenSentence.tsx",
-      "sha256": "dbe4c8fac34ee5d8bcfa59fcd7399f79e4f41bc6e9aa62e130374f53a6c57bf8"
+      "sha256": "403e24d91428e384f856094d4c37b99d2c043b898d33ebe4d3466b6070aea2c0"
     },
     {
       "path": "src/components/notebook/NotebookBackup.tsx",
-      "sha256": "7719bb0fc8d5202ec6f98c051500a0ebfd3d372d7d21f801b2ff225a5b2f0301"
+      "sha256": "0eff535b62e83fb1db8f3d4ab3ba466dc9bcbd3d1d44b00f45b73db7660df1e3"
     },
     {
       "path": "src/components/notebook/NoteEditor.tsx",
-      "sha256": "b0caab7a5925b220f103043eab0f3020786eebb21ace007b2e8ec48159aa788a"
+      "sha256": "cc48b1960106a7b0691bc1e5545dfb6035c1a09eca1e012fc501e4d5274c3caf"
     },
     {
       "path": "src/components/notebook/README.md",
@@ -189,11 +186,11 @@
     },
     {
       "path": "src/components/notebook/Sidebar.tsx",
-      "sha256": "19ef587f2809efe88dd418c3d1619183f26afc982230f761b05fd400d4124dc4"
+      "sha256": "e6f3cbd36b3bda47bf58158d1cfbdd4c9996172677fbb920c4e686c15dcbfe1e"
     },
     {
       "path": "src/components/notebook/TranslationPanel.tsx",
-      "sha256": "9bef127c46eddd9cf1a9ae96577ae19758203dd7536e5819c3707426c82c13b5"
+      "sha256": "eae6c79edcbdb45a95f9e242557e7af10ce994e92bba363f488e380dc7c7262a"
     },
     {
       "path": "src/components/README.md",
@@ -201,15 +198,27 @@
     },
     {
       "path": "src/components/ui/Modal.tsx",
-      "sha256": "ff368afd314f168abb1a931fdd41e02518a7f44aa1e3e9fbb344e4bc3f25d29f"
+      "sha256": "846554aa2c318eb4cc5535b5c1f9c142bc8db113a15ff71da5bc8c8911f18678"
     },
     {
       "path": "src/components/ui/ProgressBar.tsx",
-      "sha256": "823ecff591a6c8f3a965147d2f239f4a06e70aa589c37308704f687f62b803f1"
+      "sha256": "e14cd5f93193e59be6db8348bd11858bef3187335b46b52240b1216a71f20178"
     },
     {
       "path": "src/components/ui/README.md",
-      "sha256": "45355996f1e4e269196a36dad44653505a36f8ab3cd9b0fb6921a65e01220bc0"
+      "sha256": "21e676d988be1835f37f4992b1cd8e1b202ac2bad8dadb461b82dd5d86cf98da"
+    },
+    {
+      "path": "src/components/ui/theme-context.ts",
+      "sha256": "8626d8fd9011133a5a29d875acfef11e88adb59231ec82b343282fe802a646cd"
+    },
+    {
+      "path": "src/components/ui/ThemeProvider.tsx",
+      "sha256": "e9979ca6c7ab46f046cd289b7001845639ccf9d88ce912d3e8daa266ca730e25"
+    },
+    {
+      "path": "src/components/ui/ThemeToggle.tsx",
+      "sha256": "b6bd570e6d5fcb05377a1fd917b63b8d03cd40d28dd2f35747dc379c2ec7d713"
     },
     {
       "path": "src/data/gaokao3500.generated.json",
@@ -241,11 +250,11 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "2d21482267de902e081bec2ded5cb726c4095c32da7903a93c78a27315425818"
+      "sha256": "d84346ca65a9d2b979d0a6a0273490b97b1c695930668414f1b948648bd30d97"
     },
     {
       "path": "src/main.tsx",
-      "sha256": "4258db2c0cb7c36afbb2c8a4383cc899986af35c30a2d312e77c9bee1d728f4c"
+      "sha256": "7c01167e0d9ed739fcf12ec6b8bf8197e9983dfb6693d4ea57826b642e1615ac"
     },
     {
       "path": "src/README.md",
@@ -253,11 +262,11 @@
     },
     {
       "path": "src/routes/LandingPage.tsx",
-      "sha256": "4b948dd362b900634abed4b2e91b7ae179b2be3e26c44f4c946feb1e8369ce5e"
+      "sha256": "0c58f1dd7820d4aad809d78073c16cb3c3a928f3bcf80de8d56ec8bda7e14651"
     },
     {
       "path": "src/routes/NotebookPage.tsx",
-      "sha256": "28b4eb4c5eaf425d561eae4e4608ae7a0c10e46c42d293868624f39bc86a01aa"
+      "sha256": "19f5879bfd3a6941ca92722e06c6cacbad2531dae83818dc915a636775a272e5"
     },
     {
       "path": "src/routes/README.md",
@@ -289,7 +298,11 @@
     },
     {
       "path": "src/services/README.md",
-      "sha256": "9cbd954343c67ecdd08cc6eb6a69fbf07fba7ccb381e1e2849075344e087c370"
+      "sha256": "d884b77b944c649d579d09612a574cca3cac51ffcde1e416dd7f1a0b8528d6d4"
+    },
+    {
+      "path": "src/services/theme.ts",
+      "sha256": "059d6e1d85a1bfacac08a2c9c6f8ff9a12b617cc6f045fad219c4de553f7e626"
     },
     {
       "path": "src/services/vocabKnowledge.ts",
@@ -332,6 +345,10 @@
       "sha256": "903365797bdda20f6e3d16730ebda9c49573fd5932d7fc9d79331da767ca85f2"
     },
     {
+      "path": "tests/frontend-theme.test.mjs",
+      "sha256": "6526c94314f2ab116e2031031b16888c9e5d39e5f8084a664ed160bce2d6171a"
+    },
+    {
       "path": "tests/frontend-transport.test.mjs",
       "sha256": "ec293b6200424aa35e8b24a8ebe2b5c22ec06fa7eb3a3a4ea8e4aedaa375c03d"
     },
@@ -345,7 +362,7 @@
     },
     {
       "path": "tests/README.md",
-      "sha256": "86d53a7ab731355292417dbcca55686dc3f71b548415c88ecc4190ea88f6f6fc"
+      "sha256": "82e8a91140edda43a5cb83a7f56fa9a2e2510356983f63f90cdda385872e7d6d"
     },
     {
       "path": "tools/gaokao3500/README.md",
@@ -367,5 +384,8 @@
       "path": "vite.config.ts",
       "sha256": "dad4c0183fdbe6d33fac850854cf3a1c9a042c3003ffc895effd0341a4d19301"
     }
-  ]
+  ],
+  "name": "萤火二面源码快照",
+  "exportedAt": "2026-10-10T02:44:45.6605220+08:00",
+  "source": "D:\\03_项目与代码\\创作项目\\荧火"
 }

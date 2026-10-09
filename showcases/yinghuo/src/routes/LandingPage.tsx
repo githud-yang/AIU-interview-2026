@@ -3,14 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Flame } from 'lucide-react';
 import FireflyCanvas from '../components/landing/FireflyCanvas';
+import ThemeToggle from '../components/ui/ThemeToggle';
 
 export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
     <div className="relative w-full h-screen overflow-hidden flex items-center justify-center"
-      style={{ background: '#08081a' }}>
+      style={{ background: 'var(--yh-bg)' }}>
       <FireflyCanvas />
+      <div className="absolute right-6 top-6 z-20">
+        <ThemeToggle />
+      </div>
 
       <div className="relative z-10 flex flex-col items-center text-center px-8 select-none">
         <motion.div
@@ -20,7 +24,7 @@ export default function LandingPage() {
           className="mb-2"
         >
           <span className="text-xs tracking-[0.5em] uppercase"
-            style={{ color: 'rgba(212,175,55,0.5)', fontFamily: 'Georgia, serif' }}>
+            style={{ color: 'var(--yh-ink-050)', fontFamily: 'Georgia, serif' }}>
             随笔 · 诗心 · 英文
           </span>
         </motion.div>
@@ -56,7 +60,7 @@ export default function LandingPage() {
                 left: '-4%',
                 width: '36%',
                 height: '52%',
-                background: '#08081a',
+                background: 'var(--yh-bg)',
                 transform: 'rotate(12deg)',
                 zIndex: 1,
               }}
@@ -64,11 +68,12 @@ export default function LandingPage() {
             {/* Flame 图标替换左撇 */}
             <motion.span
               aria-hidden
+              className="landing-flame"
               animate={{
                 filter: [
-                  'drop-shadow(0 0 4px rgba(212,175,55,0.5))',
-                  'drop-shadow(0 0 14px rgba(212,175,55,0.9))',
-                  'drop-shadow(0 0 4px rgba(212,175,55,0.5))',
+                  'drop-shadow(0 0 4px var(--yh-tint-050))',
+                  'drop-shadow(0 0 14px var(--yh-tint-090))',
+                  'drop-shadow(0 0 4px var(--yh-tint-050))',
                 ],
               }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
@@ -80,7 +85,7 @@ export default function LandingPage() {
                 display: 'flex',
                 alignItems: 'flex-end',
                 zIndex: 2,
-                color: '#d4af37',
+                color: 'var(--yh-accent)',
               }}
             >
               <Flame style={{ width: '100%', height: 'auto' }} />
@@ -93,7 +98,7 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
           style={{
-            color: 'rgba(232, 220, 200, 0.55)',
+            color: 'var(--yh-text-055)',
             fontFamily: 'Georgia, "Noto Serif SC", serif',
             fontSize: '1.05rem',
             letterSpacing: '0.3em',
@@ -115,9 +120,9 @@ export default function LandingPage() {
             whileTap={{ scale: 0.97 }}
             className="relative group overflow-hidden px-12 py-4 rounded-full"
             style={{
-              border: '1px solid rgba(212,175,55,0.5)',
-              background: 'rgba(212,175,55,0.06)',
-              color: '#d4af37',
+              border: '1px solid var(--yh-line-050)',
+              background: 'var(--yh-tint-006)',
+              color: 'var(--yh-accent)',
               fontFamily: 'Georgia, "Noto Serif SC", serif',
               fontSize: '1rem',
               letterSpacing: '0.35em',
@@ -130,7 +135,7 @@ export default function LandingPage() {
               initial={{ opacity: 0 }}
               whileHover={{ opacity: 1 }}
               style={{
-                background: 'radial-gradient(ellipse at center, rgba(212,175,55,0.15) 0%, transparent 70%)',
+                background: 'radial-gradient(ellipse at center, var(--yh-tint-015) 0%, transparent 70%)',
               }}
             />
             <span className="relative z-10">开始 Ode 之旅</span>
@@ -142,7 +147,7 @@ export default function LandingPage() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 2 }}
           className="absolute bottom-10 flex flex-col items-center gap-2"
-          style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.7rem', letterSpacing: '0.2em' }}
+          style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-07)', letterSpacing: '0.2em' }}
         >
           <motion.div
             animate={{ y: [0, 6, 0] }}
@@ -156,7 +161,7 @@ export default function LandingPage() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(8,8,26,0.7) 100%)',
+          background: 'radial-gradient(ellipse at 50% 50%, transparent 30%, var(--yh-vignette) 100%)',
         }}
       />
     </div>

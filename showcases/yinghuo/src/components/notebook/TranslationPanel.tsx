@@ -25,12 +25,12 @@ export default function TranslationPanel() {
     <div className="flex flex-col h-full overflow-hidden">
       {/* Section: Translation */}
       <div
-        className="shrink-0 px-5 py-4"
-        style={{ borderBottom: '1px solid rgba(212,175,55,0.08)' }}
+        className="translation-summary shrink-0 px-5 py-4"
+        style={{ borderBottom: '1px solid var(--yh-line-008)' }}
       >
         <div className="flex items-center gap-2 mb-3">
-          <Languages size={13} style={{ color: 'rgba(212,175,55,0.5)' }} />
-          <span style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+          <Languages size={13} style={{ color: 'var(--yh-ink-050)' }} />
+          <span style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             英文译文
           </span>
         </div>
@@ -44,8 +44,8 @@ export default function TranslationPanel() {
               exit={{ opacity: 0 }}
               className="flex items-center gap-2 py-2"
             >
-              <Loader2 size={14} className="animate-spin" style={{ color: 'rgba(212,175,55,0.4)' }} />
-              <span style={{ color: 'rgba(212,175,55,0.4)', fontSize: '0.75rem', fontStyle: 'italic' }}>
+              <Loader2 size={14} className="animate-spin" style={{ color: 'var(--yh-ink-040)' }} />
+              <span style={{ color: 'var(--yh-ink-040)', fontSize: 'var(--yh-font-075)', fontStyle: 'italic' }}>
                 正在提炼…
               </span>
             </motion.div>
@@ -55,8 +55,8 @@ export default function TranslationPanel() {
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               style={{
-                color: 'rgba(232,220,200,0.75)',
-                fontSize: '0.82rem',
+                color: 'var(--yh-text-075)',
+                fontSize: 'var(--yh-font-082)',
                 lineHeight: 1.8,
                 fontFamily: 'Georgia, serif',
                 fontStyle: 'italic',
@@ -69,7 +69,7 @@ export default function TranslationPanel() {
               key="empty"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              style={{ color: 'rgba(212,175,55,0.2)', fontSize: '0.75rem', fontStyle: 'italic' }}
+              style={{ color: 'var(--yh-ink-020)', fontSize: 'var(--yh-font-075)', fontStyle: 'italic' }}
             >
               点击「提炼金句」生成译文
             </motion.p>
@@ -80,18 +80,18 @@ export default function TranslationPanel() {
       {/* Section: Golden Sentences */}
       <div className="flex-1 overflow-y-auto px-5 py-4">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles size={13} style={{ color: 'rgba(212,175,55,0.5)' }} />
-          <span style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+          <Sparkles size={13} style={{ color: 'var(--yh-ink-050)' }} />
+          <span style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             金句提炼
           </span>
           {activeNote?.goldenSentences && activeNote.goldenSentences.length > 0 && (
             <span style={{
-              background: 'rgba(212,175,55,0.1)',
-              border: '1px solid rgba(212,175,55,0.2)',
+              background: 'var(--yh-tint-010)',
+              border: '1px solid var(--yh-line-020)',
               borderRadius: 99,
               padding: '0 6px',
-              color: 'rgba(212,175,55,0.6)',
-              fontSize: '0.6rem',
+              color: 'var(--yh-ink-060)',
+              fontSize: 'var(--yh-font-06)',
             }}>
               {activeNote.goldenSentences.length}
             </span>
@@ -109,7 +109,7 @@ export default function TranslationPanel() {
             >
               {[0, 1].map(i => (
                 <div key={i} className="h-24 rounded-xl animate-pulse"
-                  style={{ background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.08)' }} />
+                  style={{ background: 'var(--yh-tint-005)', border: '1px solid var(--yh-line-008)' }} />
               ))}
             </motion.div>
           ) : activeNote?.goldenSentences && activeNote.goldenSentences.length > 0 ? (
@@ -131,8 +131,8 @@ export default function TranslationPanel() {
               animate={{ opacity: 1 }}
               className="flex flex-col items-center py-12 text-center"
             >
-              <Flame size={28} style={{ color: 'rgba(212,175,55,0.2)', marginBottom: '0.75rem' }} />
-              <p style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.78rem', lineHeight: 1.8, fontStyle: 'italic' }}>
+              <Flame size={28} style={{ color: 'var(--yh-ink-020)', marginBottom: '0.75rem' }} />
+              <p style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-078)', lineHeight: 1.8, fontStyle: 'italic' }}>
                 写下你的随笔，<br />点击「提炼金句」<br />开始多维度英语分析
               </p>
             </motion.div>

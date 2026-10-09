@@ -11,4 +11,6 @@ npm start
 
 打开 `http://127.0.0.1:4318/notebook`，可导入虚构演示日记集。真实 AI 需在该页面的“AI 设置”配置自己的 Key。详情见项目 README 和 `docs/interview-demo.md`。
 
+白天/投屏预览：`http://127.0.0.1:4318/notebook?theme=day`。统一展示台也使用此主题；应用顶部按钮可原位切回夜间。
+
 从原项目更新快照：在二面仓库运行 `./scripts/sync-yinghuo-showcase.ps1`。`source-manifest.json` 记录来源及文件哈希；密钥、浏览器数据库、node_modules、构建产物、原项目 Git 和无关 PDF/绘图未纳入快照。不要在两个位置同时维护代码。

@@ -12,20 +12,20 @@ export default function ProgressBar({ percentage, label, height = 4 }: ProgressB
     <div className="w-full">
       {label && (
         <div className="flex justify-between mb-1"
-          style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.1em' }}>
+          style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.1em' }}>
           <span>{label}</span>
           <span>{Math.round(percentage)}%</span>
         </div>
       )}
       <div
         className="w-full rounded-full overflow-hidden"
-        style={{ height, background: 'rgba(212,175,55,0.1)' }}
+        style={{ height, background: 'var(--yh-tint-010)' }}
       >
         <motion.div
           className="h-full rounded-full"
           style={{
-            background: 'linear-gradient(90deg, rgba(212,175,55,0.6) 0%, rgba(212,175,55,1) 100%)',
-            boxShadow: '0 0 8px rgba(212,175,55,0.5)',
+            background: 'linear-gradient(90deg, var(--yh-tint-060) 0%, var(--yh-tint-100) 100%)',
+            boxShadow: '0 0 8px var(--yh-tint-050)',
           }}
           initial={{ width: 0 }}
           animate={{ width: `${percentage}%` }}

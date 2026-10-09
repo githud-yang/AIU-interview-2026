@@ -1,6 +1,280 @@
 /* 统一页面主题、布局与展示动画。 */
 @import "tailwindcss";
 
+/* 语义主题：夜间保留原色；白天用暖纸背景和不透明的可读文字。 */
+:root {
+  --yh-border: rgba(212, 175, 55, .2);
+  --yh-on-accent: #080818;
+  --yh-accent: #d4af37;
+  --yh-backdrop: rgba(4, 4, 12, 0.8);
+  --yh-bg: #08081a;
+  --yh-card: rgba(20, 18, 40, 0.8);
+  --yh-danger-border: rgba(200, 50, 50, 0.3);
+  --yh-danger-fill: rgba(200, 50, 50, 0.15);
+  --yh-danger-ink: rgba(220, 100, 100, 0.9);
+  --yh-dialog: rgba(15, 15, 35, 0.95);
+  --yh-emphasis: #c0b090;
+  --yh-error: #f1a59d;
+  --yh-error-strong: rgba(255, 120, 100, 0.9);
+  --yh-font-05: 0.5rem;
+  --yh-font-052: 0.52rem;
+  --yh-font-055: 0.55rem;
+  --yh-font-058: 0.58rem;
+  --yh-font-06: 0.6rem;
+  --yh-font-062: 0.62rem;
+  --yh-font-063: 0.63rem;
+  --yh-font-065: 0.65rem;
+  --yh-font-067: 0.67rem;
+  --yh-font-068: 0.68rem;
+  --yh-font-07: 0.7rem;
+  --yh-font-072: 0.72rem;
+  --yh-font-075: 0.75rem;
+  --yh-font-078: 0.78rem;
+  --yh-font-08: 0.8rem;
+  --yh-font-082: 0.82rem;
+  --yh-font-085: 0.85rem;
+  --yh-glass: rgba(8, 8, 26, 0.85);
+  --yh-glass-panel: rgba(15, 15, 35, 0.9);
+  --yh-heading: #c9a227;
+  --yh-hint: #b8aa8d;
+  --yh-ink-015: rgba(212, 175, 55, 0.15);
+  --yh-ink-020: rgba(212, 175, 55, 0.2);
+  --yh-ink-025: rgba(212, 175, 55, 0.25);
+  --yh-ink-028: rgba(212, 175, 55, 0.28);
+  --yh-ink-030: rgba(212, 175, 55, 0.3);
+  --yh-ink-035: rgba(212, 175, 55, 0.35);
+  --yh-ink-040: rgba(212, 175, 55, 0.4);
+  --yh-ink-045: rgba(212, 175, 55, 0.45);
+  --yh-ink-050: rgba(212, 175, 55, 0.5);
+  --yh-ink-060: rgba(212, 175, 55, 0.6);
+  --yh-ink-070: rgba(212, 175, 55, 0.7);
+  --yh-ink-085: rgba(212, 175, 55, 0.85);
+  --yh-ink-090: rgba(212, 175, 55, 0.9);
+  --yh-input: #101024;
+  --yh-line-006: rgba(212, 175, 55, 0.06);
+  --yh-line-007: rgba(212, 175, 55, 0.07);
+  --yh-line-008: rgba(212, 175, 55, 0.08);
+  --yh-line-010: rgba(212, 175, 55, 0.1);
+  --yh-line-012: rgba(212, 175, 55, 0.12);
+  --yh-line-015: rgba(212, 175, 55, 0.15);
+  --yh-line-016: rgba(212, 175, 55, 0.16);
+  --yh-line-018: rgba(212, 175, 55, 0.18);
+  --yh-line-020: rgba(212, 175, 55, 0.2);
+  --yh-line-022: rgba(212, 175, 55, 0.22);
+  --yh-line-025: rgba(212, 175, 55, 0.25);
+  --yh-line-030: rgba(212, 175, 55, 0.3);
+  --yh-line-035: rgba(212, 175, 55, 0.35);
+  --yh-line-040: rgba(212, 175, 55, 0.4);
+  --yh-line-045: rgba(212, 175, 55, 0.45);
+  --yh-line-050: rgba(212, 175, 55, 0.5);
+  --yh-line-055: rgba(212, 175, 55, 0.55);
+  --yh-manual-000: rgba(240, 198, 88, 0);
+  --yh-manual-014: rgba(240, 198, 88, 0.14);
+  --yh-manual-016: rgba(240, 198, 88, 0.16);
+  --yh-manual-020: rgba(240, 198, 88, 0.2);
+  --yh-manual-025: rgba(240, 198, 88, 0.25);
+  --yh-manual-042: rgba(240, 198, 88, 0.42);
+  --yh-manual-045: rgba(240, 198, 88, 0.45);
+  --yh-manual-090: rgba(240, 198, 88, 0.9);
+  --yh-manual-092: rgba(240, 198, 88, 0.92);
+  --yh-manual-control: rgba(18, 16, 34, 0.78);
+  --yh-manual-hover: rgba(255, 225, 140, 0.95);
+  --yh-manual-ink-055: rgba(240, 198, 88, 0.55);
+  --yh-meditation-bright: rgba(255, 240, 220, 0.85);
+  --yh-meditation-dim: rgba(100, 85, 60, 0.38);
+  --yh-muted: #a79d88;
+  --yh-notice: #e0c580;
+  --yh-orb-center: rgba(255, 232, 168, 1);
+  --yh-panel: rgba(10, 10, 24, 0.97);
+  --yh-popover: rgba(10, 10, 26, 0.97);
+  --yh-rewrite: #c8a84a;
+  --yh-secondary: #cabb9e;
+  --yh-shadow-003: rgba(0, 0, 0, 0.03);
+  --yh-shadow-030: rgba(0, 0, 0, 0.3);
+  --yh-shadow-060: rgba(0, 0, 0, 0.6);
+  --yh-sheen-040: rgba(255, 210, 100, 0.4);
+  --yh-sheen-100: rgba(255, 210, 100, 1);
+  --yh-sheen-highlight: rgba(255, 255, 255, 0.9);
+  --yh-sheen-shadow: rgba(255, 180, 50, 0.6);
+  --yh-shimmer-end: #a07830;
+  --yh-shimmer-highlight: #fff8e7;
+  --yh-sidebar: rgba(10, 10, 26, 0.95);
+  --yh-spark: #fff;
+  --yh-success: #c8d9aa;
+  --yh-text: #e8dcc8;
+  --yh-text-030: rgba(232, 220, 200, 0.3);
+  --yh-text-040: rgba(232, 220, 200, 0.4);
+  --yh-text-045: rgba(232, 220, 200, 0.45);
+  --yh-text-055: rgba(232, 220, 200, 0.55);
+  --yh-text-060: rgba(232, 220, 200, 0.6);
+  --yh-text-065: rgba(232, 220, 200, 0.65);
+  --yh-text-070: rgba(232, 220, 200, 0.7);
+  --yh-text-075: rgba(232, 220, 200, 0.75);
+  --yh-text-085: rgba(232, 220, 200, 0.85);
+  --yh-tint-002: rgba(212, 175, 55, 0.02);
+  --yh-tint-003: rgba(212, 175, 55, 0.03);
+  --yh-tint-004: rgba(212, 175, 55, 0.04);
+  --yh-tint-005: rgba(212, 175, 55, 0.05);
+  --yh-tint-006: rgba(212, 175, 55, 0.06);
+  --yh-tint-007: rgba(212, 175, 55, 0.07);
+  --yh-tint-008: rgba(212, 175, 55, 0.08);
+  --yh-tint-010: rgba(212, 175, 55, 0.1);
+  --yh-tint-012: rgba(212, 175, 55, 0.12);
+  --yh-tint-015: rgba(212, 175, 55, 0.15);
+  --yh-tint-018: rgba(212, 175, 55, 0.18);
+  --yh-tint-020: rgba(212, 175, 55, 0.2);
+  --yh-tint-025: rgba(212, 175, 55, 0.25);
+  --yh-tint-030: rgba(212, 175, 55, 0.3);
+  --yh-tint-040: rgba(212, 175, 55, 0.4);
+  --yh-tint-045: rgba(212, 175, 55, 0.45);
+  --yh-tint-050: rgba(212, 175, 55, 0.5);
+  --yh-tint-060: rgba(212, 175, 55, 0.6);
+  --yh-tint-070: rgba(212, 175, 55, 0.7);
+  --yh-tint-080: rgba(212, 175, 55, 0.8);
+  --yh-tint-090: rgba(212, 175, 55, 0.9);
+  --yh-tint-100: rgba(212, 175, 55, 1);
+  --yh-vignette: rgba(8, 8, 26, 0.7);
+  --yh-wash: rgba(150, 120, 80, 0.02);
+  --yh-workspace: #080818;
+}
+
+:root[data-theme="day"] {
+  --yh-border: rgba(126, 96, 48, .28);
+  --yh-on-accent: #fffdf9;
+  --yh-accent: #795518;
+  --yh-backdrop: rgba(54, 43, 29, .28);
+  --yh-bg: #faf7f0;
+  --yh-card: #fffcf6;
+  --yh-danger-border: rgba(173, 53, 41, .35);
+  --yh-danger-fill: rgba(173, 53, 41, .08);
+  --yh-danger-ink: #a3342c;
+  --yh-dialog: #fffcf6;
+  --yh-emphasis: #6d5d46;
+  --yh-error: #ad3529;
+  --yh-error-strong: #ad3529;
+  --yh-font-05: 0.875rem;
+  --yh-font-052: 0.875rem;
+  --yh-font-055: 0.875rem;
+  --yh-font-058: 0.875rem;
+  --yh-font-06: 0.875rem;
+  --yh-font-062: 0.875rem;
+  --yh-font-063: 0.875rem;
+  --yh-font-065: 0.875rem;
+  --yh-font-067: 0.875rem;
+  --yh-font-068: 0.875rem;
+  --yh-font-07: 0.875rem;
+  --yh-font-072: 0.9375rem;
+  --yh-font-075: 0.9375rem;
+  --yh-font-078: 0.9375rem;
+  --yh-font-08: 0.9375rem;
+  --yh-font-082: 0.9375rem;
+  --yh-font-085: 0.9375rem;
+  --yh-glass: rgba(250, 247, 240, .94);
+  --yh-glass-panel: #fffcf6;
+  --yh-heading: #795518;
+  --yh-hint: #6d5d46;
+  --yh-ink-015: #75634b;
+  --yh-ink-020: #75634b;
+  --yh-ink-025: #75634b;
+  --yh-ink-028: #75634b;
+  --yh-ink-030: #75634b;
+  --yh-ink-035: #695534;
+  --yh-ink-040: #695534;
+  --yh-ink-045: #695534;
+  --yh-ink-050: #695534;
+  --yh-ink-060: #795518;
+  --yh-ink-070: #795518;
+  --yh-ink-085: #795518;
+  --yh-ink-090: #795518;
+  --yh-input: #fffdf9;
+  --yh-line-006: rgba(126, 96, 48, 0.2);
+  --yh-line-007: rgba(126, 96, 48, 0.2);
+  --yh-line-008: rgba(126, 96, 48, 0.2);
+  --yh-line-010: rgba(126, 96, 48, 0.2);
+  --yh-line-012: rgba(126, 96, 48, 0.2);
+  --yh-line-015: rgba(126, 96, 48, 0.23);
+  --yh-line-016: rgba(126, 96, 48, 0.24);
+  --yh-line-018: rgba(126, 96, 48, 0.26);
+  --yh-line-020: rgba(126, 96, 48, 0.28);
+  --yh-line-022: rgba(126, 96, 48, 0.3);
+  --yh-line-025: rgba(126, 96, 48, 0.33);
+  --yh-line-030: rgba(126, 96, 48, 0.38);
+  --yh-line-035: rgba(126, 96, 48, 0.43);
+  --yh-line-040: rgba(126, 96, 48, 0.48);
+  --yh-line-045: rgba(126, 96, 48, 0.53);
+  --yh-line-050: rgba(126, 96, 48, 0.58);
+  --yh-line-055: rgba(126, 96, 48, 0.63);
+  --yh-manual-000: rgba(153, 115, 49, 0);
+  --yh-manual-014: rgba(153, 115, 49, 0.14);
+  --yh-manual-016: rgba(153, 115, 49, 0.16);
+  --yh-manual-020: rgba(153, 115, 49, 0.2);
+  --yh-manual-025: rgba(153, 115, 49, 0.25);
+  --yh-manual-042: rgba(153, 115, 49, 0.4);
+  --yh-manual-045: rgba(153, 115, 49, 0.4);
+  --yh-manual-090: rgba(153, 115, 49, 0.4);
+  --yh-manual-092: rgba(153, 115, 49, 0.4);
+  --yh-manual-control: #f4ead6;
+  --yh-manual-hover: #6f4c17;
+  --yh-manual-ink-055: #795518;
+  --yh-meditation-bright: #9b6b25;
+  --yh-meditation-dim: rgba(126, 96, 48, .3);
+  --yh-muted: #75654f;
+  --yh-notice: #71531f;
+  --yh-orb-center: #a6772c;
+  --yh-panel: #f7f2e8;
+  --yh-popover: #fffaf1;
+  --yh-rewrite: #795518;
+  --yh-secondary: #62513d;
+  --yh-shadow-003: rgba(76, 58, 31, 0.0075);
+  --yh-shadow-030: rgba(76, 58, 31, 0.075);
+  --yh-shadow-060: rgba(76, 58, 31, 0.12);
+  --yh-sheen-040: rgba(153, 115, 49, 0.4);
+  --yh-sheen-100: rgba(153, 115, 49, 0.6);
+  --yh-sheen-highlight: #a6772c;
+  --yh-sheen-shadow: rgba(153, 115, 49, .12);
+  --yh-shimmer-end: #67481d;
+  --yh-shimmer-highlight: #a77929;
+  --yh-sidebar: #f2ecdf;
+  --yh-spark: #a6772c;
+  --yh-success: #416327;
+  --yh-text: #3f3428;
+  --yh-text-030: #75654f;
+  --yh-text-040: #75654f;
+  --yh-text-045: #75654f;
+  --yh-text-055: #62513d;
+  --yh-text-060: #62513d;
+  --yh-text-065: #514330;
+  --yh-text-070: #514330;
+  --yh-text-075: #514330;
+  --yh-text-085: #3f3428;
+  --yh-tint-002: rgba(153, 115, 49, 0.02);
+  --yh-tint-003: rgba(153, 115, 49, 0.03);
+  --yh-tint-004: rgba(153, 115, 49, 0.04);
+  --yh-tint-005: rgba(153, 115, 49, 0.05);
+  --yh-tint-006: rgba(153, 115, 49, 0.06);
+  --yh-tint-007: rgba(153, 115, 49, 0.07);
+  --yh-tint-008: rgba(153, 115, 49, 0.08);
+  --yh-tint-010: rgba(153, 115, 49, 0.1);
+  --yh-tint-012: rgba(153, 115, 49, 0.12);
+  --yh-tint-015: rgba(153, 115, 49, 0.15);
+  --yh-tint-018: rgba(153, 115, 49, 0.18);
+  --yh-tint-020: rgba(153, 115, 49, 0.2);
+  --yh-tint-025: rgba(153, 115, 49, 0.25);
+  --yh-tint-030: rgba(153, 115, 49, 0.3);
+  --yh-tint-040: rgba(153, 115, 49, 0.4);
+  --yh-tint-045: rgba(153, 115, 49, 0.45);
+  --yh-tint-050: rgba(153, 115, 49, 0.5);
+  --yh-tint-060: rgba(153, 115, 49, 0.6);
+  --yh-tint-070: rgba(153, 115, 49, 0.7);
+  --yh-tint-080: rgba(153, 115, 49, 0.8);
+  --yh-tint-090: rgba(153, 115, 49, 0.9);
+  --yh-tint-100: rgba(153, 115, 49, 1);
+  --yh-vignette: rgba(230, 218, 192, .18);
+  --yh-wash: rgba(167, 133, 70, .035);
+  --yh-workspace: #fffdf9;
+}
+
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -13,8 +287,8 @@
   }
 
   body {
-    background: #08081a;
-    color: #e8dcc8;
+    background: var(--yh-bg);
+    color: var(--yh-text);
     font-family: 'Georgia', 'Noto Serif SC', serif;
     -webkit-font-smoothing: antialiased;
   }
@@ -26,34 +300,34 @@
     background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(212, 175, 55, 0.3);
+    background: var(--yh-tint-030);
     border-radius: 2px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(212, 175, 55, 0.6);
+    background: var(--yh-tint-060);
   }
 }
 
 @layer utilities {
   .text-glow {
-    text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4), 0 0 80px rgba(212, 175, 55, 0.2);
+    text-shadow: 0 0 20px var(--yh-tint-080), 0 0 40px var(--yh-tint-040), 0 0 80px var(--yh-tint-020);
   }
 
   .text-glow-soft {
-    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.2);
+    text-shadow: 0 0 10px var(--yh-tint-050), 0 0 20px var(--yh-tint-020);
   }
 
   .border-gold {
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: var(--yh-line-030);
   }
 
   .bg-dark-glass {
-    background: rgba(8, 8, 26, 0.85);
+    background: var(--yh-glass);
     backdrop-filter: blur(12px);
   }
 
   .bg-panel {
-    background: rgba(15, 15, 35, 0.9);
+    background: var(--yh-glass-panel);
     backdrop-filter: blur(8px);
   }
 }
@@ -78,46 +352,46 @@
 
 .meditation-sheen-bar-top {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 210, 100, 0.4) 60%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(90deg, transparent 0%, var(--yh-sheen-040) 60%, var(--yh-sheen-highlight) 100%);
   animation: meditation-comet-lr 4s linear forwards;
 }
 .meditation-sheen-bar-top::after {
   content: ''; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
-  width: 24px; height: 6px; background: #fff; border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(255, 210, 100, 1), 0 0 30px 8px rgba(255, 180, 50, 0.6);
+  width: 24px; height: 6px; background: var(--yh-spark); border-radius: 50%;
+  box-shadow: 0 0 16px 4px var(--yh-sheen-100), 0 0 30px 8px var(--yh-sheen-shadow);
 }
 
 .meditation-sheen-bar-bottom {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(270deg, transparent 0%, rgba(255, 210, 100, 0.4) 60%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(270deg, transparent 0%, var(--yh-sheen-040) 60%, var(--yh-sheen-highlight) 100%);
   animation: meditation-comet-rl 4s linear forwards;
 }
 .meditation-sheen-bar-bottom::after {
   content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
-  width: 24px; height: 6px; background: #fff; border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(255, 210, 100, 1), 0 0 30px 8px rgba(255, 180, 50, 0.6);
+  width: 24px; height: 6px; background: var(--yh-spark); border-radius: 50%;
+  box-shadow: 0 0 16px 4px var(--yh-sheen-100), 0 0 30px 8px var(--yh-sheen-shadow);
 }
 
 .meditation-sheen-bar-right {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(180deg, transparent 0%, rgba(255, 210, 100, 0.4) 60%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(180deg, transparent 0%, var(--yh-sheen-040) 60%, var(--yh-sheen-highlight) 100%);
   animation: meditation-comet-tb 4s linear forwards;
 }
 .meditation-sheen-bar-right::after {
   content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-  width: 6px; height: 24px; background: #fff; border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(255, 210, 100, 1), 0 0 30px 8px rgba(255, 180, 50, 0.6);
+  width: 6px; height: 24px; background: var(--yh-spark); border-radius: 50%;
+  box-shadow: 0 0 16px 4px var(--yh-sheen-100), 0 0 30px 8px var(--yh-sheen-shadow);
 }
 
 .meditation-sheen-bar-left {
   position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(0deg, transparent 0%, rgba(255, 210, 100, 0.4) 60%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(0deg, transparent 0%, var(--yh-sheen-040) 60%, var(--yh-sheen-highlight) 100%);
   animation: meditation-comet-bt 4s linear forwards;
 }
 .meditation-sheen-bar-left::after {
   content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-  width: 6px; height: 24px; background: #fff; border-radius: 50%;
-  box-shadow: 0 0 16px 4px rgba(255, 210, 100, 1), 0 0 30px 8px rgba(255, 180, 50, 0.6);
+  width: 6px; height: 24px; background: var(--yh-spark); border-radius: 50%;
+  box-shadow: 0 0 16px 4px var(--yh-sheen-100), 0 0 30px 8px var(--yh-sheen-shadow);
 }
 
 /* TipTap Editor Styles */
@@ -126,7 +400,7 @@
   min-height: 60vh;
   font-size: 1.05rem;
   line-height: 1.9;
-  color: #e8dcc8;
+  color: var(--yh-text);
   letter-spacing: 0.02em;
 }
 
@@ -137,7 +411,7 @@
 .ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   float: left;
-  color: rgba(212, 175, 55, 0.25);
+  color: var(--yh-ink-025);
   pointer-events: none;
   height: 0;
   font-style: italic;
@@ -145,32 +419,32 @@
 
 .ProseMirror h1 {
   font-size: 1.6em;
-  color: #d4af37;
+  color: var(--yh-accent);
   font-weight: 600;
   margin: 0.8em 0 0.4em;
 }
 
 .ProseMirror h2 {
   font-size: 1.3em;
-  color: #c9a227;
+  color: var(--yh-heading);
   font-weight: 500;
   margin: 0.7em 0 0.3em;
 }
 
 .ProseMirror strong {
-  color: #d4af37;
+  color: var(--yh-accent);
 }
 
 .ProseMirror em {
-  color: #c0b090;
+  color: var(--yh-emphasis);
   font-style: italic;
 }
 
 .ProseMirror blockquote {
-  border-left: 2px solid rgba(212, 175, 55, 0.4);
+  border-left: 2px solid var(--yh-line-040);
   padding-left: 1em;
   margin: 0.8em 0;
-  color: rgba(232, 220, 200, 0.7);
+  color: var(--yh-text-070);
   font-style: italic;
 }
 
@@ -183,13 +457,13 @@
 }
 
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 4px 2px rgba(212, 175, 55, 0.4); }
-  50% { box-shadow: 0 0 12px 6px rgba(212, 175, 55, 0.9), 0 0 24px 10px rgba(212, 175, 55, 0.3); }
+  0%, 100% { box-shadow: 0 0 4px 2px var(--yh-tint-040); }
+  50% { box-shadow: 0 0 12px 6px var(--yh-tint-090), 0 0 24px 10px var(--yh-tint-030); }
 }
 
 @keyframes title-breathe {
-  0%, 100% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.8), 0 0 40px rgba(212, 175, 55, 0.4); }
-  50% { text-shadow: 0 0 30px rgba(212, 175, 55, 1), 0 0 60px rgba(212, 175, 55, 0.6), 0 0 100px rgba(212, 175, 55, 0.3); }
+  0%, 100% { text-shadow: 0 0 20px var(--yh-tint-080), 0 0 40px var(--yh-tint-040); }
+  50% { text-shadow: 0 0 30px var(--yh-tint-100), 0 0 60px var(--yh-tint-060), 0 0 100px var(--yh-tint-030); }
 }
 
 .title-breathe {
@@ -211,7 +485,7 @@
 }
 
 .shimmer-text {
-  background: linear-gradient(90deg, #d4af37 0%, #fff8e7 40%, #d4af37 60%, #a07830 100%);
+  background: linear-gradient(90deg, var(--yh-accent) 0%, var(--yh-shimmer-highlight) 40%, var(--yh-accent) 60%, var(--yh-shimmer-end) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -234,8 +508,8 @@
     0deg,
     transparent,
     transparent 2px,
-    rgba(0,0,0,0.03) 2px,
-    rgba(0,0,0,0.03) 4px
+    var(--yh-shadow-003) 2px,
+    var(--yh-shadow-003) 4px
   );
   z-index: 1000;
   animation: scan 8s linear infinite;
@@ -254,7 +528,7 @@
 /* Gold divider */
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.3), transparent);
+  background: linear-gradient(90deg, transparent, var(--yh-tint-030), transparent);
 }
 
 /* Hover glow card */
@@ -262,18 +536,18 @@
   transition: border-color 0.3s, box-shadow 0.3s;
 }
 .card-hover:hover {
-  border-color: rgba(212,175,55,0.35) !important;
-  box-shadow: 0 4px 24px rgba(212,175,55,0.08), inset 0 1px 0 rgba(212,175,55,0.1);
+  border-color: var(--yh-line-035) !important;
+  box-shadow: 0 4px 24px var(--yh-tint-008), inset 0 1px 0 var(--yh-tint-010);
 }
 
 /* Manual golden sentence visual accent */
 .manual-gs-card {
   position: relative;
-  border-color: rgba(240, 198, 88, 0.42) !important;
+  border-color: var(--yh-manual-042) !important;
   box-shadow:
-    0 0 0 1px rgba(240, 198, 88, 0.2) inset,
-    0 8px 28px rgba(240, 198, 88, 0.14),
-    0 4px 24px rgba(0,0,0,0.3);
+    0 0 0 1px var(--yh-manual-020) inset,
+    0 8px 28px var(--yh-manual-014),
+    0 4px 24px var(--yh-shadow-030);
 }
 
 .manual-gs-card::before {
@@ -282,7 +556,7 @@
   inset: 0;
   pointer-events: none;
   border-radius: inherit;
-  background: radial-gradient(circle at 8% 0%, rgba(240,198,88,0.16), transparent 42%);
+  background: radial-gradient(circle at 8% 0%, var(--yh-manual-016), transparent 42%);
 }
 
 .manual-gs-orb {
@@ -292,8 +566,8 @@
   width: 7px;
   height: 7px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(255,232,168,1) 0%, rgba(240,198,88,0.92) 52%, rgba(240,198,88,0) 100%);
-  box-shadow: 0 0 10px rgba(240,198,88,0.9), 0 0 18px rgba(240,198,88,0.45);
+  background: radial-gradient(circle, var(--yh-orb-center) 0%, var(--yh-manual-092) 52%, var(--yh-manual-000) 100%);
+  box-shadow: 0 0 10px var(--yh-manual-090), 0 0 18px var(--yh-manual-045);
   pointer-events: none;
 }
 
@@ -302,6 +576,129 @@
 }
 
 .manual-gs-remove-btn:hover {
-  color: rgba(255, 225, 140, 0.95) !important;
+  color: var(--yh-manual-hover) !important;
   transform: scale(1.06);
+}
+
+/* 主题入口始终可读；切换只改变 CSS 变量，业务组件保持挂载。 */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--yh-border);
+  border-radius: 999px;
+  background: var(--yh-tint-008);
+  color: var(--yh-accent);
+  font-size: 14px;
+  line-height: 1.3;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: var(--yh-tint-015);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--yh-accent);
+  outline-offset: 3px;
+}
+
+/* 白天展示：降低装饰性光晕，保留清晰的纸面层次、操作边界和大字阅读。 */
+:root[data-theme="day"] .theme-toggle {
+  font-size: 15px;
+  background: var(--yh-input);
+}
+
+:root[data-theme="day"] .text-glow,
+:root[data-theme="day"] .text-glow-soft,
+:root[data-theme="day"] .title-breathe,
+:root[data-theme="day"] .ambient-glow,
+:root[data-theme="day"] .agent-profile [style*="text-shadow"] {
+  text-shadow: none !important;
+  box-shadow: none !important;
+}
+
+:root[data-theme="day"] .shimmer-text {
+  color: var(--yh-accent);
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  animation: none;
+}
+
+:root[data-theme="day"] .landing-flame {
+  filter: none !important;
+}
+
+:root[data-theme="day"] .cinematic-overlay::after {
+  display: none;
+}
+
+:root[data-theme="day"] .ProseMirror {
+  font-size: 1.125rem;
+  line-height: 1.95;
+}
+
+:root[data-theme="day"] input::placeholder,
+:root[data-theme="day"] textarea::placeholder {
+  color: var(--yh-muted);
+  opacity: 1;
+}
+
+:root[data-theme="day"] .notebook-topbar,
+:root[data-theme="day"] .notebook-actions,
+:root[data-theme="day"] .editor-toolbar {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+:root[data-theme="day"] .notebook-topbar {
+  background: var(--yh-input);
+}
+
+:root[data-theme="day"] button.opacity-30:not(:disabled),
+:root[data-theme="day"] button.opacity-40:not(:disabled),
+:root[data-theme="day"] button.opacity-50:not(:disabled),
+:root[data-theme="day"] button[title="删除随笔"],
+:root[data-theme="day"] .manual-gs-remove-btn {
+  opacity: 1 !important;
+}
+
+:root[data-theme="day"] .project-actions {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+:root[data-theme="day"] .agent-level-marker {
+  opacity: 1 !important;
+}
+
+:root[data-theme="day"] .agent-profile {
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+:root[data-theme="day"] .translation-summary {
+  max-height: 38%;
+  overflow-y: auto;
+}
+
+:root[data-theme="day"] .manual-gs-card,
+:root[data-theme="day"] .card-hover:hover {
+  box-shadow: 0 3px 16px rgba(76, 58, 31, .07);
+}
+
+:root[data-theme="day"] .manual-gs-orb,
+:root[data-theme="day"] [class^="meditation-sheen-bar-"]::after {
+  box-shadow: none;
+}
+
+:root[data-theme="day"] button:focus-visible,
+:root[data-theme="day"] input:focus-visible,
+:root[data-theme="day"] textarea:focus-visible {
+  outline: 2px solid var(--yh-accent);
+  outline-offset: 3px;
 }

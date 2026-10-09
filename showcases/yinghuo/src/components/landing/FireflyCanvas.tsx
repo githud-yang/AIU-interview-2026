@@ -1,5 +1,6 @@
-/** 首页萤火粒子画布；组件卸载时释放动画帧和尺寸监听。 */
+/** 首页夜间萤火粒子；白天暂停画布，切换或卸载时释放动画和监听。 */
 import { useEffect, useRef } from 'react';
+import { useTheme } from '../ui/theme-context';
 
 interface Firefly {
   x: number;
@@ -15,6 +16,7 @@ interface Firefly {
 }
 
 export default function FireflyCanvas() {
+  const { theme } = useTheme();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animRef = useRef<number>(0);
   const firefliesRef = useRef<Firefly[]>([]);
@@ -24,6 +26,10 @@ export default function FireflyCanvas() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+    if (theme === 'day') {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
 
     const resize = () => {
       canvas.width = window.innerWidth;
@@ -100,7 +106,7 @@ export default function FireflyCanvas() {
       cancelAnimationFrame(animRef.current);
       window.removeEventListener('resize', resize);
     };
-  }, []);
+  }, [theme]);
 
   return (
     <canvas

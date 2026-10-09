@@ -96,19 +96,19 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
               gap: 5,
               padding: '4px 11px',
               borderRadius: 99,
-              background: wordDone ? 'rgba(212,175,55,0.25)' : 'rgba(10,10,26,0.97)',
-              border: '1px solid rgba(212,175,55,0.45)',
-              color: wordDone ? '#d4af37' : 'rgba(212,175,55,0.9)',
-              fontSize: '0.68rem',
+              background: wordDone ? 'var(--yh-tint-025)' : 'var(--yh-popover)',
+              border: '1px solid var(--yh-line-045)',
+              color: wordDone ? 'var(--yh-accent)' : 'var(--yh-ink-090)',
+              fontSize: 'var(--yh-font-068)',
               letterSpacing: '0.06em',
               cursor: analyzingWord ? 'not-allowed' : 'pointer',
-              boxShadow: '0 4px 16px rgba(0,0,0,0.6)',
+              boxShadow: '0 4px 16px var(--yh-shadow-060)',
               whiteSpace: 'nowrap',
             }}
           >
             {analyzingWord
               ? <Loader2 size={10} className="animate-spin" />
-              : <span style={{ fontSize: '0.6rem' }}>✦</span>}
+              : <span style={{ fontSize: 'var(--yh-font-06)' }}>✦</span>}
             {wordDone ? '已添加' : analyzingWord ? '解析中…' : `解释「${selectedWord}」`}
           </button>
         </div>
@@ -120,9 +120,9 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
         transition={{ delay: index * 0.12, duration: 0.5 }}
         className={`rounded-xl overflow-hidden mb-4 card-hover ${isManual ? 'manual-gs-card' : ''}`}
         style={{
-          background: 'rgba(20,18,40,0.8)',
-          border: '1px solid rgba(212,175,55,0.18)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(212,175,55,0.08)',
+          background: 'var(--yh-card)',
+          border: '1px solid var(--yh-line-018)',
+          boxShadow: '0 4px 24px var(--yh-shadow-030), inset 0 1px 0 var(--yh-tint-008)',
         }}
       >
         {isManual && (
@@ -140,19 +140,19 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
         <div
           className="px-4 py-3 cursor-pointer flex items-start justify-between gap-2"
           onClick={() => setExpanded(!expanded)}
-          style={{ borderBottom: expanded ? '1px solid rgba(212,175,55,0.1)' : 'none' }}
+          style={{ borderBottom: expanded ? '1px solid var(--yh-line-010)' : 'none' }}
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 mb-1">
               <span style={{
-                color: 'rgba(212,175,55,0.5)', fontSize: '0.55rem',
-                background: 'rgba(212,175,55,0.1)', padding: '1px 6px',
+                color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-055)',
+                background: 'var(--yh-tint-010)', padding: '1px 6px',
                 borderRadius: 99, letterSpacing: '0.1em',
               }}>
                 金句 {String(index + 1).padStart(2, '0')}
               </span>
               {onAddVocab && (
-                <span style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.55rem', fontStyle: 'italic' }}>
+                <span style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-055)', fontStyle: 'italic' }}>
                   框选原文可解释词语
                 </span>
               )}
@@ -163,8 +163,8 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                 onMouseUp={e => { e.stopPropagation(); handleOriginalMouseUp(); }}
                 onClick={e => e.stopPropagation()}
                 style={{
-                  color: 'rgba(232,220,200,0.6)',
-                  fontSize: '0.75rem',
+                  color: 'var(--yh-text-060)',
+                  fontSize: 'var(--yh-font-075)',
                   fontStyle: 'italic',
                   marginBottom: '0.35rem',
                   lineHeight: 1.6,
@@ -175,7 +175,7 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                 {sentence.original}
               </p>
             )}
-            <p style={{ color: '#d4af37', fontSize: '0.82rem', lineHeight: 1.65, fontFamily: 'Georgia, serif' }}>
+            <p style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-082)', lineHeight: 1.65, fontFamily: 'Georgia, serif' }}>
               "{sentence.english}"
             </p>
           </div>
@@ -191,9 +191,9 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
               style={{
                 marginTop: 2,
                 marginRight: 2,
-                border: '1px solid rgba(240,198,88,0.25)',
-                background: 'rgba(18,16,34,0.78)',
-                color: 'rgba(240,198,88,0.55)',
+                border: '1px solid var(--yh-manual-025)',
+                background: 'var(--yh-manual-control)',
+                color: 'var(--yh-manual-ink-055)',
                 borderRadius: 999,
                 width: 20,
                 height: 20,
@@ -212,13 +212,13 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
           <motion.div
             animate={{ rotate: expanded ? 180 : 0 }}
             transition={{ duration: 0.2 }}
-            style={{ color: 'rgba(212,175,55,0.4)', flexShrink: 0, marginTop: 4 }}
+            style={{ color: 'var(--yh-ink-040)', flexShrink: 0, marginTop: 4 }}
           >
             <ChevronDown size={14} />
           </motion.div>
         </div>
 
-        {error && <p role="alert" className="px-4 py-2" style={{ color: '#f1a59d', fontSize: '0.7rem' }}>{error}
+        {error && <p role="alert" className="px-4 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-07)' }}>{error}
           <button type="button" className="ml-2 underline" disabled={analyzingWord} onClick={() => {
             if (failedAction === 'word') void handleAddVocab();
             else if (failedAction === 'remove' && onRemoveManual) void onRemoveManual(sentence.id).then(() => setError('')).catch(() => setError('撤回标记失败，请重试。'));
@@ -244,10 +244,10 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                       onClick={() => setActiveTab(tab.id)}
                       className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs transition-all"
                       style={{
-                        background: isActive ? 'rgba(212,175,55,0.15)' : 'transparent',
-                        border: isActive ? '1px solid rgba(212,175,55,0.25)' : '1px solid transparent',
-                        color: isActive ? '#d4af37' : 'rgba(212,175,55,0.4)',
-                        fontSize: '0.72rem',
+                        background: isActive ? 'var(--yh-tint-015)' : 'transparent',
+                        border: isActive ? '1px solid var(--yh-line-025)' : '1px solid transparent',
+                        color: isActive ? 'var(--yh-accent)' : 'var(--yh-ink-040)',
+                        fontSize: 'var(--yh-font-072)',
                         letterSpacing: '0.05em',
                         cursor: 'pointer',
                       }}
@@ -264,7 +264,7 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                   {activeTab === 'vocab' && (
                     <motion.div key="vocab" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
                       {sentence.vocabulary.length === 0 ? (
-                        <p style={{ color: 'rgba(212,175,55,0.25)', fontSize: '0.72rem', fontStyle: 'italic' }}>
+                        <p style={{ color: 'var(--yh-ink-025)', fontSize: 'var(--yh-font-072)', fontStyle: 'italic' }}>
                           框选原文中的词语即可添加解释
                         </p>
                       ) : (
@@ -272,16 +272,16 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                           <div
                             key={i}
                             className="mb-3 pb-3 last:mb-0 last:pb-0"
-                            style={{ borderBottom: i < sentence.vocabulary.length - 1 ? '1px solid rgba(212,175,55,0.08)' : 'none' }}
+                            style={{ borderBottom: i < sentence.vocabulary.length - 1 ? '1px solid var(--yh-line-008)' : 'none' }}
                           >
                             <div className="flex items-baseline gap-2 mb-1.5">
-                              <span style={{ color: '#d4af37', fontSize: '0.9rem', fontFamily: 'Georgia, serif', fontWeight: 600 }}>
+                              <span style={{ color: 'var(--yh-accent)', fontSize: '0.9rem', fontFamily: 'Georgia, serif', fontWeight: 600 }}>
                                 {vocab.word}
                               </span>
-                              <span style={{ color: 'rgba(212,175,55,0.45)', fontSize: '0.65rem', fontStyle: 'italic' }}>
+                              <span style={{ color: 'var(--yh-ink-045)', fontSize: 'var(--yh-font-065)', fontStyle: 'italic' }}>
                                 {vocab.partOfSpeech}
                               </span>
-                              <span style={{ color: 'rgba(232,220,200,0.65)', fontSize: '0.72rem' }}>
+                              <span style={{ color: 'var(--yh-text-065)', fontSize: 'var(--yh-font-072)' }}>
                                 {vocab.meaning}
                               </span>
                             </div>
@@ -290,12 +290,12 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                                 <span
                                   key={j}
                                   style={{
-                                    background: 'rgba(212,175,55,0.07)',
-                                    border: '1px solid rgba(212,175,55,0.15)',
+                                    background: 'var(--yh-tint-007)',
+                                    border: '1px solid var(--yh-line-015)',
                                     borderRadius: 6,
                                     padding: '2px 8px',
-                                    color: 'rgba(212,175,55,0.7)',
-                                    fontSize: '0.68rem',
+                                    color: 'var(--yh-ink-070)',
+                                    fontSize: 'var(--yh-font-068)',
                                     fontFamily: 'Georgia, serif',
                                   }}
                                 >
@@ -312,21 +312,21 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                   {activeTab === 'grammar' && (
                     <motion.div key="grammar" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
                       <div className="mb-3">
-                        <p style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.1em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                        <p style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.1em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
                           句式分析
                         </p>
-                        <p style={{ color: 'rgba(232,220,200,0.7)', fontSize: '0.78rem', lineHeight: 1.75 }}>
+                        <p style={{ color: 'var(--yh-text-070)', fontSize: 'var(--yh-font-078)', lineHeight: 1.75 }}>
                           {sentence.grammarAnalysis}
                         </p>
                       </div>
                       <div
                         className="rounded-lg p-3"
-                        style={{ background: 'rgba(212,175,55,0.05)', border: '1px solid rgba(212,175,55,0.12)' }}
+                        style={{ background: 'var(--yh-tint-005)', border: '1px solid var(--yh-line-012)' }}
                       >
-                        <p style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.63rem', letterSpacing: '0.1em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
+                        <p style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-063)', letterSpacing: '0.1em', marginBottom: '0.5rem', textTransform: 'uppercase' }}>
                           高级替换
                         </p>
-                        <p style={{ color: '#c8a84a', fontSize: '0.8rem', fontFamily: 'Georgia, serif', lineHeight: 1.65, fontStyle: 'italic' }}>
+                        <p style={{ color: 'var(--yh-rewrite)', fontSize: 'var(--yh-font-08)', fontFamily: 'Georgia, serif', lineHeight: 1.65, fontStyle: 'italic' }}>
                           "{sentence.advancedRewrite}"
                         </p>
                       </div>
@@ -335,7 +335,7 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
 
                   {activeTab === 'scene' && (
                     <motion.div key="scene" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-                      <p style={{ color: 'rgba(212,175,55,0.5)', fontSize: '0.65rem', letterSpacing: '0.1em', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
+                      <p style={{ color: 'var(--yh-ink-050)', fontSize: 'var(--yh-font-065)', letterSpacing: '0.1em', marginBottom: '0.75rem', textTransform: 'uppercase' }}>
                         适用场景
                       </p>
                       <div className="flex flex-wrap gap-2">
@@ -344,15 +344,15 @@ export default function GoldenSentenceCard({ sentence, index, onAddVocab, onRemo
                             key={i}
                             className="flex items-center gap-1"
                             style={{
-                              background: 'rgba(212,175,55,0.08)',
-                              border: '1px solid rgba(212,175,55,0.2)',
+                              background: 'var(--yh-tint-008)',
+                              border: '1px solid var(--yh-line-020)',
                               borderRadius: 8,
                               padding: '4px 10px',
-                              color: 'rgba(212,175,55,0.85)',
-                              fontSize: '0.72rem',
+                              color: 'var(--yh-ink-085)',
+                              fontSize: 'var(--yh-font-072)',
                             }}
                           >
-                            <span style={{ color: 'rgba(212,175,55,0.4)', fontSize: '0.6rem' }}>✦</span>
+                            <span style={{ color: 'var(--yh-ink-040)', fontSize: 'var(--yh-font-06)' }}>✦</span>
                             {scene}
                           </span>
                         ))}
