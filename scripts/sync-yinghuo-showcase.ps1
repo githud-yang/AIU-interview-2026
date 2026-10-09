@@ -13,7 +13,12 @@ if (Test-Path -LiteralPath $exportRoot) {
   if ((Get-Item -LiteralPath $exportRoot).Attributes -band [IO.FileAttributes]::ReparsePoint -or $existingLinks.Count) { throw '展示目录内存在链接，请先检查。' }
 }
 New-Item -ItemType Directory -Path $exportRoot -Force | Out-Null
-"# Preserve exported source bytes so recorded hashes survive Git checkout.`n* -text" | Set-Content -LiteralPath (Join-Path $exportRoot '.gitattributes') -Encoding utf8
+@'
+# Preserve source bytes and recognise original Windows line endings.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Markdown hard line breaks deliberately use trailing spaces.
+*.md whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+'@ | Set-Content -LiteralPath (Join-Path $exportRoot '.gitattributes') -Encoding utf8
 $relativeFiles = [Collections.Generic.List[string]]::new()
 foreach ($name in @('README.md','NOTICE','.env.example','.gitignore','package.json','package-lock.json','index.html','vite.config.ts','eslint.config.js','tsconfig.json','tsconfig.app.json','tsconfig.node.json','DEPLOY_NETLIFY.md','DEPLOY_VERCEL.md')) { $relativeFiles.Add($name) }
 foreach ($folder in @('src','server','scripts','tests','public')) {

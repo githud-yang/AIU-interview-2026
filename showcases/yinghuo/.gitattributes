@@ -1,2 +1,4 @@
-# Preserve exported source bytes so recorded hashes survive Git checkout.
-* -text
+# Preserve source bytes and recognise original Windows line endings.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Markdown hard line breaks deliberately use trailing spaces.
+*.md whitespace=-blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
