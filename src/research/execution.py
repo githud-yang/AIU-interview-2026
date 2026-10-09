@@ -19,7 +19,7 @@ from typing import Any
 from pydantic import BaseModel, ValidationError
 
 
-REGISTERED_RUNNERS = ("digits_robustness",)
+REGISTERED_RUNNERS = ("digits_robustness", "yolo_tradeoff")
 REGISTERED_ALGORITHMS = ("logistic_regression", "random_forest")
 EXECUTION_NOTICE = "固定领域runner，未启用任意模型生成代码沙箱"
 DEFAULT_EXECUTION_ROOT = Path(__file__).resolve().parents[2] / "logs" / "research"

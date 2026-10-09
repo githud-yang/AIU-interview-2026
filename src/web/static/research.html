@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- 界面结构与交互入口；实际计算和状态由后端服务提供。 -->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
@@ -49,6 +50,7 @@
         <div class="intro-badge"><span class="badge-icon" aria-hidden="true">◎</span><div><strong>真实执行记录</strong><span>完成状态由实际产物确认</span></div></div>
       </section>
 
+      <section class="panel strategy-entry" aria-labelledby="strategy-entry-title"><div><p class="section-kicker">先选值得研究的问题</p><h2 id="strategy-entry-title">灵感、已有工作与目标期刊</h2><p>先查研究差异和投稿要求，再决定做哪些实验。已整理三个候选问题、三个期刊的官方要求及编辑咨询草稿。</p></div><a class="button button-primary" href="/research/strategy">查看选题与投稿策划 ↗</a></section>
       <div id="notice" class="notice" data-tone="neutral" role="status" hidden><span id="notice-text"></span></div>
       <div id="request-error" class="notice" data-tone="error" role="alert" hidden><span id="request-error-text"></span><button id="retry-btn" class="text-button" type="button">重新连接</button></div>
 
@@ -71,16 +73,21 @@
       <section id="new-research" class="panel new-research" aria-labelledby="new-research-title">
         <div class="panel-heading"><div><p class="section-kicker">01 / RESEARCH BRIEF</p><h2 id="new-research-title">定义这一次研究</h2></div><span class="subtle-tag">方向 → 计划 → 实验 → 成稿</span></div>
         <form id="research-form">
-          <label class="field-label" for="research-goal">研究目标<span>描述希望解决的问题与可接受的研究范围</span></label>
-          <textarea id="research-goal" name="goal" rows="3" maxlength="4000" required placeholder="例如：研究手写数字分类中，训练噪声对模型抗干扰能力与推理效率的影响。" autocomplete="off"></textarea>
-          <div class="goal-footer"><span id="goal-help">系统根据已接入的工具和资源安排研究步骤。</span><span id="goal-count">0 / 4000</span></div>
-          <label class="domain-field" for="research-domain">研究领域<select id="research-domain" name="domain" disabled><option value="">正在获取领域</option></select></label>
+          <label id="research-domain-field" class="domain-field" for="research-domain">可运行的研究任务<select id="research-domain" name="domain" disabled><option value="">正在获取任务</option></select></label>
+          <section id="task-preview" class="task-preview" aria-labelledby="task-question" hidden>
+            <p class="task-kicker">本次实际实验</p><h3 id="task-question"></h3><p id="task-description" class="task-description"></p>
+            <dl class="task-facts"><div id="task-dataset-row"><dt>使用数据</dt><dd id="task-dataset"></dd></div><div id="task-comparison-row"><dt>比较方案</dt><dd id="task-comparison"></dd></div><div id="task-metrics-row"><dt>测量指标</dt><dd id="task-metrics"></dd></div><div id="task-outputs-row"><dt>生成材料</dt><dd id="task-outputs"></dd></div></dl>
+            <p id="task-availability" class="task-availability" hidden></p>
+          </section>
+          <div class="goal-heading"><label class="field-label" for="research-goal">这次实验要重点分析什么<span>填写你希望讨论的问题</span></label><button id="fill-example-btn" class="text-button" type="button" disabled>填入示例</button></div>
+          <textarea id="research-goal" name="goal" rows="3" maxlength="4000" required placeholder="例如：比较同一 YOLO 模型在 320、480、640 输入尺寸下的检测精度与速度，分析哪种设置更适合实时检测。" autocomplete="off"></textarea>
+          <div class="goal-footer"><span id="goal-help">正在读取任务范围与可执行步骤。</span><span id="goal-count">0 / 4000</span></div>
           <details id="advanced-options" class="advanced-options">
             <summary>高级选项<span>可选资源限制</span></summary>
             <p class="advanced-description">默认持续完成研究流程。只有填写以下项目时，才按你的设置限制资源；留空表示不设限。</p>
             <div class="budget-fields" aria-label="可选资源限制">
               <label for="budget-minutes">最多运行时间<span class="input-unit"><input id="budget-minutes" name="max_minutes" type="number" min="1" step="1" placeholder="不设限" /><span>分钟</span></span></label>
-              <label for="budget-trials">最多模型拟合<span class="input-unit"><input id="budget-trials" name="max_trials" type="number" min="3" step="1" placeholder="不设限" /><span>次</span></span></label>
+              <label for="budget-trials">最多实验作业<span class="input-unit"><input id="budget-trials" name="max_trials" type="number" min="3" step="1" placeholder="不设限" /><span>次</span></span></label>
               <label for="budget-model-calls">最多模型调用<span class="input-unit"><input id="budget-model-calls" name="model_calls" type="number" min="0" step="1" placeholder="不设限" /><span>次</span></span></label>
             </div>
           </details>
@@ -96,7 +103,7 @@
         <div class="metrics-grid">
           <article class="metric-card"><div class="metric-label">运行状态<span class="metric-symbol" aria-hidden="true">◉</span></div><strong id="run-status" class="metric-value">尚未启动</strong><span id="run-stage" class="metric-detail">等待研究目标</span></article>
           <article class="metric-card"><div class="metric-label">已用时间<span class="metric-symbol" aria-hidden="true">◷</span></div><strong id="elapsed-value" class="metric-value">—</strong><span id="elapsed-detail" class="metric-detail">运行后显示实际用时</span><div id="elapsed-track" class="budget-track" aria-hidden="true" hidden><span id="elapsed-bar"></span></div></article>
-          <article class="metric-card"><div class="metric-label">已执行拟合<span class="metric-symbol" aria-hidden="true">▥</span></div><strong id="trial-value" class="metric-value">—</strong><span id="trial-detail" class="metric-detail">来自真实实验作业</span></article>
+          <article class="metric-card"><div class="metric-label">实验作业<span class="metric-symbol" aria-hidden="true">▥</span></div><strong id="trial-value" class="metric-value">—</strong><span id="trial-detail" class="metric-detail">来自真实实验作业</span></article>
           <article class="metric-card"><div class="metric-label">模型调用<span class="metric-symbol" aria-hidden="true">↗</span></div><strong id="model-call-value" class="metric-value">—</strong><span id="model-call-detail" class="metric-detail">显示实际调用次数</span></article>
           <article class="metric-card"><div class="metric-label">证据与产物<span class="metric-symbol" aria-hidden="true">▤</span></div><strong id="artifact-value" class="metric-value">—</strong><span id="artifact-detail" class="metric-detail">尚无研究产物</span></article>
         </div>

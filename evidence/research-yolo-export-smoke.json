@@ -1,0 +1,1535 @@
+{
+  "run_id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+  "status": "completed",
+  "export": {
+    "revision": 3,
+    "originals_preserved": true,
+    "new_model_calls": 0,
+    "new_model_fits": 0,
+    "experiment_reused": "frozen raw CSV and existing analysis",
+    "duration_seconds": 6.187,
+    "discussion": {
+      "status": "raw_preserved_not_used_as_measured_claims",
+      "numeric_source": "registered CSV and latency observations",
+      "semantic_review": "not_external_review"
+    },
+    "bundle": {
+      "id": "c9456e9512c51be5e6f0edb4",
+      "name": "research_bundle.zip",
+      "kind": "zip",
+      "path": "export_v3/research_bundle.zip",
+      "sha256": "028668d52a769f03e8cca485efdb531f81a3a1c7cb15f6174c582f3b27157c2e",
+      "size_bytes": 13940561,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/c9456e9512c51be5e6f0edb4"
+    }
+  },
+  "new_model_calls": 0,
+  "new_model_fits": 0,
+  "old_artifacts_preserved": 306,
+  "verified_downloads": [
+    {
+      "path": "literature/literature/arxiv_raw.xml",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/crossref_raw.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/search.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_2407.19746v1.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/arxiv_2407.19746v1.pages.json",
+      "hash_matches": true
+    },
+    {
+      "path": "literature/literature/full_text.json",
+      "hash_matches": true
+    },
+    {
+      "path": "question.json",
+      "hash_matches": true
+    },
+    {
+      "path": "research_protocol.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/weights/best.pt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000064.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000064.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000071.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000071.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000072.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000072.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000073.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000073.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000074.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000074.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000077.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000077.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000078.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000078.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000081.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000081.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000086.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000086.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000089.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000089.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000092.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000092.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000094.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000094.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000109.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000109.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000110.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000110.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000113.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000113.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000127.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000127.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000133.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000133.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000136.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000136.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000138.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000138.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000142.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000142.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000143.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000143.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000144.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000144.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000149.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000149.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000151.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000151.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000154.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000154.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000164.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000164.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000165.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000165.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000192.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000192.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000194.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000194.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000196.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000196.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000201.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000201.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000208.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000208.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000241.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000241.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000247.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000247.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000257.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000257.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000260.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000260.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000263.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000263.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000283.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000283.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000294.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000294.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000307.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000307.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000308.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000308.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000309.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000309.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000312.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000312.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000315.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000315.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000321.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000321.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000322.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000322.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000326.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000326.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000328.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000328.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000332.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000332.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000338.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000338.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000349.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000349.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000357.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000357.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000359.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000359.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000360.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000360.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000368.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000368.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000370.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000370.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000382.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000382.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000384.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000384.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000387.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000387.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000389.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000389.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000394.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000394.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000395.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000395.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000397.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000397.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000400.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000400.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000404.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000404.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000415.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000415.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000419.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000419.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000428.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000428.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000431.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000431.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000436.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000436.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000438.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000438.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000443.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000443.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000446.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000446.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000450.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000450.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000459.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000459.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000471.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000471.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000472.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000472.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000474.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000474.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000486.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000486.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000488.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000488.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000490.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000490.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000491.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000491.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000502.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000502.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000510.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000510.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000514.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000514.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000520.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000520.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000529.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000529.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000531.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000531.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000532.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000532.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000536.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000536.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000540.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000540.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000542.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000542.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000544.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000544.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000560.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000560.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000562.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000562.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000564.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000564.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000569.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000569.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000572.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000572.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000575.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000575.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000581.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000581.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000584.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000584.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000589.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000589.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000590.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000590.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000595.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000595.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000597.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000597.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000599.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000599.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000605.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000605.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000612.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000612.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000620.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000620.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000623.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000623.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000625.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000625.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000626.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000626.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000629.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000629.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000634.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000634.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/evaluation/000000000636.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/evaluation/000000000636.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000641.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000641.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000643.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000643.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/images/selection/000000000650.jpg",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset/labels/selection/000000000650.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/selection.yaml",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/evaluation.yaml",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/dataset_manifest.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/data_protocol.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/yolo_runner_source.py",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/data_preparation.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/environment.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_640/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_640/accuracy.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_640/result.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/yolo_baseline.json",
+      "hash_matches": true
+    },
+    {
+      "path": "method/recipe.json",
+      "hash_matches": true
+    },
+    {
+      "path": "method/registered_yolo_runner.py",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_320/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_320/accuracy.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_320/result.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_480/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_480/accuracy.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/selection_480/result.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/frozen_selection.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/yolo_search.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_480/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_480/accuracy.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_480/result.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_640/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_640/accuracy.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/jobs/evaluation_640/result.json",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/metrics.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/latency_samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/samples.csv",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/accuracy_latency.png",
+      "hash_matches": true
+    },
+    {
+      "path": "experiments/yolo_confirmation.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/accuracy_latency.png",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/discussion_audit.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "analysis.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/accuracy_latency.png",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/discussion_audit.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v2/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "review.json",
+      "hash_matches": true
+    },
+    {
+      "path": "submission_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "action_observation.jsonl",
+      "hash_matches": true
+    },
+    {
+      "path": "intervention_log.json",
+      "hash_matches": true
+    },
+    {
+      "path": "project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "research_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/accuracy_latency.png",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/discussion_audit.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/model_analysis_unverified.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.html",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.md",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.pdf",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/paper.tex",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/project_goal.txt",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/quality_status.json",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/submission_bundle.zip",
+      "hash_matches": true
+    },
+    {
+      "path": "manuscript_v3/manuscript.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v3/export_record.json",
+      "hash_matches": true
+    },
+    {
+      "path": "export_v3/research_bundle.zip",
+      "hash_matches": true
+    }
+  ],
+  "manuscript": {
+    "ok": true,
+    "domain": "yolo_tradeoff",
+    "status": "completed",
+    "title": "A Measured YOLO Inference Accuracy-Latency Trade-off Study",
+    "revision": 3,
+    "input_sha256": "1564302bf9598004a1d4ab4d599cba22e879f0a40eb38eda063a978f967538a6",
+    "created_utc": "2026-10-09T16:26:03.948873+00:00",
+    "quality": {
+      "status": "candidate_report",
+      "numeric_integrity": "verified_against_raw_csv",
+      "data_hash_verified": true,
+      "latency_integrity": "mean_sd_and_fps_recomputed_from_raw_observations",
+      "novelty": "novelty_unverified",
+      "external_review": "not_evaluated",
+      "submission": "not_submitted",
+      "independent_test": false,
+      "pretraining_overlap_possible": true,
+      "reproduction": "archived_evidence_only_portable_replay_unimplemented",
+      "target_format": "generic preparation bundle; no venue-specific compliance asserted",
+      "pdf": {
+        "status": "generated",
+        "backend": "reportlab",
+        "tex_compiled": false,
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.pdf"
+      },
+      "latex": {
+        "status": "source_generated_not_compiled"
+      },
+      "model_analysis": "raw source retained separately; not used as measured evidence",
+      "discussion": {
+        "status": "raw_preserved_not_used_as_measured_claims",
+        "numeric_source": "registered CSV and latency observations",
+        "semantic_review": "not_external_review"
+      }
+    },
+    "pdf": {
+      "status": "generated",
+      "backend": "reportlab",
+      "tex_compiled": false,
+      "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.pdf"
+    },
+    "summary": [
+      {
+        "map50": 0.5201748230712627,
+        "map50_95": 0.38358181046973455,
+        "precision": 0.5555121813570801,
+        "recall": 0.45794021204493573,
+        "latency_ms": 10.021053333333333,
+        "latency_sd_ms": 1.7007505117636648,
+        "fps": 99.7899089782977,
+        "imgsz": 320,
+        "repeats": 3,
+        "sample_count": 30,
+        "n_images": 59,
+        "model": "yolo_imgsz320",
+        "split": "selection"
+      },
+      {
+        "map50": 0.6238845608533226,
+        "map50_95": 0.4758265599761474,
+        "precision": 0.728732871851741,
+        "recall": 0.5066700885359263,
+        "latency_ms": 11.083686666666667,
+        "latency_sd_ms": 2.262972811596063,
+        "fps": 90.22268763762719,
+        "imgsz": 480,
+        "repeats": 3,
+        "sample_count": 30,
+        "n_images": 59,
+        "model": "yolo_imgsz480",
+        "split": "selection"
+      },
+      {
+        "map50": 0.6531813562572095,
+        "map50_95": 0.49539505692045427,
+        "precision": 0.72821173638915,
+        "recall": 0.5595424809867199,
+        "latency_ms": 12.068196666666667,
+        "latency_sd_ms": 1.7277225097445945,
+        "fps": 82.86242158798098,
+        "imgsz": 640,
+        "repeats": 3,
+        "sample_count": 30,
+        "n_images": 59,
+        "model": "yolo_imgsz640",
+        "split": "selection"
+      },
+      {
+        "map50": 0.6243131014454046,
+        "map50_95": 0.47337534080788846,
+        "precision": 0.6817568396704631,
+        "recall": 0.5536288730395079,
+        "latency_ms": 12.929319999999999,
+        "latency_sd_ms": 1.7040074721383847,
+        "fps": 77.3435880618625,
+        "imgsz": 480,
+        "repeats": 3,
+        "sample_count": 30,
+        "n_images": 59,
+        "model": "yolo_imgsz480",
+        "split": "evaluation"
+      },
+      {
+        "map50": 0.642731418922824,
+        "map50_95": 0.47456525603477334,
+        "precision": 0.7157806801345051,
+        "recall": 0.5784544412608884,
+        "latency_ms": 12.45417,
+        "latency_sd_ms": 1.6646594791376277,
+        "fps": 80.29439135646936,
+        "imgsz": 640,
+        "repeats": 3,
+        "sample_count": 30,
+        "n_images": 59,
+        "model": "yolo_imgsz640",
+        "split": "evaluation"
+      }
+    ],
+    "selected_imgsz": 480,
+    "baseline_imgsz": 640,
+    "difference_map50_95": -0.0011899152268848856,
+    "difference_latency_ms": 0.4751499999999993,
+    "artifacts": [
+      {
+        "kind": "png",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\accuracy_latency.png",
+        "sha256": "ecdbb3b901d10771541eb3546584727eb5984a5345aba957ca3ff5ec9a2ad560",
+        "size_bytes": 53445
+      },
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\discussion_audit.json",
+        "sha256": "1e6aa306a950bf9b5fd4c1df1f421af3b65cac0a5a6d37116a6b8f9379112e25",
+        "size_bytes": 170
+      },
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\model_analysis_unverified.json",
+        "sha256": "0fbcd84feed0964f9509b9a87d862837e4ae9dc2c59537841f893854c36f2896",
+        "size_bytes": 2714
+      },
+      {
+        "kind": "html",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.html",
+        "sha256": "98f4de5d229c77f66494f674271f5c52a93b5088b46c53f3f36ce6df051fad26",
+        "size_bytes": 81751
+      },
+      {
+        "kind": "md",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.md",
+        "sha256": "43e42ad98f30ae81a6f5988915e4a94e184a6b85802bb2916fdd8038dfd20c48",
+        "size_bytes": 9702
+      },
+      {
+        "kind": "pdf",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.pdf",
+        "sha256": "7a325e124198e4c4233e5b07a7c4595ad14b2e404c1e180eb6ceb2c31950df7e",
+        "size_bytes": 148577
+      },
+      {
+        "kind": "tex",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\paper.tex",
+        "sha256": "2e0b0854f4f6dc0a978df8f9a06ca76b26d839600bddb981426e8ef31e5941ce",
+        "size_bytes": 9707
+      },
+      {
+        "kind": "txt",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\project_goal.txt",
+        "sha256": "4f137bc256ccb1d5e7398127246f1090ebe1787465740b36a08d43bcf41a87ce",
+        "size_bytes": 154
+      },
+      {
+        "kind": "json",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\quality_status.json",
+        "sha256": "d12c73140efee375eeefd958bef6a2dc82e60ca75673c115293d0a396ee6eb6a",
+        "size_bytes": 1137
+      },
+      {
+        "kind": "zip",
+        "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\submission_bundle.zip",
+        "sha256": "4473b241c386b2b09b99fd47e083d2253728b9d2a1c96df6abee37856dd9f4a5",
+        "size_bytes": 11664940
+      }
+    ],
+    "manifest": {
+      "kind": "manuscript_manifest",
+      "path": "D:\\01_个人资料\\学习与生活\\AIU二面\\logs\\research\\runs\\bd8c2a7ccaff4ae4b3be7f7e6fa13c43\\manuscript_v3\\manuscript.json",
+      "sha256": "8c4d950d11bdc0cf5afdd653f73084074c8276333881555b96445ac36e57a45e",
+      "size_bytes": 7178
+    },
+    "analysis": {
+      "interpretation": "该基准测试展示了YOLO模型在不同输入分辨率（320、480、640）下的精度和速度表现。在480输入分辨率下，模型在mAP50和mAP50-95上表现较好，但速度较慢。640输入分辨率下，模型在mAP50和mAP50-95上表现稍好，速度也较快。320输入分辨率下，模型精度较低，但速度最快。此测试用于实时检测研究的前期测量，不声称独立泛化或新颖性。",
+      "limitations": [
+        "COCO128数据集包含前128个COCO train2017图像；COCO预训练可能已经见过这些图像。这并不是一个独立的泛化测试。",
+        "选择和评估子集不重叠，但两者仍然是一个小的公共训练数据样本。已知的本地COCO8图像在可识别时被排除在外。",
+        "未标注的图像被排除在外，并在清单中列出，不被视为负例。这可能会偏向于误报评估。",
+        "固定了一个现有的最佳.pt检查点，仅更改推理图像大小。未进行重新训练、架构创新、置信度阈值调整或新检测器的声明。",
+        "延迟是在此机器上测量的，使用FP32，批量1，5次预热和3次重复的10个单图像预测。它包括预处理、推理、后处理和Python调度；模型加载和图像I/O未包括在内。",
+        "三十个延迟样本重用了每个任务的十个图像。它们的SD是描述性的，而不是置信区间或独立重复训练。GPU频率、温度和背景争用未受控。",
+        "声明的0.02绝对mAP50-95选择容差是工程约束，而不是统计上等效准确性的证据。",
+        "FPS是单图像延迟的倒数，而不是相机FPS。",
+        "保留了精度损失。",
+        "未进行外部审查、独立测试或现场部署。",
+        "COCO公共样本可能与预训练重叠。",
+        "未声称新颖性"
+      ],
+      "follow_up": [
+        "进一步研究应包括不同数据集和更大规模的测试以验证泛化能力。",
+        "可以探索不同预处理和后处理技术以优化不同分辨率下的性能。",
+        "增加训练数据量和多样性，以提高模型的泛化能力。",
+        "进行更严格的延迟测量，控制GPU频率、温度和背景争用等因素。",
+        "尝试不同的模型架构和优化技术以提高精度和速度。",
+        "进行更多的实验以确定不同分辨率下的最佳应用场景。",
+        "探索在不同硬件平台上运行模型的性能差异。",
+        "评估模型在实际场景中的表现，如不同光照条件、背景复杂度等。"
+      ]
+    }
+  },
+  "intervention_count": 0,
+  "budget": {
+    "max_seconds": null,
+    "model_calls": null,
+    "max_trials": null,
+    "elapsed_seconds": 202.0,
+    "used_model_calls": 6,
+    "used_trials": 5
+  }
+}

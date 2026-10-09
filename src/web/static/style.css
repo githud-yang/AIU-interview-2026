@@ -1,3 +1,4 @@
+/** 文字冒险与视觉检测的共享界面样式。 */
 :root {
   --bg: #101718; --panel: #172123; --panel-soft: #1c292b; --border: #2e3e40;
   --text: #edf4f0; --muted: #a0b2ad; --accent: #b6ebc7; --accent-dark: #153b2a;

@@ -1,3 +1,4 @@
+# 启动本项目Web服务并记录所属进程身份。
 param([string]$Python = "python", [ValidateRange(1024,65535)][int]$Port = 8000, [switch]$Background)
 $ErrorActionPreference = "Stop"
 Set-Location -LiteralPath (Split-Path $PSScriptRoot -Parent)

@@ -54,7 +54,7 @@ function run(overrides = {}) {
     ...overrides,
   };
 }
-function harness({ saved = null, initialRun = null, customFetch = null, caps = capabilities, writerSettings = defaultWriterSettings } = {}) {
+function harness({ saved = null, initialRun = null, customFetch = null, caps = capabilities, writerSettings = defaultWriterSettings, EventSource = null } = {}) {
   const elements = Object.fromEntries(ids.map((id) => [id, new Element()]));
   const document = new Element("document");
   Object.assign(document, { hidden: false, getElementById: (id) => { assert.ok(elements[id], `Missing HTML element: ${id}`); return elements[id]; }, createElement: (tag) => new Element(tag) });
@@ -90,11 +90,74 @@ function harness({ saved = null, initialRun = null, customFetch = null, caps = c
     if (url.endsWith("/resume")) { server.run = { ...server.run, status: "running" }; return response(server.run); }
     throw new Error(`Unmocked request ${url}`);
   };
-  const app = createResearchApp({ document, window, storage, fetch, setTimeout: (callback, delay) => { const id = ++timerID; timers.set(id, { callback, delay }); return id; }, clearTimeout: (id) => timers.delete(id), uuid: () => "09998e10-3115-4dc4-b9c7-3f26fcfa650c" });
+  const app = createResearchApp({ document, window, storage, fetch, EventSource, setTimeout: (callback, delay) => { const id = ++timerID; timers.set(id, { callback, delay }); return id; }, clearTimeout: (id) => timers.delete(id), uuid: () => "09998e10-3115-4dc4-b9c7-3f26fcfa650c" });
   return { app, elements, document, window, storage, timers, calls, server, response };
 }
 const postCalls = (h, suffix = "/api/research/runs") => h.calls.filter((call) => call.options.method === "POST" && call.url === suffix);
 function textTree(node) { return [node.textContent, ...node.children.map(textTree)].filter(Boolean).join(" "); }
+function mockEventSources() {
+  const sources = [];
+  class EventSource extends Element {
+    constructor(url) { super("event-source"); this.url = url; this.readyState = 0; this.closed = false; sources.push(this); }
+    close() { this.closed = true; this.readyState = 2; }
+    emit(type, data) { this.dispatch(type, { data: JSON.stringify(data) }); }
+  }
+  return { EventSource, sources };
+}
+
+const yoloCapabilities = { ...capabilities, domains: [{ id: "yolo_tradeoff", label: "YOLO检测精度与速度优化", available: true,
+  question: "输入尺寸改变后，精度和延迟如何变化？", description: "同一权重，不重训", dataset: "公开COCO样例，预训练可能见过",
+  comparison: "320、480、640，FP32，batch1", metrics: "mAP与延迟", outputs: "测量与报告", goal_usage: "仅此尺寸实验，不自动改变方法" }, ...capabilities.domains] };
+
+test("Concrete tasks use server facts and never insert an example into user input automatically", async () => {
+  const h = harness({ caps: yoloCapabilities });
+  await h.app.ready;
+  assert.equal(h.elements["research-domain"].value, "yolo_tradeoff");
+  assert.equal(h.elements["research-domain-field"].hidden, false);
+  assert.match(h.elements["task-dataset"].textContent, /预训练可能见过/);
+  assert.equal(h.elements["research-goal"].value, "");
+  h.elements["research-goal"].value = "我的研究重点";
+  h.elements["research-goal"].dispatch("input");
+  h.elements["fill-example-btn"].dispatch("click");
+  assert.equal(h.elements["research-goal"].value, "我的研究重点");
+  const single = harness();
+  await single.app.ready;
+  assert.equal(single.elements["research-domain-field"].hidden, true);
+});
+
+test("Pending YOLO request restores its task while a new user selection survives refresh", async () => {
+  const payload = { goal: "比较YOLO速度与精度", domain: "yolo_tradeoff", mode: "autonomous", request_id: "pending-yolo-0001", budget: { max_seconds: null, model_calls: null, max_trials: null } };
+  const pending = harness({ caps: yoloCapabilities, saved: JSON.stringify({ pending: payload }),
+    customFetch: (url, options) => url === "/api/research/runs" && options.method === "POST" ? Promise.reject(new Error("Connection still unavailable")) : undefined });
+  await pending.app.ready;
+  assert.equal(pending.elements["research-domain"].value, "yolo_tradeoff");
+  assert.match(pending.elements["task-comparison"].textContent, /320/);
+  const h = harness({ caps: yoloCapabilities });
+  await h.app.ready;
+  h.elements["research-domain"].value = "digits_robustness";
+  h.elements["research-domain"].dispatch("change");
+  await h.app.refresh();
+  assert.equal(h.elements["research-domain"].value, "digits_robustness");
+});
+
+test("YOLO jobs show mAP percent and measured mean latency without claiming model fitting", async () => {
+  const h = harness({ caps: yoloCapabilities, initialRun: run({ domain: "yolo_tradeoff", outputs: { experiment: { training_fits: 0,
+    trials: [{ name: "640评测", status: "completed", config: { imgsz: 640 }, metrics: { map50: .8, latency_ms: 12.5, fps: 80 } }] } } }) });
+  await h.app.ready;
+  const text = textTree(h.elements["experiment-list"]);
+  assert.match(text, /80(?:\.0+)?%/);
+  assert.match(text, /延迟均值/);
+  assert.match(text, /ms/);
+  assert.match(h.elements["trial-detail"].textContent, /训练 0 次/);
+});
+
+test("Unavailable YOLO resources cannot enable its launch", async () => {
+  const caps = { ...yoloCapabilities, domains: [{ ...yoloCapabilities.domains[0], available: false }] };
+  const h = harness({ caps });
+  await h.app.ready;
+  assert.equal(h.elements["start-btn"].disabled, true);
+  assert.match(h.elements["task-availability"].textContent, /尚未就绪/);
+});
 
 test("Capabilities preview has no fabricated run, metrics, experiments or finished stages", async () => {
   const h = harness();
@@ -105,9 +168,9 @@ test("Capabilities preview has no fabricated run, metrics, experiments or finish
   assert.equal(h.elements["stage-list"].children.length, 3);
   assert.ok(h.elements["stage-list"].children.every((stage) => stage.dataset.status === "pending"));
   assert.equal(h.elements["experiment-list"].children.length, 0);
-  assert.match(textTree(h.elements["capability-summary"]), /手写数字分类与抗干扰/);
+  assert.match(textTree(h.elements["capability-summary"]), /手写数字分类鲁棒性/);
   assert.doesNotMatch(textTree(h.elements["capability-summary"]), /配方执行|任意生成代码|sklearn/);
-  assert.match(h.elements["goal-help"].textContent, /噪声干扰/);
+  assert.match(h.elements["goal-help"].textContent, /流程验证/);
   assert.equal(h.elements["resume-btn"].disabled, true);
   assert.equal(h.timers.size, 0, "An empty workspace does not create needless polling");
 });
@@ -183,7 +246,7 @@ test("Explicit limits annotate active runs; finished runs show only actual consu
     h.server.run = { ...h.server.run, status };
     await h.app.poll();
     assert.equal(h.elements["elapsed-track"].hidden, true);
-    assert.equal(h.elements["trial-detail"].textContent, "模型拟合尝试的实际记录");
+    assert.equal(h.elements["trial-detail"].textContent, "实际实验作业记录");
     for (const id of ["elapsed-detail", "trial-detail", "model-call-detail"]) assert.doesNotMatch(h.elements[id].textContent, /最多|上限|你设置|已设置/);
     assert.equal(h.elements["trial-value"].textContent, "1 次");
     assert.equal(h.elements["model-call-value"].textContent, "2 次");
@@ -526,4 +589,101 @@ test("Writer settings failure stays local; a late hidden-page response cannot re
   assert.equal(h.elements["writer-api-key"].value, "");
   assert.doesNotMatch(h.elements["writer-message"].textContent, /sk-leaving-page-key/);
   assert.equal(h.app.state.writerMutation, null);
+});
+
+test("SSE subscribes once and renders snapshots, changed fields and cursor events without a polling timer", async () => {
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ initialRun: run(), EventSource });
+  h.server.events = [{ seq: 4, type: "stage_start", message: "初始记录" }];
+  h.server.last_seq = 4;
+  await h.app.ready;
+  assert.equal(sources.length, 1);
+  assert.equal(sources[0].url, "/api/research/runs/run-1/stream?after_seq=4");
+  assert.equal(h.timers.size, 0);
+  const requests = h.calls.length;
+  sources[0].emit("snapshot", { run: run() });
+  sources[0].emit("state", { run_id: "run-1", changes: { summary: "后台推送的进展", budget: { ...run().budget, used_trials: 3 } }, removed: [] });
+  const batch = { events: [{ seq: 5, type: "trial_completed", message: "评测完成" }], last_seq: 5 };
+  sources[0].emit("events", batch);
+  sources[0].emit("events", batch);
+  assert.equal(h.elements["current-summary"].textContent, "后台推送的进展");
+  assert.equal(h.elements["trial-value"].textContent, "3 次");
+  assert.equal(h.app.state.lastSeq, 5);
+  assert.equal(h.app.state.events.length, 2);
+  assert.equal(h.calls.length, requests, "Push rendering performs no recurring HTTP query");
+  assert.equal(h.timers.size, 0);
+});
+
+test("Switching runs closes the prior stream and ignores its late snapshot and events", async () => {
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ initialRun: run({ status: "completed" }), EventSource,
+    customFetch: (url, options, { response }) => url === "/api/research/runs" && options.method === "POST" ? response(run({ id: "run-2" }), 202) : undefined });
+  await h.app.ready;
+  h.elements["research-goal"].value = "创建第二次实验";
+  await h.app.start({ preventDefault() {} });
+  assert.equal(sources.length, 2);
+  assert.equal(sources[0].closed, true);
+  assert.match(sources[1].url, /run-2\/stream\?after_seq=0$/);
+  sources[0].emit("snapshot", { run: run({ summary: "旧任务迟到的响应" }) });
+  sources[0].emit("events", { events: [{ seq: 9, message: "旧事件" }], last_seq: 9 });
+  assert.equal(h.app.state.run.id, "run-2");
+  assert.equal(h.app.state.lastSeq, 0);
+  assert.doesNotMatch(h.elements["current-summary"].textContent, /旧任务/);
+  sources[1].emit("snapshot", { run: run({ id: "run-2", summary: "新任务状态" }) });
+  assert.equal(h.elements["current-summary"].textContent, "新任务状态");
+});
+
+test("Pagehide and hidden tabs release SSE; returning restores one stream and ignores late messages", async () => {
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ initialRun: run(), EventSource });
+  await h.app.ready;
+  h.window.dispatch("pagehide");
+  assert.equal(sources[0].closed, true);
+  sources[0].emit("snapshot", { run: run({ status: "completed" }) });
+  assert.equal(h.app.state.run.status, "running");
+  h.window.dispatch("pageshow", { persisted: true });
+  await flush();
+  assert.equal(sources.length, 2);
+  assert.equal(h.timers.size, 0);
+  h.document.hidden = true;
+  h.document.dispatch("visibilitychange");
+  assert.equal(sources[1].closed, true);
+  h.document.hidden = false;
+  h.document.dispatch("visibilitychange");
+  await flush();
+  assert.equal(sources.length, 3);
+  assert.equal(sources.filter((source) => !source.closed).length, 1);
+});
+
+test("Transient SSE errors show reconnect state; permanent failures explicitly use compatibility queries", async () => {
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ initialRun: run(), EventSource });
+  await h.app.ready;
+  sources[0].dispatch("error");
+  assert.equal(h.app.state.connected, false);
+  assert.match(h.elements["request-error-text"].textContent, /自动重连/);
+  assert.equal(h.timers.size, 0);
+  sources[0].readyState = 1;
+  sources[0].dispatch("open");
+  assert.equal(h.app.state.connected, true);
+  assert.equal(h.elements["request-error"].hidden, true);
+  sources[0].readyState = 2;
+  sources[0].dispatch("error");
+  assert.equal(sources[0].closed, true);
+  assert.match(h.elements["notice-text"].textContent, /兼容查询/);
+  assert.equal(h.timers.size, 1);
+  h.window.dispatch("pagehide");
+  assert.equal(h.timers.size, 0);
+});
+
+test("Malformed or mismatched SSE data cannot replace a run and exposes fallback state", async () => {
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ initialRun: run(), EventSource });
+  await h.app.ready;
+  sources[0].emit("snapshot", { run: run({ id: "other-run" }) });
+  assert.equal(h.app.state.run.id, "run-1");
+  assert.equal(sources[0].closed, true);
+  assert.match(h.elements["request-error-text"].textContent, /运行编号不匹配/);
+  assert.match(h.elements["notice-text"].textContent, /格式异常/);
+  assert.equal(h.timers.size, 1);
 });

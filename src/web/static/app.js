@@ -1,3 +1,4 @@
+/** 文字冒险UI与交互；模型和工具通过后端API执行。 */
 import { sendChatMessage, getHealth } from "./api.js";
 
 const chat = document.getElementById("chat");

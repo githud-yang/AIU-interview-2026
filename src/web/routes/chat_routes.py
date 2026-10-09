@@ -1,3 +1,4 @@
+"""文字冒险页面与请求校验；对话生成委托给聊天服务。"""
 import httpx
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import HTMLResponse

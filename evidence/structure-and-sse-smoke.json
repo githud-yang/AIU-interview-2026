@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-10",
+  "http": {
+    "/": 200,
+    "/yolo": 200,
+    "/research": 200,
+    "/research/strategy": 200,
+    "/static/research-transport.js": 200,
+    "/static/yolo-transport.js": 200,
+    "/api/research/planning/brief": 200,
+    "/yolo/status": 200
+  },
+  "research_sse": {
+    "snapshot_id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+    "event_cursor": 190,
+    "last_event_id_reconnect": true,
+    "closed_after_read": true
+  },
+  "yolo_sse": {
+    "event": "status",
+    "state": "stopped",
+    "elapsed_server_computed": true,
+    "closed_after_read": true,
+    "camera_or_model_started": false
+  },
+  "missing_module_readme": [],
+  "missing_python_top_comments": [],
+  "research_budget_unchanged": true,
+  "frontend_visual_qa": false,
+  "python_tests": {
+    "total": 143,
+    "passed": 141,
+    "skipped": 2
+  },
+  "node_tests": {
+    "passed": 39
+  },
+  "limitations": [
+    "HTTP/SSE checks do not replace browser visual inspection",
+    "No new experiment, training or cloud model call"
+  ],
+  "real_yolo_public_image_and_three_frame_video": {
+    "passed": true,
+    "tests": 1,
+    "private_camera_opened": false
+  },
+  "yolo_report_v3_visual_qa": {
+    "pages": 3,
+    "rendered_and_inspected": true,
+    "headings_tables_figures_readable": true
+  }
+}

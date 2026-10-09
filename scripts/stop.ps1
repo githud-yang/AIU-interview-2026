@@ -1,3 +1,4 @@
+# 核对身份后停止本项目服务，避免误停其他进程。
 param([switch]$FunctionsOnly, [switch]$WhatIf)
 $ErrorActionPreference = "Stop"
 

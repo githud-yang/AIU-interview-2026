@@ -159,21 +159,6 @@ class LocalLLMAgent:
                 total_calls += 1
         raise ModelResponseError("模型未能完成回复")
 
-def main():
-    agent, history = LocalLLMAgent(), []
-    print("本地智能体（exit 退出，/reset 清空对话）")
-    while True:
-        try:
-            text = input("你> ").strip()
-            if text.lower() in {"exit", "quit"}: break
-            if text == "/reset":
-                history.clear()
-                continue
-            if not text: continue
-            reply = agent.chat(text, history)
-            print("助手>", reply)
-            history.extend([{"role": "user", "content": text}, {"role": "assistant", "content": reply}])
-            history = history[-20:]
-        except (EOFError, KeyboardInterrupt): break
-        except (httpx.HTTPError, ModelResponseError, ValueError) as exc: print("请求失败：", exc)
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    from src.agent.cli import main
+    main()

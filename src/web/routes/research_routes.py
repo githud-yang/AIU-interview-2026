@@ -3,11 +3,12 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from fastapi import APIRouter, HTTPException, Query, Request
-from fastapi.responses import FileResponse, JSONResponse
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from pydantic import ValidationError
 
 from src.research.contracts import RunRequest, ResumeRequest, STAGES
 from src.research.settings import DeepSeekRequest
+from src.web.services.research_stream import reconnect_cursor, research_events
 
 router = APIRouter()
 STATIC = Path(__file__).resolve().parents[1] / "static"
@@ -31,6 +32,20 @@ def translate_error(exc):
 @router.get("/research", include_in_schema=False)
 def research_page():
     return FileResponse(STATIC / "research.html")
+
+
+@router.get("/research/strategy", include_in_schema=False)
+def strategy_page():
+    return FileResponse(STATIC / "research-strategy.html")
+
+
+@router.get("/api/research/planning/{document}")
+def planning_document(document: str):
+    names = {"brief": "yolo-ideas-and-venues.md", "editor-draft": "editor-inquiry-draft.md"}
+    if document not in names:
+        raise HTTPException(404, "策划文档不存在")
+    path = STATIC.parents[2] / "docs" / names[document]
+    return FileResponse(path, media_type="text/markdown; charset=utf-8", filename=names[document])
 
 
 @router.get("/api/research/capabilities")
@@ -71,6 +86,21 @@ def events(run_id: str, request: Request, after_seq: int = Query(0, ge=0)):
         return service(request).store.events(run_id, after_seq)
     except KeyError as exc:
         raise translate_error(exc) from exc
+
+
+@router.get("/api/research/runs/{run_id}/stream")
+async def subscribe_run(run_id: str, request: Request, after_seq: int = Query(0, ge=0, le=2**63 - 1)):
+    current = service(request)
+    try:
+        current.store.get(run_id)
+    except KeyError as exc:
+        raise translate_error(exc) from exc
+    cursor = reconnect_cursor(after_seq, request.headers.get("last-event-id"))
+    return StreamingResponse(research_events(current.store, run_id, request, after_seq=cursor),
+                             media_type="text/event-stream", headers={
+                                 "Cache-Control": "no-cache, no-transform",
+                                 "X-Accel-Buffering": "no",
+                             })
 
 
 @router.post("/api/research/runs/{run_id}/cancel")

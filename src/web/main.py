@@ -1,21 +1,14 @@
-"""
-Web应用主入口
-==============
-只负责组装所有模块、初始化全局对象，不包含任何业务逻辑。
-启动命令：uvicorn src.web.main:app --port 8000
-"""
+"""组装 Web 应用、静态资源和路由；计算与生命周期交给功能模块。"""
 from __future__ import annotations
 
-from contextlib import asynccontextmanager
-import threading
-import webbrowser
 from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src.web.routes import chat_routes, yolo_routes, research_routes
+from src.web.routes import chat_routes, health_routes, research_routes, yolo_routes
+from src.web.services.lifecycle import create_lifespan
 
 # 路径常量
 BASE_DIR = Path(__file__).resolve().parent
@@ -23,26 +16,12 @@ PROJECT_ROOT = BASE_DIR.parents[1]
 
 
 def create_app(*, research_root: Path | None = None) -> FastAPI:
-    """应用工厂函数，创建并配置FastAPI实例"""
-    @asynccontextmanager
-    async def lifespan(app):
-        try:
-            from src.research.runtime import ResearchService
-        except ImportError as exc:
-            app.state.research = None
-            app.state.research_error = str(exc)
-        else:
-            app.state.research = ResearchService(research_root or PROJECT_ROOT / "logs" / "research")
-            from src.research.settings import DeepSeekSettings
-            app.state.research.writer_settings = DeepSeekSettings(PROJECT_ROOT / "configs" / ".env", app.state.research)
-            await app.state.research.start()
-        try:
-            yield
-        finally:
-            if app.state.research:
-                await app.state.research.shutdown()
-            yolo_routes.yolo_manager.stop()
-
+    """保留可注入的数据目录，便于隔离测试和多份演示环境。"""
+    lifespan = create_lifespan(
+        research_root=research_root or PROJECT_ROOT / "logs" / "research",
+        settings_path=PROJECT_ROOT / "configs" / ".env",
+        yolo_manager=yolo_routes.yolo_manager,
+    )
     app = FastAPI(lifespan=lifespan, title="AIU 创智部二面 · 综合演示")
 
     # 挂载静态文件和模板
@@ -55,10 +34,7 @@ def create_app(*, research_root: Path | None = None) -> FastAPI:
     app.include_router(chat_routes.router)
     app.include_router(yolo_routes.router)
     app.include_router(research_routes.router)
-
-    @app.get("/api/health")
-    def health():
-        return {"model": chat_routes.chat_service.agent.health(), "yolo": yolo_routes.yolo_status()}
+    app.include_router(health_routes.router)
 
     return app
 
@@ -70,6 +46,4 @@ app = create_app()
 if __name__ == "__main__":
     import uvicorn
 
-    # 启动2秒后自动打开浏览器
-    threading.Timer(2.0, lambda: webbrowser.open("http://127.0.0.1:8000")).start()
     uvicorn.run(app, host="127.0.0.1", port=8000)

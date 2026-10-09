@@ -1,3 +1,4 @@
+"""登记执行边界与受控实验配方回归。"""
 import subprocess
 import tempfile
 import unittest

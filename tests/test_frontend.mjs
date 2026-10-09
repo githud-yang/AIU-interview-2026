@@ -8,7 +8,8 @@ import { test } from "node:test";
 import vm from "node:vm";
 
 const api = await import(new URL("../src/web/static/api.js", import.meta.url));
-const moduleSource = (name) => readFileSync(new URL(`../src/web/static/${name}`, import.meta.url), "utf8").replace(/^import[^\n]*\n/, "");
+const { createYoloTransport } = await import(new URL("../src/web/static/yolo-transport.js", import.meta.url));
+const moduleSource = (name) => readFileSync(new URL(`../src/web/static/${name}`, import.meta.url), "utf8").replace(/^import[^\n]*\n/gm, "");
 const flush = async () => { for (let i = 0; i < 20; i += 1) await Promise.resolve(); };
 const deferred = () => {
   let resolve;
@@ -131,7 +132,7 @@ test("Adventure locks duplicate sends, keeps 10-turn context and retries without
   assert.equal(dom.elements.chat.children.length, 1);
 });
 
-function visionHarness() {
+function visionHarness({ EventSourceImpl = null } = {}) {
   const dom = makeDOM(["source-select", "start-btn", "stop-btn", "refresh-btn", "video", "video-placeholder", "yolo-msg", "yolo-warning", "source-help", "source-overlay", "placeholder-title", "placeholder-description", "detection-status", "active-source", "detection-model", "fps", "frame-count", "elapsed"]);
   const window = new Element("window");
   const timers = new Map();
@@ -139,7 +140,7 @@ function visionHarness() {
   let nextTimer = 0;
   let current = { running: false, state: "stopped", frame_count: 0, fps: 0 };
   const calls = { starts: 0, stops: 0, status: 0 };
-  const activeState = () => ({ running: true, state: "running", source: "demo", source_label: "公开样例", model: "best.pt", frame_count: 1, fps: 3.3, started_at: new Date().toISOString() });
+  const activeState = () => ({ running: true, state: "running", source: "demo", source_label: "公开样例", model: "best.pt", frame_count: 1, fps: 3.3, started_at: new Date().toISOString(), elapsed_seconds: 5 });
   const context = {
     document: dom.document, window, Date,
     getYoloSources: async () => ({ default: "demo", sources: [{ id: "demo", label: "静态样例", available: true }, { id: "video", label: "本地文件", available: false }] }),
@@ -150,6 +151,13 @@ function visionHarness() {
     setTimeout: (fn) => { const id = ++nextTimer; timers.set(id, fn); return id; },
     clearTimeout: (id) => { timers.delete(id); },
   };
+  context.createYoloTransport = (options) => createYoloTransport({
+    ...options, EventSourceImpl,
+    readSources: context.getYoloSources, readStatus: context.getYoloStatus,
+    requestStart: context.startYolo, requestStop: context.stopYolo,
+    imageUrl: context.getYoloStreamUrl,
+    setTimer: context.setTimeout, clearTimer: context.clearTimeout,
+  });
   vm.runInNewContext(moduleSource("yolo.js"), context);
   return {
     ...dom, window, calls, timers, statusResponses, activeState,
@@ -215,4 +223,148 @@ test("YOLO stops old poll scheduling during pagehide and resumes one poll/stream
   harness.window.dispatch("pageshow", { persisted: false });
   await flush();
   assert.equal(harness.timers.size, 0, "A normal new navigation must not start a second initialization chain");
+});
+
+function eventSourceHarness() {
+  const instances = [];
+  class FakeEventSource {
+    constructor(url) { this.url = url; this.listeners = new Map(); this.closed = false; instances.push(this); }
+    addEventListener(name, callback) { this.listeners.set(name, callback); }
+    send(status) { this.listeners.get("status")?.({ data: JSON.stringify(status) }); }
+    malformed(data) { this.listeners.get("status")?.({ data }); }
+    fail() { this.onerror?.(); }
+    close() { this.closed = true; }
+  }
+  return { EventSourceImpl: FakeEventSource, instances };
+}
+
+test("YOLO subscribes to SSE, formats server elapsed time and closes/resumes one subscription per visible page", async () => {
+  const events = eventSourceHarness();
+  const harness = visionHarness(events);
+  await flush();
+  assert.equal(events.instances.length, 1);
+  assert.equal(events.instances[0].url, "/yolo/events");
+  assert.equal(harness.calls.status, 0, "EventSource primary mode has no HTTP status polling");
+  assert.equal(harness.timers.size, 0);
+  const first = events.instances[0];
+  first.send({ running: false, state: "stopped", elapsed_seconds: null });
+  assert.equal(harness.elements["start-btn"].disabled, false);
+  first.send({ ...harness.activeState(), started_at: "2000-01-01T00:00:00Z", elapsed_seconds: 125 });
+  assert.equal(harness.elements.elapsed.textContent, "2:05", "The browser formats backend duration instead of recalculating it from its clock");
+  assert.equal(harness.elements.video.src, "/yolo/stream");
+  harness.document.hidden = true;
+  harness.document.dispatch("visibilitychange");
+  assert.equal(first.closed, true);
+  assert.equal(harness.elements.video.src, "");
+  first.send({ ...harness.activeState(), frame_count: 999 });
+  assert.equal(harness.elements["frame-count"].textContent, "1", "Late events from a closed subscription cannot update the page");
+  harness.document.hidden = false;
+  harness.document.dispatch("visibilitychange");
+  assert.equal(events.instances.length, 2);
+  events.instances[1].send({ ...harness.activeState(), elapsed_seconds: 126 });
+  assert.equal(harness.elements.elapsed.textContent, "2:06");
+  harness.window.dispatch("pagehide");
+  assert.equal(events.instances[1].closed, true);
+  harness.window.dispatch("pageshow", { persisted: true });
+  assert.equal(events.instances.length, 3);
+  events.instances[2].fail();
+  events.instances[2].fail();
+  assert.equal(events.instances[2].closed, true);
+  assert.equal(harness.timers.size, 1, "Duplicate errors schedule only one reconnect");
+  assert.equal(harness.elements["detection-status"].textContent, "服务未连接");
+  harness.runTimer();
+  assert.equal(events.instances.length, 4);
+  events.instances[3].send({ running: false, state: "stopped", elapsed_seconds: null });
+  assert.equal(harness.elements["detection-status"].textContent, "已停止");
+  assert.equal(harness.calls.status, 0);
+  harness.window.dispatch("pagehide");
+  assert.equal(events.instances[3].closed, true);
+  assert.equal(harness.timers.size, 0);
+});
+
+test("YOLO transport rejects malformed SSE and ignores a late HTTP status after a newer pushed state", async () => {
+  const events = eventSourceHarness();
+  const states = [];
+  const errors = [];
+  const timers = new Map();
+  let serial = 0;
+  let response = deferred();
+  const transport = createYoloTransport({
+    ...events, onStatus: (value) => states.push(value), onError: (error) => errors.push(error.message),
+    readStatus: () => response.promise,
+    setTimer: (callback) => { timers.set(++serial, callback); return serial; },
+    clearTimer: (id) => timers.delete(id),
+  });
+  transport.start();
+  transport.start();
+  assert.equal(events.instances.length, 1);
+  const refreshing = transport.refresh();
+  events.instances[0].send({ running: true, state: "running", frame_count: 8 });
+  response.resolve({ running: false, state: "stopped" });
+  await refreshing;
+  assert.equal(states.length, 1);
+  assert.equal(states[0].frame_count, 8, "An older HTTP response cannot replace a newer pushed state");
+  response = deferred();
+  const failing = transport.refresh();
+  events.instances[0].send({ running: true, state: "running", frame_count: 9 });
+  response.reject(new Error("outdated request failed"));
+  await failing;
+  assert.equal(errors.length, 0, "An old failed request cannot disconnect a healthy SSE subscription");
+  events.instances[0].malformed("{bad json");
+  assert.equal(errors.length, 1);
+  assert.equal(events.instances[0].closed, true);
+  assert.equal(timers.size, 1);
+  const retry = timers.values().next().value;
+  timers.clear();
+  retry();
+  assert.equal(events.instances.length, 2);
+  events.instances[1].send({ running: false, state: "stopped" });
+  assert.equal(states.at(-1).state, "stopped");
+  events.instances[1].malformed(JSON.stringify({ state: "running" }));
+  assert.match(errors.at(-1), /无效/);
+  transport.close();
+  assert.equal(timers.size, 0);
+  const before = states.length;
+  events.instances[1].send({ running: true, state: "running" });
+  assert.equal(states.length, before);
+});
+
+test("YOLO fallback recovers from HTTP errors and does not reuse a pre-command status request", async () => {
+  const states = [];
+  const errors = [];
+  const timers = new Map();
+  let serial = 0;
+  let reads = 0;
+  let request = deferred();
+  const transport = createYoloTransport({
+    EventSourceImpl: null, onStatus: (value) => states.push(value), onError: (error) => errors.push(error.message),
+    readStatus: () => { reads += 1; return request.promise; },
+    requestStart: async () => ({ ok: true }),
+    setTimer: (callback) => { timers.set(++serial, callback); return serial; },
+    clearTimer: (id) => timers.delete(id),
+  });
+  transport.start();
+  request.reject(new Error("offline"));
+  await flush();
+  assert.deepEqual(errors, ["offline"]);
+  assert.equal(timers.size, 1);
+  const retry = timers.values().next().value;
+  timers.clear();
+  request = deferred();
+  retry();
+  await flush();
+  const older = request;
+  await transport.startDetection("demo");
+  request = deferred();
+  const confirmation = transport.refresh();
+  assert.equal(reads, 3, "Command completion forces a new confirmation instead of reusing a pre-command request");
+  request.resolve({ running: true, state: "running", frame_count: 2 });
+  await confirmation;
+  older.resolve({ running: false, state: "stopped" });
+  await flush();
+  assert.equal(states.length, 1);
+  assert.equal(states[0].state, "running");
+  assert.equal(timers.size, 1);
+  transport.close();
+  assert.equal(timers.size, 0);
 });

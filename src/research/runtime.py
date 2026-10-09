@@ -114,10 +114,16 @@ class ResearchService:
             raise ValueError("论文模型设置正在保存，请稍后启动研究")
         if self.exporting:
             raise ValueError("正在导出已完成研究，请稍后启动新研究")
-        if request.domain != "digits_robustness" or request.mode != "autonomous":
-            raise ValueError("当前支持 digits_robustness 自动流程")
-        if request.budget.max_trials is not None and request.budget.max_trials < 15:
+        if request.domain not in {"digits_robustness", "yolo_tradeoff"} or request.mode != "autonomous":
+            raise ValueError("当前支持手写数字抗干扰与YOLO精度速度实验")
+        if request.domain == "digits_robustness" and request.budget.max_trials is not None and request.budget.max_trials < 15:
             raise ValueError("完整三种子流程至少需要15次拟合；请设置足够预算")
+        if request.domain == "yolo_tradeoff":
+            from .yolo_domain import capability
+            if not capability()["available"]:
+                raise ValueError("YOLO实验需要已登记的本地权重与Ultralytics环境")
+            if request.budget.max_trials is not None and request.budget.max_trials < 5:
+                raise ValueError("YOLO流程最多需要5个评测作业，请留空或设置至少5；不进行训练")
         run, created = self.store.create(request)
         if created:
             self._schedule(run["id"])
@@ -320,6 +326,16 @@ class ResearchService:
         self.store.update(run_id, mutate=charge, event={"type": "trial_started",
             "stage": self.store.get(run_id)["stage"], "message": "登记一次真实模型拟合"})
 
+    def _before_yolo_trial(self, run_id):
+        self._boundary(run_id)
+        def charge(r):
+            cap = r["budget"]["max_trials"]
+            if cap is not None and r["budget"]["used_trials"] >= cap:
+                raise ResearchBudgetExceeded("累计评测作业上限已耗尽")
+            r["budget"]["used_trials"] += 1
+        self.store.update(run_id, mutate=charge, event={"type": "trial_started",
+            "stage": self.store.get(run_id)["stage"], "message": "登记一次YOLO精度与延迟评测；不进行训练"})
+
     def _output(self, run_id, stage):
         return self.store.operation(run_id, stage)
 
@@ -367,6 +383,9 @@ class ResearchService:
                 manuscript=output["revised_manuscript"], analysis=output["revised_manuscript"].get("analysis", {})))
 
     async def _execute(self, run_id, stage, root, run):
+        if run["domain"] == "yolo_tradeoff" and stage != "submission":
+            from .yolo_workflow import execute_yolo_stage
+            return await execute_yolo_stage(self, run_id, stage, root, run)
         goal = run["goal"]
         if stage == "literature":
             (root / "project_goal.txt").write_text(goal, encoding="utf-8")
@@ -445,7 +464,7 @@ class ResearchService:
             write_json(root / "research_protocol.json", result)
             result["artifacts"] = [{"path": str(root / "research_protocol.json"), "kind": "protocol"}]
             return result
-        recipe = self._output(run_id, "protocol")["recipe"] if stage not in {"literature", "reading", "ideation", "protocol"} else None
+        recipe = self._output(run_id, "protocol")["recipe"] if stage in {"data", "baseline", "method", "experiments", "validation"} else None
         if stage == "data":
             return await asyncio.to_thread(prepare_dataset, root, recipe)
         if stage in {"baseline", "experiments", "validation"}:
@@ -554,9 +573,26 @@ class ResearchService:
 
     async def capabilities(self):
         execution, model, writer = await asyncio.gather(asyncio.to_thread(capability_report), self.provider.health(), self.provider.writer.health())
-        return {"model": model, "writer": writer, "execution": {**execution, "available": execution["fixed_runner"]["available"],
+        from .yolo_domain import capability
+        yolo = capability()
+        return {"model": model, "writer": writer, "execution": {**execution, "available": execution["fixed_runner"]["available"] or yolo["available"],
                 "detail": execution["notice"]},
-            "domains": [{"id": "digits_robustness", "label": "视觉分类鲁棒性", "description": "真实digits数据、三种子、候选增强与固定留出测试"}],
+            "domains": [{"id": "yolo_tradeoff", "label": "YOLO检测精度与速度优化", "available": yolo["available"],
+                "description": "固定已有YOLO权重，比较输入尺寸对检测精度和推理延迟的影响；不重训",
+                "question": "同一个YOLO模型用320、480、640输入时，哪些配置能加快检测并保留精度？",
+                "dataset": "公开COCO128标注样例；划分选配置与评测两部分，预训练可能见过这些图像",
+                "comparison": "同一权重、FP32、batch=1；以640输入为基线，比较320和480",
+                "metrics": "mAP50、mAP50–95、预热后端到端延迟（毫秒）与单张吞吐量（FPS）",
+                "outputs": "全部配置结果、精度—延迟图、选定配置、原始测量和研究报告",
+                "goal_usage": "填写重点用于文献检索和结果论述。当前只优化输入尺寸，不自动改结构或重训；公开样例不证明真实场景泛化。"},
+                {"id": "digits_robustness", "label": "手写数字加噪训练对照", "available": execution["fixed_runner"]["available"],
+                 "description": "手写数字训练加噪与不加噪的固定对照实验",
+                 "question": "训练时加入噪声，能否提高干扰图片的识别率？正常图片的准确率会下降多少？",
+                 "dataset": "1797张8×8手写数字图片，标签为0至9",
+                 "comparison": "训练时加噪声与不加噪声；三个随机种子，共享固定数据划分",
+                 "metrics": "正常图片和加噪图片的分类准确率、Macro F1及训练耗时",
+                 "outputs": "对照结果、图表、原始预测、分析和研究报告",
+                 "goal_usage": "填写重点用于检索与论述，实际执行仍是此预设实验，不自动切换数据或方法。"}],
             "stages": [{"id": k, "label": v} for k, v in STAGES],
-            "limitations": ["当前自动研究限于注册的分类实验领域", "未启用任意生成代码沙箱",
+            "limitations": ["当前自动研究限于登记的YOLO输入尺寸和数字加噪对照实验", "未启用任意生成代码沙箱",
                 "全文限开放arXiv PDF，公式/表格需额外核验", "流程完成不代表新颖性、接受或发表"]}

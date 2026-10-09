@@ -1,3 +1,4 @@
+"""真实训练归档格式、来源与哈希回归。"""
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import json

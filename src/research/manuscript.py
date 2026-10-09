@@ -98,6 +98,10 @@ def build_manuscript(output_dir: str | Path, *, question: str, literature: dict 
     The archive is a preparation bundle. No channel-specific format compliance,
     author declaration, submission, acceptance or scientific novelty is asserted.
     """
+    if experiment.get("domain") == "yolo_tradeoff":
+        from .yolo_manuscript import build_yolo_manuscript
+        return build_yolo_manuscript(output_dir, question=question, literature=literature,
+                                     experiment=experiment, analysis=analysis, revision=revision)
     root = Path(output_dir).resolve()
     summary = _verify_experiment(experiment, root)
     if not isinstance(revision, int) or isinstance(revision, bool) or revision < 1:

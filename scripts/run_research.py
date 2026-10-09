@@ -13,6 +13,7 @@ def main():
     parser.add_argument("--base-url", default="http://127.0.0.1:8000")
     parser.add_argument("--goal", default="Study whether Gaussian training augmentation improves digit classification under noisy inputs while measuring its clean accuracy trade-off.")
     parser.add_argument("--run-id", help="Observe an existing run without creating another")
+    parser.add_argument("--domain", choices=("digits_robustness", "yolo_tradeoff"), default="digits_robustness")
     parser.add_argument("--model-calls", type=int, help="Optional cumulative model-call limit")
     parser.add_argument("--seconds", type=int, help="Optional cumulative elapsed-time limit")
     parser.add_argument("--trials", type=int, help="Optional cumulative model-fit limit")
@@ -22,7 +23,7 @@ def main():
         if args.run_id:
             run_id = args.run_id
         else:
-            request = {"goal": args.goal, "domain": "digits_robustness", "mode": "autonomous",
+            request = {"goal": args.goal, "domain": args.domain, "mode": "autonomous",
                        "request_id": uuid.uuid4().hex, "budget": {"max_seconds": args.seconds,
                            "model_calls": args.model_calls, "max_trials": args.trials}}
             response = client.post("/api/research/runs", json=request)
@@ -50,7 +51,7 @@ def main():
         evidence = {"run": run, "verified_downloads": downloads,
                     "model_calls_actual": run["budget"]["used_model_calls"],
                     "human_interventions_actual": run["intervention_count"],
-                    "limitations": ["Registered digits recipe study only", "No novelty, external review or publication asserted"]}
+                    "limitations": ["Registered task only: " + run["domain"], "No novelty, external review or publication asserted"]}
         path = Path(args.evidence)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(evidence, ensure_ascii=False, indent=2), encoding="utf-8")

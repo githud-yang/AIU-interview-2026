@@ -1,3 +1,6 @@
+/** Research workspace UI: render server records and dispatch user commands. */
+import { createResearchTransport } from "./research-transport.js";
+
 const STORAGE_KEY = "aiu.research.workspace.v1";
 const ACTIVE_STATUSES = new Set(["queued", "running", "cancelling"]);
 const RESUMABLE_STATUSES = new Set(["interrupted", "failed", "needs_input"]);
@@ -12,7 +15,8 @@ const QUALITY_LABELS = {
   candidate_report_novelty_unverified: "候选稿 · 创新待验证",
 };
 const DOMAIN_COPY = {
-  digits_robustness: { label: "手写数字分类与抗干扰", description: "当前可研究手写数字在噪声干扰下的识别效果与准确率变化。" },
+  digits_robustness: { label: "手写数字分类与抗干扰", launch: "启动数字识别实验", example: "比较训练噪声增强对手写数字识别的影响，重点分析抗干扰能力与干净图像准确率的变化。" },
+  yolo_tradeoff: { label: "YOLO 检测精度与速度", launch: "启动YOLO实验", example: "比较同一 YOLO 模型在 320、480、640 输入尺寸下的检测精度与速度，分析哪种设置更适合实时检测。" },
 };
 
 export function safeURL(value, baseURL, { artifact = false } = {}) {
@@ -56,26 +60,42 @@ function configuredLimit(value, minimum = 0) {
   return Number.isSafeInteger(number) && number >= minimum ? number : null;
 }
 function domainDescription(domain) {
-  return DOMAIN_COPY[domain?.id]?.description || domain?.description || "系统根据已接入的工具和资源安排研究步骤。";
+  return domain?.goal_usage || domain?.description || "分析重点用于文献检索与结果论述；实验执行范围以任务卡片为准。";
+}
+function taskText(value) {
+  return Array.isArray(value) ? value.map((item) => asText(item, "")).filter(Boolean).join("\n") : asText(value, "");
+}
+function metricsText(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return asText(value);
+  const ratios = { map50: "mAP50", map50_95: "mAP50–95" };
+  const milliseconds = { latency_ms: "端到端延迟均值", latency_median_ms: "端到端延迟中位数", latency_mean_ms: "端到端延迟均值", latency_p95_ms: "端到端延迟 P95", p95_ms: "端到端延迟 P95" };
+  if (!Object.keys(value).some((key) => ratios[key] || milliseconds[key] || key === "fps")) return asText(value);
+  return Object.entries(value).map(([key, number]) => {
+    if (typeof number === "number" && Number.isFinite(number)) {
+      if (ratios[key] && number >= 0 && number <= 1) return `${ratios[key]}: ${(number * 100).toFixed(2)}%`;
+      if (milliseconds[key]) return `${milliseconds[key]}: ${number.toFixed(2)} ms`;
+      if (key === "fps") return `吞吐速度: ${number.toFixed(2)} FPS`;
+    }
+    return `${ratios[key] || key}: ${asText(number)}`;
+  }).join("\n");
 }
 
 export function createResearchApp(dependencies = {}) {
   const doc = dependencies.document || globalThis.document;
   const win = dependencies.window || globalThis.window;
-  const fetcher = dependencies.fetch || globalThis.fetch.bind(globalThis);
+  const transport = dependencies.transport || createResearchTransport(dependencies);
+  const request = transport.request;
   let storage = dependencies.storage;
   if (!storage) {
     try { storage = win.localStorage; }
     catch { storage = { getItem() { return null; }, setItem() { throw new Error("Storage unavailable"); } }; }
   }
-  const schedule = dependencies.setTimeout || globalThis.setTimeout;
-  const unschedule = dependencies.clearTimeout || globalThis.clearTimeout;
   const uuid = dependencies.uuid || (() => globalThis.crypto.randomUUID());
   const baseURL = dependencies.baseURL || win.location.href;
   const el = (id) => doc.getElementById(id);
   const state = {
     capabilities: null, run: null, pending: null, savedRunID: null,
-    mutation: false, refreshPromise: null, pollBusy: false, timer: null, paused: false,
+    mutation: false, refreshPromise: null, pollBusy: false, paused: false,
     generation: 0, events: [], lastSeq: 0, connected: false, initialized: false,
     writerSettings: null, writerMutation: null, writerInputDirty: false,
     writerSettingsRevision: 0, writerActionGeneration: 0, writerSettingsLoadFailed: false,
@@ -125,45 +145,42 @@ export function createResearchApp(dependencies = {}) {
     el("connection-status").dataset.tone = connected ? "success" : "error";
     if (!connected && state.run) write("footer-state", "连接中断 · 展示上次获取的服务端记录");
   }
-  async function request(path, options = {}, timeoutMS = 15000) {
-    const controller = new AbortController();
-    const timeout = schedule(() => controller.abort(), timeoutMS);
-    let response;
-    try {
-      response = await fetcher(path, { ...options, headers: { Accept: "application/json", ...(options.body ? { "Content-Type": "application/json" } : {}), ...options.headers }, signal: controller.signal, cache: "no-store" });
-    } catch (error) {
-      const failure = new Error(error?.name === "AbortError" ? "服务响应超时，请重新连接确认运行状态。" : "无法连接服务，请检查网络和后台服务。");
-      failure.uncertain = Boolean(options.method && options.method !== "GET");
-      throw failure;
-    } finally { unschedule(timeout); }
-    let data;
-    try { data = await response.json(); }
-    catch {
-      const failure = new Error("服务返回了无法读取的响应，请重新连接确认运行状态。");
-      failure.uncertain = Boolean(options.method && options.method !== "GET");
-      throw failure;
-    }
-    if (!response.ok) {
-      const detail = typeof data.detail === "string" ? data.detail : (data.error || (Array.isArray(data.detail) ? data.detail.map((issue) => issue.msg || asText(issue)).join("；") : null));
-      const failure = new Error(detail || `请求失败（HTTP ${response.status}）`);
-      failure.status = response.status;
-      failure.uncertain = response.status >= 500 && Boolean(options.method && options.method !== "GET");
-      throw failure;
-    }
-    if (!data || typeof data !== "object") throw new Error("服务返回的数据格式无效。");
-    return data;
-  }
-
   function updateControls() {
     const active = Boolean(state.run && ACTIVE_STATUSES.has(state.run.status));
-    const ready = Boolean(state.capabilities?.execution?.available && listFrom(state.capabilities?.domains, []).length);
+    const domain = selectedDomain();
+    const domains = listFrom(state.capabilities?.domains, []);
+    const ready = Boolean(state.capabilities?.execution?.available && domain && domain.available !== false);
+    const selectionReady = Boolean(state.capabilities?.execution?.available && domains.some((item) => item.available !== false));
     el("start-btn").disabled = state.mutation || Boolean(state.writerMutation) || active || !ready || !state.connected;
     el("cancel-btn").disabled = state.mutation || !state.connected || !state.run || !["queued", "running"].includes(state.run.status);
     el("resume-btn").disabled = state.mutation || !state.connected || !state.run || !RESUMABLE_STATUSES.has(state.run.status);
-    for (const id of ["research-goal", "research-domain", "budget-minutes", "budget-trials", "budget-model-calls"]) el(id).disabled = state.mutation || active || Boolean(state.pending) || (id === "research-domain" && !ready);
-    write("start-label", state.mutation ? "正在处理" : state.pending ? "确认启动状态" : "启动研究");
+    for (const id of ["research-goal", "research-domain", "budget-minutes", "budget-trials", "budget-model-calls"]) el(id).disabled = state.mutation || active || Boolean(state.pending) || (id === "research-domain" && !selectionReady);
+    el("fill-example-btn").disabled = state.mutation || active || Boolean(state.pending) || !ready || Boolean(el("research-goal").value.trim());
+    write("start-label", state.mutation ? "正在处理" : state.pending ? "确认启动状态" : DOMAIN_COPY[domain?.id]?.launch || "启动实验");
     write("start-help", state.mutation ? "正在与服务确认，请稍候" : active ? "已有研究正在执行" : state.writerMutation ? "论文模型设置处理中，完成后可启动研究" : !ready ? "当前执行条件未就绪" : !state.connected ? "连接恢复后可以启动" : state.pending ? "沿用原请求编号，不新建重复运行" : !state.capabilities?.model?.available ? "模型暂不可用，使用预设流程并记录原因" : "自动推进至流程完成，可随时取消");
     updateWriterControls();
+  }
+
+  function selectedDomain() {
+    return listFrom(state.capabilities?.domains, []).find((domain) => domain.id === el("research-domain").value);
+  }
+  function renderSelectedTask() {
+    const domain = selectedDomain();
+    el("task-preview").hidden = !domain;
+    if (!domain) { write("goal-help", "暂无可运行的实验任务。"); updateControls(); return; }
+    write("task-question", domain.question || domain.label || DOMAIN_COPY[domain.id]?.label || domain.id);
+    write("task-description", taskText(domain.description), "");
+    el("task-description").hidden = !taskText(domain.description);
+    for (const field of ["dataset", "comparison", "metrics", "outputs"]) {
+      const value = taskText(domain[field]);
+      write(`task-${field}`, value, "");
+      el(`task-${field}-row`).hidden = !value;
+    }
+    el("task-availability").hidden = domain.available !== false;
+    write("task-availability", domain.available === false ? "此任务的执行资源尚未就绪，请选择其他可运行任务。" : "", "");
+    write("goal-help", domainDescription(domain));
+    el("research-goal").placeholder = `例如：${DOMAIN_COPY[domain.id]?.example || domain.question || "填写本次实验希望重点分析的问题。"}`;
+    updateControls();
   }
 
   function updateWriterControls() {
@@ -294,22 +311,23 @@ export function createResearchApp(dependencies = {}) {
     const dot = element("span", "status-dot");
     dot.dataset.tone = execution.available ? "success" : "warning";
     const domains = listFrom(data.domains, []);
-    const availableDomains = domains.map((domain) => DOMAIN_COPY[domain.id]?.label || domain.label || domain.id).join("、");
-    const parts = [execution.available ? `已接入${availableDomains || "当前研究领域"}；将自动检索文献、完成实验并生成论文与复现材料。` : "研究执行环境暂未就绪。"];
+    const availableDomains = domains.filter((domain) => domain.available !== false).map((domain) => domain.label || DOMAIN_COPY[domain.id]?.label || domain.id).join("、");
+    const parts = [execution.available && availableDomains ? `可运行任务：${availableDomains}。按所选方案检索文献、测量指标并生成论文与复现材料。` : "研究执行条件暂未就绪，请查看任务资源状态。"];
     if (!model.available) parts.push("研究规划模型暂不可用，使用预设流程时会保留记录。");
     if (writer && !writer.available) parts.push("论文模型暂不可用，稿件生成方式会记录在结果中。");
     summary.replaceChildren(dot, element("p", "", parts.join(" ")));
     const select = el("research-domain");
-    const previous = select.value;
+    const previous = state.pending?.domain || (ACTIVE_STATUSES.has(state.run?.status) ? state.run.domain : select.value);
     const options = domains.map((domain) => {
-      const option = element("option", "", DOMAIN_COPY[domain.id]?.label || domain.label || domain.id);
+      const option = element("option", "", (domain.label || DOMAIN_COPY[domain.id]?.label || domain.id) + (domain.available === false ? "（资源未就绪）" : ""));
       option.value = domain.id;
+      option.disabled = domain.available === false;
       return option;
     });
-    select.replaceChildren(...(options.length ? options : [element("option", "", "暂无接入领域")]));
-    select.value = domains.some((domain) => domain.id === previous) ? previous : domains[0]?.id || "";
-    const selected = domains.find((domain) => domain.id === select.value);
-    write("goal-help", domainDescription(selected));
+    select.replaceChildren(...(options.length ? options : [element("option", "", "暂无可运行任务")]));
+    select.value = domains.some((domain) => domain.id === previous) ? previous : domains.find((domain) => domain.available !== false)?.id || domains[0]?.id || "";
+    el("research-domain-field").hidden = domains.length <= 1;
+    renderSelectedTask();
     if (!state.run) renderStages(listFrom(data.stages, []).map((stage) => ({ ...stage, status: "pending" })), null);
     updateControls();
   }
@@ -367,9 +385,9 @@ export function createResearchApp(dependencies = {}) {
       const configData = data.config || data.recipe || { ...(data.condition !== undefined ? { condition: data.condition } : {}), ...(data.seed !== undefined ? { seed: data.seed } : {}) };
       const config = element("td", "", asText(configData));
       config.style.whiteSpace = "pre-wrap";
-      const metricFields = ["accuracy_mean", "accuracy_sd", "macro_f1_mean", "macro_f1_sd", "seeds_completed", "accuracy", "macro_f1"].filter((key) => data[key] !== undefined);
+      const metricFields = ["accuracy_mean", "accuracy_sd", "macro_f1_mean", "macro_f1_sd", "seeds_completed", "accuracy", "macro_f1", "map50", "map50_95", "latency_ms", "latency_mean_ms", "latency_median_ms", "latency_p95_ms", "p95_ms", "fps"].filter((key) => data[key] !== undefined);
       const actualMetrics = metricFields.length ? Object.fromEntries(metricFields.map((key) => [key, data[key]])) : null;
-      const metrics = element("td", "", asText(data.metrics || data.result || data.results || data.summary || actualMetrics));
+      const metrics = element("td", "", metricsText(data.metrics || data.result || data.results || data.summary || actualMetrics));
       metrics.style.whiteSpace = "pre-wrap";
       const evidence = element("td", "", data.error || data.artifact_id || data.log || data.duration_seconds !== undefined && `耗时 ${data.duration_seconds} 秒` || "—");
       row.append(name, status, config, metrics, evidence);
@@ -448,6 +466,10 @@ export function createResearchApp(dependencies = {}) {
     if (!run || typeof run.id !== "string") throw new Error("服务未返回有效的研究运行编号。");
     if (state.run?.id !== run.id) { state.events = []; state.lastSeq = 0; renderEvents(); }
     state.run = run;
+    if (ACTIVE_STATUSES.has(run.status) && listFrom(state.capabilities?.domains, []).some((domain) => domain.id === run.domain)) {
+      el("research-domain").value = run.domain;
+      renderSelectedTask();
+    }
     state.savedRunID = run.id;
     save();
     const budget = run.budget || {};
@@ -469,7 +491,10 @@ export function createResearchApp(dependencies = {}) {
     el("elapsed-track").hidden = !showLimits || seconds === null;
     el("elapsed-bar").style.width = `${seconds ? Math.min(100, Math.max(0, elapsed / seconds * 100)) : 0}%`;
     write("trial-value", `${usedTrials} 次`);
-    write("trial-detail", showLimits && trialsLimit !== null ? `本次最多 ${trialsLimit} 次拟合` : "模型拟合尝试的实际记录");
+    const experiments = run.outputs?.experiment || run.outputs?.experiments || run.outputs?.baseline;
+    const trainingFits = experiments?.training_fits;
+    const trialDetail = run.domain === "yolo_tradeoff" ? `实际评测作业${typeof trainingFits === "number" && Number.isFinite(trainingFits) ? ` · 训练 ${trainingFits} 次` : ""}` : "实际实验作业记录";
+    write("trial-detail", [trialDetail, showLimits && trialsLimit !== null ? `本次最多 ${trialsLimit} 次实验作业` : ""].filter(Boolean).join(" · "));
     write("model-call-value", `${usedCalls} 次`);
     write("model-call-detail", showLimits && callsLimit !== null ? `本次最多 ${callsLimit} 次调用` : "规划、写作与审阅的实际调用");
     write("artifact-value", artifacts.length);
@@ -492,12 +517,12 @@ export function createResearchApp(dependencies = {}) {
     write("evidence-updated", `更新于 ${stamp(run.updated_at)}`);
     write("footer-state", `研究 ${run.id} · ${STATUS_LABELS[run.status] || run.status} · 服务端记录`);
     renderStages(stages, run);
-    renderExperiments(run.outputs?.experiment);
+    renderExperiments(experiments);
     renderLiterature(run.outputs?.reading?.records ? run.outputs.reading : run.outputs?.literature);
     renderArtifacts(artifacts);
     renderManuscript(run.outputs);
     renderInterventions(run);
-    if (!el("research-goal").value) el("research-goal").value = run.goal || "";
+    if (ACTIVE_STATUSES.has(run.status) && !el("research-goal").value) el("research-goal").value = run.goal || "";
     updateGoalCount();
     updateControls();
   }
@@ -527,38 +552,53 @@ export function createResearchApp(dependencies = {}) {
     renderEvents();
   }
 
-  function stopTimer() { if (state.timer !== null) { unschedule(state.timer); state.timer = null; } }
-  function queuePoll(delay = 2500) {
-    stopTimer();
+  function stopSubscription() { transport.stop(); }
+  function subscribeUpdates(initialDelay = 2500) {
+    stopSubscription();
     if (state.paused || doc.hidden || !state.savedRunID) return;
-    state.timer = schedule(() => { state.timer = null; void poll(); }, delay);
+    const generation = state.generation;
+    const id = state.savedRunID;
+    const current = () => generation === state.generation && !state.paused && !doc.hidden && id === state.savedRunID;
+    transport.subscribe({ runID: id, afterSeq: state.lastSeq, initialRun: state.run, initialDelay,
+      onRun(run) {
+        if (!current()) return;
+        const statusChanged = state.run?.status !== run.status;
+        renderRun(run); showError("");
+        if (statusChanged) void loadWriterSettings(generation);
+      },
+      onEvents(events) { if (current()) appendEvents(events); },
+      onConnection(connected) { if (current()) { setConnection(connected); updateControls(); if (connected) showError(""); } },
+      onError(error) { if (current()) { showError(error.message); updateControls(); } },
+      onFallback(message) {
+        if (!current()) return;
+        const previous = el("notice").hidden ? "" : el("notice-text").textContent;
+        if (!previous.includes(message)) showNotice([previous, message].filter(Boolean).join("\n"), "warning");
+      },
+      onCycle: () => current() ? loadWriterSettings(generation) : undefined,
+    });
   }
+  // Explicit refresh remains available; ongoing updates use the transport subscription.
   async function poll() {
     if (state.pollBusy || state.paused || doc.hidden || !state.savedRunID) return;
     state.pollBusy = true;
     const generation = state.generation;
     const id = state.savedRunID;
-    let failed = false;
     try {
-      const run = await request(`/api/research/runs/${encodeURIComponent(id)}`);
+      const { run, events } = await transport.readRun(id, state.lastSeq);
       if (generation !== state.generation || state.paused || id !== state.savedRunID) return;
       setConnection(true);
       renderRun(run);
-      const events = await request(`/api/research/runs/${encodeURIComponent(id)}/events?after_seq=${state.lastSeq}`);
-      if (generation !== state.generation || state.paused || id !== state.savedRunID) return;
       appendEvents(events);
       await loadWriterSettings(generation);
       if (generation !== state.generation || state.paused || id !== state.savedRunID) return;
       showError("");
     } catch (error) {
       if (generation !== state.generation || state.paused) return;
-      failed = true;
       setConnection(false);
       showError(error.message);
       updateControls();
     } finally {
       state.pollBusy = false;
-      if (generation === state.generation && !state.paused) queuePoll(failed ? 7000 : ACTIVE_STATUSES.has(state.run?.status) ? 2500 : 10000);
     }
   }
   async function chooseExistingRun() {
@@ -590,7 +630,7 @@ export function createResearchApp(dependencies = {}) {
       showError("");
       showNotice("启动请求已确认。执行状态与产物会持续更新。");
       setConnection(true);
-      queuePoll(0);
+      subscribeUpdates(0);
     } catch (error) {
       if (!error.uncertain) { state.pending = null; save(); }
       showError(error.status === 409 ? `当前已有研究或请求冲突：${error.message}` : error.message);
@@ -601,7 +641,7 @@ export function createResearchApp(dependencies = {}) {
         try {
           const data = await request("/api/research/runs");
           const run = listFrom(data.runs, []).find((item) => ACTIVE_STATUSES.has(item.status));
-          if (run) { renderRun(run); queuePoll(0); }
+          if (run) { renderRun(run); subscribeUpdates(0); }
         }
         catch { setConnection(false); }
       }
@@ -610,7 +650,7 @@ export function createResearchApp(dependencies = {}) {
   async function refresh() {
     if (state.refreshPromise) return state.refreshPromise;
     if (state.paused) return;
-    stopTimer();
+    stopSubscription();
     state.generation += 1;
     const generation = state.generation;
     el("refresh-btn").disabled = true;
@@ -639,7 +679,7 @@ export function createResearchApp(dependencies = {}) {
         showError(error.message);
         updateControls();
       } finally {
-        if (generation === state.generation && !state.paused) queuePoll(state.connected ? ACTIVE_STATUSES.has(state.run?.status) ? 2500 : 10000 : 7000);
+        if (generation === state.generation && !state.paused) subscribeUpdates(state.connected ? ACTIVE_STATUSES.has(state.run?.status) ? 2500 : 10000 : 7000);
         state.refreshPromise = null;
         el("refresh-btn").disabled = false;
       }
@@ -650,7 +690,7 @@ export function createResearchApp(dependencies = {}) {
     const input = el(id).value.trim();
     if (!input) return null;
     const value = Number(input);
-    if (!Number.isSafeInteger(value) || value < minimum || value > maximum) throw new Error(`请填写${id === "budget-minutes" ? "运行时间" : id === "budget-trials" ? "模型拟合次数" : "模型调用次数"}的有效整数（至少 ${minimum}），或留空不设限。`);
+    if (!Number.isSafeInteger(value) || value < minimum || value > maximum) throw new Error(`请填写${id === "budget-minutes" ? "运行时间" : id === "budget-trials" ? "实验作业次数" : "模型调用次数"}的有效整数（至少 ${minimum}），或留空不设限。`);
     return value;
   }
   async function start(event) {
@@ -661,7 +701,8 @@ export function createResearchApp(dependencies = {}) {
       const goal = el("research-goal").value.trim();
       if (!goal || goal.length > 4000) throw new Error("请填写 1 至 4000 字的研究目标。");
       const domain = el("research-domain").value;
-      if (!listFrom(state.capabilities.domains, []).some((item) => item.id === domain)) throw new Error("请选择当前已接入的研究领域。");
+      const task = selectedDomain();
+      if (!task || task.available === false) throw new Error("请选择执行资源已就绪的研究任务。");
       const minutes = optionalLimit("budget-minutes", 1, Math.floor(Number.MAX_SAFE_INTEGER / 60));
       state.pending = { goal, domain, request_id: uuid(), budget: { max_seconds: minutes === null ? null : minutes * 60, model_calls: optionalLimit("budget-model-calls", 0), max_trials: optionalLimit("budget-trials", 3) }, mode: "autonomous" };
       save();
@@ -673,7 +714,7 @@ export function createResearchApp(dependencies = {}) {
     if (name === "cancel" && !["queued", "running"].includes(state.run.status)) return;
     if (name === "resume" && !RESUMABLE_STATUSES.has(state.run.status)) return;
     state.mutation = true;
-    stopTimer();
+    stopSubscription();
     state.generation += 1;
     updateControls();
     try {
@@ -684,7 +725,7 @@ export function createResearchApp(dependencies = {}) {
     } catch (error) {
       showError(error.message);
       if (error.uncertain) { setConnection(false); showNotice("操作结果尚未确认，正在查询运行状态；不会重复发送操作。", "warning"); }
-    } finally { state.mutation = false; updateControls(); queuePoll(0); }
+    } finally { state.mutation = false; updateControls(); subscribeUpdates(0); }
   }
   function updateGoalCount() { write("goal-count", `${el("research-goal").value.length} / 4000`); }
   const tabNames = ["experiments", "literature", "artifacts", "events"];
@@ -713,20 +754,26 @@ export function createResearchApp(dependencies = {}) {
   el("writer-settings-form").addEventListener("submit", (event) => { void writerAction("save", event); });
   el("writer-test-btn").addEventListener("click", () => { void writerAction("test"); });
   for (const id of ["writer-api-key", "writer-model-input"]) el(id).addEventListener("input", () => { state.writerInputDirty = true; writerMessage(""); });
-  el("research-goal").addEventListener("input", updateGoalCount);
+  el("research-goal").addEventListener("input", () => { updateGoalCount(); updateControls(); });
   el("research-domain").addEventListener("change", () => {
-    const domain = listFrom(state.capabilities?.domains, []).find((item) => item.id === el("research-domain").value);
-    write("goal-help", domainDescription(domain));
+    renderSelectedTask();
+  });
+  el("fill-example-btn").addEventListener("click", () => {
+    if (el("fill-example-btn").disabled || el("research-goal").value.trim()) return;
+    const domain = selectedDomain();
+    if (!domain || domain.available === false) return;
+    el("research-goal").value = DOMAIN_COPY[domain.id]?.example || domain.question || "";
+    updateGoalCount(); updateControls(); el("research-goal").focus();
   });
   el("refresh-btn").addEventListener("click", () => { void refresh(); });
   el("retry-btn").addEventListener("click", () => { void refresh(); });
   el("cancel-btn").addEventListener("click", () => { void action("cancel"); });
   el("resume-btn").addEventListener("click", () => { void action("resume"); });
-  win.addEventListener("offline", () => { setConnection(false); updateControls(); showError("网络已断开。后台研究可能仍在执行，重新连接后会查询实际状态。"); });
+  win.addEventListener("offline", () => { stopSubscription(); setConnection(false); updateControls(); showError("网络已断开。后台研究可能仍在执行，重新连接后会查询实际状态。"); });
   win.addEventListener("online", () => { void refresh(); });
-  win.addEventListener("pagehide", () => { state.paused = true; state.generation += 1; state.writerActionGeneration += 1; el("writer-api-key").value = ""; stopTimer(); });
+  win.addEventListener("pagehide", () => { state.paused = true; state.generation += 1; state.writerActionGeneration += 1; el("writer-api-key").value = ""; stopSubscription(); });
   win.addEventListener("pageshow", (event) => { if (event.persisted) { state.paused = false; void refresh(); } });
-  doc.addEventListener("visibilitychange", () => { if (doc.hidden) stopTimer(); else if (!state.paused) void refresh(); });
+  doc.addEventListener("visibilitychange", () => { if (doc.hidden) stopSubscription(); else if (!state.paused) void refresh(); });
   load();
   if (!el("writer-model-input").value) el("writer-model-input").value = "deepseek-flash";
   updateGoalCount();

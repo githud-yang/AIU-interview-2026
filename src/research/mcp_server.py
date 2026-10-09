@@ -63,9 +63,11 @@ async def research_events(run_id: str, after_seq: int = 0) -> dict:
 
 
 @mcp.tool()
-async def research_start(goal: str, request_id: str, max_seconds: int | None = None, model_calls: int | None = None, max_trials: int | None = None) -> dict:
+async def research_start(goal: str, request_id: str, max_seconds: int | None = None, model_calls: int | None = None, max_trials: int | None = None, domain: str = "digits_robustness") -> dict:
     """Start authorized research; resource limits are optional. Keep request_id stable after a lost response."""
-    return compact(await api("POST", "/api/research/runs", {"goal": goal, "domain": "digits_robustness", "mode": "autonomous",
+    if domain not in {"digits_robustness", "yolo_tradeoff"}:
+        raise ValueError("Unknown registered research task")
+    return compact(await api("POST", "/api/research/runs", {"goal": goal, "domain": domain, "mode": "autonomous",
         "request_id": request_id, "budget": {"max_seconds": max_seconds, "model_calls": model_calls, "max_trials": max_trials}}))
 
 
