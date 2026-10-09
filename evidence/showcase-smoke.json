@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-09T17:48:29.541595+00:00",
+  "checkedAt": "2026-10-09T17:50:56.743418+00:00",
   "pages": {
     "/showcase": 200,
     "/": 200,
@@ -24,7 +24,7 @@
       "id": "requirements",
       "status": 200,
       "mediaType": "text/plain",
-      "sha256": "3c45cbb501d78e64d67242ff2af06d5affc1bf4236ac87e23d35491be3fb4e40"
+      "sha256": "3f1c60e543ae792f27f5165e0f985122805a205efed56a0a34a282b7670fa802"
     },
     {
       "id": "architecture",
@@ -99,7 +99,7 @@
     "unregistered-file": 404
   },
   "preflight": {
-    "checkedAt": "2026-10-09T17:48:29.443316+00:00",
+    "checkedAt": "2026-10-09T17:50:56.654708+00:00",
     "services": [
       {
         "id": "agent",
