@@ -1,0 +1,153 @@
+{
+  "checkedAt": "2026-10-09T17:48:29.541595+00:00",
+  "pages": {
+    "/showcase": 200,
+    "/": 200,
+    "/yolo": 200,
+    "/research": 200,
+    "/research/strategy": 200,
+    "/static/showcase.html": 200,
+    "/static/showcase.css": 200,
+    "/static/showcase.js": 200,
+    "/static/showcase-transport.js": 200
+  },
+  "cardOrder": [
+    "agent",
+    "yolo",
+    "yinghuo",
+    "hardware",
+    "harness",
+    "engineering"
+  ],
+  "publicEvidence": [
+    {
+      "id": "requirements",
+      "status": 200,
+      "mediaType": "text/plain",
+      "sha256": "3c45cbb501d78e64d67242ff2af06d5affc1bf4236ac87e23d35491be3fb4e40"
+    },
+    {
+      "id": "architecture",
+      "status": 200,
+      "mediaType": "text/plain",
+      "sha256": "ff0244e44984217b934d902cd2e5b247a98edad521f3bbc7b1122be39ba8f2af"
+    },
+    {
+      "id": "demo-guide",
+      "status": 200,
+      "mediaType": "text/plain",
+      "sha256": "8ea993252806731f0ae5c6591161ae55cb84e58a7d551770e86231c8133ede34"
+    },
+    {
+      "id": "agent-proof",
+      "status": 200,
+      "mediaType": "text/plain",
+      "sha256": "65b35842d12f754b975588d5c365d248268d17ab429203294d35aa7a4d496107"
+    },
+    {
+      "id": "training",
+      "status": 200,
+      "mediaType": "application/json",
+      "sha256": "7d885b92a40b3b5220e7088374b632417102f1d5a9331b7119f7115884f89e4c"
+    },
+    {
+      "id": "training-curve",
+      "status": 200,
+      "mediaType": "image/png",
+      "sha256": "b1849b380361b73e50b8311cd633038265da05e4faeee3be4c7102a9556c9f25"
+    },
+    {
+      "id": "public-detection",
+      "status": 200,
+      "mediaType": "image/jpeg",
+      "sha256": "5bbfaf2c1b0fa65b358aa9574ed7965f8602b789b4d76a6df0c0b29ca2d3a8d6"
+    },
+    {
+      "id": "yolo-proof",
+      "status": 200,
+      "mediaType": "application/json",
+      "sha256": "ceda166264d936f71c3b80541f5f1dc2d32edf17a2e0712b32c5224c50ee2d91"
+    },
+    {
+      "id": "yinghuo-proof",
+      "status": 200,
+      "mediaType": "application/json",
+      "sha256": "95b1dae5532ea1152082ca7e3cb3349288ae577bb9ed481cb051affde67a4c78"
+    },
+    {
+      "id": "yinghuo-guide",
+      "status": 200,
+      "mediaType": "text/plain",
+      "sha256": "663597bc7fdfcf424c8c455ef221b50c7b5604a3af49d6a62cb452144e96dec7"
+    },
+    {
+      "id": "research-proof",
+      "status": 200,
+      "mediaType": "application/json",
+      "sha256": "195fca976141274dcade7c930e7721ee735a3cc4291bb0e4e8e3a2099aa4a68a"
+    },
+    {
+      "id": "engineering-proof",
+      "status": 200,
+      "mediaType": "application/json",
+      "sha256": "734f651e3ed9a218203e49c070c515e03a1556a227e1d7b2f92c2c09b2416860"
+    }
+  ],
+  "unregisteredFiles": {
+    ".env": 404,
+    "yolo-camera": 404,
+    "unregistered-file": 404
+  },
+  "preflight": {
+    "checkedAt": "2026-10-09T17:48:29.443316+00:00",
+    "services": [
+      {
+        "id": "agent",
+        "label": "本地模型",
+        "available": true,
+        "detail": "qwen2.5:7b"
+      },
+      {
+        "id": "yolo",
+        "label": "检测权重",
+        "available": true,
+        "detail": "权重在本机；运行状态：stopped"
+      },
+      {
+        "id": "yinghuo",
+        "label": "萤火服务",
+        "available": true,
+        "detail": "本机 4318 服务已连接"
+      },
+      {
+        "id": "harness",
+        "label": "科研服务",
+        "available": true,
+        "detail": "服务已加载，展示已有完成记录"
+      }
+    ],
+    "note": "只读预检：不生成模型回复、不调用云端AI、不打开摄像头、不启动研究。在线状态不替代现场功能验收。"
+  },
+  "researchStatesUnchanged": true,
+  "yoloState": "stopped",
+  "cloudGenerationRequests": 0,
+  "cameraOpened": false,
+  "browserVisualVerified": false,
+  "regression": {
+    "python": {
+      "total": 150,
+      "passed": 148,
+      "skipped": 2
+    },
+    "nodeExisting": {
+      "passed": 39
+    },
+    "nodeShowcaseTransport": {
+      "passed": 3
+    }
+  },
+  "limitations": [
+    "HTTP与离线测试不代替浏览器视觉、完整交互和本人讲解彩排。",
+    "萤火编辑/刷新持久化/备份下载及可选现场摄像头仍需实际验收。"
+  ]
+}

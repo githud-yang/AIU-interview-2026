@@ -117,11 +117,11 @@ select:disabled { opacity: .7; }
   .message { max-width: 96%; }
 }
 @media (max-width: 680px) {
-  .site-header { height: 69px; padding: 0 18px; justify-content: space-between; gap: 12px; }
+  .site-header { min-height: 69px; height: auto; padding: 14px 18px; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .brand { font-size: 16px; gap: 9px; }
   .brand-mark { width: 27px; height: 30px; font-size: 18px; }
   .brand b { display: none; }
-  .page-nav { gap: 2px; }
+  .page-nav { gap: 2px; flex-wrap: wrap; }
   .page-nav a { font-size: 12px; padding: 9px 10px; }
   .workspace { display: flex; flex-direction: column; padding: 23px 16px; gap: 22px; }
   .sidebar, .chat-panel, .vision-panel { width: 100%; }

@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from src.web.routes import chat_routes, health_routes, research_routes, yolo_routes
+from src.web.routes import chat_routes, health_routes, research_routes, showcase_routes, yolo_routes
 from src.web.services.lifecycle import create_lifespan
 
 # 路径常量
@@ -35,6 +35,7 @@ def create_app(*, research_root: Path | None = None) -> FastAPI:
     app.include_router(yolo_routes.router)
     app.include_router(research_routes.router)
     app.include_router(health_routes.router)
+    app.include_router(showcase_routes.router)
 
     return app
 

@@ -2,6 +2,8 @@
 
 本项目按面试题组织：本地大模型与智能体、YOLO训练/实时推理、创意应用，以及进阶科研Harness。硬件已由本人于2026-10-10确认完成，按实际项目展示。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
+面试从[统一展示台](http://127.0.0.1:8000/showcase)进入：先看总览，再按基础→YOLO→萤火→硬件→Harness→工程与AI披露逐项演示，也可直接查看公开证据、运行只读预检。预检核对服务与已有材料，不启动研究、摄像头或云端模型；通过预检不代表最新界面已完成浏览器视觉验收。建议演示6–8分钟，具体提纲见[demo.md](docs/demo.md)。
+
 创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
 
 ## 启动
@@ -28,6 +30,7 @@ Copy-Item configs/.env.example configs/.env
 
 | 入口 | 功能与分类 |
 | --- | --- |
+| [统一展示台](http://127.0.0.1:8000/showcase) | 首入口：总览、逐项演示、公开证据、只读预检 |
 | [文字冒险](http://127.0.0.1:8000/) | 本地智能体/API应用，同时作为创意作品 |
 | [视觉检测](http://127.0.0.1:8000/yolo) | YOLO基础任务，公开图/本地视频/摄像头 |
 | [科研工作台](http://127.0.0.1:8000/research) | Harness进阶，两个注册科研任务 |
@@ -67,7 +70,7 @@ showcases/yinghuo/ 萤火独立创意作品源码快照（Node/React）
 - 本地Ollama + qwen2.5:7b、工具调用、游戏API已有真实验证。
 - YOLO完成coco8真实30轮训练，参数、CSV、曲线和权重哈希齐备；共享推理线程、HTTP双流及本地短视频已实测。摄像头过去黑画面，现场演示尚未重新验收，已有公开图/视频备用。
 - 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练，306个产物下载哈希一致；选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
-- DeepSeek Key接口已实现，在科研页本机填写、测试并保存即可即时切换；没有真实Key调用证据。既有Codex调用与回退按日志记录。
+- 科研论文模块的DeepSeek Key接口已实现，在科研页本机填写、测试并保存即可即时切换；该模块尚无真实DeepSeek论文调用证据，既有Codex调用与回退按日志记录。萤火是独立应用，已完成5次真实DeepSeek请求，两者分别验收。
 - 灵感/期刊首批资料与编辑草稿已整理；自动全文差异矩阵、自动背调决策、便携冻结重放、外部科学评价及真实投稿未完成。
 
 完整核验见[verification.md](docs/verification.md)，操作见[research-workbench.md](docs/research-workbench.md)，演示见[demo.md](docs/demo.md)。`docs/evidence/`是训练证据，根`evidence/`是研究摘要；完整原始运行在忽略Git的`logs/research/`。归档不参与启动或计入成果。
@@ -79,6 +82,8 @@ showcases/yinghuo/ 萤火独立创意作品源码快照（Node/React）
 node --test tests/test_frontend.mjs tests/test_research_frontend.mjs
 ```
 
-默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。用户已确认先前桌面布局正常，最新订阅改版与小屏视觉尚未实测。
+默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。用户已确认先前科研桌面布局正常；最新统一展示台、科研订阅改版与小屏视觉尚未实测，萤火完整编辑/刷新持久化和备份下载也仍需浏览器核验。只读预检和接口测试不替代这些检查。
+
+截至2026-10-10本次核对，最近已知推送记录为`95d49a0`，包含此前的结构整理与萤火交付；后续新增改动是否提交、推送以实际Git记录为准。
 
 原骨架由豆包辅助生成，之后由Codex对照题目修复、训练、验证和整理。模型生成解释与实测数据分别保留；本人应能解释实现思路、失败处理及证据范围。科研稿件、创新、真实投稿和录用分别验收。仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。

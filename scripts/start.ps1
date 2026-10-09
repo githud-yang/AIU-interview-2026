@@ -12,6 +12,7 @@ $Python = (Get-Command $Python -ErrorAction Stop).Source
 $existing = Get-AIUWebServerState $startRoot
 if ($existing.Processes.Count -gt 0) {
     Write-Host "Owned web server is already running on port $($existing.Record.port)."
+    Write-Host "Interview showcase: http://127.0.0.1:$($existing.Record.port)/showcase"
     Write-Host "Research workspace: http://127.0.0.1:$($existing.Record.port)/research"
     exit 0
 }
@@ -19,6 +20,7 @@ $portOwners = @(Get-NetTCPConnection -State Listen -LocalPort $Port -ErrorAction
 if ($portOwners.Count -gt 0) { throw "Port $Port is already in use. No process was stopped. Choose another port or stop that service yourself." }
 & $Python -c "import fastapi, uvicorn, httpx, jinja2"
 if ($LASTEXITCODE -ne 0) { throw "Missing Web dependencies. Run: python -m pip install -r requirements-yolo.txt" }
+Write-Host "Interview showcase: http://127.0.0.1:$Port/showcase"
 Write-Host "Research workspace: http://127.0.0.1:$Port/research"
 if ($Background) {
     $logDirectory = Join-Path $startRoot "logs"

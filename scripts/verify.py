@@ -14,7 +14,7 @@ def main():
     p = argparse.ArgumentParser(); p.add_argument("--live", action="store_true"); a = p.parse_args()
     subprocess.run([sys.executable, "-X", "utf8", "-m", "unittest", "discover", "-s", "tests", "-v"], cwd=Path(__file__).resolve().parents[1], check=True)
     with tempfile.TemporaryDirectory() as temporary, TestClient(create_app(research_root=Path(temporary))) as c:
-        for path in ["/", "/yolo", "/research", "/static/app.js", "/static/research.js", "/yolo/status"]:
+        for path in ["/", "/yolo", "/research", "/showcase", "/api/showcase", "/static/app.js", "/static/research.js", "/static/showcase.js", "/yolo/status"]:
             assert c.get(path).status_code == 200, path
         settings = c.get("/api/research/writer-settings")
         if settings.status_code == 200:

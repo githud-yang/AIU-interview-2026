@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!-- 二面展示台的语义结构与离线入口；事实、证据清单和连接检查由只读后端接口提供。 -->
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <meta name="theme-color" content="#173f35" />
+  <title>二面展示台 · AIU Lab</title>
+  <link rel="stylesheet" href="/static/showcase.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="/showcase" aria-label="AIU 二面展示台"><span class="brand-mark" aria-hidden="true">A</span><span>AIU <b>LAB</b><small>二面展示台</small></span></a>
+    <nav class="site-nav" aria-label="功能导航"><a href="/showcase" aria-current="page">展示总览</a><a href="/">文字冒险</a><a href="/yolo">视觉检测</a><a href="/research">科研工作台</a></nav>
+    <span class="header-note">作品 · 证据 · 讲解</span>
+  </header>
+
+  <main id="main" class="page-shell">
+    <section class="hero" aria-labelledby="showcase-title">
+      <div class="hero-copy">
+        <p class="eyebrow">AIU / INTERVIEW SHOWCASE</p>
+        <h1 id="showcase-title">二面展示台</h1>
+        <p class="hero-description">把做过的事讲清楚。<br />从作品出发，让实现与证据接得上。</p>
+        <p id="checked-date" class="checked-date">正在读取交付核对日期…</p>
+        <div class="hero-actions"><button id="start-presenting" class="button button-primary" type="button" disabled>开始讲解 <span aria-hidden="true">→</span></button><a class="text-link" href="#projects">浏览全部作品 <span aria-hidden="true">↘</span></a></div>
+      </div>
+      <aside class="verdict-card" aria-labelledby="verdict-title">
+        <p class="eyebrow">当前核对结论</p>
+        <h2 id="verdict-title">正在读取交付核对结果…</h2>
+        <p>完成范围与现场操作分开说明。每项作品都保留证据入口和边界，方便追问时展开。</p>
+        <div class="verdict-footer"><span class="verdict-line" aria-hidden="true"></span><span>展示作品，再说明你如何实现。</span></div>
+      </aside>
+    </section>
+
+    <section class="preflight" aria-labelledby="preflight-title">
+      <div class="section-heading preflight-heading"><div><p class="eyebrow">BEFORE THE DEMO</p><h2 id="preflight-title">演示前连接检查</h2></div><div class="preflight-tools"><span id="preflight-time" class="subtle">正在读取…</span><button id="refresh-preflight" class="button button-light button-small" type="button">刷新检查 <span aria-hidden="true">↻</span></button></div></div>
+      <div id="preflight-services" class="service-grid" aria-busy="true"><p class="loading-note">正在检查本机服务是否可达…</p></div>
+      <p id="preflight-note" class="preflight-note">只读取连接状态；完整操作仍以实际演示为准。</p>
+      <p id="preflight-announcement" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="projects" class="projects" aria-labelledby="projects-title">
+      <div class="project-toolbar">
+        <div><p class="eyebrow">THE WORK</p><h2 id="projects-title">作品与证据</h2></div>
+        <div class="toolbar-controls"><div class="mode-switch" role="group" aria-label="展示模式"><button id="overview-mode" type="button" aria-pressed="true">总览</button><button id="presenter-mode" type="button" aria-pressed="false" disabled>讲解模式</button></div><button id="fullscreen-button" class="icon-button" type="button" aria-pressed="false" title="全屏展示" hidden><span aria-hidden="true">⛶</span><span class="sr-only" id="fullscreen-label">全屏展示</span></button><button id="print-button" class="icon-button" type="button" title="打印展示提纲" disabled><span aria-hidden="true">⎙</span><span class="sr-only">打印展示提纲</span></button></div>
+      </div>
+      <p id="mode-description" class="mode-description">先看整体，再选择一项作品展开。</p>
+      <div id="showcase-loading" class="loading-panel" role="status"><span class="loading-dot" aria-hidden="true"></span><p>正在整理作品与证据清单…</p></div>
+      <div id="showcase-error" class="error-panel" role="alert" hidden><h3>展示清单暂时未能读取</h3><p id="showcase-error-message"></p><button id="retry-showcase" class="button button-primary button-small" type="button">重新读取</button><p class="small">也可以使用下方的直接入口。</p></div>
+
+      <div id="overview-panel" hidden><div id="project-grid" class="project-grid"></div><details id="engineering-details" class="engineering-details" hidden><summary><span><span class="eyebrow">OPTIONAL CLOSING</span><strong id="engineering-summary">工程实现与维护</strong></span><span aria-hidden="true">＋</span></summary><div id="engineering-card"></div></details></div>
+
+      <div id="presenter-panel" class="presenter-layout" hidden>
+        <aside class="presenter-sidebar" aria-label="讲解顺序"><p class="eyebrow">讲解路径</p><nav id="presenter-steps" class="presenter-steps" aria-label="选择讲解作品"></nav><p class="presenter-hint">用左右方向键切换作品。<br />项目在新标签页打开，本页保留位置。</p></aside>
+        <div class="presenter-main"><article id="presenter-card" class="presenter-card" aria-labelledby="presenter-title"></article><div class="presenter-navigation"><button id="previous-step" class="button button-light" type="button"><span aria-hidden="true">←</span> 上一项</button><span id="presenter-position" class="subtle"></span><button id="next-step" class="button button-primary" type="button">下一项 <span aria-hidden="true">→</span></button></div><p id="step-announcement" class="sr-only" role="status" aria-live="polite"></p></div>
+      </div>
+    </section>
+
+    <section id="preparation" class="preparation" aria-labelledby="preparation-title" hidden><div><p class="eyebrow">MAKE IT YOUR OWN</p><h2 id="preparation-title">上台前，再走一遍</h2><p>让页面帮助组织展示，<br />用自己的话解释每一步。</p></div><ul id="preparation-list" class="preparation-list"></ul></section>
+
+    <section class="direct-links" aria-labelledby="direct-links-title"><h2 id="direct-links-title">直接打开项目</h2><p>打开项目后，可返回此页继续讲解。</p><div><a href="/" target="_blank" rel="noopener noreferrer">文字冒险 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="/yolo" target="_blank" rel="noopener noreferrer">视觉检测 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="http://127.0.0.1:4318/notebook" target="_blank" rel="noopener noreferrer">萤火 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="/research" target="_blank" rel="noopener noreferrer">科研工作台 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a></div><noscript><p class="noscript-note">启用 JavaScript 后可读取核对结论、讲解提纲和证据清单。上面的入口仍可直接使用。</p></noscript></section>
+  </main>
+  <footer class="site-footer"><span>AIU LAB / 二面展示台</span><span>已登记证据说明完成范围；服务可达性不替代完整操作验收。</span></footer>
+
+  <dialog id="evidence-dialog" class="evidence-dialog" aria-labelledby="evidence-title" aria-describedby="evidence-description"><div class="evidence-dialog-heading"><div><p class="eyebrow">PROJECT EVIDENCE</p><h2 id="evidence-title">项目证据</h2></div><button id="close-evidence" class="icon-button" type="button" aria-label="关闭证据">×</button></div><p id="evidence-description" class="evidence-description">查看本项目已登记的展示证据。</p><div class="evidence-content"><p id="evidence-status" role="status" aria-live="polite">正在读取…</p><img id="evidence-image" alt="" hidden /><pre id="evidence-text" tabindex="0" aria-label="证据文件内容" hidden></pre></div><div class="evidence-dialog-footer"><a id="evidence-open" class="text-link" target="_blank" rel="noopener noreferrer">单独打开证据 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><span class="subtle">Esc 关闭</span></div></dialog>
+  <section id="print-summary" class="print-summary" aria-label="打印版展示提纲"></section>
+  <p id="interface-announcement" class="sr-only" role="status" aria-live="polite"></p>
+  <script type="module" src="/static/showcase.js"></script>
+</body>
+</html>

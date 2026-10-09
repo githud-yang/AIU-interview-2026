@@ -8,7 +8,7 @@
 ./.venv/Scripts/python.exe -X utf8 scripts/verify.py
 ```
 
-- `start.ps1` / `stop.ps1`：组装启动命令、核对本项目进程身份与释放。
+- `start.ps1` / `stop.ps1`：组装启动命令、核对本项目进程身份与释放；启动后显示统一`/showcase`入口。
 - `verify.py`：临时目录中的离线回归；`--live`才调用真实本地模型。
 - `run_research.py`：通过公共API启动或观察研究，`--run-id`只观察已有运行。
 - `export_research.py`：从冻结测量导出新稿件，不增加模型调用/训练。
