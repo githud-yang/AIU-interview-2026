@@ -33,6 +33,21 @@ export function validatePreflightSnapshot(value) {
   return value;
 }
 
+export function validateStageResearchSnapshot(value) {
+  const artifactIds = new Set(["report", "table", "figure", "pdf"]);
+  if (!record(value) || typeof value.available !== "boolean"
+      || !["title", "runId", "status", "source", "summary", "limitation"].every((key) => string(value[key]))
+      || !Array.isArray(value.metrics) || !value.metrics.every((item) => record(item) && string(item.label) && string(item.value))
+      || !Array.isArray(value.stages) || !value.stages.every((item) => record(item) && string(item.id) && string(item.label) && string(item.status))
+      || !Array.isArray(value.comparison) || !Array.isArray(value.artifacts)
+      || !value.artifacts.every((item) => record(item) && artifactIds.has(item.id) && string(item.label)
+        && ["html", "text", "image", "pdf"].includes(item.kind) && typeof item.available === "boolean"
+        && item.href === `/api/showcase/research/files/${item.id}`)) {
+    throw new Error("保存的研究记录格式不完整，请重新读取。");
+  }
+  return value;
+}
+
 export function createShowcaseTransport({
   fetchImpl = globalThis.fetch,
   requestTimeout = 15000,
@@ -78,6 +93,11 @@ export function createShowcaseTransport({
   return {
     async getShowcase() { return validateShowcaseSnapshot(await read("/api/showcase")); },
     async getPreflight() { return validatePreflightSnapshot(await read("/api/showcase/preflight")); },
+    async getStageResearch() { return validateStageResearchSnapshot(await read("/api/showcase/research")); },
+    getStageResearchText: (id, options = {}) => {
+      if (id !== "table") throw new Error("未登记的表格编号。");
+      return read("/api/showcase/research/files/table", { ...options, text: true });
+    },
     evidenceUrl,
     getEvidenceText: (id, options = {}) => read(evidenceUrl(id), { ...options, text: true }),
     close() { for (const controller of pending) controller.abort(); },

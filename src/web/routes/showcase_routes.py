@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import FileResponse
 
 from src.web.routes import chat_routes, yolo_routes
-from src.web.services import showcase_service
+from src.web.services import showcase_service, showcase_research
 
 router = APIRouter()
 
@@ -32,3 +32,21 @@ def showcase_file(file_id: str):
     path, media_type = item
     return FileResponse(path, media_type=media_type, filename=path.name, content_disposition_type="inline",
                         headers={"X-Content-Type-Options": "nosniff", "Cache-Control": "no-cache"})
+
+
+@router.get("/api/showcase/research")
+def stage_research(request: Request):
+    return showcase_research.stage_research(getattr(request.app.state, "research", None))
+
+
+@router.get("/api/showcase/research/files/{file_id}")
+def stage_research_file(file_id: str, request: Request):
+    item = showcase_research.stage_artifact(getattr(request.app.state, "research", None), file_id)
+    if item is None:
+        raise HTTPException(404, "示例产物不存在或原始哈希核验未通过")
+    path, media_type = item
+    headers = {"X-Content-Type-Options": "nosniff", "Cache-Control": "no-cache"}
+    if media_type == "text/html":
+        headers["Content-Security-Policy"] = "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'"
+    return FileResponse(path, media_type=media_type, filename=path.name,
+                        content_disposition_type="inline", headers=headers)

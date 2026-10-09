@@ -1,0 +1,211 @@
+{
+  "checkedAt": "2026-10-09T18:13:48.671057+00:00",
+  "pages": {
+    "/showcase": {
+      "status": 200,
+      "sha256": "ac4c112de803a7548fd3110389d6bf7f6a2c2d4389a665546dc339314b890b37"
+    },
+    "/": {
+      "status": 200,
+      "sha256": "48b07a263b8ff8486ceaa75c9e2eb1a72a170a4f8037fc127296e24e524f4842"
+    },
+    "/yolo": {
+      "status": 200,
+      "sha256": "55ac17250879c598aa2a21db099499cef0ed6a717c4819b57da76757514f9f2f"
+    },
+    "/research": {
+      "status": 200,
+      "sha256": "748d854a528501bf478c1e75a6086f5c6be222bc22b7b77ea6a69b74c9f4f32c"
+    },
+    "/research/strategy": {
+      "status": 200,
+      "sha256": "b1a53fd7bb2bcb04e582c2c5e3655219e364900088f4e089c73a2c3a6ce9efce"
+    },
+    "/static/showcase.html": {
+      "status": 200,
+      "sha256": "ac4c112de803a7548fd3110389d6bf7f6a2c2d4389a665546dc339314b890b37"
+    },
+    "/static/showcase.css": {
+      "status": 200,
+      "sha256": "dbe645f2cbfe6d09cc4a2e6539913b496e0a67cf7deed2e552e779e3e064724e"
+    },
+    "/static/showcase.js": {
+      "status": 200,
+      "sha256": "7ab47c468e3c372da5ec592807372c67ba0a946ab3173012d5a4b3af0736bf3c"
+    },
+    "/static/showcase-transport.js": {
+      "status": 200,
+      "sha256": "9324868ee64b7881247415c6661696300a31ef0cdb3caded4ce230947e5bcf40"
+    },
+    "/static/showcase-live.js": {
+      "status": 200,
+      "sha256": "81ddf8683e425600a45c15542134561d020a0b925858287f61e2a6f52da4a62c"
+    },
+    "/static/showcase-chat.js": {
+      "status": 200,
+      "sha256": "cdbb47a332cd403e091b16f20d5a2685dbe100289d4d0028ff3c44d27bb604dc"
+    },
+    "/static/showcase-yolo.js": {
+      "status": 200,
+      "sha256": "9ed475faab1e85da69e602315654af0ab4e346145fe7e06ab51791542f0d6ff0"
+    }
+  },
+  "publicEvidence": [
+    {
+      "id": "requirements",
+      "sha256": "a510d4ad260b402fa450270a7815d4f6d997782eb7e06653181b3f5b5167eeb4"
+    },
+    {
+      "id": "architecture",
+      "sha256": "ff0244e44984217b934d902cd2e5b247a98edad521f3bbc7b1122be39ba8f2af"
+    },
+    {
+      "id": "demo-guide",
+      "sha256": "9a8e6e89fbd0821d4848e74184a591c751a2ce3d82181c4b9682d0e36c3bb8bc"
+    },
+    {
+      "id": "agent-proof",
+      "sha256": "65b35842d12f754b975588d5c365d248268d17ab429203294d35aa7a4d496107"
+    },
+    {
+      "id": "training",
+      "sha256": "7d885b92a40b3b5220e7088374b632417102f1d5a9331b7119f7115884f89e4c"
+    },
+    {
+      "id": "training-curve",
+      "sha256": "b1849b380361b73e50b8311cd633038265da05e4faeee3be4c7102a9556c9f25"
+    },
+    {
+      "id": "public-detection",
+      "sha256": "5bbfaf2c1b0fa65b358aa9574ed7965f8602b789b4d76a6df0c0b29ca2d3a8d6"
+    },
+    {
+      "id": "yolo-proof",
+      "sha256": "ceda166264d936f71c3b80541f5f1dc2d32edf17a2e0712b32c5224c50ee2d91"
+    },
+    {
+      "id": "yinghuo-proof",
+      "sha256": "95b1dae5532ea1152082ca7e3cb3349288ae577bb9ed481cb051affde67a4c78"
+    },
+    {
+      "id": "yinghuo-guide",
+      "sha256": "663597bc7fdfcf424c8c455ef221b50c7b5604a3af49d6a62cb452144e96dec7"
+    },
+    {
+      "id": "research-proof",
+      "sha256": "195fca976141274dcade7c930e7721ee735a3cc4291bb0e4e8e3a2099aa4a68a"
+    },
+    {
+      "id": "engineering-proof",
+      "sha256": "734f651e3ed9a218203e49c070c515e03a1556a227e1d7b2f92c2c09b2416860"
+    }
+  ],
+  "researchPreview": {
+    "runId": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+    "metrics": [
+      {
+        "label": "完成阶段",
+        "value": "12 / 12"
+      },
+      {
+        "label": "运行耗时",
+        "value": "202 秒"
+      },
+      {
+        "label": "评测作业",
+        "value": "5"
+      },
+      {
+        "label": "新增训练",
+        "value": "0"
+      },
+      {
+        "label": "登记产物",
+        "value": "319"
+      }
+    ],
+    "artifacts": [
+      {
+        "id": "report",
+        "sha256": "98f4de5d229c77f66494f674271f5c52a93b5088b46c53f3f36ce6df051fad26",
+        "kind": "html",
+        "status": 200
+      },
+      {
+        "id": "table",
+        "sha256": "9b3d91992500dbd8510773567d0ac39c8e4ea38bd09c598efab7474a0ab775b6",
+        "kind": "text",
+        "status": 200
+      },
+      {
+        "id": "figure",
+        "sha256": "ecdbb3b901d10771541eb3546584727eb5984a5345aba957ca3ff5ec9a2ad560",
+        "kind": "image",
+        "status": 200
+      },
+      {
+        "id": "pdf",
+        "sha256": "7a325e124198e4c4233e5b07a7c4595ad14b2e404c1e180eb6ceb2c31950df7e",
+        "kind": "pdf",
+        "status": 200
+      }
+    ]
+  },
+  "layoutContract": {
+    "continuousPage": true,
+    "overviewPresenterSwitch": false,
+    "evidenceModal": false,
+    "newTabLinks": false,
+    "yinghuoLoadsOnlyOnClick": true,
+    "reportSandbox": true
+  },
+  "preflight": {
+    "checkedAt": "2026-10-09T18:13:48.666804+00:00",
+    "services": [
+      {
+        "id": "agent",
+        "label": "本地模型",
+        "available": true,
+        "detail": "qwen2.5:7b"
+      },
+      {
+        "id": "yolo",
+        "label": "检测权重",
+        "available": true,
+        "detail": "权重在本机；运行状态：stopped"
+      },
+      {
+        "id": "yinghuo",
+        "label": "萤火服务",
+        "available": true,
+        "detail": "本机 4318 服务已连接"
+      },
+      {
+        "id": "harness",
+        "label": "科研服务",
+        "available": true,
+        "detail": "服务已加载，展示已有完成记录"
+      }
+    ],
+    "note": "只读预检：不生成模型回复、不调用云端AI、不打开摄像头、不启动研究。在线状态不替代现场功能验收。"
+  },
+  "researchStatesUnchanged": true,
+  "detectionStarted": false,
+  "cloudGenerationRequests": 0,
+  "browserVisualVerified": false,
+  "regression": {
+    "python": {
+      "total": 154,
+      "passed": 152,
+      "skipped": 2
+    },
+    "node": {
+      "total": 49,
+      "passed": 49
+    }
+  },
+  "limitations": [
+    "HTTP、静态DOM与离线行为检查不代替真实浏览器视觉和完整操作验收。",
+    "未读取萤火私人笔记，未发送真实模型生成或打开摄像头。"
+  ]
+}

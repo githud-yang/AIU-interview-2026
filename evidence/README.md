@@ -4,4 +4,6 @@
 
 `yinghuo-showcase-smoke.json`记录独立创意作品的软件验证与5次真实DeepSeek调用。`showcase-smoke.json`记录统一展示入口、公开证据下载哈希和只读预检，不包含浏览器视觉验收，也不代表科研论文的DeepSeek已实测。
 
+`showcase-stage-smoke.json`为后续固定同页改版记录：页面与脚本、12份公开文件、4份登记报告/数据、原始SHA256、离线操作回归和未启动真实作业的边界。旧快照保留原检查时状态，不用于声称最新界面已有浏览器视觉验收。
+
 `research-yolo-runtime-smoke.json`是首次YOLO贯穿快照，`research-yolo-export-smoke.json`是复用冻结测量的后续导出。快照保留当时配置和失败/恢复，不代表当前默认限额或新的独立科学确认。

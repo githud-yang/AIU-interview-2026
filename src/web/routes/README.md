@@ -4,4 +4,4 @@
 
 路由只负责请求校验、调用服务和响应组织；计算交给 `../services/`、`../managers/` 及对应后端功能模块。统一由 `../main.py` 挂载，不单独启动。
 
-`showcase_routes.py` 提供 `/showcase`、`/api/showcase`、`/api/showcase/preflight` 与固定ID的公开证据读取。文件接口不接受任意路径，不暴露配置、私人摄像头或运行目录。
+`showcase_routes.py`提供`/showcase`、`/api/showcase`、`/api/showcase/preflight`与固定ID的公开证据读取；`/api/showcase/research`及其`files/{id}`只展示指定已完成研究的四类已登记结果。文件接口不接受任意路径，不暴露配置、私人摄像头或完整运行目录；HTML预览通过CSP sandbox禁止脚本。

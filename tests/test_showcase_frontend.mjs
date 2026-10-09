@@ -1,7 +1,15 @@
 /** Exercise the showcase HTTP boundary offline; no browser or model service is contacted. */
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { createShowcaseTransport } from "../src/web/static/showcase-transport.js";
+import { createShowcaseTransport, validateStageResearchSnapshot } from "../src/web/static/showcase-transport.js";
+
+test("inline research keeps registered report URLs and rejects an external embed", () => {
+  const snapshot = { available: true, title: "saved", runId: "public", status: "completed", source: "local",
+    summary: "completed", limitation: "sample", metrics: [{ label: "jobs", value: "5" }], stages: [], comparison: [],
+    artifacts: [{ id: "report", label: "report", kind: "html", available: true, href: "/api/showcase/research/files/report" }] };
+  assert.equal(validateStageResearchSnapshot(snapshot), snapshot);
+  assert.throws(() => validateStageResearchSnapshot({ ...snapshot, artifacts: [{ ...snapshot.artifacts[0], href: "https://unregistered.example/report" }] }), /格式不完整/);
+});
 
 test("showcase requests are read-only, evidence IDs stay in one encoded path segment", async () => {
   const calls = [];

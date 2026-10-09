@@ -1,6 +1,6 @@
 # 记录与证据
 
-面试首入口为[统一展示台](http://127.0.0.1:8000/showcase)，集中总览、逐项演示、公开证据与只读预检；建议按基础→YOLO→萤火→硬件→Harness→工程与AI披露演示6–8分钟。预检只核对当前服务与已有材料，不启动研究、摄像头或云端模型，也不替代浏览器视觉和完整交互验收。
+面试首入口为[统一展示台](http://127.0.0.1:8000/showcase)：固定连续页内直接操作文字冒险和YOLO，萤火点击后在本页加载，训练曲线和保存研究报告常驻；页内导航仅定位已有区域。建议按基础→YOLO→萤火→硬件→Harness演示6–8分钟，工程与核对资料放在页底。不会因为浏览或定位而启动实验或模型生成；实际生成、检测和云端请求由本人主动操作。
 
 - [checklist.md](checklist.md)：唯一主进度清单，区分实现、运行、科学质量和实物验证。
 - [structure.md](structure.md)：六条工程要求对应位置、模块边界与历史归档。
@@ -23,10 +23,11 @@
 - [../evidence/research-settings-http-smoke.json](../evidence/research-settings-http-smoke.json)：科研论文模块DeepSeek设置入口的真实HTTP检查；该次未修改凭据，尚无真实DeepSeek论文调用证据。
 - [../evidence/yinghuo-showcase-smoke.json](../evidence/yinghuo-showcase-smoke.json)：萤火独立创意作品的安装/构建/测试及5次真实DeepSeek调用；不替代科研论文模块验收。
 - [../evidence/showcase-smoke.json](../evidence/showcase-smoke.json)：统一展示台页面、12份公开证据字节核验与只读预检；未进行浏览器视觉验收。
+- [../evidence/showcase-stage-smoke.json](../evidence/showcase-stage-smoke.json)：固定同页操作改版的HTTP、公开证据与原始报告哈希，以及离线行为回归；未进行浏览器视觉验收。
 
 `docs/evidence/` 为 YOLO 训练归档，根目录 `evidence/` 保存可提交的运行摘要与公开样例。完整科研原始文件、论文版本和数据库位于忽略提交的 `logs/research/`；密钥与个人授权不随证据提交。
 
 - [../evidence/research-yolo-runtime-smoke.json](../evidence/research-yolo-runtime-smoke.json)：YOLO固定权重尺寸对比的真实12阶段运行、原始指标与306个产物下载核验。
 - [../evidence/research-yolo-export-smoke.json](../evidence/research-yolo-export-smoke.json)：YOLO第三版导出复用冻结测量，旧306个文件保留、累计319下载一致，无新增模型调用或训练。
 
-先前科研桌面布局已经本人确认；最新统一展示台、科研订阅改版、小屏，以及萤火完整编辑/刷新持久化和备份下载仍待浏览器核验。展示台实现与证据d36318f已实际推送，后续说明收尾以Git记录为准。硬件按本人确认完成；通用自主科研、创新和投稿等探索目标不列为二面基础缺项。
+先前科研桌面布局已经本人确认；最新固定页面展示台、科研订阅改版、小屏，以及萤火完整编辑/刷新持久化和备份下载仍待浏览器核验。上一版展示台d36318f已实际推送，固定页面改版以最新Git记录为准。硬件按本人确认完成；通用自主科研、创新和投稿等探索目标不列为二面基础缺项。

@@ -1,72 +1,97 @@
 <!DOCTYPE html>
-<!-- 二面展示台的语义结构与离线入口；事实、证据清单和连接检查由只读后端接口提供。 -->
+<!-- One continuous stage page: navigation never replaces or remounts applications. -->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#173f35" />
-  <title>二面展示台 · AIU Lab</title>
-  <link rel="stylesheet" href="/static/showcase.css" />
+  <title>AIU · 项目演示</title>
+  <link rel="stylesheet" href="/static/showcase.css?v=stage-20261010" />
 </head>
 <body>
-  <a class="skip-link" href="#main">跳到主要内容</a>
+  <a class="skip-link" href="#agent">跳到项目演示</a>
   <header class="site-header">
-    <a class="brand" href="/showcase" aria-label="AIU 二面展示台"><span class="brand-mark" aria-hidden="true">A</span><span>AIU <b>LAB</b><small>二面展示台</small></span></a>
-    <nav class="site-nav" aria-label="功能导航"><a href="/showcase" aria-current="page">展示总览</a><a href="/">文字冒险</a><a href="/yolo">视觉检测</a><a href="/research">科研工作台</a></nav>
-    <span class="header-note">作品 · 证据 · 讲解</span>
+    <div class="header-inner">
+      <a class="brand" href="#agent"><span class="brand-mark" aria-hidden="true">A</span><div><h1 id="showcase-title">AIU · 项目演示</h1><small>本地智能体 / 视觉检测 / 创意应用</small></div></a>
+      <nav class="site-nav" aria-label="项目导航">
+        <a href="#agent">智能体</a><a href="#yolo">YOLO</a><a href="#yinghuo">萤火</a><a href="#hardware">硬件</a><a href="#harness">科研</a><a href="#engineering">工程</a>
+      </nav>
+      <button id="fullscreen-button" class="button button-quiet" type="button" aria-pressed="false" hidden>全屏</button>
+    </div>
   </header>
 
-  <main id="main" class="page-shell">
-    <section class="hero" aria-labelledby="showcase-title">
-      <div class="hero-copy">
-        <p class="eyebrow">AIU / INTERVIEW SHOWCASE</p>
-        <h1 id="showcase-title">二面展示台</h1>
-        <p class="hero-description">把做过的事讲清楚。<br />从作品出发，让实现与证据接得上。</p>
-        <p id="checked-date" class="checked-date">正在读取交付核对日期…</p>
-        <div class="hero-actions"><button id="start-presenting" class="button button-primary" type="button" disabled>开始讲解 <span aria-hidden="true">→</span></button><a class="text-link" href="#projects">浏览全部作品 <span aria-hidden="true">↘</span></a></div>
+  <main class="page-shell">
+    <section id="agent" class="project-section" aria-labelledby="agent-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">01</div><div><p class="eyebrow">LOCAL AGENT</p><h2 id="agent-title">本地模型与智能体</h2><p class="section-description">本地模型、工具调用与文字冒险。</p></div></div>
+      <div class="app-frame chat-app">
+        <div class="app-toolbar"><div><span class="status-dot" aria-hidden="true"></span><strong>实验室文字冒险</strong><span class="app-label">本地模型</span></div><button id="stage-chat-reset" class="button button-quiet" type="button">重新开始</button></div>
+        <div id="stage-chat-log" class="chat-log" role="log" aria-label="文字冒险对话" aria-live="polite" aria-relevant="additions text"></div>
+        <div class="chat-controls">
+          <div class="quick-actions" aria-label="快捷指令"><button type="button" data-stage-action="看看终端屏幕">看看终端屏幕</button><button type="button" data-stage-action="检查实验室的门">检查实验室的门</button></div>
+          <form id="stage-chat-form" class="chat-form"><label class="sr-only" for="stage-chat-input">输入行动</label><textarea id="stage-chat-input" name="message" rows="2" maxlength="4000" placeholder="输入你的行动…" required></textarea><button id="stage-chat-send" class="button button-primary" type="submit">发送 <span aria-hidden="true">↗</span></button></form>
+          <div class="notice-line"><p id="stage-chat-notice" class="notice" role="status">输入指令，开始探索实验室。</p><button id="stage-chat-retry" class="button button-quiet" type="button" hidden>重试</button></div>
+        </div>
       </div>
-      <aside class="verdict-card" aria-labelledby="verdict-title">
-        <p class="eyebrow">当前核对结论</p>
-        <h2 id="verdict-title">正在读取交付核对结果…</h2>
-        <p>完成范围与现场操作分开说明。每项作品都保留证据入口和边界，方便追问时展开。</p>
-        <div class="verdict-footer"><span class="verdict-line" aria-hidden="true"></span><span>展示作品，再说明你如何实现。</span></div>
-      </aside>
+      <div class="flow-strip" aria-label="智能体调用流程"><span>页面输入</span><span aria-hidden="true">→</span><span>HTTP API</span><span aria-hidden="true">→</span><span>智能体与工具</span><span aria-hidden="true">→</span><span>本地模型</span></div>
     </section>
 
-    <section class="preflight" aria-labelledby="preflight-title">
-      <div class="section-heading preflight-heading"><div><p class="eyebrow">BEFORE THE DEMO</p><h2 id="preflight-title">演示前连接检查</h2></div><div class="preflight-tools"><span id="preflight-time" class="subtle">正在读取…</span><button id="refresh-preflight" class="button button-light button-small" type="button">刷新检查 <span aria-hidden="true">↻</span></button></div></div>
-      <div id="preflight-services" class="service-grid" aria-busy="true"><p class="loading-note">正在检查本机服务是否可达…</p></div>
-      <p id="preflight-note" class="preflight-note">只读取连接状态；完整操作仍以实际演示为准。</p>
-      <p id="preflight-announcement" class="sr-only" role="status" aria-live="polite"></p>
-    </section>
-
-    <section id="projects" class="projects" aria-labelledby="projects-title">
-      <div class="project-toolbar">
-        <div><p class="eyebrow">THE WORK</p><h2 id="projects-title">作品与证据</h2></div>
-        <div class="toolbar-controls"><div class="mode-switch" role="group" aria-label="展示模式"><button id="overview-mode" type="button" aria-pressed="true">总览</button><button id="presenter-mode" type="button" aria-pressed="false" disabled>讲解模式</button></div><button id="fullscreen-button" class="icon-button" type="button" aria-pressed="false" title="全屏展示" hidden><span aria-hidden="true">⛶</span><span class="sr-only" id="fullscreen-label">全屏展示</span></button><button id="print-button" class="icon-button" type="button" title="打印展示提纲" disabled><span aria-hidden="true">⎙</span><span class="sr-only">打印展示提纲</span></button></div>
+    <section id="yolo" class="project-section" aria-labelledby="yolo-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">02</div><div><p class="eyebrow">COMPUTER VISION</p><h2 id="yolo-title">YOLO 训练与实时检测</h2><p class="section-description">选择输入源，展示检测画面与推理状态。</p></div></div>
+      <div class="app-frame yolo-app">
+        <div class="app-toolbar yolo-toolbar"><label class="source-control" for="stage-yolo-source"><span>输入源</span><select id="stage-yolo-source"><option value="" disabled selected>正在读取输入源…</option></select></label><div class="toolbar-actions"><button id="stage-yolo-start" class="button button-primary" type="button" disabled>启动检测</button><button id="stage-yolo-stop" class="button button-light" type="button" disabled>停止</button><button id="stage-yolo-refresh" class="button button-quiet" type="button">刷新状态</button><button id="stage-yolo-view" class="button button-light" type="button" hidden>连接已有画面</button></div></div>
+        <div class="video-frame"><img id="stage-yolo-image" alt="YOLO 实时目标检测画面" hidden /><div id="stage-yolo-placeholder" class="video-placeholder"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 24V10h14m16 0h14v14m0 16v14H40m-16 0H10V40M22 32h20M32 22v20" /></svg><strong>检测画面</strong><p>选择输入源后，点击启动检测。</p></div></div>
+        <div class="yolo-statusbar"><span id="stage-yolo-status" class="status-pill">未启动</span><span>输入 <strong id="stage-yolo-source-label">—</strong></span><span>帧率 <strong id="stage-yolo-fps">—</strong></span><span>帧数 <strong id="stage-yolo-frames">—</strong></span></div>
+        <p id="stage-yolo-notice" class="notice app-notice" role="status">正在读取检测服务状态…</p>
       </div>
-      <p id="mode-description" class="mode-description">先看整体，再选择一项作品展开。</p>
-      <div id="showcase-loading" class="loading-panel" role="status"><span class="loading-dot" aria-hidden="true"></span><p>正在整理作品与证据清单…</p></div>
-      <div id="showcase-error" class="error-panel" role="alert" hidden><h3>展示清单暂时未能读取</h3><p id="showcase-error-message"></p><button id="retry-showcase" class="button button-primary button-small" type="button">重新读取</button><p class="small">也可以使用下方的直接入口。</p></div>
-
-      <div id="overview-panel" hidden><div id="project-grid" class="project-grid"></div><details id="engineering-details" class="engineering-details" hidden><summary><span><span class="eyebrow">OPTIONAL CLOSING</span><strong id="engineering-summary">工程实现与维护</strong></span><span aria-hidden="true">＋</span></summary><div id="engineering-card"></div></details></div>
-
-      <div id="presenter-panel" class="presenter-layout" hidden>
-        <aside class="presenter-sidebar" aria-label="讲解顺序"><p class="eyebrow">讲解路径</p><nav id="presenter-steps" class="presenter-steps" aria-label="选择讲解作品"></nav><p class="presenter-hint">用左右方向键切换作品。<br />项目在新标签页打开，本页保留位置。</p></aside>
-        <div class="presenter-main"><article id="presenter-card" class="presenter-card" aria-labelledby="presenter-title"></article><div class="presenter-navigation"><button id="previous-step" class="button button-light" type="button"><span aria-hidden="true">←</span> 上一项</button><span id="presenter-position" class="subtle"></span><button id="next-step" class="button button-primary" type="button">下一项 <span aria-hidden="true">→</span></button></div><p id="step-announcement" class="sr-only" role="status" aria-live="polite"></p></div>
+      <div class="saved-visuals">
+        <figure class="saved-figure"><figcaption><strong>训练曲线</strong><span>coco8 · 30 epochs · 已归档</span></figcaption><div class="saved-image"><img src="/api/showcase/files/training-curve" alt="coco8 训练 30 轮的损失与评测曲线" loading="lazy" /><p class="image-fallback" hidden>训练曲线暂时无法读取。</p></div></figure>
+        <figure class="saved-figure"><figcaption><strong>已保存检测结果</strong><span>公开样例 · 归档画面</span></figcaption><div class="saved-image"><img src="/api/showcase/files/public-detection" alt="已保存的公开样例 YOLO 检测结果" loading="lazy" /><p class="image-fallback" hidden>已保存检测结果暂时无法读取。</p></div></figure>
       </div>
     </section>
 
-    <section id="preparation" class="preparation" aria-labelledby="preparation-title" hidden><div><p class="eyebrow">MAKE IT YOUR OWN</p><h2 id="preparation-title">上台前，再走一遍</h2><p>让页面帮助组织展示，<br />用自己的话解释每一步。</p></div><ul id="preparation-list" class="preparation-list"></ul></section>
+    <section id="yinghuo" class="project-section" aria-labelledby="yinghuo-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">03</div><div><p class="eyebrow">CREATIVE APPLICATION</p><h2 id="yinghuo-title">萤火</h2><p class="section-description">随笔记录、英语表达与文字知己。</p></div></div>
+      <div class="app-frame yinghuo-app">
+        <div class="app-toolbar"><div><strong>萤火 · 随笔与英语</strong><span class="app-label">使用虚构演示日记集</span></div><button id="load-yinghuo" class="button button-primary" type="button">载入萤火</button></div>
+        <div class="embedded-frame"><iframe id="yinghuo-frame" title="萤火随笔与英语应用" data-src="http://127.0.0.1:4318/notebook" hidden></iframe><div id="yinghuo-placeholder" class="embedded-placeholder"><span class="firefly-mark" aria-hidden="true">✦</span><strong>萤火</strong><p id="yinghuo-load-status" role="status">点击“载入萤火”，打开本机应用。</p></div></div>
+      </div>
+    </section>
 
-    <section class="direct-links" aria-labelledby="direct-links-title"><h2 id="direct-links-title">直接打开项目</h2><p>打开项目后，可返回此页继续讲解。</p><div><a href="/" target="_blank" rel="noopener noreferrer">文字冒险 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="/yolo" target="_blank" rel="noopener noreferrer">视觉检测 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="http://127.0.0.1:4318/notebook" target="_blank" rel="noopener noreferrer">萤火 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><a href="/research" target="_blank" rel="noopener noreferrer">科研工作台 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a></div><noscript><p class="noscript-note">启用 JavaScript 后可读取核对结论、讲解提纲和证据清单。上面的入口仍可直接使用。</p></noscript></section>
+    <section id="hardware" class="project-section compact-section" aria-labelledby="hardware-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">04</div><div><p class="eyebrow">HARDWARE</p><h2 id="hardware-title">硬件作品</h2></div></div>
+      <div class="app-frame hardware-frame"><svg class="hardware-icon" viewBox="0 0 80 80" aria-hidden="true"><rect x="22" y="22" width="36" height="36" rx="5"/><rect x="31" y="31" width="18" height="18" rx="2"/><path d="M30 12v10m10-10v10m10-10v10M30 58v10m10-10v10m10-10v10M12 30h10M12 40h10M12 50h10M58 30h10M58 40h10M58 50h10"/></svg><div><span class="eyebrow">实物 · 现场展示</span><h3>实物操作与功能演示</h3><p>作品连接、功能表现与调试过程。</p></div><span class="status-pill">已完成</span></div>
+    </section>
+
+    <section id="harness" class="project-section" aria-labelledby="harness-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">05</div><div><p class="eyebrow">RESEARCH HARNESS</p><h2 id="harness-title">科研 Harness</h2><p class="section-description">持续执行、检查点与可追溯产物。</p></div></div>
+      <div class="app-frame harness-app">
+        <div class="app-toolbar"><div><strong>已保存运行</strong><span id="harness-source" class="app-label">正在读取运行记录…</span></div><button id="refresh-harness" class="button button-quiet" type="button">刷新记录</button></div>
+        <div class="harness-summary"><h3 id="harness-run">正在读取已完成研究…</h3><p id="harness-summary" class="notice" role="status">读取保存的报告、评测与产物。</p><div id="harness-metrics" class="metric-grid" aria-label="运行指标"><div class="metric"><span>完成阶段</span><strong>—</strong></div><div class="metric"><span>运行耗时</span><strong>—</strong></div><div class="metric"><span>评测作业</span><strong>—</strong></div><div class="metric"><span>新增训练</span><strong>—</strong></div><div class="metric"><span>登记产物</span><strong>—</strong></div></div></div>
+        <div id="harness-artifacts" class="harness-artifacts"><div class="report-heading"><strong>研究报告</strong><span id="harness-report-label" class="small">已保存产物</span></div><div class="report-frame"><iframe id="harness-report" title="已保存研究报告" sandbox hidden></iframe><div id="harness-report-placeholder" class="embedded-placeholder"><strong>研究报告</strong><p>正在读取报告产物…</p></div></div><div id="harness-downloads" class="artifact-links"></div></div>
+      </div>
+    </section>
+
+    <section id="engineering" class="project-section compact-section" aria-labelledby="engineering-title">
+      <div class="section-heading"><div class="section-number" aria-hidden="true">06</div><div><p class="eyebrow">ENGINEERING</p><h2 id="engineering-title">工程实现</h2><p class="section-description">模块封装，HTTP 接口与订阅解耦。</p></div></div>
+      <div class="app-frame engineering-frame"><pre class="module-tree" aria-label="项目模块结构">src/
+├─ agent/       本地模型 · 工具循环
+├─ yolo/        训练 · 输入源 · 推理
+├─ web/         API · 订阅 · 界面
+└─ research/    执行 · 检查点 · 报告
+showcases/
+└─ yinghuo/     随笔 · 英语 · 对话</pre><div class="engineering-copy"><h3>从输入到结果</h3><p>前端提交操作，后端组织执行；状态、日志和产物保留可追溯记录。</p><a class="text-link" href="https://github.com/githud-yang/AIU-interview-2026">GitHub 源码 <span aria-hidden="true">↗</span></a></div></div>
+    </section>
+
+    <details id="runtime-details" class="runtime-details"><summary>运行资料 <span>连接检查 · 原始数据 · 实现说明</span></summary><div class="runtime-content">
+      <section class="runtime-block" aria-labelledby="preflight-title"><div class="runtime-heading"><h3 id="preflight-title">连接检查</h3><button id="refresh-preflight" class="button button-light" type="button">检查连接</button></div><p id="preflight-time" class="small">尚未检查</p><div id="preflight-services" class="service-grid"><p class="small">点击检查连接，读取本机服务状态。</p></div><p id="preflight-note" class="small">只读取连接状态。</p><p id="preflight-announcement" class="sr-only" role="status"></p></section>
+      <section class="runtime-block"><h3>原始运行数据</h3><details id="harness-table-details" class="data-details"><summary>查看评测 CSV</summary><pre id="harness-table" tabindex="0">尚未读取。</pre></details><p id="harness-limitation" class="small"></p></section>
+      <section class="runtime-block"><div class="runtime-heading"><h3>项目说明与记录</h3><button id="retry-showcase" class="button button-quiet" type="button">刷新资料</button></div><p id="checked-date" class="small"></p><p id="showcase-verdict" class="small"></p><div id="runtime-catalog"><p class="small">展开后读取项目资料。</p></div></section>
+    </div></details>
   </main>
-  <footer class="site-footer"><span>AIU LAB / 二面展示台</span><span>已登记证据说明完成范围；服务可达性不替代完整操作验收。</span></footer>
-
-  <dialog id="evidence-dialog" class="evidence-dialog" aria-labelledby="evidence-title" aria-describedby="evidence-description"><div class="evidence-dialog-heading"><div><p class="eyebrow">PROJECT EVIDENCE</p><h2 id="evidence-title">项目证据</h2></div><button id="close-evidence" class="icon-button" type="button" aria-label="关闭证据">×</button></div><p id="evidence-description" class="evidence-description">查看本项目已登记的展示证据。</p><div class="evidence-content"><p id="evidence-status" role="status" aria-live="polite">正在读取…</p><img id="evidence-image" alt="" hidden /><pre id="evidence-text" tabindex="0" aria-label="证据文件内容" hidden></pre></div><div class="evidence-dialog-footer"><a id="evidence-open" class="text-link" target="_blank" rel="noopener noreferrer">单独打开证据 <span aria-hidden="true">↗</span><span class="sr-only">（新标签页）</span></a><span class="subtle">Esc 关闭</span></div></dialog>
-  <section id="print-summary" class="print-summary" aria-label="打印版展示提纲"></section>
+  <footer class="site-footer"><span>AIU · PROJECT DEMO</span><span>本机运行 · 作品演示</span></footer>
   <p id="interface-announcement" class="sr-only" role="status" aria-live="polite"></p>
-  <script type="module" src="/static/showcase.js"></script>
+  <noscript><p class="noscript-note">启用 JavaScript 后可操作智能体、检测和嵌入应用。</p></noscript>
+  <script type="module" src="/static/showcase.js?v=stage-20261010"></script>
 </body>
 </html>
