@@ -1,0 +1,484 @@
+{
+  "checked_at": "2026-10-11T10:01:51.790813+00:00",
+  "scope": "live backend checks and browser UI verification; no camera/cloud/new research jobs",
+  "checks": {
+    "local_model_health": {
+      "provider": "ollama",
+      "model": "qwen2.5:7b",
+      "available": true,
+      "error": ""
+    },
+    "adventure": {
+      "status": 200,
+      "seconds": 10.219,
+      "input": "我走到实验室的终端前，仔细看看屏幕上有什么线索，并检查旁边的桌子。",
+      "reply": "终端屏幕上显示着一些代码和信息，但没有明显提示。桌子上有几页看似研究记录的纸张，还有两瓶不同颜色的液体。你想要查看终端上的代码，还是阅读桌上的记录？",
+      "nonempty_reply": true,
+      "browser_session_untouched": true
+    },
+    "yolo_start": {
+      "status": 200,
+      "body": {
+        "ok": true,
+        "running": true,
+        "state": "starting",
+        "msg": "正在加载模型和视频来源",
+        "error": "",
+        "warning": "",
+        "source": "demo",
+        "source_label": "公开 bus.jpg 静态样例",
+        "model": "best.pt",
+        "frame_count": 0,
+        "fps": 0.0,
+        "started_at": "2026-10-11T10:02:02.796977+00:00",
+        "last_frame_at": null,
+        "elapsed_seconds": 0
+      }
+    },
+    "yolo_demo": {
+      "source": "demo",
+      "content_type": "multipart/x-mixed-replace; boundary=frame",
+      "jpeg_bytes": 237633,
+      "jpeg_sha256": "2fa0b5255ff6ca2a4233f6b998ef96f6ff058010cbd3a6011c16d299dce09394",
+      "width": 810,
+      "height": 1080,
+      "mean_pixel": 120.275,
+      "status_with_frame": {
+        "running": true,
+        "state": "running",
+        "msg": "检测正在运行",
+        "error": "",
+        "warning": "",
+        "source": "demo",
+        "source_label": "公开 bus.jpg 静态样例",
+        "model": "best.pt",
+        "frame_count": 1,
+        "fps": 0.0,
+        "started_at": "2026-10-11T10:02:02.796977+00:00",
+        "last_frame_at": "2026-10-11T10:02:18.013736+00:00",
+        "elapsed_seconds": 15
+      },
+      "decode_ok": true,
+      "visual_inspection": false
+    },
+    "yolo_stop": {
+      "status": 200,
+      "body": {
+        "ok": true,
+        "running": false,
+        "state": "stopped",
+        "msg": "检测已停止，视频来源已释放",
+        "error": "",
+        "warning": "",
+        "source": "demo",
+        "source_label": "公开 bus.jpg 静态样例",
+        "model": "best.pt",
+        "frame_count": 1,
+        "fps": 0.0,
+        "started_at": "2026-10-11T10:02:02.796977+00:00",
+        "last_frame_at": "2026-10-11T10:02:18.013736+00:00",
+        "elapsed_seconds": null
+      }
+    },
+    "saved_research": {
+      "run_id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+      "status": "completed",
+      "metrics": [
+        {
+          "label": "完成阶段",
+          "value": "12 / 12"
+        },
+        {
+          "label": "运行耗时",
+          "value": "202 秒"
+        },
+        {
+          "label": "评测作业",
+          "value": "5"
+        },
+        {
+          "label": "新增训练",
+          "value": "0"
+        },
+        {
+          "label": "登记产物",
+          "value": "319"
+        }
+      ],
+      "artifacts": [
+        {
+          "id": "report",
+          "status": 200,
+          "bytes": 81751,
+          "sha256": "98f4de5d229c77f66494f674271f5c52a93b5088b46c53f3f36ce6df051fad26",
+          "registered_sha256": "98f4de5d229c77f66494f674271f5c52a93b5088b46c53f3f36ce6df051fad26",
+          "hash_match": true,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "id": "table",
+          "status": 200,
+          "bytes": 1081,
+          "sha256": "9b3d91992500dbd8510773567d0ac39c8e4ea38bd09c598efab7474a0ab775b6",
+          "registered_sha256": "9b3d91992500dbd8510773567d0ac39c8e4ea38bd09c598efab7474a0ab775b6",
+          "hash_match": true,
+          "content_type": "text/plain; charset=utf-8"
+        },
+        {
+          "id": "figure",
+          "status": 200,
+          "bytes": 53445,
+          "sha256": "ecdbb3b901d10771541eb3546584727eb5984a5345aba957ca3ff5ec9a2ad560",
+          "registered_sha256": "ecdbb3b901d10771541eb3546584727eb5984a5345aba957ca3ff5ec9a2ad560",
+          "hash_match": true,
+          "content_type": "image/png"
+        },
+        {
+          "id": "pdf",
+          "status": 200,
+          "bytes": 148577,
+          "sha256": "7a325e124198e4c4233e5b07a7c4595ad14b2e404c1e180eb6ceb2c31950df7e",
+          "registered_sha256": "7a325e124198e4c4233e5b07a7c4595ad14b2e404c1e180eb6ceb2c31950df7e",
+          "hash_match": true,
+          "content_type": "application/pdf"
+        }
+      ],
+      "new_jobs": 0
+    },
+    "research_state_preserved": {
+      "equal": true,
+      "counts": {
+        "completed": 3,
+        "failed": 1
+      }
+    },
+    "yinghuo": {
+      "health_status": 200,
+      "health": {
+        "ok": true
+      },
+      "page_status": 200,
+      "title": "萤火 · 随笔成诗",
+      "assets": [
+        {
+          "path": "/assets/index-BEX-ZVjK.js",
+          "status": 200,
+          "bytes": 181108,
+          "sha256": "b9f1c82ced866d703d4df7ce6816137e781de5feba9b0f4ea0d4c7596dcea277",
+          "content_type": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/chunk-BEqpzyXh.js",
+          "status": 200,
+          "bytes": 817,
+          "sha256": "2c4bd028f943e20fbbed928c46af1b2b9310c60818d9eea70b5859796f63c300",
+          "content_type": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/jsx-runtime-B1-PFr6Z.js",
+          "status": 200,
+          "bytes": 49166,
+          "sha256": "6f90aa4ee060aa800323960dee0436876d67bc89f72fbe59181d77ab1ac29dd8",
+          "content_type": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/vocabKnowledge-BLKMkket.js",
+          "status": 200,
+          "bytes": 672487,
+          "sha256": "f67d440f76b34ffec14a07ae2e506fc87b86c9c8f2abb55e33d712a3a56813bb",
+          "content_type": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/react-dom-Bg-FuqZj.js",
+          "status": 200,
+          "bytes": 3579,
+          "sha256": "34f189dc138f2aa2b3a3c440d1f2ea8ef00ea058f2f64340bb829aface435ebd",
+          "content_type": "text/javascript; charset=utf-8"
+        },
+        {
+          "path": "/assets/index-D9sfciyF.css",
+          "status": 200,
+          "bytes": 31611,
+          "sha256": "6b9fbe99509a2a51b3d0252a2842d97dd7d1823ae7cd97a088320ad60880317b",
+          "content_type": "text/css; charset=utf-8"
+        }
+      ],
+      "model_requests": 0,
+      "private_notes_accessed": false,
+      "visual_inspection": false
+    },
+    "campus": {
+      "method": "GET",
+      "url": "https://hzau.rundecloud.com/",
+      "final_url": "https://hzau.rundecloud.com/",
+      "status": 200,
+      "title": "华南农业大学 · AI百事通",
+      "bytes": 579,
+      "login": false,
+      "model_requests": 0,
+      "visual_inspection": false
+    },
+    "mozhi": {
+      "method": "GET",
+      "url": "https://121.43.165.79/",
+      "final_url": "https://121.43.165.79/",
+      "status": 200,
+      "title": "墨我知兮",
+      "bytes": 744,
+      "login": false,
+      "model_requests": 0,
+      "visual_inspection": false
+    }
+  },
+  "limitations": [
+    "HTTP and JPEG decoding are backend checks, not browser visual acceptance."
+  ],
+  "research_before": [
+    {
+      "id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+      "domain": "yolo_tradeoff",
+      "status": "completed",
+      "updated_at": "2026-10-09T16:26:04.910706+00:00",
+      "budget": {
+        "max_seconds": null,
+        "model_calls": null,
+        "max_trials": null,
+        "elapsed_seconds": 202.0,
+        "used_model_calls": 6,
+        "used_trials": 5
+      }
+    },
+    {
+      "id": "2c82025713d643d68b57c62876f8886d",
+      "domain": "yolo_tradeoff",
+      "status": "failed",
+      "updated_at": "2026-10-09T05:10:06.188389+00:00",
+      "budget": {
+        "max_seconds": null,
+        "model_calls": null,
+        "max_trials": null,
+        "elapsed_seconds": 37.454,
+        "used_model_calls": 0,
+        "used_trials": 1
+      }
+    },
+    {
+      "id": "dd98c3f59cc34e73b7d2be3e3ec36899",
+      "domain": "digits_robustness",
+      "status": "completed",
+      "updated_at": "2026-10-08T15:44:04.699216+00:00",
+      "budget": {
+        "max_seconds": 1200,
+        "model_calls": 12,
+        "max_trials": 18,
+        "elapsed_seconds": 454.031,
+        "used_model_calls": 7,
+        "used_trials": 18
+      }
+    },
+    {
+      "id": "628064837b3b4708bcf0c591fd5909da",
+      "domain": "digits_robustness",
+      "status": "completed",
+      "updated_at": "2026-10-08T11:03:08.917181+00:00",
+      "budget": {
+        "max_seconds": 1200,
+        "model_calls": 12,
+        "max_trials": 18,
+        "elapsed_seconds": 63.656,
+        "used_model_calls": 6,
+        "used_trials": 18
+      }
+    }
+  ],
+  "yolo_before": {
+    "running": false,
+    "state": "stopped",
+    "msg": "检测未启动",
+    "error": "",
+    "warning": "",
+    "source": null,
+    "source_label": "",
+    "model": "",
+    "frame_count": 0,
+    "fps": 0.0,
+    "started_at": null,
+    "last_frame_at": null,
+    "elapsed_seconds": null
+  },
+  "yolo_after": {
+    "running": false,
+    "state": "stopped",
+    "msg": "检测已停止，视频来源已释放",
+    "error": "",
+    "warning": "",
+    "source": "demo",
+    "source_label": "公开 bus.jpg 静态样例",
+    "model": "best.pt",
+    "frame_count": 1,
+    "fps": 0.0,
+    "started_at": "2026-10-11T10:02:02.796977+00:00",
+    "last_frame_at": "2026-10-11T10:02:18.013736+00:00",
+    "elapsed_seconds": null
+  },
+  "research_after": [
+    {
+      "id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+      "domain": "yolo_tradeoff",
+      "status": "completed",
+      "updated_at": "2026-10-09T16:26:04.910706+00:00",
+      "budget": {
+        "max_seconds": null,
+        "model_calls": null,
+        "max_trials": null,
+        "elapsed_seconds": 202.0,
+        "used_model_calls": 6,
+        "used_trials": 5
+      }
+    },
+    {
+      "id": "2c82025713d643d68b57c62876f8886d",
+      "domain": "yolo_tradeoff",
+      "status": "failed",
+      "updated_at": "2026-10-09T05:10:06.188389+00:00",
+      "budget": {
+        "max_seconds": null,
+        "model_calls": null,
+        "max_trials": null,
+        "elapsed_seconds": 37.454,
+        "used_model_calls": 0,
+        "used_trials": 1
+      }
+    },
+    {
+      "id": "dd98c3f59cc34e73b7d2be3e3ec36899",
+      "domain": "digits_robustness",
+      "status": "completed",
+      "updated_at": "2026-10-08T15:44:04.699216+00:00",
+      "budget": {
+        "max_seconds": 1200,
+        "model_calls": 12,
+        "max_trials": 18,
+        "elapsed_seconds": 454.031,
+        "used_model_calls": 7,
+        "used_trials": 18
+      }
+    },
+    {
+      "id": "628064837b3b4708bcf0c591fd5909da",
+      "domain": "digits_robustness",
+      "status": "completed",
+      "updated_at": "2026-10-08T11:03:08.917181+00:00",
+      "budget": {
+        "max_seconds": 1200,
+        "model_calls": 12,
+        "max_trials": 18,
+        "elapsed_seconds": 63.656,
+        "used_model_calls": 6,
+        "used_trials": 18
+      }
+    }
+  ],
+  "browser_checked_at": "2026-10-11T10:18:45.909713+00:00",
+  "browser_checks": {
+    "old_document_confirmed": "Existing tab had old six-item navigation and no mowozhixi target; changing only the fragment did not load new HTML.",
+    "eight_nav_targets": [
+      {
+        "id": "agent",
+        "current_matches": true
+      },
+      {
+        "id": "yolo",
+        "current_matches": true
+      },
+      {
+        "id": "yinghuo",
+        "current_matches": true
+      },
+      {
+        "id": "mowozhixi",
+        "current_matches": true
+      },
+      {
+        "id": "campus",
+        "current_matches": true
+      },
+      {
+        "id": "hardware",
+        "current_matches": true
+      },
+      {
+        "id": "harness",
+        "current_matches": true
+      },
+      {
+        "id": "engineering",
+        "current_matches": true
+      }
+    ],
+    "mowozhixi": {
+      "visible_link_and_intro": true,
+      "reload_deep_link_aligned": true,
+      "target_top_px": 125.927,
+      "screenshot": "showcase-mowozhixi-20261011.jpg"
+    },
+    "adventure": {
+      "clicked": "看看终端屏幕",
+      "reply_visible": true,
+      "notice": "可以继续输入下一步行动。"
+    },
+    "yolo": {
+      "started_from_ui": true,
+      "source": "demo",
+      "visible_bus_person_boxes": true,
+      "image_size": [
+        810,
+        1080
+      ],
+      "stopped_from_ui": true
+    },
+    "yinghuo": {
+      "day_iframe_visible": true,
+      "navigation_kept_loaded_frame": true,
+      "standalone_day_night_day_switch": true,
+      "iframe_theme_click_automation": "CUA bridge returned Click target is no longer available; standalone controls succeeded; no conclusion about iframe click behavior."
+    },
+    "research": {
+      "saved_html_visible": true,
+      "csv_expanded_from_ui": true,
+      "stages": "12/12",
+      "evaluations": 5,
+      "new_training": 0,
+      "artifacts": 319
+    },
+    "responsive_320": {
+      "document_width": 305,
+      "scroll_width": 305,
+      "all_eight_links_inside_viewport": true,
+      "header_bottom_px": 141.1875,
+      "target_top_px": 183.875,
+      "viewport_reset": true
+    },
+    "external_pages": "Backend GET checks only. Browser inventory showed mozhi title after opening, but UI inspection timed out; no login, writing or model workflow tested.",
+    "remaining_scope": [
+      "physical hardware demo",
+      "presenter rehearsal",
+      "camera",
+      "notebook editing/export/import",
+      "external project business workflows"
+    ],
+    "responsive_801": {
+      "document_width": 786,
+      "scroll_width": 786,
+      "last_nav_right_px": 688.667,
+      "fullscreen_right_px": 762,
+      "viewport_reset": true
+    }
+  },
+  "final_server_check": {
+    "html": 200,
+    "cache_control": "no-store",
+    "navigation_module": 200,
+    "yolo_running": false
+  }
+}

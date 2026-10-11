@@ -10,7 +10,10 @@ router = APIRouter()
 
 @router.get("/showcase", include_in_schema=False)
 def showcase_page():
-    return FileResponse(showcase_service.ROOT / "src/web/static/showcase.html")
+    # The stage document changes as projects are added; never reuse a cached
+    # navigation/anchor list when the user explicitly opens this page again.
+    return FileResponse(showcase_service.ROOT / "src/web/static/showcase.html",
+                        headers={"Cache-Control": "no-store"})
 
 
 @router.get("/api/showcase")

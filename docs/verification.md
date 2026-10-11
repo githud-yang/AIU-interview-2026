@@ -113,3 +113,10 @@ YOLO固定权重320/480/640研究真实完成12阶段，run为bd8c2a7ccaff4ae4b3
 以原项目 `train12/args.yaml`、10行 `results.csv` 和原始 `mytrain.py` 核对参数，归档为 [wildlife_training_result.json](wildlife_training_result.json)。展示台曲线与训练下载已切换为该10轮记录；原训练入口保持字节一致，未启动训练、重新验证模型或覆盖实时通用检测权重。保存的验证样图16个文件名均仅匹配当前训练目录，详见归档中的 `validation-sample-audit.json`；日志成绩不作为独立验证成绩。
 
 归档/展示14项自动检查全部通过。20份归档文件哈希、萤火96份源码快照哈希一致；真实HTTP读取12份登记展示资料，均与磁盘字节一致，训练接口返回african-wildlife和10轮，页面曲线标签与之对应。服务重启前后检测未运行，已有研究仍为3个completed/1个failed；无新研究、摄像头或模型调用。本轮没有浏览器视觉验收。
+
+
+# 2026-10-11：展示页实际运行与定位回归
+
+12项Python（test_showcase、test_showcase_research）及16项Node（showcase_frontend、showcase_live、showcase_navigation）通过。覆盖HTML不缓存、旧缓存验证头返回新文档、长栏目离开时导航不串项、初始深链仅一次校正及用户操作取消、既有聊天/检测/传输行为。
+
+实际浏览器完成八项导航、高亮、墨我知兮深链刷新、320px无横向溢出、文字冒险模型回复、公开样例检测画面与停止、萤火白天载入、独立页面日夜往返、研究报告及CSV展开。物理投屏/硬件、摄像头、笔记编辑/备份和外站业务流程未包含；嵌入页主题点击被自动化桥拒绝，只以独立页结果确认切换。详见../evidence/showcase-live-check-20261011.json及最终截图。

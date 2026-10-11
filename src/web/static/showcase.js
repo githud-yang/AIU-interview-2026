@@ -1,6 +1,7 @@
 /** Keep every project mounted; only explicit controls start or reload applications. */
 import { createShowcaseTransport } from "./showcase-transport.js";
 import { initShowcaseLive } from "./showcase-live.js";
+import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=20261011";
 
 const byId = (id) => document.getElementById(id);
 const transport = createShowcaseTransport();
@@ -169,16 +170,6 @@ document.querySelectorAll(".saved-image img").forEach((image) => image.addEventL
   image.hidden = true; image.parentElement.querySelector(".image-fallback").hidden = false;
 }));
 
-const links = [...document.querySelectorAll(".site-nav a")];
-function markSection(id) { links.forEach((link) => { if (link.hash === `#${id}`) link.setAttribute("aria-current", "location"); else link.removeAttribute("aria-current"); }); }
-markSection(window.location.hash.slice(1) || "agent");
-if (typeof IntersectionObserver === "function") {
-  const observer = new IntersectionObserver((entries) => {
-    const entry = entries.filter((item) => item.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (entry) markSection(entry.target.id);
-  }, { rootMargin: "-100px 0px -55% 0px", threshold: 0 });
-  document.querySelectorAll(".project-section").forEach((section) => observer.observe(section));
-}
 if (document.fullscreenEnabled && typeof document.documentElement.requestFullscreen === "function") {
   const button = byId("fullscreen-button"); button.hidden = false;
   button.addEventListener("click", async () => {
@@ -191,4 +182,5 @@ if (document.fullscreenEnabled && typeof document.documentElement.requestFullscr
 }
 window.addEventListener("pagehide", () => transport.close());
 initShowcaseLive();
+initializeShowcaseNavigation();
 void loadResearch();

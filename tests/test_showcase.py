@@ -14,6 +14,27 @@ from src.web.services import showcase_service as showcase
 
 
 class ShowcaseTests(unittest.TestCase):
+    def test_stage_document_is_not_cached_and_reopening_reads_current_projects(self):
+        app = FastAPI()
+        app.include_router(showcase_routes.router)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            document = root / "src/web/static/showcase.html"
+            document.parent.mkdir(parents=True)
+            document.write_text('<section id="agent">Agent</section>', encoding="utf-8")
+            with patch.object(showcase, "ROOT", root), TestClient(app) as client:
+                old = client.get("/showcase")
+                self.assertEqual(old.status_code, 200)
+                self.assertEqual(old.headers["cache-control"], "no-store")
+                document.write_text('<section id="mowozhixi">New project</section>', encoding="utf-8")
+                current = client.get("/showcase", headers={
+                    "If-None-Match": old.headers["etag"],
+                    "If-Modified-Since": old.headers["last-modified"],
+                })
+                self.assertEqual(current.status_code, 200)
+                self.assertIn('id="mowozhixi"', current.text)
+                self.assertEqual(current.headers["cache-control"], "no-store")
+
     def test_catalog_marks_missing_evidence_without_disclosing_private_files(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
