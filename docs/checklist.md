@@ -95,5 +95,7 @@
 
 ## 2026-10-11：简化YOLO训练入口
 
-- [x] ✓ 按本人反馈将训练入口从60行简化为12行，参数直接写在训练调用中；归档操作独立为 `src/yolo/archive_training.py`，启动说明和缺权重提示同步。
+- [x] ✓ 按本人明确确认，`src/yolo/train.py` 采用PyCharm原稿 `mytrain.py` 的13行原样内容；保留african-wildlife/10轮/batch28/RAM缓存/workers1，没有追加参数或封装。
 - [x] ✓ 7项既有归档回归通过；训练入口使用模型桩核对，独立归档命令用临时样例验证通过，没有重新训练或修改已有权重/证据。
+- [x] ✓ 已找到本人原稿：`D:/03_项目与代码/AI与算法/deeplearning/ultralytics-8.3.163/mytrain.py`，共13行，配置african-wildlife/10轮/batch28/RAM缓存/workers1；该项目 `.idea/workspace.xml` 选中 `Python.mytrain` 并指向此文件。原稿未修改，未据此推定训练完成情况。
+- [x] ✓ 本次复制版与原文件字节哈希一致，语法与模型桩参数核对通过；说明区分原稿与此前coco8实验，未重新训练或覆盖已有成果。

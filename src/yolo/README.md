@@ -1,6 +1,6 @@
 # YOLO训练与推理
 
-- `train.py`：简短的Ultralytics训练脚本，训练参数直接在文件中修改。
+- `train.py`：原样保留的`mytrain.py`训练原稿，训练参数直接在文件中修改。
 - `archive_training.py`：独立归档已完成的训练，保存摘要和最佳权重。
 - `detect_realtime.py`：摄像头/图像/视频推理CLI，界面与推理在后端。
 - `sources.py`：统一来源配置、图像读取与合法路径检查。
@@ -20,12 +20,12 @@
 ./.venv/Scripts/python.exe -m src.yolo.train
 ```
 
-默认使用`yolo11n.pt`和`coco8.yaml`，训练30轮，图像尺寸640，batch为4，使用CPU，workers为0，seed为42。新机器所需的公开权重和数据集由Ultralytics下载，训练输出在`runs/detect/`。
+原稿使用`yolo11n.pt`和`african-wildlife.yaml`，训练10轮，图像尺寸640，batch为28，cache为`ram`，workers为1；未指定device、project或name。所需的公开权重和数据集由Ultralytics下载，默认输出目录由Ultralytics决定。
 
 训练完成后，再独立归档；路径替换为本次实际输出目录：
 
 ```powershell
-./.venv/Scripts/python.exe -m src.yolo.archive_training runs/detect/coco8_baseline
+./.venv/Scripts/python.exe -m src.yolo.archive_training runs/detect/train
 ```
 
-归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`。既有GPU训练参数见`training_result.json`；新运行不保证同一性能数值。
+归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`。既有`training_result.json`和coco8归档来自此前另一次实验，不是此次wildlife脚本的新运行结果。
