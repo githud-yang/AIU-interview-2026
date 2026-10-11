@@ -1,0 +1,298 @@
+{
+  "schema_version": 2,
+  "started_at": null,
+  "completed_at": null,
+  "archived_at": "2026-10-11T06:34:22.465921+00:00",
+  "parameters": {
+    "task": "detect",
+    "mode": "train",
+    "model": "yolo11n.pt",
+    "data": "african-wildlife.yaml",
+    "epochs": 10,
+    "time": null,
+    "patience": 100,
+    "batch": 28,
+    "imgsz": 640,
+    "save": true,
+    "save_period": -1,
+    "cache": "ram",
+    "device": null,
+    "workers": 1,
+    "project": null,
+    "name": "train12",
+    "exist_ok": false,
+    "pretrained": true,
+    "optimizer": "auto",
+    "verbose": true,
+    "seed": 0,
+    "deterministic": true,
+    "single_cls": false,
+    "rect": false,
+    "cos_lr": false,
+    "close_mosaic": 10,
+    "resume": false,
+    "amp": true,
+    "fraction": 1.0,
+    "profile": false,
+    "freeze": null,
+    "multi_scale": false,
+    "overlap_mask": true,
+    "mask_ratio": 4,
+    "dropout": 0.0,
+    "val": true,
+    "split": "val",
+    "save_json": false,
+    "conf": null,
+    "iou": 0.7,
+    "max_det": 300,
+    "half": false,
+    "dnn": false,
+    "plots": true,
+    "source": null,
+    "vid_stride": 1,
+    "stream_buffer": false,
+    "visualize": false,
+    "augment": false,
+    "agnostic_nms": false,
+    "classes": null,
+    "retina_masks": false,
+    "embed": null,
+    "show": false,
+    "save_frames": false,
+    "save_txt": false,
+    "save_conf": false,
+    "save_crop": false,
+    "show_labels": true,
+    "show_conf": true,
+    "show_boxes": true,
+    "line_width": null,
+    "format": "torchscript",
+    "keras": false,
+    "optimize": false,
+    "int8": false,
+    "dynamic": false,
+    "simplify": true,
+    "opset": null,
+    "workspace": null,
+    "nms": false,
+    "lr0": 0.01,
+    "lrf": 0.01,
+    "momentum": 0.937,
+    "weight_decay": 0.0005,
+    "warmup_epochs": 3.0,
+    "warmup_momentum": 0.8,
+    "warmup_bias_lr": 0.1,
+    "box": 7.5,
+    "cls": 0.5,
+    "dfl": 1.5,
+    "pose": 12.0,
+    "kobj": 1.0,
+    "nbs": 64,
+    "hsv_h": 0.015,
+    "hsv_s": 0.7,
+    "hsv_v": 0.4,
+    "degrees": 0.0,
+    "translate": 0.1,
+    "scale": 0.5,
+    "shear": 0.0,
+    "perspective": 0.0,
+    "flipud": 0.0,
+    "fliplr": 0.5,
+    "bgr": 0.0,
+    "mosaic": 1.0,
+    "mixup": 0.0,
+    "cutmix": 0.0,
+    "copy_paste": 0.0,
+    "copy_paste_mode": "flip",
+    "auto_augment": "randaugment",
+    "erasing": 0.4,
+    "cfg": null,
+    "tracker": "botsort.yaml",
+    "save_dir": "runs\\detect\\train12"
+  },
+  "run_dir": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\runs\\detect\\train12",
+  "completed_epochs": 10,
+  "weights": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\runs\\detect\\train12\\weights\\best.pt",
+  "weights_sha256": "1e1fabea306ba7ceeb30d70d1d30df29de28099c2c605ddebd9effd9ecbc4be9",
+  "metrics": {
+    "metrics/precision(B)": 0.94569,
+    "metrics/recall(B)": 0.9224,
+    "metrics/mAP50(B)": 0.96695,
+    "metrics/mAP50-95(B)": 0.81953
+  },
+  "metrics_origin": "last_epoch_csv",
+  "last_epoch_metrics": {
+    "epoch": 10.0,
+    "time": 154.453,
+    "train/box_loss": 0.65243,
+    "train/cls_loss": 0.8066,
+    "train/dfl_loss": 1.06944,
+    "metrics/precision(B)": 0.94569,
+    "metrics/recall(B)": 0.9224,
+    "metrics/mAP50(B)": 0.96695,
+    "metrics/mAP50-95(B)": 0.81953,
+    "val/box_loss": 0.59679,
+    "val/cls_loss": 0.53513,
+    "val/dfl_loss": 0.99928,
+    "lr/pg0": 0.00013625,
+    "lr/pg1": 0.00013625,
+    "lr/pg2": 0.00013625
+  },
+  "environment": {
+    "python": "3.11.14 | packaged by Anaconda, Inc. | (main, Oct 21 2025, 18:30:03) [MSC v.1929 64 bit (AMD64)]",
+    "executable": "D:\\01_个人资料\\学习与生活\\AIU二面\\.venv\\Scripts\\python.exe",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "packages": {
+      "ultralytics": "8.4.170",
+      "torch": "2.9.1+cu128",
+      "torchvision": "0.24.1+cu128",
+      "numpy": "2.2.6",
+      "opencv-python": "4.12.0.88",
+      "PyYAML": "6.0.3"
+    }
+  },
+  "environment_origin": "archive_runtime",
+  "dataset": {
+    "configured": "african-wildlife.yaml",
+    "names": [
+      "buffalo",
+      "elephant",
+      "rhino",
+      "zebra"
+    ],
+    "split_origin": "historical_resolved_split_unavailable",
+    "validation_sample_audit": {
+      "file": "validation-sample-audit.json",
+      "checked_filenames": 16,
+      "all_found_only_in_current_train_directory": true,
+      "full_historical_split_reconstructed": false
+    }
+  },
+  "dataset_origin": "archive_time_config_snapshots",
+  "evidence_dir": "D:\\01_个人资料\\学习与生活\\AIU二面\\docs\\evidence\\wildlife_train12_20261011",
+  "artifacts": [
+    {
+      "file": "args.yaml",
+      "sha256": "9c871c046cd8d556c8679117a7b07f811340c76e5434dea0a85e22c5d8c03dc3",
+      "bytes": 1619
+    },
+    {
+      "file": "BoxF1_curve.png",
+      "sha256": "e20091975d9114eae38bec7d73ffa59253c0e664598c375d3e3100712d74e72b",
+      "bytes": 192543
+    },
+    {
+      "file": "BoxP_curve.png",
+      "sha256": "54e75576ab8999876b9afef5e8cc87dd6b09429dfa0b24f7fdb7b9a3f8a5430b",
+      "bytes": 145395
+    },
+    {
+      "file": "BoxPR_curve.png",
+      "sha256": "31cc01d0f4307078273d06b007e4ab152046de5cefc327856ec681fd43afeca4",
+      "bytes": 119691
+    },
+    {
+      "file": "BoxR_curve.png",
+      "sha256": "7c19db87016b1e185bfa2270b35ef71ff7c24f5cc589c0430cc2b70f452fc9b2",
+      "bytes": 169136
+    },
+    {
+      "file": "confusion_matrix.png",
+      "sha256": "a7acc2b8454d53b64f58c3362c6ed2199582b941164e1586cd718064b36a4781",
+      "bytes": 129929
+    },
+    {
+      "file": "confusion_matrix_normalized.png",
+      "sha256": "98780b8b542e4cd326d5f9f19f9ab744d518c291c5d2b63bc042d7838365701e",
+      "bytes": 143128
+    },
+    {
+      "file": "results.csv",
+      "sha256": "ed8e19337922fc4c0be1e61b8df875cc83b8feba0856418dc71129fb10cd9219",
+      "bytes": 1414
+    },
+    {
+      "file": "results.png",
+      "sha256": "68340c44d6d77ee0624d2572a66739f389912e417ca2c273c1e5ba9c0412e773",
+      "bytes": 264472
+    },
+    {
+      "file": "val_batch0_labels.jpg",
+      "sha256": "b031861dead4ee2e745c18c5d88e44bd68213b360e1e16259bf2d69dd2a84f59",
+      "bytes": 404458
+    },
+    {
+      "file": "val_batch0_pred.jpg",
+      "sha256": "db4295b37a8205ae3f9a957e40476c11827fc118e93d3f14e70b98b9b11f1c98",
+      "bytes": 412256
+    },
+    {
+      "file": "val_batch1_labels.jpg",
+      "sha256": "23bbce6f8a38b994c734b2c8339775fe8b898a81ea72cc4945d9a52b04ec4391",
+      "bytes": 471134
+    },
+    {
+      "file": "val_batch1_pred.jpg",
+      "sha256": "2e5bc394d944b5b0a026056a4fdc10ccdf6b1b37462693fb562c18d56e2b9657",
+      "bytes": 481801
+    },
+    {
+      "file": "val_batch2_labels.jpg",
+      "sha256": "b63e860db88406377b5dbe753db54089cc934fdc5d33fae3fa5bc7277dd491e0",
+      "bytes": 502348
+    },
+    {
+      "file": "val_batch2_pred.jpg",
+      "sha256": "c23ad7fb640b39195001eb4fc32058d8a62ead258d994b2bd1d1a3302dddffb0",
+      "bytes": 505277
+    },
+    {
+      "file": "environment-versions.txt",
+      "sha256": "5bf6ff1bb147aece9af422a0b9d309bd20ff64464b983c7db9fd74b25c105ff2",
+      "bytes": 197,
+      "generated": true
+    },
+    {
+      "file": "mytrain.py",
+      "sha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7",
+      "bytes": 259,
+      "source": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\mytrain.py",
+      "copied_at_archive": true
+    },
+    {
+      "file": "dataset-config-current-package.yaml",
+      "sha256": "f4fd720ec76a1262bb230a9e67ed6f4dac42559166d88fb9a26b9ea37adae3bc",
+      "bytes": 921,
+      "source": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\ultralytics\\cfg\\datasets\\african-wildlife.yaml",
+      "copied_at_archive": true
+    },
+    {
+      "file": "dataset-config-current-download.yaml",
+      "sha256": "08ffd36c25794554107062784f7858e658ab571b60c9fb65920a054d5cd09847",
+      "bytes": 939,
+      "source": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\african-wildlife.yaml",
+      "copied_at_archive": true
+    },
+    {
+      "file": "validation-sample-audit.json",
+      "sha256": "37a010c54569f55a59213e7ad73511859bdad60565d73f84547cfd8e46efd844",
+      "bytes": 6479,
+      "generated": true
+    }
+  ],
+  "note": "原项目 train12 保存了与当前 mytrain.py 相同的训练参数及10轮CSV。指标取自最后一轮日志，未重新验证best权重。保存的验证样图中核对的16个文件名均只存在当前训练目录，不能将这些分数称为独立验证成绩。两份当前同名数据配置存在val/test路径分歧，历史完整划分尚未还原；配置快照及核查记录保存在归档中。实时公交车/行人演示使用另一次coco8训练权重。",
+  "source_script": {
+    "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\mytrain.py",
+    "sha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7",
+    "archived_file": "mytrain.py",
+    "configured_parameters": {
+      "model": "yolo11n.pt",
+      "data": "african-wildlife.yaml",
+      "epochs": 10,
+      "imgsz": 640,
+      "batch": 28,
+      "cache": "ram",
+      "workers": 1
+    }
+  }
+}

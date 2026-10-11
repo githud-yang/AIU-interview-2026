@@ -1,0 +1,171 @@
+{
+  "scope": "16 filenames read from original train12/val_batch0_labels.jpg; not a full historical split reconstruction",
+  "source_image": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\runs\\detect\\train12\\val_batch0_labels.jpg",
+  "source_image_sha256": "b031861dead4ee2e745c18c5d88e44bd68213b360e1e16259bf2d69dd2a84f59",
+  "matched_training_filenames": 16,
+  "matched_validation_filenames": 0,
+  "matched_test_filenames": 0,
+  "entries": [
+    {
+      "filename": "3 (190).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (190).jpg",
+          "sha256": "8263d4596289ee3375c8582683f45ce9f4aa38a38f005b74982b7882cb9f1105"
+        }
+      ]
+    },
+    {
+      "filename": "4 (351).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\4 (351).jpg",
+          "sha256": "0be402de9b6241a49b8c640e21bc4ed34c98ab77523f8ad4e148432e81d9fd08"
+        }
+      ]
+    },
+    {
+      "filename": "1 (326).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\1 (326).jpg",
+          "sha256": "26eeb8eb4be98095017eccbeefacb5918dfbe3e79beba7b54b4761d14499895d"
+        }
+      ]
+    },
+    {
+      "filename": "3 (225).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (225).jpg",
+          "sha256": "98c76ef99cc42cfeb3806673b1bf910a086e6aa0e5eddb7c0c63bb74c2f4a55a"
+        }
+      ]
+    },
+    {
+      "filename": "3 (365).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (365).jpg",
+          "sha256": "8263d4596289ee3375c8582683f45ce9f4aa38a38f005b74982b7882cb9f1105"
+        }
+      ]
+    },
+    {
+      "filename": "3 (279).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (279).jpg",
+          "sha256": "54fca880da1cf15e548e930948e6be3ecfaf03809e93d3744ab0bed972f728c6"
+        }
+      ]
+    },
+    {
+      "filename": "1 (152).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\1 (152).jpg",
+          "sha256": "5f375942b9ae6fb28fc5724f1682f2ca294769bf6722987f5fe114368b8c30e2"
+        }
+      ]
+    },
+    {
+      "filename": "2 (299).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\2 (299).jpg",
+          "sha256": "053ebdb759f3a7d15c4342e755dc6f33c7d47146b167d80d02a2fd0f3565240c"
+        }
+      ]
+    },
+    {
+      "filename": "4 (121).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\4 (121).jpg",
+          "sha256": "0d836f7f79314e58c59bc41b6c3f80be7dbe2e87759f5b407f22c1fd28c7d0f5"
+        }
+      ]
+    },
+    {
+      "filename": "3 (102).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (102).jpg",
+          "sha256": "25844e7ce0c72ac9d4240b01c463bb306672082a45a49aaeb004f85b2a211838"
+        }
+      ]
+    },
+    {
+      "filename": "4 (24).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\4 (24).jpg",
+          "sha256": "c85795529bff5f22873b34aa9e3ccea461f91ff58779cb91354a2b0a99401853"
+        }
+      ]
+    },
+    {
+      "filename": "4 (334).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\4 (334).jpg",
+          "sha256": "f9bb1a4823baaee7d5dfc02e29f2c4198ccf76599b4b22648ea4c381c0023eac"
+        }
+      ]
+    },
+    {
+      "filename": "3 (211).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (211).jpg",
+          "sha256": "f3fcd7de5d6d6a4cc25c44415b0d9bd996151ceff0cc840111b1d785ca1900f0"
+        }
+      ]
+    },
+    {
+      "filename": "3 (171).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (171).jpg",
+          "sha256": "be485be1790718dfcb16828ee260a8c94957efebee97fdc179d42a840b860f96"
+        }
+      ]
+    },
+    {
+      "filename": "3 (89).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (89).jpg",
+          "sha256": "88d1365852aa4b11b058fbd59248eccf4f671feec69188fb8b392b67f15251b2"
+        }
+      ]
+    },
+    {
+      "filename": "3 (356).jpg",
+      "matches": [
+        {
+          "split": "train",
+          "path": "D:\\03_项目与代码\\AI与算法\\deeplearning\\ultralytics-8.3.163\\datasets\\african-wildlife\\images\\train\\3 (356).jpg",
+          "sha256": "884ad7c43dc5576c5f1f3450afd44e4475bd50a10fb2740050fc4301e577e15a"
+        }
+      ]
+    }
+  ],
+  "finding": "Saved validation examples contain training-directory images; original logged scores are not independent validation evidence."
+}

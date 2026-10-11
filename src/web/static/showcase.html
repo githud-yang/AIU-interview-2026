@@ -37,7 +37,7 @@
     </section>
 
     <section id="yolo" class="project-section" aria-labelledby="yolo-title">
-      <div class="section-heading"><div class="section-number" aria-hidden="true">02</div><div><p class="eyebrow">COMPUTER VISION</p><h2 id="yolo-title">YOLO 训练与实时检测</h2><p class="section-description">选择输入源，展示检测画面与推理状态。</p></div></div>
+      <div class="section-heading"><div class="section-number" aria-hidden="true">02</div><div><p class="eyebrow">COMPUTER VISION</p><h2 id="yolo-title">YOLO 训练与实时检测</h2><p class="section-description">野生动物四类训练；通用目标实时检测。</p></div></div>
       <div class="app-frame yolo-app">
         <div class="app-toolbar yolo-toolbar"><label class="source-control" for="stage-yolo-source"><span>输入源</span><select id="stage-yolo-source"><option value="" disabled selected>正在读取输入源…</option></select></label><div class="toolbar-actions"><button id="stage-yolo-start" class="button button-primary" type="button" disabled>启动检测</button><button id="stage-yolo-stop" class="button button-light" type="button" disabled>停止</button><button id="stage-yolo-refresh" class="button button-quiet" type="button">刷新状态</button><button id="stage-yolo-view" class="button button-light" type="button" hidden>连接已有画面</button></div></div>
         <div class="video-frame"><img id="stage-yolo-image" alt="YOLO 实时目标检测画面" hidden /><div id="stage-yolo-placeholder" class="video-placeholder"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M10 24V10h14m16 0h14v14m0 16v14H40m-16 0H10V40M22 32h20M32 22v20" /></svg><strong>检测画面</strong><p>选择输入源后，点击启动检测。</p></div></div>
@@ -45,8 +45,8 @@
         <p id="stage-yolo-notice" class="notice app-notice" role="status">正在读取检测服务状态…</p>
       </div>
       <div class="saved-visuals">
-        <figure class="saved-figure"><figcaption><strong>训练曲线</strong><span>coco8 · 30 epochs · 已归档</span></figcaption><div class="saved-image"><img src="/api/showcase/files/training-curve" alt="coco8 训练 30 轮的损失与评测曲线" loading="lazy" /><p class="image-fallback" hidden>训练曲线暂时无法读取。</p></div></figure>
-        <figure class="saved-figure"><figcaption><strong>已保存检测结果</strong><span>公开样例 · 归档画面</span></figcaption><div class="saved-image"><img src="/api/showcase/files/public-detection" alt="已保存的公开样例 YOLO 检测结果" loading="lazy" /><p class="image-fallback" hidden>已保存检测结果暂时无法读取。</p></div></figure>
+        <figure class="saved-figure"><figcaption><strong>原项目训练曲线</strong><span>African Wildlife · 10轮 · train12</span></figcaption><div class="saved-image"><img src="/api/showcase/files/training-curve" alt="原项目train12保存的African Wildlife 10轮训练曲线" loading="lazy" /><p class="image-fallback" hidden>训练曲线暂时无法读取。</p></div></figure>
+        <figure class="saved-figure"><figcaption><strong>通用检测结果</strong><span>公交车与行人 · 通用检测权重</span></figcaption><div class="saved-image"><img src="/api/showcase/files/public-detection" alt="通用检测权重对公开公交车与行人样例的检测结果" loading="lazy" /><p class="image-fallback" hidden>已保存检测结果暂时无法读取。</p></div></figure>
       </div>
     </section>
 

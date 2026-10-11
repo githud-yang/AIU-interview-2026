@@ -28,4 +28,8 @@
 ./.venv/Scripts/python.exe -m src.yolo.archive_training runs/detect/train
 ```
 
-归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`。既有`training_result.json`和coco8归档来自此前另一次实验，不是此次wildlife脚本的新运行结果。
+归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`，同时更新实时检测使用的模型。
+
+展示台的训练曲线来自原项目同参数`train12`的完整10轮记录，见[野生动物训练摘要](../../docs/wildlife_training_result.json)。原始脚本与参数、CSV和曲线一起归档。保存的验证样图中，已核对的16个文件名均只存在当前训练目录，因此日志分数不作为独立验证成绩；细节见归档中的`validation-sample-audit.json`。
+
+当前公交车/行人实时演示仍使用此前coco8实验的通用检测权重，其摘要为`docs/training_result.json`；它与四类野生动物训练分别展示。

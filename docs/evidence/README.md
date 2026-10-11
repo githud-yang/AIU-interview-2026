@@ -1,5 +1,6 @@
 # 运行证据
 
+- `wildlife_train12_20261011/`：本人原项目同参数10轮训练的原始脚本、CSV、曲线、配置和哈希，摘要见`../wildlife_training_result.json`。保存的验证样图含训练目录图片，`validation-sample-audit.json`记录16个文件名核查；原日志分数不作独立验证成绩。
 - `coco8_baseline_*/`：由实际训练目录归档的 CSV、曲线、配置、验证图片、哈希与环境快照；最新位置见 `../training_result.json` 的 evidence_dir。
 - `yolo-public-sample.jpg` 及对应 JSON：本机 best.pt 对 Ultralytics 安装包公开 bus.jpg 的真实检测。公交车与行人是公开样例，非用户摄像头图。
 - `yolo-runtime-smoke.json`：真实 HTTP 双视频流、停止和三帧本地视频释放核验。

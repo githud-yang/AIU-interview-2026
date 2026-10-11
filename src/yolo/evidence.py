@@ -104,7 +104,7 @@ def archive_run(run_dir, *, parameters, metrics=None, output_weights=None, summa
         "environment_origin": "current_training_runtime" if training_completed_now else "archive_runtime",
         "dataset": dataset, "dataset_origin": dataset_origin,
         "evidence_dir": str(archive), "artifacts": artifacts,
-        "note": "coco8 仅用于流程验证，不能代表真实场景泛化能力；固定 seed 提高可复现性，跨硬件不保证逐位一致",
+        "note": "训练参数来自原始配置；指标来源见 metrics_origin，环境来源见 environment_origin。此归档不包含新的独立测试。",
     }
     versions = summary["environment"]["packages"]
     version_file = archive / "environment-versions.txt"

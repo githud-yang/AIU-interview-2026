@@ -26,7 +26,7 @@ Copy-Item configs/.env.example configs/.env
 ./scripts/start.ps1 -Background
 ```
 
-基础网页/智能体可只安装`requirements.txt`，视觉模块用`requirements-yolo.txt`，科研完整环境用`requirements-research.txt`；CUDA版PyTorch按设备配置。YOLO权重不进Git，新机器按[视觉模块说明](src/yolo/README.md)与[训练记录](docs/training_result.json)恢复。主工作台前端无npm构建步骤；萤火独立使用Node，启动见[创意作品说明](showcases/README.md)。
+基础网页/智能体可只安装`requirements.txt`，视觉模块用`requirements-yolo.txt`，科研完整环境用`requirements-research.txt`；CUDA版PyTorch按设备配置。YOLO权重不进Git；训练入口与权重准备见[视觉模块说明](src/yolo/README.md)，本次展示对应[野生动物训练记录](docs/wildlife_training_result.json)。主工作台前端无npm构建步骤；萤火独立使用Node，启动见[创意作品说明](showcases/README.md)。
 
 | 入口 | 功能与分类 |
 | --- | --- |
@@ -68,14 +68,14 @@ showcases/yinghuo/ 萤火独立创意作品源码快照（Node/React）
 ## 完成证据与范围
 
 - 本地Ollama + qwen2.5:7b、工具调用、游戏API已有真实验证。
-- YOLO完成coco8真实30轮训练，参数、CSV、曲线和权重哈希齐备；共享推理线程、HTTP双流及本地短视频已实测。摄像头过去黑画面，现场演示尚未重新验收，已有公开图/视频备用。
+- YOLO保留本人原始13行训练脚本：`yolo11n.pt`、`african-wildlife.yaml`、`epochs=10`、`imgsz=640`、`batch=28`、`cache="ram"`、`workers=1`；展示原项目同参数`train12`保存的10轮CSV和曲线。公交车/行人的实时检测使用独立的通用检测权重，已有公开图、HTTP双流和本地短视频实测；摄像头现场效果仍需复验。
 - 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练，306个产物下载哈希一致；选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
-- 科研论文模块的DeepSeek Key接口已实现，在科研页本机填写、测试并保存即可即时切换；该模块尚无真实DeepSeek论文调用证据，既有Codex调用与回退按日志记录。萤火是独立应用，已完成5次真实DeepSeek请求，两者分别验收。
+- 科研论文模块支持在本机配置DeepSeek Key，测试并保存后即时切换；模型接口与运行记录见科研模块说明。萤火是独立应用，已完成5类真实DeepSeek请求。
 - 灵感/期刊首批资料与编辑草稿已整理；自动全文差异矩阵、自动背调决策、便携冻结重放、外部科学评价及真实投稿未完成。
 
 完整核验见[verification.md](docs/verification.md)，操作见[research-workbench.md](docs/research-workbench.md)，演示见[demo.md](docs/demo.md)。`docs/evidence/`是训练证据，根`evidence/`是研究摘要；完整原始运行在忽略Git的`logs/research/`。归档不参与启动或计入成果。
 
-## 验证与AI使用
+## 验证
 
 ```powershell
 ./.venv/Scripts/python.exe -X utf8 scripts/verify.py
@@ -84,6 +84,4 @@ node --test tests/test_frontend.mjs tests/test_research_frontend.mjs
 
 默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。用户已确认先前科研桌面布局正常；最新固定连续页展示台、科研订阅改版与小屏视觉尚未实测，萤火完整编辑/刷新持久化和备份下载也仍需浏览器核验。接口和只读状态检查不替代这些检查。
 
-上一版统一展示台`d36318f`已有推送记录，此前结构整理与萤火交付亦已推送；本轮固定页面改版及后续文档是否提交、推送以实际Git记录为准。
-
-原骨架由豆包辅助生成，之后由Codex对照题目修复、训练、验证和整理。模型生成解释与实测数据分别保留；本人应能解释实现思路、失败处理及证据范围。科研稿件、创新、真实投稿和录用分别验收。仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。
+仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。

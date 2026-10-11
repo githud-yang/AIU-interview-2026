@@ -18,7 +18,7 @@ class ShowcaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "docs").mkdir()
-            (root / "docs/training_result.json").write_text('{}', encoding="utf-8")
+            (root / "docs/wildlife_training_result.json").write_text('{}', encoding="utf-8")
             result = showcase.catalog(root)
         items = [item for card in result["cards"] for item in card["evidence"]]
         self.assertEqual([item["id"] for item in items if item["available"]], ["training"])
@@ -30,7 +30,7 @@ class ShowcaseTests(unittest.TestCase):
             root = Path(temporary)
             for value in ["../configs/.env", "configs/.env", "yolo-camera", ".env", "training"]:
                 self.assertIsNone(showcase.public_file(value, root))
-            target = root / "docs/training_result.json"
+            target = root / "docs/wildlife_training_result.json"
             target.parent.mkdir()
             target.write_text('{}', encoding="utf-8")
             self.assertEqual(showcase.public_file("training", root), (target.resolve(), "application/json"))
@@ -40,7 +40,7 @@ class ShowcaseTests(unittest.TestCase):
             root = Path(temporary).resolve()
             private = root / "private"
             private.mkdir()
-            (private / "training_result.json").write_text('private', encoding="utf-8")
+            (private / "wildlife_training_result.json").write_text('private', encoding="utf-8")
             link = root / "docs"
             if os.name == "nt":
                 import _winapi
@@ -93,12 +93,12 @@ class ShowcaseTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             (root / "docs").mkdir()
-            (root / "docs/training_result.json").write_text('{"epochs":30}', encoding="utf-8")
+            (root / "docs/wildlife_training_result.json").write_text('{"epochs":10}', encoding="utf-8")
             with patch.object(showcase, "public_file", side_effect=lambda file_id: original(file_id, root)):
                 client = TestClient(app)
                 response = client.get("/api/showcase/files/training")
                 self.assertEqual(response.status_code, 200)
-                self.assertEqual(response.json(), {"epochs": 30})
+                self.assertEqual(response.json(), {"epochs": 10})
                 self.assertEqual(response.headers["x-content-type-options"], "nosniff")
                 self.assertEqual(client.get("/api/showcase/files/.env").status_code, 404)
                 self.assertEqual(client.get("/api/showcase/files/yolo-camera").status_code, 404)

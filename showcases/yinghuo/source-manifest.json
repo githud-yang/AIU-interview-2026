@@ -1,4 +1,5 @@
 {
+  "name": "萤火二面源码快照",
   "files": [
     {
       "path": ".env.example",
@@ -66,7 +67,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "6c32a528f3d02d6bc2d11e06adaea3e2755c839782364f5706cdc8402f0d384d"
+      "sha256": "418bc6aeeb2375c5d6ad3df5bf6226e7f86a88f3c2f26870456a1234c522bb7d"
     },
     {
       "path": "scripts/build-gaokao3500.mjs",
@@ -385,7 +386,6 @@
       "sha256": "dad4c0183fdbe6d33fac850854cf3a1c9a042c3003ffc895effd0341a4d19301"
     }
   ],
-  "name": "萤火二面源码快照",
-  "exportedAt": "2026-10-10T02:44:45.6605220+08:00",
-  "source": "D:\\03_项目与代码\\创作项目\\荧火"
+  "source": "D:\\03_项目与代码\\创作项目\\荧火",
+  "exportedAt": "2026-10-11T14:40:50.1286668+08:00"
 }
