@@ -83,7 +83,7 @@ class YoloProcessManager:
                 if not weights.is_absolute():
                     weights = ROOT / weights
                 if not weights.is_file():
-                    raise ValueError("缺少训练权重，请先执行 src/yolo/train.py")
+                    raise ValueError("缺少训练权重，请按 src/yolo/README.md 完成训练与归档")
                 conf = float(os.getenv("YOLO_CONF", "0.25"))
                 if not 0 <= conf <= 1:
                     raise ValueError("YOLO_CONF 必须在 0 到 1 之间")

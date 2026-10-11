@@ -31,7 +31,7 @@ def main():
     if not weights.is_absolute():
         weights = ROOT / weights
     if not weights.is_file():
-        p.error("权重不存在，请先运行 train.py")
+        p.error("权重不存在，请按 src/yolo/README.md 完成训练与归档")
     if not 0 <= a.conf <= 1 or a.max_frames < 0:
         p.error("conf 必须在 0 到 1 之间，max-frames 必须为非负数")
     try:
