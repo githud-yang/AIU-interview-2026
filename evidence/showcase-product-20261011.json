@@ -1,0 +1,154 @@
+{
+  "checkedAt": "2026-10-11",
+  "designReferences": [
+    "https://www.apple.com/macbook-pro/",
+    "https://www.apple.com/iphone/"
+  ],
+  "navigation": [
+    {
+      "active": "#agent",
+      "hash": "#agent",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 169.95834350585938,
+      "width": 902
+    },
+    {
+      "active": "#yolo",
+      "hash": "#yolo",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 206.125,
+      "width": 902
+    },
+    {
+      "active": "#yinghuo",
+      "hash": "#yinghuo",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 205.78125,
+      "width": 902
+    },
+    {
+      "active": "#mowozhixi",
+      "hash": "#mowozhixi",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 206.0104217529297,
+      "width": 902
+    },
+    {
+      "active": "#campus",
+      "hash": "#campus",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 205.6875,
+      "width": 902
+    },
+    {
+      "active": "#hardware",
+      "hash": "#hardware",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 206.1041717529297,
+      "width": 902
+    },
+    {
+      "active": "#harness",
+      "hash": "#harness",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 134.27084350585938,
+      "width": 902
+    },
+    {
+      "active": "#engineering",
+      "hash": "#engineering",
+      "headerBottom": 64.66667175292969,
+      "scrollWidth": 902,
+      "titleTop": 206.1875,
+      "width": 902
+    }
+  ],
+  "responsive": [
+    {
+      "active": "#mowozhixi",
+      "headerBottom": 147.6666717529297,
+      "minimumNavHeight": 44,
+      "scrollWidth": 305,
+      "size": 320,
+      "titleTop": 239.9479217529297,
+      "width": 305
+    },
+    {
+      "size": 701,
+      "width": 686,
+      "scrollWidth": 686
+    },
+    {
+      "size": 801,
+      "width": 786,
+      "scrollWidth": 786
+    },
+    {
+      "csv": "model,split,imgsz,map50,map50_95,precision,recall,latency_ms,latency_sd_ms,latency_median_ms,latency_p95_ms,fps,repeats,sample_count,n_images\r\nyolo_imgsz480,evaluation,480,0.6243131014454046,0.47337534080788846,0.6817568",
+      "headerBottom": 64.66667175292969,
+      "inputBottom": 836.5000228881836,
+      "replyPresent": true,
+      "scrollWidth": 1425,
+      "sendBottom": 818.3333740234375,
+      "size": 1440,
+      "viewport": 900,
+      "width": 1425
+    }
+  ],
+  "finalState": {
+    "active": null,
+    "hash": "#intro",
+    "headingCount": 1,
+    "projects": 8,
+    "runtimeOpen": false,
+    "scrollWidth": 902,
+    "stylesheet": "/static/showcase.css?v=product-stage-20261011",
+    "width": 902
+  },
+  "behavior": {
+    "localModelReplyReceived": true,
+    "publicYoloDemo": {
+      "source": "demo",
+      "imageWidth": 810,
+      "imageHeight": 1080,
+      "observedFrames": 246,
+      "stopped": true
+    },
+    "yinghuo": {
+      "theme": "day",
+      "ready": "complete",
+      "navigationRetainedLoadedFrame": true
+    },
+    "research": {
+      "reportHeadingsReadable": true,
+      "csvHeaderReadable": true,
+      "pdfLink": "/api/showcase/research/files/pdf",
+      "newRuns": 0
+    },
+    "initialDeepLink": {
+      "hash": "#mowozhixi",
+      "active": "#mowozhixi",
+      "titleTop": 205.9375,
+      "headerBottom": 64.66667175292969
+    },
+    "keyboardFocusVisible": true
+  },
+  "checks": {
+    "pythonUnittest": 12,
+    "nodeTests": 17,
+    "httpFilesMatchedDisk": 4,
+    "trainSha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7"
+  },
+  "scope": "Browser and local services only. No physical projection, hardware, camera, cloud model call, training, new research or external project workflow tested.",
+  "screenshots": [
+    "showcase-product-hero-20261011.jpg",
+    "showcase-product-mozhi-20261011.jpg"
+  ]
+}

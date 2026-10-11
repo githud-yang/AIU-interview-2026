@@ -34,7 +34,7 @@ export function initializeShowcaseNavigation({ document: doc = globalThis.docume
     frame = null;
     if (destroyed) return;
     const headerBottom = header?.getBoundingClientRect().bottom || 0;
-    let active = sections[0];
+    let active = null;
     // IntersectionObserver entries contain only changed intersections. Read every
     // section so a departing long project cannot overwrite the actual current one.
     for (const section of sections) {

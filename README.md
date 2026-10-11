@@ -2,7 +2,7 @@
 
 本项目按面试题组织：本地大模型与智能体、YOLO训练/实时推理、创意应用，以及进阶科研Harness。硬件已由本人于2026-10-10确认完成，按实际项目展示。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
-面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、硬件、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。Harness展示选定已完成运行的概要和行内报告/CSV及PDF下载，工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
+面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品集开场点击“开始演示”，或[直接进入操作区](http://127.0.0.1:8000/showcase#agent)。作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、硬件、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。Harness展示选定已完成运行的概要和行内报告/CSV及PDF下载，工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
 
 创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
 
@@ -87,6 +87,6 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 node --test tests/test_frontend.mjs tests/test_research_frontend.mjs
 ```
 
-默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。用户已确认先前科研桌面布局正常；最新固定连续页展示台、科研订阅改版与小屏视觉尚未实测，萤火完整编辑/刷新持久化和备份下载也仍需浏览器核验。接口和只读状态检查不替代这些检查。
+默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。固定连续页展示台已实测八项导航、开场与深链、320/701/801/1440px布局、本地模型回复、公开图检测与停止、萤火白天载入及研究报告/CSV；见[evidence/showcase-product-20261011.json](evidence/showcase-product-20261011.json)。实际投屏与硬件、科研任务/设置/策划页完整浏览器流程、萤火编辑/刷新持久化和备份下载仍需单独核验。
 
 仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。

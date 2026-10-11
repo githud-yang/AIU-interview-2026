@@ -5,15 +5,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#173f35" />
+  <meta name="theme-color" content="#f5f5f7" />
   <title>AIU · 项目演示</title>
-  <link rel="stylesheet" href="/static/showcase.css?v=mozhi-profile-20261011" />
+  <link rel="stylesheet" href="/static/showcase.css?v=product-stage-20261011" />
 </head>
 <body>
   <a class="skip-link" href="#agent">跳到项目演示</a>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#agent"><span class="brand-mark" aria-hidden="true">A</span><div><h1 id="showcase-title">AIU · 项目演示</h1><small>本地智能体 / 视觉检测 / 创意应用</small></div></a>
+      <a class="brand" href="#intro" aria-label="AIU · 作品集首页"><span class="brand-mark">AIU</span><span class="brand-caption">项目作品集</span></a>
       <nav class="site-nav" aria-label="项目导航">
         <a href="#agent">智能体</a><a href="#yolo">YOLO</a><a href="#yinghuo">萤火</a><a href="#mowozhixi">墨我知兮</a><a href="#campus">企业协作</a><a href="#hardware">硬件</a><a href="#harness">科研</a><a href="#engineering">工程</a>
       </nav>
@@ -22,6 +22,14 @@
   </header>
 
   <main class="page-shell">
+    <section id="intro" class="showcase-intro" aria-labelledby="showcase-title">
+      <p class="intro-kicker">杨锦毅 · SELECTED WORKS</p>
+      <h1 id="showcase-title">把想法，<br /><span>变成作品。</span></h1>
+      <p class="intro-description">从本地智能体到视觉感知，<br class="mobile-break" />从创作工具到校园服务。<br />用可以运行的作品，呈现思考与实现。</p>
+      <div class="intro-actions"><a class="button button-primary" href="#agent">开始演示 <span aria-hidden="true">↘</span></a><a class="text-link" href="https://github.com/githud-yang/AIU-interview-2026">浏览源码 <span aria-hidden="true">↗</span></a></div>
+      <div class="intro-index" aria-label="作品方向"><span>智能体与工具</span><span>视觉与硬件</span><span>表达与创作</span></div>
+    </section>
+
     <section id="agent" class="project-section" aria-labelledby="agent-title">
       <div class="section-heading"><div class="section-number" aria-hidden="true">01</div><div><p class="eyebrow">LOCAL AGENT</p><h2 id="agent-title">本地模型与智能体</h2><p class="section-description">本地模型、工具调用与文字冒险。</p></div></div>
       <div class="app-frame chat-app">
@@ -62,7 +70,7 @@
       <div class="section-heading"><div class="section-number" aria-hidden="true">04</div><div><p class="eyebrow">NATIONAL INNOVATION PROJECT</p><h2 id="mowozhixi-title">墨我知兮</h2><p class="section-description">国家级大学生创新创业训练计划项目 · 项目负责人</p></div></div>
       <article class="app-frame">
         <div class="app-toolbar"><div><strong>中文表达认知智能体与人机协同创作</strong></div><a class="text-link" href="https://121.43.165.79/" rel="external">项目网站 <span aria-hidden="true">↗</span></a></div>
-        <div class="project-brief-content"><p>面向高校中文表达训练与文学创作，构建融合<strong>文学语料治理、RAG风格检索与可追溯交互</strong>的学科垂类智能体。贯通“原稿输入—局部推敲—自主取舍—版本回溯—创作历程导出”，将表达调整与作者决策沉淀为可复核的过程记录，服务学生表达能力培养与教师过程性评价。项目已形成云端写作平台，并开展基于Qwen轻量模型的LoRA风格适配实验。</p></div>
+        <div class="project-brief-content"><p><span class="brief-lead">从日常表达，<br />到入境成篇。</span><span class="brief-body">面向高校中文表达训练与文学创作，构建融合<strong>文学语料治理、RAG风格检索与可追溯交互</strong>的学科垂类智能体。贯通“原稿输入—局部推敲—自主取舍—版本回溯—创作历程导出”，将表达调整与作者决策沉淀为可复核的过程记录，服务学生表达能力培养与教师过程性评价。项目已形成云端写作平台，并开展基于Qwen轻量模型的LoRA风格适配实验。</span></p></div>
       </article>
     </section>
 
@@ -115,9 +123,9 @@ showcases/
       <section class="runtime-block"><div class="runtime-heading"><h3>项目说明与记录</h3><button id="retry-showcase" class="button button-quiet" type="button">刷新资料</button></div><p id="checked-date" class="small"></p><p id="showcase-verdict" class="small"></p><div id="runtime-catalog"><p class="small">展开后读取项目资料。</p></div></section>
     </div></details>
   </main>
-  <footer class="site-footer"><span>AIU · PROJECT DEMO</span><span>本机运行 · 作品演示</span></footer>
+  <footer class="site-footer"><a href="#intro">AIU · SELECTED WORKS</a><span>杨锦毅 · 项目作品集</span><a href="#agent">回到演示 <span aria-hidden="true">↑</span></a></footer>
   <p id="interface-announcement" class="sr-only" role="status" aria-live="polite"></p>
   <noscript><p class="noscript-note">启用 JavaScript 后可操作智能体、检测和嵌入应用。</p></noscript>
-  <script type="module" src="/static/showcase.js?v=stage-nav-20261011"></script>
+  <script type="module" src="/static/showcase.js?v=product-stage-20261011"></script>
 </body>
 </html>

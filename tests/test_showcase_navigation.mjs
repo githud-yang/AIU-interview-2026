@@ -18,10 +18,9 @@ class Events {
     }
   }
 }
-function navigationHarness({ hash = "", scrollY = 0, readyState = "loading" } = {}) {
+function navigationHarness({ hash = "", scrollY = 0, readyState = "loading", positions = { agent: 0, yolo: 1000, yinghuo: 2000, mowozhixi: 3500, campus: 4500, engineering: 8800 } } = {}) {
   const win = new Events();
   const doc = { readyState, documentElement: { scrollHeight: 9000 } };
-  const positions = { agent: 0, yolo: 1000, yinghuo: 2000, mowozhixi: 3500, campus: 4500, engineering: 8800 };
   const scrolls = [];
   const sections = Object.entries(positions).map(([id, top]) => ({
     id,
@@ -56,6 +55,22 @@ function navigationHarness({ hash = "", scrollY = 0, readyState = "loading" } = 
   const current = () => links.find((link) => link.attrs["aria-current"] === "location")?.hash;
   return { win, doc, sections, scrolls, widget, flush, current };
 }
+
+test("the portfolio introduction has no active project until a demonstration reaches the reading position", () => {
+  const h = navigationHarness({ positions: { agent: 700, yolo: 1700 } });
+  h.flush();
+  assert.equal(h.current(), undefined);
+  h.win.scrollY = 490;
+  h.win.dispatch("scroll");
+  h.flush();
+  assert.equal(h.current(), "#agent");
+  h.win.scrollY = 0;
+  h.win.location.hash = "#intro";
+  h.win.dispatch("hashchange");
+  h.flush();
+  assert.equal(h.current(), undefined);
+  assert.equal(h.scrolls.length, 0);
+});
 
 test("a long previous section leaving cannot overwrite the project at the reading position", () => {
   const h = navigationHarness({ scrollY: 3290 });

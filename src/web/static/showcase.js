@@ -1,7 +1,7 @@
 /** Keep every project mounted; only explicit controls start or reload applications. */
 import { createShowcaseTransport } from "./showcase-transport.js";
 import { initShowcaseLive } from "./showcase-live.js";
-import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=20261011";
+import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=product-stage-20261011";
 
 const byId = (id) => document.getElementById(id);
 const transport = createShowcaseTransport();
