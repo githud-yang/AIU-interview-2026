@@ -1,7 +1,8 @@
 /** Keep every project mounted; only explicit controls start or reload applications. */
-import { createShowcaseTransport } from "./showcase-transport.js";
+import { createShowcaseTransport } from "./showcase-transport.js?v=harness-stage-20261011";
 import { initShowcaseLive } from "./showcase-live.js";
 import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=product-stage-20261011";
+import { createStageWorkbench, selectResearchReport } from "./showcase-research.js?v=harness-stage-20261011";
 
 const byId = (id) => document.getElementById(id);
 const transport = createShowcaseTransport();
@@ -12,6 +13,9 @@ let catalogLoaded = false;
 let tableArtifact = null;
 let tableLoadedFor = "";
 let currentRun = "";
+let researchSnapshot = null;
+const stageWorkbench = createStageWorkbench({ frame: byId("harness-workbench"),
+  container: byId("harness-workbench-container"), button: byId("open-harness"), link: byId("harness-full-workbench") });
 const element = (tag, className, text) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -26,7 +30,9 @@ const dateLabel = (value) => {
 };
 
 function renderResearch(data) {
+  researchSnapshot = data;
   currentRun = data.runId;
+  stageWorkbench.setRun(data.runId);
   byId("harness-source").textContent = data.source;
   byId("harness-run").textContent = data.title;
   byId("harness-summary").textContent = data.summary;
@@ -36,11 +42,12 @@ function renderResearch(data) {
     item.append(element("span", "", metric.label), element("strong", "", metric.value));
     return item;
   }));
-  const report = data.artifacts.find((item) => item.id === "report" && item.available);
+  const report = selectResearchReport(data.artifacts, byId("harness-language").value);
   const frame = byId("harness-report");
   const placeholder = byId("harness-report-placeholder");
   if (report) {
     byId("harness-report-label").textContent = report.label;
+    byId("harness-language").value = report.id === "report-zh" ? "zh" : "en";
     frame.hidden = false;
     placeholder.hidden = true;
     if (frame.getAttribute("src") !== report.href || frame.dataset.run !== data.runId) {
@@ -70,7 +77,7 @@ function renderResearch(data) {
   downloads.replaceChildren();
   for (const artifact of data.artifacts.filter((item) => item.available && item.kind === "pdf")) {
     const link = element("a", "", artifact.label);
-    link.href = artifact.href; link.download = "AIU-research-report.pdf"; downloads.append(link);
+    link.href = artifact.href; link.download = artifact.id === "pdf-zh" ? "AIU-research-report.zh.pdf" : "AIU-research-report.en.pdf"; downloads.append(link);
   }
   if (tableArtifact) {
     const link = element("a", "", "原始评测 CSV"); link.href = "#runtime-details";
@@ -162,6 +169,8 @@ byId("load-yinghuo").addEventListener("click", () => {
 });
 yinghuo.addEventListener("load", () => { if (yinghuo.hasAttribute("src")) byId("yinghuo-placeholder").hidden = true; });
 byId("refresh-harness").addEventListener("click", () => { void loadResearch(); });
+byId("open-harness").addEventListener("click", () => stageWorkbench.open());
+byId("harness-language").addEventListener("change", () => { if (researchSnapshot) renderResearch(researchSnapshot); });
 byId("refresh-preflight").addEventListener("click", () => { void refreshPreflight(); });
 byId("retry-showcase").addEventListener("click", () => { void loadCatalog(); });
 byId("runtime-details").addEventListener("toggle", () => { if (byId("runtime-details").open && !catalogLoaded) void loadCatalog(); });

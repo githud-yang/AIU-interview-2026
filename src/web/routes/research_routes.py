@@ -31,12 +31,12 @@ def translate_error(exc):
 
 @router.get("/research", include_in_schema=False)
 def research_page():
-    return FileResponse(STATIC / "research.html")
+    return FileResponse(STATIC / "research.html", headers={"Cache-Control": "no-store"})
 
 
 @router.get("/research/strategy", include_in_schema=False)
 def strategy_page():
-    return FileResponse(STATIC / "research-strategy.html")
+    return FileResponse(STATIC / "research-strategy.html", headers={"Cache-Control": "no-store"})
 
 
 @router.get("/api/research/planning/{document}")

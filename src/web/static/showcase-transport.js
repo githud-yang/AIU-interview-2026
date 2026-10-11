@@ -34,7 +34,7 @@ export function validatePreflightSnapshot(value) {
 }
 
 export function validateStageResearchSnapshot(value) {
-  const artifactIds = new Set(["report", "table", "figure", "pdf"]);
+  const artifactIds = new Set(["report-zh", "report", "table", "figure", "pdf-zh", "pdf"]);
   if (!record(value) || typeof value.available !== "boolean"
       || !["title", "runId", "status", "source", "summary", "limitation"].every((key) => string(value[key]))
       || !Array.isArray(value.metrics) || !value.metrics.every((item) => record(item) && string(item.label) && string(item.value))

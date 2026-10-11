@@ -133,3 +133,11 @@ YOLO固定权重320/480/640研究真实完成12阶段，run为bd8c2a7ccaff4ae4b3
 整页视觉重写后，原DOM ID、快捷行动、八项项目锚点及两个iframe契约完整保留。12项Python unittest及17项Node检查通过（新增开场无项目高亮回归），HTML/CSS/两个脚本实际HTTP200且与磁盘一致；HTML保持no-store，YOLO原始13行训练入口SHA256仍为775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7。
 
 真实浏览器八项导航与高亮、墨我知兮初始深链、开场无项目高亮、键盘焦点、320/701/801/1440px无横向溢出均通过，临时视口已恢复。默认902px及1440×900下智能体输入和发送按钮可见；本地模型快捷动作收到回复，公开样例推理显示810×1080检测画面并手动停止。萤火iframe显示day主题，跨章节后仍可读；保存研究报告标题可读，CSV展开后显示实际表头和记录。无新研究、训练、摄像头或云模型调用，外站业务流程及实物投屏不在本轮范围。截图与详细记录见../evidence/showcase-product-20261011.json、showcase-product-hero-20261011.jpg及showcase-product-mozhi-20261011.jpg。
+
+# 2026-10-11：科研双语阅读与同页操作验收
+
+Python 37项通过：test_showcase、test_showcase_research、test_yolo_chinese_report、test_yolo_research、test_research_stream。Node 57项通过：showcase_frontend、showcase_research_frontend、showcase_navigation、showcase_live、research_frontend。覆盖中文导出哈希/历史追加/重复幂等、首稿/修订/后续export登记链路、最新中文公开白名单、英文回退、显式挂载、展示存储隔离、pending优先恢复、入口首次选run、新建后保留run与旧订阅清理。
+
+实际HTTP的10份HTML/CSS/JS与磁盘一致；中文HTML/PDF匹配最终reading_zh_v2登记哈希，HTML保留脚本阻断sandbox CSP。四页中文PDF已渲染逐页检查，331个登记产物哈希通过。已有研究仍3完成/1失败，YOLO实际6模型调用/5评测不变；本轮没有新模型、评测、训练或外部通信。未来双语导出以临时store和报告builder替身完成集成测试。
+
+实际浏览器完成中文/英文报告切换、工作台主动加载、示例填写/启动可用/限制留空、12阶段与实测结果、事件及产物页签、跨作品保留输入；最新中文标题/材料优先显示。根页及iframe在320/801无横溢出，1440显示五列指标；策划页320的宽表仅内部滚动。临时视口恢复，临时期刊页签关闭。截图与范围见../evidence/research-stage-20261011.json及三份research展示截图。

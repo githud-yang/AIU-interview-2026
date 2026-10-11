@@ -1,0 +1,50 @@
+{
+  "checked_date": "2026-10-11",
+  "run_id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+  "implementation": {
+    "default_reading": "Chinese HTML, with English original selectable and both PDF links",
+    "interactive_entry": "/showcase#harness -> explicit load -> /research?presentation=1",
+    "execution": "existing workbench controller, HTTP API and SSE; no duplicate research engine",
+    "recovery": "presentation storage independent from the ordinary workspace; entry run selected once",
+    "journal_materials": "three journals manually checked against official sources; recent paper examples and reading scope; not an automated planning engine"
+  },
+  "browser_verified": [
+    "Chinese report headings and English original headings rendered; language switches retain the selected report",
+    "same-page workbench shows the completed YOLO run and 12 stages",
+    "task example fills the goal; launch is available; optional resource fields remain empty",
+    "project navigation preserves the mounted workbench and typed goal",
+    "experiment results, events and registered artifact tabs work",
+    "Chinese manuscript title and latest Chinese material links appear before the archive",
+    "journal table displays official requirements, project gaps and the SIVP page-limit conflict",
+    "root and embedded page have no horizontal overflow at 320 and 801; 1440 layout shows five metrics in one row",
+    "strategy page at 320 has no document overflow; its wide table scrolls within its own container",
+    "temporary browser viewport reset and temporary strategy tab closed"
+  ],
+  "responsive_measurements": {
+    "320": {"root_client": 305, "root_scroll": 305, "embedded_client": 252, "embedded_scroll": 252},
+    "801": {"root_client": 786, "root_scroll": 786, "embedded_client": 689, "embedded_scroll": 689},
+    "1440": {"embedded_client": 1103, "embedded_scroll": 1103, "metric_columns": 5},
+    "default": {"root_client": 902, "root_scroll": 902},
+    "strategy_320": {"client": 305, "scroll": 305, "table_container": 265, "table_scroll": 960}
+  },
+  "verification": {
+    "python_tests": 37,
+    "node_tests": 57,
+    "served_files_equal_disk": 10,
+    "chinese_html_pdf_http_hashes": "match final reading_zh_v2 registered hashes",
+    "html_csp": "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'",
+    "chinese_pdf": "4 pages rendered and inspected; see research-chinese-reading-20261011.json",
+    "original_yolo_train_sha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7"
+  },
+  "scope": {
+    "new_model_calls": 0,
+    "new_evaluation_jobs": 0,
+    "new_training": 0,
+    "real_runs_after": {"completed": 3, "failed": 1},
+    "yolo_budget_after": {"model_calls": 6, "evaluation_jobs": 5},
+    "registered_artifacts_after": 331,
+    "no_external_correspondence_or_submission": true,
+    "future_bilingual_export": "integration-tested with mocked report builders and a temporary real store, not a new live study"
+  },
+  "screenshots": ["research-stage-entry-20261011.jpg", "research-chinese-display-20261011.jpg", "research-venue-display-20261011.jpg"]
+}

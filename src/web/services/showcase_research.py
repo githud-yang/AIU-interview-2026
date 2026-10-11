@@ -2,21 +2,24 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from .showcase_service import ROOT
 
 RUN_ID = "bd8c2a7ccaff4ae4b3be7f7e6fa13c43"
 ARTIFACTS = {
-    "report": ("manuscript_v3/paper.html", "研究报告 · 第三版", "html", "text/html"),
+    "report-zh": ("reading_zh/paper.zh.html", "中文研究报告", "html", "text/html"),
+    "report": ("manuscript_v3/paper.html", "英文原稿 · 第三版", "html", "text/html"),
     "table": ("experiments/metrics.csv", "原始评测CSV", "text", "text/plain"),
     "figure": ("manuscript_v3/accuracy_latency.png", "精度与延迟图", "image", "image/png"),
-    "pdf": ("manuscript_v3/paper.pdf", "下载报告PDF", "pdf", "application/pdf"),
+    "pdf-zh": ("reading_zh/paper.zh.pdf", "中文 PDF", "pdf", "application/pdf"),
+    "pdf": ("manuscript_v3/paper.pdf", "英文 PDF", "pdf", "application/pdf"),
 }
 
 
 def stage_artifact(current, file_id: str):
-    """仅返回指定已完成示例的四类登记产物，并复用原始哈希核验。"""
+    """仅返回指定已完成示例的白名单登记产物，复用原始哈希核验。"""
     entry = ARTIFACTS.get(file_id)
     if current is None or entry is None:
         return None
@@ -24,7 +27,16 @@ def stage_artifact(current, file_id: str):
         run = current.store.get(RUN_ID)
         if run["status"] != "completed":
             return None
-        record = next((item for item in run["artifacts"] if item["path"] == entry[0]), None)
+        if file_id in {"report-zh", "pdf-zh"}:
+            filename = "paper.zh.html" if file_id == "report-zh" else "paper.zh.pdf"
+            editions = []
+            for item in run["artifacts"]:
+                match = re.fullmatch(r"reading_zh(?:_v([1-9][0-9]*))?/" + re.escape(filename), item["path"])
+                if match:
+                    editions.append((int(match[1] or 1), item))
+            record = max(editions, key=lambda edition: edition[0])[1] if editions else None
+        else:
+            record = next((item for item in run["artifacts"] if item["path"] == entry[0]), None)
         if record is None:
             return None
         path = current.store.artifact_path(RUN_ID, record["id"])

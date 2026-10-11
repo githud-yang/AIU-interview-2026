@@ -2,6 +2,7 @@
 import { createResearchTransport } from "./research-transport.js";
 
 const STORAGE_KEY = "aiu.research.workspace.v1";
+const PRESENTATION_STORAGE_KEY = "aiu.research.presentation.v1";
 const ACTIVE_STATUSES = new Set(["queued", "running", "cancelling"]);
 const RESUMABLE_STATUSES = new Set(["interrupted", "failed", "needs_input"]);
 const STATUS_LABELS = {
@@ -92,9 +93,14 @@ export function createResearchApp(dependencies = {}) {
   }
   const uuid = dependencies.uuid || (() => globalThis.crypto.randomUUID());
   const baseURL = dependencies.baseURL || win.location.href;
+  const pageURL = new URL(baseURL);
+  const presentation = pageURL.searchParams.get("presentation") === "1";
+  const storageKey = presentation ? PRESENTATION_STORAGE_KEY : STORAGE_KEY;
+  const requestedRunID = pageURL.searchParams.get("run_id");
+  const entryRunID = requestedRunID && /^[a-zA-Z0-9_-]{1,100}$/.test(requestedRunID) ? requestedRunID : null;
   const el = (id) => doc.getElementById(id);
   const state = {
-    capabilities: null, run: null, pending: null, savedRunID: null,
+    capabilities: null, run: null, pending: null, savedRunID: null, entryRunID: null,
     mutation: false, refreshPromise: null, pollBusy: false, paused: false,
     generation: 0, events: [], lastSeq: 0, connected: false, initialized: false,
     writerSettings: null, writerMutation: null, writerInputDirty: false,
@@ -110,16 +116,17 @@ export function createResearchApp(dependencies = {}) {
   function write(id, value, fallback = "—") { el(id).textContent = asText(value, fallback); }
   function save() {
     try {
-      storage.setItem(STORAGE_KEY, JSON.stringify({ runID: state.savedRunID, pending: state.pending }));
+      storage.setItem(storageKey, JSON.stringify({ runID: state.savedRunID, pending: state.pending, entryRunID: state.entryRunID }));
     } catch {
       showNotice("浏览器未能保存恢复记录；刷新后仍可从服务端找回运行。", "warning");
     }
   }
   function load() {
     try {
-      const saved = JSON.parse(storage.getItem(STORAGE_KEY) || "null");
+      const saved = JSON.parse(storage.getItem(storageKey) || "null");
       if (!saved || typeof saved !== "object") return;
       if (typeof saved.runID === "string") state.savedRunID = saved.runID;
+      if (typeof saved.entryRunID === "string") state.entryRunID = saved.entryRunID;
       if (saved.pending && typeof saved.pending === "object" && typeof saved.pending.request_id === "string" && typeof saved.pending.goal === "string" && saved.pending.budget && typeof saved.pending.budget === "object") {
         state.pending = saved.pending;
         write("notice-text", "正在确认上次启动请求的实际状态，将使用原请求编号防止重复启动。");
@@ -424,10 +431,19 @@ export function createResearchApp(dependencies = {}) {
     });
     el("literature-list").replaceChildren(...nodes);
   }
-  function renderArtifacts(artifacts) {
+  function renderArtifacts(artifacts, outputs) {
     write("output-count", artifacts.length);
     el("artifact-empty").hidden = artifacts.length > 0;
-    const nodes = artifacts.map((artifact) => {
+    const reading = outputs?.manuscript?.chinese_reading || outputs?.chinese_reading;
+    const readingFiles = listFrom(reading?.artifacts, []);
+    const priority = (artifact) => {
+      const relative = typeof artifact.path === "string" ? artifact.path.replaceAll("\\", "/") : "";
+      const preferred = relative && readingFiles.some((item) => typeof item.path === "string"
+        && item.path.replaceAll("\\", "/").endsWith(`/${relative}`) && item.sha256 === artifact.sha256);
+      return preferred ? 10 + ({ chinese_reading_html: 4, chinese_reading_pdf: 3, chinese_reading_md: 2, chinese_reading_png: 1 }[artifact.kind] || 0) : 0;
+    };
+    const ordered = [...artifacts].sort((left, right) => priority(right) - priority(left));
+    const nodes = ordered.map((artifact) => {
       const item = element("li", "artifact-entry");
       const icon = element("span", "paper-symbol", artifact.kind === "manuscript" ? "▧" : "▤");
       icon.setAttribute("aria-hidden", "true");
@@ -444,8 +460,9 @@ export function createResearchApp(dependencies = {}) {
     const present = manuscript && typeof manuscript === "object" && Object.keys(manuscript).length > 0;
     el("manuscript-result").hidden = !present;
     if (!present) return;
-    write("manuscript-title", manuscript.title || "稿件输出");
-    write("manuscript-summary", manuscript.summary || manuscript.status || "服务未提供稿件摘要");
+    const reading = manuscript.chinese_reading || outputs?.chinese_reading;
+    write("manuscript-title", reading?.title || manuscript.title || "稿件输出");
+    write("manuscript-summary", reading?.title ? "中文阅读版、图表与来源清单已列在前方，英文稿与历史版本保留在材料列表。" : manuscript.summary || manuscript.status || "服务未提供稿件摘要");
     const checks = { ...(manuscript.quality ? { quality: manuscript.quality } : {}), ...(manuscript.pdf ? { pdf: manuscript.pdf } : {}), ...(outputs.analysis ? { analysis: outputs.analysis } : {}), ...(outputs.review ? { review: outputs.review } : {}), ...(outputs.submission ? { submission: outputs.submission } : {}) };
     write("manuscript-checks", Object.keys(checks).length ? checks : manuscript);
   }
@@ -519,7 +536,7 @@ export function createResearchApp(dependencies = {}) {
     renderStages(stages, run);
     renderExperiments(experiments);
     renderLiterature(run.outputs?.reading?.records ? run.outputs.reading : run.outputs?.literature);
-    renderArtifacts(artifacts);
+    renderArtifacts(artifacts, run.outputs);
     renderManuscript(run.outputs);
     renderInterventions(run);
     if (ACTIVE_STATUSES.has(run.status) && !el("research-goal").value) el("research-goal").value = run.goal || "";
@@ -602,6 +619,20 @@ export function createResearchApp(dependencies = {}) {
     }
   }
   async function chooseExistingRun() {
+    // A deep link selects once. Later refreshes keep the user's current run,
+    // including a newly launched run, rather than switching back to the example.
+    if (entryRunID && state.entryRunID !== entryRunID) {
+      try {
+        const run = await request(`/api/research/runs/${encodeURIComponent(entryRunID)}`);
+        state.entryRunID = entryRunID;
+        return run;
+      } catch (error) {
+        if (error.status !== 404) throw error;
+        state.entryRunID = entryRunID;
+        save();
+        showNotice("链接中的研究运行不存在；已查询当前工作台可用的运行记录。", "warning");
+      }
+    }
     if (state.savedRunID) {
       try { return await request(`/api/research/runs/${encodeURIComponent(state.savedRunID)}`); }
       catch (error) {
@@ -662,7 +693,11 @@ export function createResearchApp(dependencies = {}) {
         renderCapabilities(capabilities);
         await loadWriterSettings(generation);
         if (generation !== state.generation || state.paused) return;
-        if (state.pending) { await resolvePending(); return; }
+        if (state.pending) {
+          // Recovery owns the existing request ID; an entry link must not replace it.
+          if (entryRunID) { state.entryRunID = entryRunID; save(); }
+          await resolvePending(); return;
+        }
         const run = await chooseExistingRun();
         if (generation !== state.generation || state.paused) return;
         if (run) {
@@ -774,7 +809,13 @@ export function createResearchApp(dependencies = {}) {
   win.addEventListener("pagehide", () => { state.paused = true; state.generation += 1; state.writerActionGeneration += 1; el("writer-api-key").value = ""; stopSubscription(); });
   win.addEventListener("pageshow", (event) => { if (event.persisted) { state.paused = false; void refresh(); } });
   doc.addEventListener("visibilitychange", () => { if (doc.hidden) stopSubscription(); else if (!state.paused) void refresh(); });
+  if (presentation) {
+    doc.documentElement.dataset.presentation = "true";
+    doc.title = "科研工作台";
+    el("presentation-heading").hidden = false;
+  }
   load();
+  if (requestedRunID && !entryRunID) showNotice("研究运行链接无效；已查询当前工作台可用的运行记录。", "warning");
   if (!el("writer-model-input").value) el("writer-model-input").value = "deepseek-flash";
   updateGoalCount();
   updateControls();

@@ -100,8 +100,24 @@ def build_manuscript(output_dir: str | Path, *, question: str, literature: dict 
     """
     if experiment.get("domain") == "yolo_tradeoff":
         from .yolo_manuscript import build_yolo_manuscript
-        return build_yolo_manuscript(output_dir, question=question, literature=literature,
-                                     experiment=experiment, analysis=analysis, revision=revision)
+        from .yolo_chinese_report import build_yolo_chinese_report
+        english = build_yolo_manuscript(output_dir, question=question, literature=literature,
+                                        experiment=experiment, analysis=analysis, revision=revision)
+        if english["status"] != "completed":
+            return english
+        root = Path(output_dir).resolve()
+        chinese = build_yolo_chinese_report(root, experiment=experiment, literature=literature,
+                                            run_id=root.name, directory_name=f"reading_zh_v{revision}")
+        # Keep the English manifest and PDFs immutable. The caller registers both
+        # editions through the existing artifacts contract, including revisions.
+        merged = {str(Path(item["path"]).resolve()): item for item in english["artifacts"]}
+        for item in [*chinese["artifacts"], chinese["manifest"]]:
+            key = str(Path(item["path"]).resolve())
+            if key in merged and merged[key] != item:
+                raise ValueError("中文阅读稿与原稿产物登记冲突")
+            merged[key] = item
+        return {**english, "artifacts": list(merged.values()), "chinese_reading": chinese,
+                "default_reading_language": "zh-CN", "available_reading_languages": ["zh-CN", "en"]}
     root = Path(output_dir).resolve()
     summary = _verify_experiment(experiment, root)
     if not isinstance(revision, int) or isinstance(revision, bool) or revision < 1:

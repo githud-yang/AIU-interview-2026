@@ -54,13 +54,15 @@ function run(overrides = {}) {
     ...overrides,
   };
 }
-function harness({ saved = null, initialRun = null, customFetch = null, caps = capabilities, writerSettings = defaultWriterSettings, EventSource = null } = {}) {
+function harness({ saved = null, storedValues = null, url = "http://127.0.0.1:8000/research", initialRun = null, customFetch = null, caps = capabilities, writerSettings = defaultWriterSettings, EventSource = null } = {}) {
   const elements = Object.fromEntries(ids.map((id) => [id, new Element()]));
   const document = new Element("document");
-  Object.assign(document, { hidden: false, getElementById: (id) => { assert.ok(elements[id], `Missing HTML element: ${id}`); return elements[id]; }, createElement: (tag) => new Element(tag) });
+  Object.assign(document, { hidden: false, documentElement: new Element("html"), getElementById: (id) => { assert.ok(elements[id], `Missing HTML element: ${id}`); return elements[id]; }, createElement: (tag) => new Element(tag) });
   const window = new Element("window");
-  window.location = { href: "http://127.0.0.1:8000/research" };
-  const storage = { value: saved, getItem() { return this.value; }, setItem(_key, value) { this.value = value; } };
+  window.location = { href: url };
+  const values = new Map(storedValues || []);
+  if (saved !== null) values.set("aiu.research.workspace.v1", saved);
+  const storage = { value: saved, values, getItem(key) { return values.get(key) || null; }, setItem(key, value) { this.value = value; values.set(key, value); } };
   const timers = new Map();
   let timerID = 0;
   const calls = [];
@@ -108,6 +110,78 @@ function mockEventSources() {
 const yoloCapabilities = { ...capabilities, domains: [{ id: "yolo_tradeoff", label: "YOLO检测精度与速度优化", available: true,
   question: "输入尺寸改变后，精度和延迟如何变化？", description: "同一权重，不重训", dataset: "公开COCO样例，预训练可能见过",
   comparison: "320、480、640，FP32，batch1", metrics: "mAP与延迟", outputs: "测量与报告", goal_usage: "仅此尺寸实验，不自动改变方法" }, ...capabilities.domains] };
+
+test("Presentation isolates recovery storage and opens its example without replaying an ordinary pending request", async () => {
+  const saved = JSON.stringify({ pending: { goal: "普通页面等待确认的研究", domain: "digits_robustness", request_id: "ordinary-pending-001", budget: {} } });
+  const h = harness({ saved, url: "http://127.0.0.1:8000/research?presentation=1&run_id=run-1", initialRun: run({ status: "completed" }) });
+  await h.app.ready;
+  assert.equal(h.app.state.run.id, "run-1");
+  assert.equal(h.app.state.pending, null);
+  assert.equal(postCalls(h).length, 0);
+  assert.equal(h.storage.values.get("aiu.research.workspace.v1"), saved);
+  assert.equal(JSON.parse(h.storage.values.get("aiu.research.presentation.v1")).runID, "run-1");
+  assert.equal(h.document.documentElement.dataset.presentation, "true");
+  assert.equal(h.document.title, "科研工作台");
+  assert.equal(h.elements["presentation-heading"].hidden, false);
+  for (const id of ["budget-minutes", "budget-trials", "budget-model-calls"]) assert.equal(h.elements[id].value, "");
+});
+
+test("An explicit run link initially wins over saved and latest records in both layouts", async () => {
+  for (const presentation of [false, true]) {
+    const key = presentation ? "aiu.research.presentation.v1" : "aiu.research.workspace.v1";
+    const h = harness({ storedValues: [[key, JSON.stringify({ runID: "run-1" })]], initialRun: run(),
+      url: `http://127.0.0.1:8000/research?${presentation ? "presentation=1&" : ""}run_id=example`,
+      customFetch: (url, _options, { response }) => url === "/api/research/runs/example" ? response(run({ id: "example", status: "completed" })) : undefined });
+    await h.app.ready;
+    assert.equal(h.app.state.run.id, "example");
+    assert.equal(postCalls(h).length, 0);
+    assert.equal(h.calls.some((call) => call.url === "/api/research/runs/run-1"), false);
+    if (!presentation) assert.equal(h.document.documentElement.dataset.presentation, undefined);
+  }
+});
+
+test("After a presentation launch, refresh and reload retain the new run rather than reopening the example", async () => {
+  const url = "http://127.0.0.1:8000/research?presentation=1&run_id=example";
+  const h = harness({ url, customFetch: (path, _options, { response }) => path === "/api/research/runs/example" ? response(run({ id: "example", status: "completed" })) : undefined });
+  await h.app.ready;
+  h.elements["research-goal"].value = "继续比较噪声鲁棒性";
+  await h.app.start({ preventDefault() {} });
+  assert.equal(postCalls(h).length, 1);
+  assert.equal(h.app.state.run.id, "run-1");
+  await h.app.refresh();
+  assert.equal(h.app.state.run.id, "run-1");
+  assert.equal(h.calls.filter((call) => call.url === "/api/research/runs/example").length, 1);
+  const restored = harness({ url, storedValues: h.storage.values, initialRun: h.server.run });
+  await restored.app.ready;
+  assert.equal(restored.app.state.run.id, "run-1");
+  assert.equal(restored.calls.some((call) => call.url === "/api/research/runs/example"), false);
+  assert.equal(postCalls(restored).length, 0);
+});
+
+test("A missing linked run gives a usable fallback without starting research", async () => {
+  const h = harness({ url: "http://127.0.0.1:8000/research?presentation=1&run_id=missing",
+    customFetch: (path, _options, { response }) => path === "/api/research/runs/missing" ? response({ detail: "Run not found" }, 404) : undefined });
+  await h.app.ready;
+  assert.equal(h.app.state.run, null);
+  assert.equal(h.elements["start-btn"].disabled, false);
+  assert.match(h.elements["notice-text"].textContent, /运行不存在/);
+  assert.equal(h.elements["request-error"].hidden, true);
+  assert.equal(postCalls(h).length, 0);
+  await h.app.refresh();
+  assert.equal(h.calls.filter((call) => call.url === "/api/research/runs/missing").length, 1);
+});
+
+test("An ordinary pending request keeps its stable ID even when opened through an example link", async () => {
+  const payload = { goal: "恢复已发起的数字实验", domain: "digits_robustness", request_id: "ordinary-pending-002", budget: {} };
+  const h = harness({ saved: JSON.stringify({ pending: payload }), url: "http://127.0.0.1:8000/research?run_id=example" });
+  await h.app.ready;
+  assert.equal(postCalls(h).length, 1);
+  assert.equal(JSON.parse(postCalls(h)[0].options.body).request_id, payload.request_id);
+  assert.equal(h.calls.some((call) => call.url === "/api/research/runs/example"), false);
+  await h.app.refresh();
+  assert.equal(h.app.state.run.id, "run-1");
+  assert.equal(h.calls.some((call) => call.url === "/api/research/runs/example"), false);
+});
 
 test("Concrete tasks use server facts and never insert an example into user input automatically", async () => {
   const h = harness({ caps: yoloCapabilities });
@@ -402,6 +476,21 @@ test("Tabs support keyboard navigation and artifact URL validation rejects execu
   assert.equal(safeURL("//evil.invalid/api/research/a", "http://localhost/research", { artifact: true }), null);
   assert.equal(safeURL("/static/nope", "http://localhost/research", { artifact: true }), null);
   assert.equal(safeURL("/api/research/a", "http://localhost/research", { artifact: true }), "http://localhost/api/research/a");
+});
+
+test("Chinese reading uses its title and prioritizes registered files while preserving English history", async () => {
+  const original = { id: "english", name: "paper.pdf", sha256: "en", url: "/api/research/runs/run-1/artifacts/english" };
+  const chinese = { id: "chinese", name: "paper.zh.pdf", path: "reading_zh_v2/paper.zh.pdf", sha256: "zh", url: "/api/research/runs/run-1/artifacts/chinese" };
+  const older = { ...chinese, id: "older", path: "reading_zh/paper.zh.pdf", url: "/api/research/runs/run-1/artifacts/older" };
+  const h = harness({ initialRun: run({ status: "completed", outputs: {
+    manuscript: { title: "English original", status: "completed" },
+    chinese_reading: { title: "中文研究报告", artifacts: [{ sha256: "zh", path: "D:/runs/run-1/reading_zh_v2/paper.zh.pdf" }] },
+  }, artifacts: [original, older, chinese] }) });
+  await h.app.ready;
+  assert.equal(h.elements["manuscript-title"].textContent, "中文研究报告");
+  assert.equal(h.elements["artifact-list"].children[0].children[2].href, "http://127.0.0.1:8000/api/research/runs/run-1/artifacts/chinese");
+  assert.equal(h.elements["artifact-list"].children[1].children[2].href, "http://127.0.0.1:8000/api/research/runs/run-1/artifacts/english");
+  assert.equal(h.elements["artifact-list"].children[2].children[2].href, "http://127.0.0.1:8000/api/research/runs/run-1/artifacts/older");
 });
 
 test("Actual digits module outputs expose real summary metrics, reading scope and manuscript checks", async () => {

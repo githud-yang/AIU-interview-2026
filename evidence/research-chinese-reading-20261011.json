@@ -1,0 +1,148 @@
+{
+  "run_id": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+  "status": "verified",
+  "language": "zh-CN",
+  "final_directory": "reading_zh_v2",
+  "english_source": "src/research/yolo_manuscript.py hard-coded English sections",
+  "new_model_calls": 0,
+  "new_evaluation_jobs": 0,
+  "new_training_fits": 0,
+  "pdf_pages": 4,
+  "pdf_font": "simhei.ttf",
+  "pdf_text_checks": "Chinese headings, measured values and negative result found; no replacement characters",
+  "render_check": "All four final PDF pages rendered by Poppler and visually inspected; no clipping, overlap or missing glyphs",
+  "unit_tests": 7,
+  "idempotency": "Repeat final export adds zero artifacts/events and leaves entire run object unchanged",
+  "registered_artifact_hashes_checked": 331,
+  "final_artifacts": [
+    {
+      "id": "6dc38b30010f1250b4f93e34",
+      "name": "accuracy_latency.zh.png",
+      "kind": "chinese_reading_png",
+      "path": "reading_zh_v2/accuracy_latency.zh.png",
+      "sha256": "5368a4c848da022f3b2e3cc10dd5e3846a729bb80c89c32215c3f91731515d18",
+      "size_bytes": 52414,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/6dc38b30010f1250b4f93e34"
+    },
+    {
+      "id": "dfb2da08d6ab9fe3cb8526ce",
+      "name": "paper.zh.html",
+      "kind": "chinese_reading_html",
+      "path": "reading_zh_v2/paper.zh.html",
+      "sha256": "fc658302c1ab5c867fd421af57c1473566e8a101dc871bfe1bcca7f90c929a31",
+      "size_bytes": 81754,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/dfb2da08d6ab9fe3cb8526ce"
+    },
+    {
+      "id": "538424cfbf1a6d8c43108ae5",
+      "name": "paper.zh.md",
+      "kind": "chinese_reading_md",
+      "path": "reading_zh_v2/paper.zh.md",
+      "sha256": "8b09614381cbd4df77528988527f4612eae7e38026750ed078d6b73d283c55d6",
+      "size_bytes": 9352,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/538424cfbf1a6d8c43108ae5"
+    },
+    {
+      "id": "c7e321d526b84824d592479d",
+      "name": "paper.zh.pdf",
+      "kind": "chinese_reading_pdf",
+      "path": "reading_zh_v2/paper.zh.pdf",
+      "sha256": "527f9c797d5a12d7aea48c1fc622d6de2973a6a419d0cb6f9668656da814d764",
+      "size_bytes": 155168,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/c7e321d526b84824d592479d"
+    },
+    {
+      "id": "bb63122262a60e6f7361ae4b",
+      "name": "source_manifest.json",
+      "kind": "chinese_reading_json",
+      "path": "reading_zh_v2/source_manifest.json",
+      "sha256": "2d9ee3358b11e03e4c21b7cd19c93c0c795670e0fd287e6d2071e41d36353478",
+      "size_bytes": 45028,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/bb63122262a60e6f7361ae4b"
+    },
+    {
+      "id": "b54beb9cf5508f3ef23c942e",
+      "name": "reading_zh.json",
+      "kind": "chinese_reading_manifest",
+      "path": "reading_zh_v2/reading_zh.json",
+      "sha256": "80bd52c12e11737af771b4546d873196961864588c48ac3ab98b059e9e554908",
+      "size_bytes": 4583,
+      "url": "/api/research/runs/bd8c2a7ccaff4ae4b3be7f7e6fa13c43/artifacts/b54beb9cf5508f3ef23c942e"
+    }
+  ],
+  "historical_english_artifacts": [
+    {
+      "path": "manuscript/paper.html",
+      "sha256": "90a21f1b31bd221a3f42ff4f419285901727f64a28bcd5c92ee13703a36dac1f"
+    },
+    {
+      "path": "manuscript/paper.md",
+      "sha256": "f739c0ae07c8f49a324856a210bba6c6e3e6686aa996cea97b00528ea389c3f7"
+    },
+    {
+      "path": "manuscript/paper.pdf",
+      "sha256": "d0d9b664646a2c6d8e25c3986ddb62d11911b998bded2240e74c456405d18766"
+    },
+    {
+      "path": "manuscript/paper.tex",
+      "sha256": "0351c8cf220c083860aa0324f1c7a2fe95dcebf779e574f670a791cc5867d3d9"
+    },
+    {
+      "path": "manuscript_v2/paper.html",
+      "sha256": "90a21f1b31bd221a3f42ff4f419285901727f64a28bcd5c92ee13703a36dac1f"
+    },
+    {
+      "path": "manuscript_v2/paper.md",
+      "sha256": "f739c0ae07c8f49a324856a210bba6c6e3e6686aa996cea97b00528ea389c3f7"
+    },
+    {
+      "path": "manuscript_v2/paper.pdf",
+      "sha256": "14471db44c5b58af2950f7fe99d01980ed7f0a8829fb8b3ff97e60c6d5189d8c"
+    },
+    {
+      "path": "manuscript_v2/paper.tex",
+      "sha256": "0351c8cf220c083860aa0324f1c7a2fe95dcebf779e574f670a791cc5867d3d9"
+    },
+    {
+      "path": "manuscript_v3/paper.html",
+      "sha256": "98f4de5d229c77f66494f674271f5c52a93b5088b46c53f3f36ce6df051fad26"
+    },
+    {
+      "path": "manuscript_v3/paper.md",
+      "sha256": "43e42ad98f30ae81a6f5988915e4a94e184a6b85802bb2916fdd8038dfd20c48"
+    },
+    {
+      "path": "manuscript_v3/paper.pdf",
+      "sha256": "7a325e124198e4c4233e5b07a7c4595ad14b2e404c1e180eb6ceb2c31950df7e"
+    },
+    {
+      "path": "manuscript_v3/paper.tex",
+      "sha256": "2e0b0854f4f6dc0a978df8f9a06ca76b26d839600bddb981426e8ef31e5941ce"
+    }
+  ],
+  "recorded_budget": {
+    "max_seconds": null,
+    "model_calls": null,
+    "max_trials": null,
+    "elapsed_seconds": 202.0,
+    "used_model_calls": 6,
+    "used_trials": 5
+  },
+  "future_exports": {
+    "default_reading_language": "zh-CN",
+    "available_reading_languages": [
+      "zh-CN",
+      "en"
+    ],
+    "version_directories": "reading_zh_v<revision>",
+    "integration_verified": [
+      "initial manuscript",
+      "review revision",
+      "ResearchService.export next revision"
+    ],
+    "historical_english_manifest_and_pdf": "preserved",
+    "language_scope": "Chinese reading edition; no venue-specific compliance asserted",
+    "failed_english_export": "original failure status retained; no Chinese publish to hide failure"
+  },
+  "pdf_render_previews": "logs/qa/pdf/yolo-reading-zh-20261011 (Git ignored)"
+}

@@ -65,6 +65,20 @@ class StageResearchTests(unittest.TestCase):
         self.assertIsNone(stage_artifact(current, "report"))
         current.store.artifact_path.assert_not_called()
 
+    def test_chinese_preview_selects_latest_registered_edition_and_requires_its_hash(self):
+        current = Mock()
+        current.store.get.return_value = {**completed_run(), "artifacts": [
+            {"id": "zh1", "path": "reading_zh/paper.zh.html"},
+            {"id": "zh2", "path": "reading_zh_v2/paper.zh.html"},
+            {"id": "private", "path": "private/reading_zh_v3/paper.zh.html"},
+        ]}
+        current.store.artifact_path.return_value = Path("paper.zh.html")
+        self.assertEqual(stage_artifact(current, "report-zh"), (Path("paper.zh.html"), "text/html"))
+        current.store.artifact_path.assert_called_once_with(RUN_ID, "zh2")
+        current.store.artifact_path.side_effect = ValueError("hash changed")
+        self.assertIsNone(stage_artifact(current, "report-zh"))
+        self.assertIsNone(stage_artifact(current, "pdf-zh"))
+
     def test_report_http_is_inline_with_script_blocking_sandbox_and_missing_file_is_404(self):
         app = FastAPI()
         app.include_router(router)

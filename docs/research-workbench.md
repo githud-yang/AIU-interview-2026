@@ -189,6 +189,18 @@ digits 创建请求示例：
 
 不带 `--run-id` 的 run_research.py 会开始新的研究。该脚本使用与网页相同的 API，不在后台绕过阶段状态直接伪造产物。
 
+## 现场交互与中文阅读
+
+现场展示入口为 `/showcase#harness`。中文阅读报告默认显示，保留英文原稿切换和双语PDF；“现场操作”主动载入 `/research?presentation=1&run_id=...`，复用原任务、API与SSE订阅，跨作品定位不重挂载。展示模式使用独立的浏览器恢复记录，显式运行链接只首次选择样例，新任务仍按原请求编号恢复。顶部“任务 / 进展 / 结果”用于讲解表单、阶段、实验、文献、产物与事件。
+
+YOLO首稿、审查修订及后续导出同时登记独立中文阅读版 `reading_zh_v<revision>`，保留英文稿和全部冻结证据。已有运行可使用以下命令追加中文版本，重复同版本只核验并复用，不增加模型调用或实验：
+
+```powershell
+./.venv/Scripts/python.exe -X utf8 -m src.research.yolo_chinese_report bd8c2a7ccaff4ae4b3be7f7e6fa13c43 --directory reading_zh_v2
+```
+
+中文PDF使用可嵌入中文字体，本机为SimHei；新机器需要相应字体。阅读版不表示目标期刊格式合规。三刊人工核查资料见 `/research/strategy`，包含官方来源、核查日期、近期样本的实际阅读范围和证据缺口；尚未自动更新或驱动实验计划，也未发送编辑信件。
+
 ## MCP 与可复用技能
 
 MCP 只提供工作台 API 的八个工具：`research_capabilities`、`research_list_runs`、`research_get_run`、`research_events`、`research_start`、`research_cancel`、`research_resume`、`research_artifact`。接口限制为本机 HTTP，文件只接受服务器发出的任务与产物 ID，没有任意文件读写或 shell 工具。
