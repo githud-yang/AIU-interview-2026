@@ -106,6 +106,24 @@ img { max-width: 100%; }
 .saved-image { height: 240px; display: flex; align-items: center; justify-content: center; padding: 10px; background: #fff; }
 .saved-image img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .image-fallback { color: var(--muted); font-size: 15px; }
+.campus-content { padding: 26px 30px 30px; }
+.campus-intro { max-width: 960px; color: var(--body); font-size: 19px; line-height: 1.85; }
+.campus-scale-label { margin-top: 24px; color: var(--muted); font-size: 13px; }
+.campus-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 10px 0 26px; border: 1px solid var(--line); border-radius: 8px; background: #f8faf6; }
+.campus-metrics > div { padding: 16px 24px; }
+.campus-metrics > div + div { border-left: 1px solid var(--line); }
+.campus-metrics dt { color: var(--muted); font-size: 14px; }
+.campus-metrics dd { margin: 2px 0 0; color: var(--ink); font-size: 38px; line-height: 1.4; font-weight: 550; font-variant-numeric: tabular-nums; }
+.campus-metrics dd span { margin-left: 8px; font-size: 14px; font-weight: 400; color: var(--muted); }
+.campus-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px; }
+.campus-columns h3 { margin-bottom: 9px; color: var(--ink); font-size: 20px; font-weight: 600; }
+.campus-columns p { color: var(--body); font-size: 16px; line-height: 1.9; }
+.campus-stack { display: block; margin-top: 12px; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.campus-next { display: flex; align-items: baseline; gap: 18px; margin-top: 26px; padding-top: 19px; border-top: 1px solid var(--line); font-size: 15px; }
+.campus-next strong { flex-shrink: 0; color: var(--ink); font-weight: 600; }
+.campus-next p { color: var(--muted); }
+@media (max-width: 800px) { .campus-content { padding: 20px; } .campus-intro { font-size: 17px; } .campus-metrics > div { padding: 14px 16px; } .campus-metrics dd { font-size: 30px; } .campus-columns { grid-template-columns: 1fr; gap: 22px; } }
+@media (max-width: 480px) { .campus-metrics > div { padding: 12px 10px; } .campus-metrics dd { font-size: 25px; } .campus-metrics dd span { margin-left: 4px; font-size: 12px; } .campus-next { display: block; } .campus-next p { margin-top: 5px; } }
 .embedded-frame { position: relative; height: 760px; min-height: 640px; background: #f9faf6; }
 .embedded-frame iframe, .report-frame iframe { display: block; border: 0; width: 100%; height: 100%; background: white; }
 .embedded-placeholder { color: var(--muted); background: #f9faf6; }

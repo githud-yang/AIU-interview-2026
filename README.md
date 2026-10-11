@@ -2,9 +2,11 @@
 
 本项目按面试题组织：本地大模型与智能体、YOLO训练/实时推理、创意应用，以及进阶科研Harness。硬件已由本人于2026-10-10确认完成，按实际项目展示。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
-面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品和结果排在同一张固定连续页面，页内导航可定位基础→YOLO→萤火→硬件→Harness。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据。Harness展示选定已完成运行的概要和行内报告/CSV及PDF下载，工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
+面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品和结果排在同一张固定连续页面，页内导航可定位基础→YOLO→萤火→企业协作→硬件→Harness。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据。Harness展示选定已完成运行的概要和行内报告/CSV及PDF下载，工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
 
 创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
+
+企业协作经历：[华农校园百事通AI智能体](showcases/campus-assistant/README.md)。暑期实习期间担任项目负责人，与润建股份协作推进校园服务智能体建设；阶段形成262份知识文档、10个知识板块和11个业务工作流。[项目网站](https://hzau.rundecloud.com/)。
 
 ## 启动
 
@@ -61,6 +63,7 @@ evidence/      可提交的科研运行摘要
 assets/        本机模型资源，二进制不进Git
 archive/legacy/ 旧C++/ROS2练习和已替代原型
 showcases/yinghuo/ 萤火独立创意作品源码快照（Node/React）
+showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 ```
 
 每个功能目录有短README。前端提交指令、订阅SSE/MJPEG并显示结果；模型调用、训练推理、指标计算、阶段推进、文件与Key保存全部在后端。传输适配独立封装。初始化、清理和健康检查不在主入口实现。结构说明见[src/README.md](src/README.md)。
