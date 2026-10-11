@@ -106,6 +106,12 @@ img { max-width: 100%; }
 .saved-image { height: 240px; display: flex; align-items: center; justify-content: center; padding: 10px; background: #fff; }
 .saved-image img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .image-fallback { color: var(--muted); font-size: 15px; }
+.project-link-card { margin-top: 22px; padding: 24px; }
+.project-link-card h3 { margin-bottom: 10px; color: var(--ink); font-size: 23px; font-weight: 600; }
+.project-link-card h3 a { text-decoration: none; }
+.project-link-card h3 a:hover { text-decoration: underline; }
+.project-link-card h3 span { margin-left: 8px; font-size: 18px; }
+.project-link-card p { color: var(--body); font-size: 16px; line-height: 1.9; }
 .campus-content { padding: 26px 30px 30px; }
 .campus-intro { max-width: 960px; color: var(--body); font-size: 19px; line-height: 1.85; }
 .campus-scale-label { margin-top: 24px; color: var(--muted); font-size: 13px; }
