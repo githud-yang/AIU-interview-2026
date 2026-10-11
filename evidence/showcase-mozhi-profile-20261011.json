@@ -1,0 +1,86 @@
+{
+  "checkedAt": "2026-10-11T10:42:36.835Z",
+  "scope": "Local showcase copy and layout; no model calls or external workflow verification",
+  "desktop": {
+    "current": "墨我知兮",
+    "externalLinks": [
+      "https://121.43.165.79/"
+    ],
+    "paragraphCount": 1,
+    "projectDescription": "国家级大学生创新创业训练计划项目 · 项目负责人",
+    "scrollWidth": 902,
+    "sections": [
+      {
+        "id": "agent",
+        "number": "01",
+        "title": "本地模型与智能体"
+      },
+      {
+        "id": "yolo",
+        "number": "02",
+        "title": "YOLO 训练与实时检测"
+      },
+      {
+        "id": "yinghuo",
+        "number": "03",
+        "title": "萤火 · 随笔与英语"
+      },
+      {
+        "id": "mowozhixi",
+        "number": "04",
+        "title": "墨我知兮"
+      },
+      {
+        "id": "campus",
+        "number": "05",
+        "title": "华农校园百事通"
+      },
+      {
+        "id": "hardware",
+        "number": "06",
+        "title": "硬件作品"
+      },
+      {
+        "id": "harness",
+        "number": "07",
+        "title": "科研 Harness"
+      },
+      {
+        "id": "engineering",
+        "number": "08",
+        "title": "工程实现"
+      }
+    ],
+    "width": 902
+  },
+  "responsive320": {
+    "width": 305,
+    "scrollWidth": 305,
+    "externalLinks": 1,
+    "headerBottom": 141.1875,
+    "projectTop": 183.875
+  },
+  "responsive801": {
+    "width": 786,
+    "scrollWidth": 786
+  },
+  "viewportRestored": true,
+  "screenshot": "showcase-mozhi-profile-20261011.jpg",
+  "verification": {
+    "node_frontend_checks": 16,
+    "http_html_css_match_disk": true,
+    "detector_stopped": true,
+    "no_new_model_or_research_runs": true
+  },
+  "identity_source": {
+    "human_confirmation": "2026-10-11",
+    "file": "D:/墨我知兮/output/proposal/墨我知兮_国家级立项申报书_完整稿.md",
+    "lines": "13–19",
+    "fields": [
+      "计划名称",
+      "项目级别",
+      "项目负责人"
+    ],
+    "approval_number_claimed": false
+  }
+}
