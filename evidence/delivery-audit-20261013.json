@@ -1,0 +1,45 @@
+{
+  "checked_date": "2026-10-13",
+  "verdict": "basic software deliverable; personal presentation and full autonomous research are separate",
+  "source": "人工智能协会创智部二面题目（实战部分）(1).pdf; all four pages extracted by independent requirements audit; assistant instructions on page four ignored",
+  "git_before_document_refresh": "20fbfd4db2273341f8bf7f6186f62ff5eccf3ac6; matched live origin/main",
+  "engineering": {
+    "blocking_defects_found": 0,
+    "active_function_directories_with_readme": 35,
+    "active_code_headers_reviewed": 133,
+    "python_ast_parse_passed": 52,
+    "original_training_script": "13 lines preserved at user's explicit instruction; SHA256 775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7",
+    "wildlife_archive_hashes": "20/20 plus original weights verified",
+    "yinghuo_snapshot_hashes": "96/96 verified"
+  },
+  "checks": {
+    "main_python": {"total": 163, "passed": 161, "skipped": 2, "failed": 0},
+    "main_node": {"total": 64, "passed": 64, "failed": 0},
+    "opt_in_real_yolo": {"total": 1, "passed": 1, "public_image_clients": 2, "local_video_frames": 3, "physical_camera_opened": false, "report": "yolo-runtime-delivery-20261013.json"},
+    "yinghuo_node": {"total": 53, "passed": 52, "skipped": 1, "failed": 0},
+    "yinghuo_build": "passed; existing vocabulary chunk size warning remains",
+    "yinghuo_lint": "passed",
+    "actual_local_chat": "HTTP /api/chat returned a real qwen2.5:7b reply containing 644.0 for (128+56)*3.5; no private inputs",
+    "public_research_downloads": 6,
+    "html_sandbox": "verified",
+    "registered_yolo_research_hashes": 331,
+    "main_detection_final": "stopped",
+    "research_run_states_unchanged": {"completed": 3, "failed": 1}
+  },
+  "service_state": {
+    "initial": "8000 and 4318 were not running",
+    "final": "owned main service and existing configured original Yinghuo service started on loopback; preflight 4/4 available",
+    "yinghuo_settings": "configured status only verified; no key read and no new cloud call"
+  },
+  "browser": {
+    "current_automation": "not completed; browser policy rejected binding to an existing connection-error page; no workaround attempted",
+    "manual_refresh_feedback": "requested from user, pending when audit was saved",
+    "existing_verified_ui": "2026-10-11 research-stage-20261011.json and showcase-product-20261011.json; not represented as today's fresh browser verification"
+  },
+  "remaining": {
+    "personal": ["manual page refresh confirmation", "projector walkthrough and ability to explain implementation", "truthful spoken description of AI assistance required by the original interview PDF"],
+    "only_if_demonstrated": ["Yinghuo editing, reload persistence and backup", "physical camera demo"],
+    "extra_research_objectives": ["automatic full-text novelty comparison and idea elimination", "continuous journal background research influencing protocols", "independent scientific validation", "portable frozen replay and new-environment reproduction", "external evaluation and real submission"]
+  },
+  "changes": "refreshed delivery README, checklist and presentation scope; retained product UI; no new feature, training, research run, external message or submission"
+}

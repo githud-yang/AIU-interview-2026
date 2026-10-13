@@ -74,7 +74,7 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 
 - 本地Ollama + qwen2.5:7b、工具调用、游戏API已有真实验证。
 - YOLO保留本人原始13行训练脚本：`yolo11n.pt`、`african-wildlife.yaml`、`epochs=10`、`imgsz=640`、`batch=28`、`cache="ram"`、`workers=1`；展示原项目同参数`train12`保存的10轮CSV和曲线。公交车/行人的实时检测使用独立的通用检测权重，已有公开图、HTTP双流和本地短视频实测；摄像头现场效果仍需复验。
-- 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练，306个产物下载哈希一致；选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
+- 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练；追加中文阅读版后331个登记产物哈希一致，原始实验不变。选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
 - 科研论文模块支持在本机配置DeepSeek Key，测试并保存后即时切换；模型接口与运行记录见科研模块说明。萤火是独立应用，已完成5类真实DeepSeek请求。
 - 灵感/期刊首批资料与编辑草稿已整理；自动全文差异矩阵、自动背调决策、便携冻结重放、外部科学评价及真实投稿未完成。
 
@@ -87,6 +87,6 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 node --test tests/test_frontend.mjs tests/test_research_frontend.mjs
 ```
 
-默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。固定连续页展示台已实测八项导航、开场与深链、320/701/801/1440px布局、本地模型回复、公开图检测与停止、萤火白天载入及研究报告/CSV；见[evidence/showcase-product-20261011.json](evidence/showcase-product-20261011.json)。实际投屏与硬件、科研任务/设置/策划页完整浏览器流程、萤火编辑/刷新持久化和备份下载仍需单独核验。
+默认不打开私人摄像头、不调用云端模型。真实YOLO测试需设置`YOLO_RUNTIME_TEST=1`。固定连续页已实测八项导航、开场与深链、小屏布局、本地模型回复、公开图检测与停止、萤火白天载入；同页科研任务/阶段/实验/事件/材料、双语报告和期刊表也已实测，见[evidence/research-stage-20261011.json](evidence/research-stage-20261011.json)。实际投屏与本人讲解、论文Key设置完整浏览器流程、萤火编辑/刷新持久化/备份仍单独核验。2026-10-13交付复核见[交付核对](docs/submission-readiness.md)，旧截图不作为当天新鲜浏览器验收。
 
 仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。
