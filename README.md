@@ -2,7 +2,7 @@
 
 本项目按面试题组织：本地大模型与智能体、YOLO训练/实时推理、创意应用，以及进阶科研Harness。硬件已由本人于2026-10-10确认完成，按实际项目展示。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
-面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品集开场点击“开始演示”，或[直接进入操作区](http://127.0.0.1:8000/showcase#agent)。作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、硬件、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。[科研区](http://127.0.0.1:8000/showcase#harness)默认显示中文报告，可切英文原稿、下载双语PDF；“现场操作”在同页展开真实工作台，“期刊与选题”直达三刊背调。工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
+面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品集开场点击“开始演示”，或[直接进入操作区](http://127.0.0.1:8000/showcase#agent)。作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、实物展示、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。[科研区](http://127.0.0.1:8000/showcase#harness)只保留常驻科研工作台，任务、进度、文献、稿件与期刊资料在其中操作。进入YOLO区自动开启摄像头，选择“行人视频案例”立即切换逐帧实时检测；离开释放本页启动的来源。工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
 
 创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
 
@@ -25,6 +25,7 @@
 ```powershell
 python -m venv .venv
 ./.venv/Scripts/python.exe -m pip install -r requirements-research.txt
+./.venv/Scripts/python.exe scripts/setup_yolo_demo.py
 ollama pull qwen2.5:7b
 Copy-Item configs/.env.example configs/.env
 ./scripts/start.ps1 -Background
@@ -36,7 +37,7 @@ Copy-Item configs/.env.example configs/.env
 | --- | --- |
 | [统一展示台](http://127.0.0.1:8000/showcase) | 首入口：固定连续页，直接操作作品并展示训练与科研结果 |
 | [文字冒险](http://127.0.0.1:8000/) | 本地智能体/API应用，同时作为创意作品 |
-| [视觉检测](http://127.0.0.1:8000/yolo) | YOLO基础任务，公开图/本地视频/摄像头 |
+| [视觉检测](http://127.0.0.1:8000/yolo) | YOLO基础任务，自动摄像头/动态视频案例切换 |
 | [科研工作台](http://127.0.0.1:8000/research) | Harness进阶，两个注册科研任务 |
 | [研究策划](http://127.0.0.1:8000/research/strategy) | 用户额外要求的灵感与期刊资料，探索功能 |
 | [接口文档](http://127.0.0.1:8000/docs) | HTTP与事件订阅接口 |
@@ -73,7 +74,7 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 ## 完成证据与范围
 
 - 本地Ollama + qwen2.5:7b、工具调用、游戏API已有真实验证。
-- YOLO保留本人原始13行训练脚本：`yolo11n.pt`、`african-wildlife.yaml`、`epochs=10`、`imgsz=640`、`batch=28`、`cache="ram"`、`workers=1`；展示原项目同参数`train12`保存的10轮CSV和曲线。公交车/行人的实时检测使用独立的通用检测权重，已有公开图、HTTP双流和本地短视频实测；摄像头现场效果仍需复验。
+- YOLO保留本人原始13行训练脚本：`yolo11n.pt`、`african-wildlife.yaml`、`epochs=10`、`imgsz=640`、`batch=28`、`cache="ram"`、`workers=1`；展示原项目同参数`train12`保存的10轮CSV和曲线。公交车/行人的实时检测使用独立的通用检测权重，已有摄像头连续读帧、动态视频HTTP双流与本地短视频实测；摄像头和案例均逐帧现算。
 - 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练；追加中文阅读版后331个登记产物哈希一致，原始实验不变。选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
 - 科研论文模块支持在本机配置DeepSeek Key，测试并保存后即时切换；模型接口与运行记录见科研模块说明。萤火是独立应用，已完成5类真实DeepSeek请求。
 - 灵感/期刊首批资料与编辑草稿已整理；自动全文差异矩阵、自动背调决策、便携冻结重放、外部科学评价及真实投稿未完成。

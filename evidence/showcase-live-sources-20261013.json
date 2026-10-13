@@ -1,0 +1,101 @@
+{
+  "private_camera_pixels_saved": false,
+  "physical_camera_opened": true,
+  "new_training": 0,
+  "new_research": 0,
+  "sources": {
+    "default": "camera",
+    "sources": [
+      {
+        "id": "camera",
+        "label": "本地摄像头",
+        "available": true,
+        "msg": ""
+      },
+      {
+        "id": "demo",
+        "label": "行人视频案例",
+        "available": true,
+        "msg": ""
+      },
+      {
+        "id": "video",
+        "label": "服务器配置的本地文件",
+        "available": false,
+        "msg": "请先在服务器配置 YOLO_VIDEO 本地视频路径"
+      }
+    ]
+  },
+  "camera": {
+    "running": true,
+    "state": "running",
+    "msg": "检测正在运行",
+    "error": "",
+    "warning": "",
+    "source": "camera",
+    "source_label": "本地摄像头 0",
+    "model": "best.pt",
+    "frame_count": 7,
+    "fps": 29.56,
+    "started_at": "2026-10-13T14:55:34.749472+00:00",
+    "last_frame_at": "2026-10-13T14:55:42.111318+00:00",
+    "elapsed_seconds": 7
+  },
+  "case_status": {
+    "running": true,
+    "state": "running",
+    "msg": "检测正在运行",
+    "error": "",
+    "warning": "",
+    "source": "demo",
+    "source_label": "行人视频案例",
+    "model": "best.pt",
+    "frame_count": 3,
+    "fps": 8.0,
+    "started_at": "2026-10-13T14:55:42.558555+00:00",
+    "last_frame_at": "2026-10-13T14:55:42.966567+00:00",
+    "elapsed_seconds": 0
+  },
+  "case_jpeg_hashes": [
+    "7cadac9a6f1e2fd4674072779b93e8f3079bf18b8ac2803ebb5f6fe817d6917d",
+    "a6759cb8148ead83bd7e37c495ec8c94b0ae577bdd1c2a29839399188682f243"
+  ],
+  "case_frames_differ": true,
+  "conditional_stop_preserves_current": true,
+  "final_state": "stopped",
+  "checked_date": "2026-10-13",
+  "python_tests": {
+    "total": 171,
+    "passed": 169,
+    "skipped": 2
+  },
+  "node_tests": {
+    "passed": 70
+  },
+  "independent_dynamic_video_test": "evidence/yolo-dynamic-video-runtime-20261013.json",
+  "showcase": {
+    "research_workbench_iframes": 1,
+    "outer_saved_report_removed": true,
+    "outer_venue_cards_removed": true,
+    "hardware_title": "实物展示",
+    "static_case_preview_removed": true,
+    "historical_training_curve_retained": true
+  },
+  "standalone_yolo": "same initializeShowcaseYolo controller with control-ID mapping; no second state machine",
+  "lifecycle": "entry starts camera; latest source selection wins; manual stop remains stopped until next entry or explicit action; owned timestamp-conditional stop protects other runs; navigation cleanup stop uses keepalive",
+  "video": {
+    "file": "assets/examples/vtest.avi",
+    "sha256": "45cddc9490be69345cbdab64ca583be65987e864ca408038e648db99e10516cf",
+    "size_bytes": 8131690,
+    "fps": 10,
+    "frames": 795,
+    "committed_binary": false,
+    "setup": "scripts/setup_yolo_demo.py"
+  },
+  "browser": {
+    "automation": "not performed; enabled browser surfaces remain old connection-error pages restricted by URL policy; no workaround attempted",
+    "new_layout_and_switch_feedback": "requested from user, pending"
+  },
+  "research_runs_unchanged": true,
+  "served_file_byte_checks": 9
+}

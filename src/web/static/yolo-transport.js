@@ -1,5 +1,5 @@
 /** Own YOLO commands and state subscriptions; the page only renders snapshots. */
-import { getYoloSources, getYoloStatus, startYolo, stopYolo, getYoloStreamUrl } from "./api.js";
+import { getYoloSources, getYoloStatus, startYolo, stopYolo, getYoloStreamUrl } from "./api.js?v=stage-live-20261013-c";
 
 export function createYoloTransport({
   onStatus, onError = () => {},
@@ -111,8 +111,8 @@ export function createYoloTransport({
       pending = null;
       return result;
     },
-    async stopDetection() {
-      const result = await requestStop();
+    async stopDetection(expectedStartedAt) {
+      const result = await requestStop(expectedStartedAt);
       statusVersion += 1;
       pending = null;
       return result;

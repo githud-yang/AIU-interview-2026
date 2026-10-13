@@ -1,4 +1,4 @@
-"""Opt-in real HTTP/public-image/video smoke test: YOLO_RUNTIME_TEST=1."""
+"""Opt-in real HTTP/dynamic-video inference smoke test: YOLO_RUNTIME_TEST=1."""
 from contextlib import ExitStack
 import json
 import os
@@ -13,8 +13,9 @@ from unittest.mock import patch
 
 @unittest.skipUnless(os.getenv("YOLO_RUNTIME_TEST") == "1", "opt-in real inference; no physical camera is opened")
 class YoloRuntimeTests(unittest.TestCase):
-    def test_public_sample_two_http_streams_and_local_video(self):
+    def test_public_video_two_http_streams_and_local_video(self):
         import cv2
+        import numpy as np
         from fastapi import FastAPI
         import httpx
         import uvicorn
@@ -29,7 +30,7 @@ class YoloRuntimeTests(unittest.TestCase):
         server = uvicorn.Server(uvicorn.Config(app, host="127.0.0.1", port=8011, log_level="warning"))
         thread = threading.Thread(target=server.run, daemon=True)
         thread.start()
-        report = {"source": "installed ultralytics/assets/bus.jpg", "network": "127.0.0.1 only", "physical_camera_opened": False}
+        report = {"source": "OpenCV pinned vtest.avi pedestrian video", "network": "127.0.0.1 only", "physical_camera_opened": False}
 
         def wait(predicate, timeout=60):
             deadline = time.monotonic() + timeout
@@ -41,11 +42,18 @@ class YoloRuntimeTests(unittest.TestCase):
 
         try:
             wait(lambda: server.started, timeout=10)
+            source = FrameSource(resolve_source("demo", Path.cwd()))
+            try:
+                raw_frames = [source.read() for _ in range(3)]
+                self.assertTrue(all(frame is not None for frame in raw_frames))
+                self.assertFalse(np.array_equal(raw_frames[0], raw_frames[1]), "demo must decode changing video frames")
+            finally:
+                source.close()
             with patch.dict("os.environ", {"YOLO_SOURCE": "demo"}), httpx.Client(base_url="http://127.0.0.1:8011", timeout=30) as client:
                 self.assertEqual(client.get("/yolo/stream").status_code, 409)
                 self.assertEqual(client.post("/yolo/start", json={"source": "C:/secret.mp4"}).status_code, 422)
                 self.assertTrue(client.post("/yolo/start").json()["ok"])
-                wait(lambda: manager.status()["frame_count"] >= 1)
+                wait(lambda: manager.status()["frame_count"] >= 3)
                 status = client.get("/yolo/status").json()
                 self.assertEqual(status["source"], "demo")
                 self.assertEqual(status["state"], "running")
@@ -56,30 +64,34 @@ class YoloRuntimeTests(unittest.TestCase):
                     for response, iterator in zip(responses, iterators):
                         self.assertEqual(response.status_code, 200)
                         self.assertIn("multipart/x-mixed-replace", response.headers["content-type"])
-                        content = b""
-                        while b"\xff\xd9" not in content:
+                        content, jpeg_frames = b"", []
+                        while len(jpeg_frames) < 2:
                             content += next(iterator)
-                        self.assertTrue(content.startswith(b"--frame\r\n"))
-                        self.assertIn(b"\xff\xd8", content)
-                        stream_bytes.append(len(content))
+                            while len(jpeg_frames) < 2:
+                                start = content.find(b"\xff\xd8")
+                                end = content.find(b"\xff\xd9", start + 2) if start >= 0 else -1
+                                if end < 0:
+                                    break
+                                jpeg_frames.append(content[start:end + 2])
+                                content = content[end + 2:]
+                        self.assertNotEqual(jpeg_frames[0], jpeg_frames[1], "stream must publish newly inferred moving frames")
+                        for jpeg in jpeg_frames:
+                            self.assertIsNotNone(cv2.imdecode(np.frombuffer(jpeg, dtype=np.uint8), cv2.IMREAD_COLOR))
+                        stream_bytes.append([len(jpeg) for jpeg in jpeg_frames])
+                    frame_count_after = client.get("/yolo/status").json()["frame_count"]
+                    self.assertGreater(frame_count_after, status["frame_count"])
                     self.assertTrue(client.post("/yolo/stop").json()["ok"])
                     for iterator in iterators:
                         list(iterator)  # The server ends both clients when inference stops.
                 self.assertEqual(client.get("/yolo/status").json()["state"], "stopped")
-                report["public_image"] = {"status": status, "clients": 2, "jpeg_bytes_per_client": stream_bytes, "stream_ended_after_stop": True}
-
-                source = FrameSource(resolve_source("demo", Path.cwd()))
-                try:
-                    image = source.read()
-                finally:
-                    source.close()
+                report["dynamic_video"] = {"status": status, "clients": 2, "jpeg_bytes_per_client": stream_bytes, "raw_neighbor_frames_differ": True, "inferred_neighbor_frames_differ": True, "frame_count_after": frame_count_after, "stream_ended_after_stop": True}
                 with TemporaryDirectory() as temporary:
                     video = Path(temporary) / "public_sample.avi"
                     writer = cv2.VideoWriter(str(video), cv2.VideoWriter_fourcc(*"MJPG"), 5.0, (320, 240))
                     self.assertTrue(writer.isOpened(), "local MJPG encoder unavailable")
                     try:
-                        for _ in range(3):
-                            writer.write(cv2.resize(image, (320, 240)))
+                        for frame in raw_frames:
+                            writer.write(cv2.resize(frame, (320, 240)))
                     finally:
                         writer.release()
                     with patch.dict("os.environ", {"YOLO_VIDEO": str(video), "YOLO_VIDEO_LOOP": "0"}):
@@ -92,7 +104,7 @@ class YoloRuntimeTests(unittest.TestCase):
                         manager._thread.join(timeout=5)
                         self.assertFalse(manager._thread.is_alive())
                         self.assertEqual(manager.status()["state"], "finished")
-                        report["local_video"] = {"frame_count": 3, "state": "finished", "source": "3-frame AVI generated from public bus.jpg, no camera", "capture_released": not manager._thread.is_alive()}
+                        report["local_video"] = {"frame_count": 3, "state": "finished", "source": "3 consecutive moving frames from public vtest.avi, no camera", "capture_released": not manager._thread.is_alive()}
                         self.assertTrue(client.post("/yolo/stop").json()["ok"])
             if os.getenv("YOLO_RUNTIME_REPORT"):
                 target = Path(os.environ["YOLO_RUNTIME_REPORT"])

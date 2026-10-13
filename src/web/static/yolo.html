@@ -23,20 +23,20 @@
       <section class="side-card" aria-label="检测控制">
         <label class="card-label" for="source-select">画面来源</label>
         <select id="source-select" disabled><option>读取可用来源中…</option></select>
-        <p id="source-help" class="muted small source-help">启动前选择要检测的来源。</p>
+        <p id="source-help" class="muted small source-help">进入后自动启动摄像头；选择案例即可切换实时检测。</p>
         <div class="control-buttons"><button id="start-btn" class="button button-primary" type="button" disabled>启动检测 <span aria-hidden="true">▶</span></button><button id="stop-btn" class="button button-quiet" type="button" disabled>停止</button></div>
       </section>
       <section class="side-card" aria-label="运行信息">
         <p class="card-label">运行信息</p>
         <dl class="runtime-details"><div><dt>检测模型</dt><dd id="detection-model">—</dd></div><div><dt>当前来源</dt><dd id="active-source">—</dd></div></dl>
-        <button id="refresh-btn" class="text-button" type="button">刷新状态</button>
+        <button id="refresh-btn" class="text-button" type="button">刷新状态</button><button id="view-btn" class="text-button" type="button" hidden>连接已有画面</button>
       </section>
-      <p class="sidebar-footer">摄像头由当前运行应用的电脑提供。离开此页后检测仍会运行，请用“停止”结束。</p>
+      <p class="sidebar-footer">摄像头由当前运行应用的电脑提供。离开本页会释放本页启动的检测。</p>
     </aside>
     <section class="vision-panel" aria-label="检测预览">
       <div class="panel-toolbar"><strong>检测画面</strong><span id="detection-status" class="status-badge" data-tone="neutral">连接中</span></div>
       <div class="video-stage">
-        <div id="video-placeholder" class="video-placeholder"><span class="viewfinder" aria-hidden="true">＋</span><h2 id="placeholder-title">准备好开始检测</h2><p id="placeholder-description">选择画面来源，然后点击“启动检测”。</p></div>
+        <div id="video-placeholder" class="video-placeholder"><span class="viewfinder" aria-hidden="true">＋</span><h2 id="placeholder-title">实时检测</h2><p id="placeholder-description">正在连接摄像头…</p></div>
         <img id="video" alt="YOLO 物体检测结果，画面上显示预测框和类别" hidden />
         <span id="source-overlay" class="source-overlay" hidden></span>
       </div>
@@ -44,6 +44,6 @@
       <div class="vision-notices"><p id="yolo-msg" class="notice" role="status">正在连接检测服务…</p><p id="yolo-warning" class="notice notice-warning" role="status" hidden></p></div>
     </section>
   </main>
-  <script type="module" src="/static/yolo.js"></script>
+  <script type="module" src="/static/yolo.js?v=stage-live-20261013-c"></script>
 </body>
 </html>

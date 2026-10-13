@@ -132,97 +132,23 @@ test("Adventure locks duplicate sends, keeps 10-turn context and retries without
   assert.equal(dom.elements.chat.children.length, 1);
 });
 
-function visionHarness({ EventSourceImpl = null } = {}) {
-  const dom = makeDOM(["source-select", "start-btn", "stop-btn", "refresh-btn", "video", "video-placeholder", "yolo-msg", "yolo-warning", "source-help", "source-overlay", "placeholder-title", "placeholder-description", "detection-status", "active-source", "detection-model", "fps", "frame-count", "elapsed"]);
-  const window = new Element("window");
-  const timers = new Map();
-  const statusResponses = [];
-  let nextTimer = 0;
-  let current = { running: false, state: "stopped", frame_count: 0, fps: 0 };
-  const calls = { starts: 0, stops: 0, status: 0 };
-  const activeState = () => ({ running: true, state: "running", source: "demo", source_label: "公开样例", model: "best.pt", frame_count: 1, fps: 3.3, started_at: new Date().toISOString(), elapsed_seconds: 5 });
-  const context = {
-    document: dom.document, window, Date,
-    getYoloSources: async () => ({ default: "demo", sources: [{ id: "demo", label: "静态样例", available: true }, { id: "video", label: "本地文件", available: false }] }),
-    getYoloStatus: async () => { calls.status += 1; return statusResponses.length ? statusResponses.shift() : current; },
-    startYolo: async () => { calls.starts += 1; current = activeState(); return { ok: true, ...current }; },
-    stopYolo: async () => { calls.stops += 1; current = { ...current, running: false, state: "stopped" }; return { ok: true, ...current }; },
-    getYoloStreamUrl: () => "/yolo/stream",
-    setTimeout: (fn) => { const id = ++nextTimer; timers.set(id, fn); return id; },
-    clearTimeout: (id) => { timers.delete(id); },
-  };
-  context.createYoloTransport = (options) => createYoloTransport({
-    ...options, EventSourceImpl,
-    readSources: context.getYoloSources, readStatus: context.getYoloStatus,
-    requestStart: context.startYolo, requestStop: context.stopYolo,
-    imageUrl: context.getYoloStreamUrl,
-    setTimer: context.setTimeout, clearTimer: context.clearTimeout,
-  });
-  vm.runInNewContext(moduleSource("yolo.js"), context);
-  return {
-    ...dom, window, calls, timers, statusResponses, activeState,
-    setState: (value) => { current = value; },
-    runTimer: () => { const entry = timers.entries().next().value; assert.ok(entry, "Expected a scheduled poll"); timers.delete(entry[0]); entry[1](); },
-  };
-}
-
-test("YOLO locks start, labels static media, recovers broken MJPEG and removes it on stop", async () => {
-  const harness = visionHarness();
-  await flush();
-  assert.equal(harness.elements["source-select"].value, "demo");
-  assert.equal(harness.elements["source-select"].children[1].disabled, true);
-  assert.equal(harness.elements["start-btn"].disabled, false);
-  harness.elements["start-btn"].dispatch("click");
-  harness.elements["start-btn"].dispatch("click");
-  await flush();
-  assert.equal(harness.calls.starts, 1);
-  assert.equal(harness.elements.video.hidden, false, "A first processed frame reveals MJPEG without waiting for the stream to finish");
-  assert.equal(harness.elements["source-select"].disabled, true);
-  assert.match(harness.elements["source-overlay"].textContent, /非实时/);
-  harness.elements.video.dispatch("error");
-  assert.equal(harness.elements.video.hidden, true);
-  assert.equal(harness.elements.video.src, "");
-  assert.match(harness.elements["yolo-msg"].textContent, /连接中断/);
-  harness.elements["refresh-btn"].dispatch("click");
-  await flush();
-  assert.equal(harness.elements.video.hidden, false);
-  assert.equal(harness.elements.video.src, "/yolo/stream");
-  harness.elements["stop-btn"].dispatch("click");
-  await flush();
-  assert.equal(harness.calls.stops, 1);
-  assert.equal(harness.elements.video.hidden, true);
-  assert.equal(harness.elements.video.src, "");
-  assert.equal(harness.elements["start-btn"].disabled, false);
-});
-
-test("YOLO stops old poll scheduling during pagehide and resumes one poll/stream on bfcache return", async () => {
-  const harness = visionHarness();
-  await flush();
-  harness.setState(harness.activeState());
-  assert.equal(harness.timers.size, 1);
-  const pending = deferred();
-  harness.statusResponses.push(pending.promise);
-  harness.runTimer();
-  await flush();
-  harness.document.hidden = true;
-  harness.window.dispatch("pagehide");
-  assert.equal(harness.elements.video.src, "");
-  pending.resolve(harness.activeState());
-  await flush();
-  assert.equal(harness.elements.video.src, "", "A late status response must not reopen the stream after pagehide");
-  assert.equal(harness.timers.size, 0, "An old asynchronous poll must not schedule a new timer after leaving");
-  harness.document.hidden = false;
-  harness.window.dispatch("pageshow", { persisted: true });
-  await flush();
-  assert.equal(harness.timers.size, 1, "Restoring from bfcache restarts a single poll chain");
-  assert.equal(harness.elements.video.hidden, false);
-  assert.equal(harness.elements.video.src, "/yolo/stream");
-  harness.window.dispatch("pagehide");
-  assert.equal(harness.timers.size, 0);
-  assert.equal(harness.elements.video.src, "");
-  harness.window.dispatch("pageshow", { persisted: false });
-  await flush();
-  assert.equal(harness.timers.size, 0, "A normal new navigation must not start a second initialization chain");
+test("standalone detector assembles the shared automatic controller and formats server metadata", () => {
+  const dom = makeDOM(["main", "detection-model", "elapsed"]);
+  let assembled;
+  vm.runInNewContext(moduleSource("yolo.js"), { document: dom.document,
+    initializeShowcaseYolo: (options) => { assembled = options; } });
+  assert.equal(assembled.section, dom.elements.main);
+  assert.equal(assembled.controlIds["stage-yolo-source"], "source-select");
+  assert.equal(assembled.controlIds["stage-yolo-view"], "view-btn");
+  let visible = false;
+  const dispose = assembled.observeSection(dom.elements.main, value => { visible = value; });
+  assert.equal(visible, true);
+  assert.equal(typeof dispose, "function");
+  assembled.onSnapshot({ model: "best.pt", elapsed_seconds: 125 });
+  assert.equal(dom.elements["detection-model"].textContent, "best.pt");
+  assert.equal(dom.elements.elapsed.textContent, "2:05");
+  assembled.onSnapshot({ elapsed_seconds: null });
+  assert.equal(dom.elements.elapsed.textContent, "—");
 });
 
 function eventSourceHarness() {
@@ -237,50 +163,6 @@ function eventSourceHarness() {
   }
   return { EventSourceImpl: FakeEventSource, instances };
 }
-
-test("YOLO subscribes to SSE, formats server elapsed time and closes/resumes one subscription per visible page", async () => {
-  const events = eventSourceHarness();
-  const harness = visionHarness(events);
-  await flush();
-  assert.equal(events.instances.length, 1);
-  assert.equal(events.instances[0].url, "/yolo/events");
-  assert.equal(harness.calls.status, 0, "EventSource primary mode has no HTTP status polling");
-  assert.equal(harness.timers.size, 0);
-  const first = events.instances[0];
-  first.send({ running: false, state: "stopped", elapsed_seconds: null });
-  assert.equal(harness.elements["start-btn"].disabled, false);
-  first.send({ ...harness.activeState(), started_at: "2000-01-01T00:00:00Z", elapsed_seconds: 125 });
-  assert.equal(harness.elements.elapsed.textContent, "2:05", "The browser formats backend duration instead of recalculating it from its clock");
-  assert.equal(harness.elements.video.src, "/yolo/stream");
-  harness.document.hidden = true;
-  harness.document.dispatch("visibilitychange");
-  assert.equal(first.closed, true);
-  assert.equal(harness.elements.video.src, "");
-  first.send({ ...harness.activeState(), frame_count: 999 });
-  assert.equal(harness.elements["frame-count"].textContent, "1", "Late events from a closed subscription cannot update the page");
-  harness.document.hidden = false;
-  harness.document.dispatch("visibilitychange");
-  assert.equal(events.instances.length, 2);
-  events.instances[1].send({ ...harness.activeState(), elapsed_seconds: 126 });
-  assert.equal(harness.elements.elapsed.textContent, "2:06");
-  harness.window.dispatch("pagehide");
-  assert.equal(events.instances[1].closed, true);
-  harness.window.dispatch("pageshow", { persisted: true });
-  assert.equal(events.instances.length, 3);
-  events.instances[2].fail();
-  events.instances[2].fail();
-  assert.equal(events.instances[2].closed, true);
-  assert.equal(harness.timers.size, 1, "Duplicate errors schedule only one reconnect");
-  assert.equal(harness.elements["detection-status"].textContent, "服务未连接");
-  harness.runTimer();
-  assert.equal(events.instances.length, 4);
-  events.instances[3].send({ running: false, state: "stopped", elapsed_seconds: null });
-  assert.equal(harness.elements["detection-status"].textContent, "已停止");
-  assert.equal(harness.calls.status, 0);
-  harness.window.dispatch("pagehide");
-  assert.equal(events.instances[3].closed, true);
-  assert.equal(harness.timers.size, 0);
-});
 
 test("YOLO transport rejects malformed SSE and ignores a late HTTP status after a newer pushed state", async () => {
   const events = eventSourceHarness();

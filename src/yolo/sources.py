@@ -1,8 +1,7 @@
-"""Local camera/video/public-image sources shared by Web and CLI."""
+"""Camera, live-inferred public video and configured local sources."""
 from __future__ import annotations
 
 from dataclasses import dataclass
-import importlib.util
 import os
 from pathlib import Path
 
@@ -17,13 +16,10 @@ class SourceSpec:
     frame_interval: float = 0.0
 
 
-def public_sample_path():
-    package = importlib.util.find_spec("ultralytics")
-    if not package or not package.origin:
-        raise ValueError("公开样例需要安装 requirements-yolo.txt 中的 ultralytics")
-    path = Path(package.origin).parent / "assets" / "bus.jpg"
+def public_demo_path(root):
+    path = Path(root) / "assets" / "examples" / "vtest.avi"
     if not path.is_file():
-        raise ValueError("当前 ultralytics 安装中缺少公开 bus.jpg 样例")
+        raise ValueError("缺少行人视频案例；请在仓库根目录运行 ./.venv/Scripts/python.exe scripts/setup_yolo_demo.py")
     return path
 
 
@@ -47,7 +43,8 @@ def resolve_source(selector, root):
             raise ValueError("YOLO_CAMERA 必须是非负摄像头编号")
         return SourceSpec("camera", f"本地摄像头 {camera}", "camera", camera)
     if selector == "demo":
-        return SourceSpec("demo", "公开 bus.jpg 静态样例", "image", str(public_sample_path()), frame_interval=0.25)
+        # OpenCV's pinned vtest.avi is a 10 FPS clip; no boxes are prerecorded.
+        return SourceSpec("demo", "行人视频案例", "video", str(public_demo_path(root)), loop=True, frame_interval=0.1)
     if selector == "video":
         value = os.getenv("YOLO_VIDEO", "")
         if not value:
@@ -60,7 +57,7 @@ def resolve_source(selector, root):
 
 def source_options(root):
     options = []
-    for selector, label in [("camera", "本地摄像头"), ("demo", "公开静态样例（bus.jpg）"), ("video", "服务器配置的本地文件")]:
+    for selector, label in [("camera", "本地摄像头"), ("demo", "行人视频案例"), ("video", "本地视频")]:
         try:
             resolve_source(selector, root)
             available, msg = True, ""
@@ -100,6 +97,8 @@ class FrameSource:
     def read(self):
         if self._image is not None:
             return self._image.copy()
+        if self._cap is None:
+            return None
         ok, frame = self._cap.read()
         if ok:
             self._reads += 1
@@ -111,6 +110,7 @@ class FrameSource:
                 self._cap.set(self._cv2.CAP_PROP_POS_FRAMES, 0)
                 ok, frame = self._cap.read()
                 if ok:
+                    self._reads += 1
                     return frame
                 raise RuntimeError("视频无法重新播放，文件可能没有可解码帧")
             return None

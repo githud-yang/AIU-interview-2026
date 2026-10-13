@@ -1,9 +1,10 @@
 /** Assemble the two stage widgets; each owns its API controls and local UI state. */
 import { initializeShowcaseChat } from "./showcase-chat.js";
-import { initializeShowcaseYolo } from "./showcase-yolo.js";
+import { initializeShowcaseYolo } from "./showcase-yolo.js?v=stage-live-20261013-c";
 
 export function initializeShowcaseLive(options = {}) {
-  const widgets = [initializeShowcaseChat(options), initializeShowcaseYolo(options)];
+  const doc = options.document || globalThis.document;
+  const widgets = [initializeShowcaseChat(options), initializeShowcaseYolo({ ...options, section: options.section || doc.getElementById("yolo") })];
   return { destroy() { widgets.forEach((widget) => widget?.destroy()); } };
 }
 

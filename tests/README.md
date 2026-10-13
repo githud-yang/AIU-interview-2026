@@ -13,4 +13,4 @@ node --test tests/test_frontend.mjs tests/test_research_frontend.mjs tests/test_
 
 `test_showcase_frontend.mjs`验证展示HTTP客户端的只读请求、非法/离线响应与关闭/超时取消，不请求真实网络。
 
-`test_showcase_research.py`验证固定已完成运行摘要、私有字段隔离、产物原始哈希失败拒绝与报告CSP sandbox。`test_showcase_live.mjs`验证同页实际操作的重复提交、重试与检测启动/查看的用户动作边界，使用离线依赖，不生成真实内容。
+`test_showcase_research.py`验证兼容的已完成报告接口、私有字段隔离、产物哈希失败拒绝与CSP sandbox。`test_showcase_live.mjs`验证进入YOLO自动开启摄像头、换源串行/最后意图、主动停止抑制、离开释放与外部运行保护；独立页复用同一控制器。`test_yolo_stop_guard.py`核对条件停止的原子边界；`test_yolo_demo_setup.py`核对案例安装完整性。真实动态视频双流检查仍需显式启用，不在普通单测中打开物理摄像头。

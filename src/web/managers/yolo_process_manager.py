@@ -73,8 +73,8 @@ class YoloProcessManager:
             if self.is_running:
                 current = self.status()["source"]
                 if source and source != current:
-                    return {**self._response(False), "msg": "请先停止当前检测，再切换来源"}
-                return {**self._response(True), "msg": "检测已经在启动或运行"}
+                    return {**self._response(False), "created": False, "msg": "请先停止当前检测，再切换来源"}
+                return {**self._response(True), "created": False, "msg": "检测已经在启动或运行"}
             if self._thread and self._thread.is_alive():
                 return {**self._response(False), "msg": "正在释放视频来源，请稍后重试"}
             try:
@@ -112,7 +112,7 @@ class YoloProcessManager:
                 target=self._run, args=(spec, weights, conf), name="yolo-inference", daemon=True
             )
             self._thread.start()
-            return self._response(True)
+            return {**self._response(True), "created": True}
 
     def _run(self, spec, weights, conf):
         source = None
@@ -176,8 +176,10 @@ class YoloProcessManager:
                         self.frame = None
                     self._condition.notify_all()
 
-    def stop(self):
+    def stop(self, expected_started_at=None):
         with self._control:
+            if expected_started_at is not None and self.status()["started_at"] != expected_started_at:
+                return {**self._response(False), "msg": "检测运行已更新，保留当前画面"}
             with self._condition:
                 self._stop.set()
                 if self._thread and self._thread.is_alive():

@@ -2,7 +2,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { initializeShowcaseChat } from "../src/web/static/showcase-chat.js";
-import { initializeShowcaseYolo } from "../src/web/static/showcase-yolo.js";
+import { initializeShowcaseYolo, observeYoloSection } from "../src/web/static/showcase-yolo.js";
 import { createYoloTransport } from "../src/web/static/yolo-transport.js";
 
 const flush = async () => { for (let i = 0; i < 25; i += 1) await Promise.resolve(); };
@@ -105,55 +105,75 @@ test("only ten successful stage turns enter context, with input limits and IME-s
 });
 
 const visionIds = ["stage-yolo-source", "stage-yolo-start", "stage-yolo-stop", "stage-yolo-refresh", "stage-yolo-view", "stage-yolo-image", "stage-yolo-placeholder", "stage-yolo-status", "stage-yolo-notice", "stage-yolo-source-label", "stage-yolo-fps", "stage-yolo-frames"];
-function visionHarness({ initial, demoAvailable = true } = {}) {
-  const dom = makeDOM(visionIds);
+function visionHarness({ initial, demoAvailable = true, cameraAvailable = true, visible = false, controlIds = {} } = {}) {
+  const dom = makeDOM(visionIds.map((id) => controlIds[id] || id));
+  // Tests address logical controls while the DOM can use independent page IDs.
+  for (const id of visionIds) if (controlIds[id]) dom.elements[id] = dom.elements[controlIds[id]];
   const streams = [];
-  const calls = { starts: [], stops: 0, urls: 0, status: 0, sources: 0 };
+  const calls = { starts: [], stops: 0, stopStamps: [], urls: 0, status: 0, sources: 0 };
   let state = initial || { running: false, state: "stopped", source: null, frame_count: 0, fps: 0 };
   let startReply = null;
+  let stopReply = null;
   let sourceFailure = false;
+  let changeVisibility;
+  const snapshots = [];
   class Events {
     constructor(path) { this.path = path; this.handlers = {}; this.closed = false; streams.push(this); }
     addEventListener(name, handler) { this.handlers[name] = handler; }
     close() { this.closed = true; }
     publish(snapshot) { this.handlers.status({ data: JSON.stringify(snapshot) }); }
   }
-  const running = (source = "demo", stamp = "run-1") => ({ running: true, state: "running", source, source_label: source === "demo" ? "公开样例" : "本地摄像头", started_at: stamp, frame_count: 1, fps: 2.75 });
-  const widget = initializeShowcaseYolo({ document: dom.document, window: dom.window, createTransport: (options) => createYoloTransport({
+  const running = (source = "camera", stamp = "run-1") => ({ running: true, state: "running", source, source_label: source === "demo" ? "动态检测案例" : "本地摄像头", started_at: stamp, frame_count: 1, fps: 2.75 });
+  const widget = initializeShowcaseYolo({ document: dom.document, window: dom.window,
+    controlIds, onSnapshot: (snapshot) => snapshots.push(snapshot),
+    observeSection: (_section, callback) => { changeVisibility = callback; callback(visible); return () => {}; },
+    createTransport: (options) => createYoloTransport({
     ...options, EventSourceImpl: Events,
     readSources: async () => {
       calls.sources += 1;
       if (sourceFailure) throw new Error("source list offline");
-      return { default: "camera", sources: [{ id: "camera", label: "本地摄像头", available: true }, { id: "demo", label: "公开样例", available: demoAvailable, msg: "样例未安装" }] };
+      return { default: "camera", sources: [{ id: "camera", label: "本地摄像头", available: cameraAvailable, msg: "摄像头不可用" }, { id: "demo", label: "动态检测案例", available: demoAvailable, msg: "案例未安装" }, { id: "video", label: "视频案例", available: true }] };
     },
     readStatus: async () => { calls.status += 1; return state; },
     requestStart: async (source) => {
       calls.starts.push(source);
-      const result = startReply ? await startReply : { ok: true, ...running(source) };
+      const reply = startReply;
+      startReply = null;
+      const result = reply ? await reply : { ok: true, created: true, ...running(source, `run-${calls.starts.length}`) };
       state = result; return result;
     },
-    requestStop: async () => { calls.stops += 1; state = { ...state, running: false, state: "stopped" }; return { ok: true, ...state }; },
+    requestStop: async (stamp) => {
+      calls.stops += 1; calls.stopStamps.push(stamp);
+      if (stopReply) { const reply = stopReply; stopReply = null; state = await reply; return state; }
+      if (stamp && stamp !== state.started_at) return { ok: false, ...state, msg: "运行已变更" };
+      state = { ...state, running: false, state: "stopped" }; return { ok: true, ...state };
+    },
     imageUrl: () => { calls.urls += 1; return `/mock-stream/${calls.urls}`; },
   }) });
-  return { ...dom, calls, streams, running, widget, setStartReply: (value) => { startReply = value; }, setSourceFailure: (value) => { sourceFailure = value; }, setState: (value) => { state = value; streams.at(-1).publish(value); } };
+  return { ...dom, calls, streams, snapshots, running, widget, enter: () => changeVisibility(true), leave: () => changeVisibility(false),
+    select: (source) => { dom.elements["stage-yolo-source"].value = source; dom.elements["stage-yolo-source"].dispatch("change"); },
+    setStartReply: (value) => { startReply = value; }, setStopReply: (value) => { stopReply = value; },
+    setSourceFailure: (value) => { sourceFailure = value; }, setState: (value) => { state = value; streams.at(-1).publish(value); } };
 }
 
-test("stage detection prefers demo, starts once explicitly and reconnects MJPEG only on a manual retry", async () => {
+test("camera starts on entering YOLO, never behind the home page; Stop suppresses repeated observer entries", async () => {
   const h = visionHarness();
   await flush();
-  assert.equal(h.elements["stage-yolo-source"].value, "demo");
+  assert.equal(h.elements["stage-yolo-source"].value, "camera");
   assert.equal(h.streams[0].path, "/yolo/events");
   assert.equal(h.calls.starts.length, 0);
   assert.equal(h.calls.urls, 0);
   const pending = deferred();
   h.setStartReply(pending.promise);
+  h.enter();
+  await flush();
   h.elements["stage-yolo-start"].dispatch("click");
-  h.elements["stage-yolo-start"].dispatch("click");
-  assert.deepEqual(h.calls.starts, ["demo"]);
-  pending.resolve({ ok: true, ...h.running() });
+  h.enter();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  pending.resolve({ ok: true, created: true, ...h.running() });
   await flush();
   assert.equal(h.elements["stage-yolo-image"].hidden, false);
-  assert.match(h.elements["stage-yolo-source-label"].textContent, /非实时/);
+  assert.match(h.elements["stage-yolo-source-label"].textContent, /摄像头/);
   h.elements["stage-yolo-image"].dispatch("error");
   h.setState(h.running());
   assert.equal(h.calls.urls, 1, "Automatic status updates cannot retry a broken image stream");
@@ -164,15 +184,25 @@ test("stage detection prefers demo, starts once explicitly and reconnects MJPEG 
   h.elements["stage-yolo-stop"].dispatch("click");
   await flush();
   assert.equal(h.calls.stops, 1);
+  assert.deepEqual(h.calls.stopStamps, ["run-1"]);
   assert.equal(h.elements["stage-yolo-image"].src, "");
+  h.enter();
+  h.setState({ ...h.running(), running: false, state: "stopped" });
+  h.elements["stage-yolo-refresh"].dispatch("click");
+  await flush();
+  assert.deepEqual(h.calls.starts, ["camera"], "Stop is not undone by repeat visibility or refresh");
+  h.leave(); await flush(); h.enter(); await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "camera"], "A later visit starts a new demonstration");
   h.widget.destroy();
+  await flush();
 });
 
-test("existing camera is read-only until View; hide closes clients and return needs a fresh View", async () => {
+test("an external camera remains read-only until View; leaving or hiding never stops it", async () => {
   const current = { running: true, state: "running", source: "camera", source_label: "本地摄像头", started_at: "existing", frame_count: 24, fps: 4 };
-  const h = visionHarness({ initial: current });
+  const h = visionHarness({ initial: current, visible: true });
   await flush();
-  assert.equal(h.elements["stage-yolo-source"].value, "demo");
+  assert.equal(h.elements["stage-yolo-source"].value, "camera");
+  assert.equal(h.calls.starts.length, 0);
   assert.equal(h.calls.urls, 0, "Even an already-running camera is never attached on page load");
   assert.equal(h.elements["stage-yolo-view"].hidden, false);
   h.elements["stage-yolo-view"].dispatch("click");
@@ -180,6 +210,7 @@ test("existing camera is read-only until View; hide closes clients and return ne
   h.document.hidden = true;
   h.document.dispatch("visibilitychange");
   h.window.dispatch("pagehide");
+  await flush();
   assert.equal(h.elements["stage-yolo-image"].src, "");
   assert.equal(h.streams[0].closed, true);
   assert.equal(h.calls.stops, 0, "Navigation must not stop another page's shared worker");
@@ -194,41 +225,172 @@ test("existing camera is read-only until View; hide closes clients and return ne
   assert.equal(h.elements["stage-yolo-image"].src, "", "Viewing permission is bound to one worker run");
   assert.equal(h.calls.urls, 2);
   h.widget.destroy();
+  await flush();
 });
 
-test("unavailable demo never silently selects camera; failed source refresh leaves Stop usable", async () => {
-  const h = visionHarness({ demoAvailable: false });
+test("unavailable camera shows a recoverable error; selecting a case starts live inference without another click", async () => {
+  const h = visionHarness({ cameraAvailable: false, visible: true });
   await flush();
-  assert.equal(h.elements["stage-yolo-source"].value, "demo");
+  assert.equal(h.elements["stage-yolo-source"].value, "camera");
+  assert.equal(h.calls.starts.length, 0);
   assert.equal(h.elements["stage-yolo-start"].disabled, true);
-  h.elements["stage-yolo-source"].value = "camera";
-  h.elements["stage-yolo-source"].dispatch("change");
-  h.elements["stage-yolo-start"].dispatch("click");
+  assert.match(h.elements["stage-yolo-notice"].textContent, /摄像头不可用/);
+  h.select("demo");
   await flush();
-  assert.deepEqual(h.calls.starts, ["camera"], "Camera can be started by an explicit source choice and click");
+  assert.deepEqual(h.calls.starts, ["demo"]);
+  assert.equal(h.elements["stage-yolo-image"].hidden, false);
+  assert.match(h.elements["stage-yolo-source-label"].textContent, /动态检测案例/);
   h.setSourceFailure(true);
   h.elements["stage-yolo-refresh"].dispatch("click");
   await flush();
   assert.match(h.elements["stage-yolo-notice"].textContent, /source list offline/);
   assert.equal(h.elements["stage-yolo-stop"].disabled, false);
   h.widget.destroy();
+  await flush();
 });
 
-test("returning while Start is pending resumes reads and observes its completion without reopening video", async () => {
+test("rapid choices serialize Stop and Start, skip obsolete targets, and attach only the final live stream", async () => {
+  const h = visionHarness({ visible: true });
+  await flush();
+  const pending = deferred();
+  h.setStopReply(pending.promise);
+  h.select("demo");
+  await flush();
+  assert.equal(h.calls.stops, 1);
+  assert.equal(h.elements["stage-yolo-source"].disabled, false);
+  h.select("video"); h.select("demo"); h.select("video");
+  pending.resolve({ ok: true, ...h.running(), running: false, state: "stopped" });
+  await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "video"]);
+  assert.equal(h.calls.urls, 2);
+  assert.equal(h.elements["stage-yolo-source"].value, "video");
+  h.widget.destroy(); await flush();
+});
+
+test("leaving during Start releases the eventual owned camera before starting the next visit", async () => {
   const h = visionHarness();
   await flush();
   const pending = deferred();
   h.setStartReply(pending.promise);
-  h.elements["stage-yolo-start"].dispatch("click");
-  h.window.dispatch("pagehide");
-  h.window.dispatch("pageshow", { persisted: true });
-  assert.equal(h.streams.length, 2, "A pending command does not block the read subscription on return");
-  pending.resolve({ ok: true, ...h.running() });
+  h.enter(); await flush(); h.leave();
+  pending.resolve({ ok: true, created: true, ...h.running() });
   await flush();
-  assert.deepEqual(h.calls.starts, ["demo"]);
-  assert.equal(h.calls.urls, 0, "Leaving the page revokes its original viewing permission");
-  assert.equal(h.elements["stage-yolo-status"].textContent, "检测中");
-  assert.equal(h.elements["stage-yolo-stop"].disabled, false);
-  assert.equal(h.elements["stage-yolo-view"].hidden, false);
-  h.widget.destroy();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  assert.deepEqual(h.calls.stopStamps, ["run-1"]);
+  assert.equal(h.calls.urls, 0, "An obsolete Start response must never attach its stream");
+  h.enter(); await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "camera"]);
+  assert.equal(h.calls.urls, 1);
+  h.widget.destroy(); await flush();
+});
+
+test("changing during Start never displays the obsolete source and immediately moves to the latest choice", async () => {
+  const h = visionHarness(); await flush();
+  const pending = deferred(); h.setStartReply(pending.promise);
+  h.enter(); await flush(); h.select("demo"); h.select("video");
+  pending.resolve({ ok: true, created: true, ...h.running() });
+  await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "video"]);
+  assert.deepEqual(h.calls.stopStamps, ["run-1"]);
+  assert.equal(h.calls.urls, 1, "Only the final source is attached");
+  h.widget.destroy(); await flush();
+});
+
+test("Stop during pending Start releases the eventual run and never opens its image", async () => {
+  const h = visionHarness(); await flush();
+  const pending = deferred(); h.setStartReply(pending.promise);
+  h.enter(); await flush(); h.elements["stage-yolo-stop"].dispatch("click");
+  pending.resolve({ ok: true, created: true, ...h.running() });
+  await flush();
+  assert.deepEqual(h.calls.stopStamps, ["run-1"]);
+  assert.equal(h.calls.urls, 0);
+  h.enter(); await flush();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  h.widget.destroy(); await flush();
+});
+
+test("an in-flight Start with created:false never owns or releases another client's worker", async () => {
+  const h = visionHarness(); await flush();
+  const pending = deferred(); h.setStartReply(pending.promise);
+  h.enter(); await flush(); h.leave();
+  pending.resolve({ ok: true, created: false, ...h.running("camera", "other-page") });
+  await flush();
+  assert.equal(h.calls.stops, 0);
+  assert.equal(h.calls.urls, 0);
+  h.widget.destroy(); await flush();
+});
+
+test("page hiding releases this page's camera, and showing it resumes a visible demonstration", async () => {
+  const h = visionHarness({ visible: true }); await flush();
+  h.document.hidden = true; h.document.dispatch("visibilitychange"); await flush();
+  assert.deepEqual(h.calls.stopStamps, ["run-1"]);
+  assert.equal(h.elements["stage-yolo-image"].src, "");
+  assert.equal(h.streams[0].closed, true);
+  h.document.hidden = false; h.document.dispatch("visibilitychange"); await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "camera"]);
+  assert.equal(h.calls.urls, 2);
+  h.widget.destroy(); await flush();
+});
+
+test("returning while Start is pending keeps one command and restores the visible owned stream", async () => {
+  const h = visionHarness(); await flush();
+  const pending = deferred(); h.setStartReply(pending.promise);
+  h.enter(); await flush(); h.window.dispatch("pagehide");
+  h.window.dispatch("pageshow", { persisted: true });
+  pending.resolve({ ok: true, created: true, ...h.running() });
+  await flush();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  assert.equal(h.calls.stops, 0);
+  assert.equal(h.calls.urls, 1);
+  h.widget.destroy(); await flush();
+});
+
+test("a replaced external run fails the conditional Stop and blocks the requested switch", async () => {
+  const h = visionHarness({ visible: true }); await flush();
+  const pending = deferred(); h.setStopReply(pending.promise);
+  h.select("demo"); await flush();
+  pending.resolve({ ok: false, ...h.running("video", "external-replacement"), msg: "运行已变更" });
+  await flush();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  assert.match(h.elements["stage-yolo-notice"].textContent, /运行已变更/);
+  h.leave(); await flush();
+  assert.equal(h.calls.stops, 1, "Leaving never stops the replacement run");
+  h.widget.destroy(); await flush();
+});
+
+test("the standalone page can reuse the controller with its own DOM IDs and extra snapshot fields", async () => {
+  const controlIds = Object.fromEntries(visionIds.map((id, index) => [id, `standalone-${index}`]));
+  const h = visionHarness({ visible: true, controlIds }); await flush();
+  assert.deepEqual(h.calls.starts, ["camera"]);
+  assert.equal(h.document.getElementById(controlIds["stage-yolo-image"]).hidden, false);
+  assert.equal(h.snapshots.at(-1).source, "camera");
+  h.select("demo"); await flush();
+  assert.deepEqual(h.calls.starts, ["camera", "demo"]);
+  h.widget.destroy(); await flush();
+});
+
+test("viewport entry works for a long section, waits outside YOLO, and removes observers on teardown", () => {
+  const { document, window } = makeDOM([]);
+  window.innerHeight = 900;
+  let box = { top: 1000, bottom: 3000 };
+  const section = { getBoundingClientRect: () => box };
+  const header = { getBoundingClientRect: () => ({ bottom: 80 }) };
+  document.querySelector = () => header;
+  let callback;
+  let disconnected = false;
+  window.IntersectionObserver = class {
+    constructor(fn) { callback = fn; }
+    observe(element) { assert.equal(element, section); }
+    disconnect() { disconnected = true; }
+  };
+  const observations = [];
+  const stop = observeYoloSection(section, (visible) => observations.push(visible), { window, document });
+  assert.deepEqual(observations, [false]);
+  box = { top: 200, bottom: 2200 }; callback();
+  box = { top: -500, bottom: 1800 }; window.dispatch("scroll");
+  box = { top: -2000, bottom: 100 }; window.dispatch("hashchange");
+  assert.deepEqual(observations, [false, true, true, false]);
+  stop(); assert.equal(disconnected, true);
+  box = { top: 200, bottom: 2200 }; window.dispatch("scroll");
+  assert.equal(observations.length, 4);
 });

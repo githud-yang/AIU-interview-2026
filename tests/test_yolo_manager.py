@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import Mock, patch
 
 from src.web.managers.yolo_process_manager import YoloProcessManager
-from src.yolo.sources import FrameSource, SourceSpec, resolve_source
+from src.yolo.sources import FrameSource, SourceSpec, resolve_source, source_options
 
 
 class FakeFrame:
@@ -43,7 +43,7 @@ class ManagerTests(unittest.TestCase):
         self.env = patch.dict("os.environ", {"YOLO_WEIGHTS": str(self.weights), "YOLO_CONF": "0.25"})
         self.env.start()
         self.resolver = patch("src.web.managers.yolo_process_manager.resolve_source", return_value=self.spec)
-        self.resolver.start()
+        self.resolver_mock = self.resolver.start()
         encoded = Mock()
         encoded.tobytes.return_value = b"jpeg"
         self.cv2 = types.SimpleNamespace(IMWRITE_JPEG_QUALITY=1, imencode=Mock(return_value=(True, encoded)))
@@ -156,8 +156,61 @@ class ManagerTests(unittest.TestCase):
         with self.assertRaises(StopIteration):
             next(stream)
 
+    def test_each_changing_video_frame_runs_inference_and_source_is_released(self):
+        frames = [FakeFrame(20), FakeFrame(90), FakeFrame(180)]
+        capture = Mock()
+        capture.isOpened.return_value = True
+        capture.read.side_effect = [(True, frame) for frame in frames] + [(False, None)]
+        self.cv2.VideoCapture = Mock(return_value=capture)
+        self.cv2.CAP_PROP_POS_FRAMES = 1
+        spec = SourceSpec("demo", "public pedestrian video", "video", "test.avi")
+        self.resolver_mock.return_value = spec
+        self.manager._open_source = FrameSource
+        model = self.manager._load_model.return_value
+        self.manager.start("demo")
+        self.wait(lambda: self.manager._state == "finished")
+        self.manager._thread.join(1)
+        self.assertEqual(self.manager.status()["frame_count"], 3)
+        self.assertEqual([call.args[0] for call in model.call_args_list], frames)
+        self.assertEqual([call.args[0].brightness for call in model.call_args_list], [20, 90, 180])
+        self.assertEqual(self.cv2.imencode.call_count, 3)
+        capture.release.assert_called_once()
+
 
 class SourceTests(unittest.TestCase):
+    def test_demo_is_looping_video_and_missing_asset_has_setup_command(self):
+        with TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            with self.assertRaisesRegex(ValueError, "setup_yolo_demo.py"):
+                resolve_source("demo", root)
+            unavailable = next(item for item in source_options(root)["sources"] if item["id"] == "demo")
+            self.assertFalse(unavailable["available"])
+            path = root / "assets" / "examples" / "vtest.avi"
+            path.parent.mkdir(parents=True)
+            path.write_bytes(b"fixture path only")
+            spec = resolve_source("demo", root)
+            self.assertEqual((spec.id, spec.kind, spec.loop), ("demo", "video", True))
+            self.assertEqual(Path(spec.value), path)
+            self.assertEqual(spec.frame_interval, 0.1)
+            self.assertEqual(spec.label, "行人视频案例")
+
+    def test_looping_video_reads_new_frames_and_rewinds_only_at_end(self):
+        first, second = FakeFrame(20), FakeFrame(90)
+        capture = Mock()
+        capture.isOpened.return_value = True
+        capture.read.side_effect = [(True, first), (True, second), (False, None), (True, first)]
+        cv2 = types.SimpleNamespace(VideoCapture=Mock(return_value=capture), CAP_PROP_POS_FRAMES=1)
+        with patch.dict("sys.modules", {"cv2": cv2}):
+            source = FrameSource(SourceSpec("demo", "video", "video", "test.avi", loop=True))
+            self.assertIs(source.read(), first)
+            self.assertIs(source.read(), second)
+            capture.set.assert_not_called()
+            self.assertIs(source.read(), first)
+            capture.set.assert_called_once_with(cv2.CAP_PROP_POS_FRAMES, 0)
+            source.close()
+            self.assertIsNone(source.read())
+            capture.release.assert_called_once()
+
     def test_arbitrary_http_or_local_path_is_not_accepted_by_web(self):
         for value in ["https://example.test/video", "C:/secret.mp4", "-1"]:
             with self.assertRaises(ValueError):

@@ -11,6 +11,9 @@ yolo_manager = YoloProcessManager()
 class StartRequest(BaseModel):
     source: Literal["camera", "demo", "video"] | None = None
 
+class StopRequest(BaseModel):
+    expected_started_at: str | None = None
+
 @router.get("/yolo", response_class=HTMLResponse)
 def yolo_page(request: Request):
     return request.app.state.templates.TemplateResponse(request=request, name="yolo.html")
@@ -21,8 +24,8 @@ def yolo_start(options: StartRequest | None = None):
     return {**result, **status_snapshot(yolo_manager), "msg": result.get("msg", "")}
 
 @router.post("/yolo/stop")
-def yolo_stop():
-    result = yolo_manager.stop()
+def yolo_stop(options: StopRequest | None = None):
+    result = yolo_manager.stop(expected_started_at=options.expected_started_at) if options and options.expected_started_at is not None else yolo_manager.stop()
     return {**result, **status_snapshot(yolo_manager), "msg": result.get("msg", "")}
 
 @router.get("/yolo/status")

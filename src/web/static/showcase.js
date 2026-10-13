@@ -1,21 +1,13 @@
-/** Keep every project mounted; only explicit controls start or reload applications. */
-import { createShowcaseTransport } from "./showcase-transport.js?v=harness-stage-20261011";
-import { initShowcaseLive } from "./showcase-live.js";
-import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=product-stage-20261011";
-import { createStageWorkbench, selectResearchReport } from "./showcase-research.js?v=harness-stage-20261011";
+/** Assemble continuous project views and public connection metadata. */
+import { createShowcaseTransport } from "./showcase-transport.js?v=stage-live-20261013-c";
+import { initShowcaseLive } from "./showcase-live.js?v=stage-live-20261013-c";
+import { initializeShowcaseNavigation } from "./showcase-navigation.js?v=stage-live-20261013-c";
 
 const byId = (id) => document.getElementById(id);
 const transport = createShowcaseTransport();
-let readingResearch = false;
 let readingCatalog = false;
 let checking = false;
 let catalogLoaded = false;
-let tableArtifact = null;
-let tableLoadedFor = "";
-let currentRun = "";
-let researchSnapshot = null;
-const stageWorkbench = createStageWorkbench({ frame: byId("harness-workbench"),
-  container: byId("harness-workbench-container"), button: byId("open-harness"), link: byId("harness-full-workbench") });
 const element = (tag, className, text) => {
   const node = document.createElement(tag);
   if (className) node.className = className;
@@ -28,91 +20,6 @@ const dateLabel = (value) => {
     year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Shanghai", hour12: false,
   }).format(date);
 };
-
-function renderResearch(data) {
-  researchSnapshot = data;
-  currentRun = data.runId;
-  stageWorkbench.setRun(data.runId);
-  byId("harness-source").textContent = data.source;
-  byId("harness-run").textContent = data.title;
-  byId("harness-summary").textContent = data.summary;
-  byId("harness-limitation").textContent = data.limitation;
-  if (data.metrics.length) byId("harness-metrics").replaceChildren(...data.metrics.map((metric) => {
-    const item = element("div", "metric");
-    item.append(element("span", "", metric.label), element("strong", "", metric.value));
-    return item;
-  }));
-  const report = selectResearchReport(data.artifacts, byId("harness-language").value);
-  const frame = byId("harness-report");
-  const placeholder = byId("harness-report-placeholder");
-  if (report) {
-    byId("harness-report-label").textContent = report.label;
-    byId("harness-language").value = report.id === "report-zh" ? "zh" : "en";
-    frame.hidden = false;
-    placeholder.hidden = true;
-    if (frame.getAttribute("src") !== report.href || frame.dataset.run !== data.runId) {
-      frame.dataset.run = data.runId;
-      frame.src = report.href;
-    }
-  } else {
-    frame.hidden = true;
-    placeholder.hidden = false;
-    placeholder.replaceChildren(element("strong", "", data.source), element("p", "", data.summary));
-    if (data.comparison.length) {
-      const table = element("table", "comparison-table");
-      const head = element("tr");
-      ["输入尺寸", "mAP50–95", "延迟 / ms", "拆分"].forEach((label) => head.append(element("th", "", label)));
-      const body = element("tbody");
-      data.comparison.forEach((row) => {
-        const tr = element("tr");
-        [row.imgsz, row.map50_95, row.latency_ms, row.split].forEach((value) => tr.append(element("td", "", String(value ?? "—"))));
-        body.append(tr);
-      });
-      const thead = element("thead"); thead.append(head); table.append(thead, body); placeholder.append(table);
-    }
-  }
-  tableArtifact = data.artifacts.find((item) => item.id === "table" && item.available) || null;
-  if (tableLoadedFor !== currentRun) byId("harness-table").textContent = tableArtifact ? "展开后读取原始评测数据。" : "该运行快照未提供可读取的 CSV 文件。";
-  const downloads = byId("harness-downloads");
-  downloads.replaceChildren();
-  for (const artifact of data.artifacts.filter((item) => item.available && item.kind === "pdf")) {
-    const link = element("a", "", artifact.label);
-    link.href = artifact.href; link.download = artifact.id === "pdf-zh" ? "AIU-research-report.zh.pdf" : "AIU-research-report.en.pdf"; downloads.append(link);
-  }
-  if (tableArtifact) {
-    const link = element("a", "", "原始评测 CSV"); link.href = "#runtime-details";
-    link.addEventListener("click", () => { byId("runtime-details").open = true; byId("harness-table-details").open = true; });
-    downloads.append(link);
-  }
-  if (byId("harness-table-details").open) void loadTable();
-}
-
-async function loadResearch() {
-  if (readingResearch) return;
-  readingResearch = true;
-  byId("refresh-harness").disabled = true;
-  try { renderResearch(await transport.getStageResearch()); }
-  catch (error) {
-    if (error?.name !== "AbortError") {
-      byId("harness-source").textContent = "读取未完成";
-      byId("harness-summary").textContent = error.message || "运行记录暂时无法读取，可刷新记录重试。";
-      const placeholder = byId("harness-report-placeholder");
-      if (!placeholder.hidden) placeholder.replaceChildren(element("strong", "", "已保存研究报告"), element("p", "", "刷新记录后读取报告产物。"));
-    }
-  } finally { readingResearch = false; byId("refresh-harness").disabled = false; }
-}
-
-async function loadTable() {
-  if (!tableArtifact || tableLoadedFor === currentRun) return;
-  const run = currentRun;
-  byId("harness-table").textContent = "正在读取…";
-  try {
-    const text = await transport.getStageResearchText("table");
-    if (run !== currentRun) return;
-    byId("harness-table").textContent = text || "（文件为空）";
-    tableLoadedFor = run;
-  } catch (error) { if (error?.name !== "AbortError") byId("harness-table").textContent = error.message || "原始数据读取未完成。"; }
-}
 
 async function loadCatalog() {
   if (readingCatalog) return;
@@ -168,13 +75,9 @@ byId("load-yinghuo").addEventListener("click", () => {
   byId("load-yinghuo").title = "仅点击此按钮才重新载入；项目导航保留当前编辑。";
 });
 yinghuo.addEventListener("load", () => { if (yinghuo.hasAttribute("src")) byId("yinghuo-placeholder").hidden = true; });
-byId("refresh-harness").addEventListener("click", () => { void loadResearch(); });
-byId("open-harness").addEventListener("click", () => stageWorkbench.open());
-byId("harness-language").addEventListener("change", () => { if (researchSnapshot) renderResearch(researchSnapshot); });
 byId("refresh-preflight").addEventListener("click", () => { void refreshPreflight(); });
 byId("retry-showcase").addEventListener("click", () => { void loadCatalog(); });
 byId("runtime-details").addEventListener("toggle", () => { if (byId("runtime-details").open && !catalogLoaded) void loadCatalog(); });
-byId("harness-table-details").addEventListener("toggle", () => { if (byId("harness-table-details").open) void loadTable(); });
 document.querySelectorAll(".saved-image img").forEach((image) => image.addEventListener("error", () => {
   image.hidden = true; image.parentElement.querySelector(".image-fallback").hidden = false;
 }));
@@ -192,4 +95,3 @@ if (document.fullscreenEnabled && typeof document.documentElement.requestFullscr
 window.addEventListener("pagehide", () => transport.close());
 initShowcaseLive();
 initializeShowcaseNavigation();
-void loadResearch();

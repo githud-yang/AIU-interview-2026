@@ -1,0 +1,43 @@
+{
+  "source": "OpenCV pinned vtest.avi pedestrian video",
+  "network": "127.0.0.1 only",
+  "physical_camera_opened": false,
+  "dynamic_video": {
+    "status": {
+      "running": true,
+      "state": "running",
+      "msg": "检测正在运行",
+      "error": "",
+      "warning": "",
+      "source": "demo",
+      "source_label": "行人视频案例",
+      "model": "best.pt",
+      "frame_count": 3,
+      "fps": 8.0,
+      "started_at": "2026-10-13T14:48:49.693684+00:00",
+      "last_frame_at": "2026-10-13T14:48:56.893753+00:00",
+      "elapsed_seconds": 7
+    },
+    "clients": 2,
+    "jpeg_bytes_per_client": [
+      [
+        95747,
+        98347
+      ],
+      [
+        95747,
+        98347
+      ]
+    ],
+    "raw_neighbor_frames_differ": true,
+    "inferred_neighbor_frames_differ": true,
+    "frame_count_after": 4,
+    "stream_ended_after_stop": true
+  },
+  "local_video": {
+    "frame_count": 3,
+    "state": "finished",
+    "source": "3 consecutive moving frames from public vtest.avi, no camera",
+    "capture_released": true
+  }
+}

@@ -1,10 +1,10 @@
 /** Shared same-origin API client. Network failures and responses are checked here. */
-async function request(path, { method = "GET", body, timeout = 15000 } = {}) {
+async function request(path, { method = "GET", body, timeout = 15000, keepalive = false } = {}) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeout);
   try {
     const response = await fetch(path, {
-      method, signal: controller.signal, cache: "no-store",
+      method, signal: controller.signal, cache: "no-store", keepalive,
       headers: body === undefined ? {} : { "Content-Type": "application/json" },
       body: body === undefined ? undefined : JSON.stringify(body),
     });
@@ -32,5 +32,6 @@ export const getHealth = () => request("/api/health", { timeout: 12000 });
 export const getYoloSources = () => request("/yolo/sources");
 export const getYoloStatus = () => request("/yolo/status");
 export const startYolo = (source) => request("/yolo/start", { method: "POST", body: { source }, timeout: 60000 });
-export const stopYolo = () => request("/yolo/stop", { method: "POST", timeout: 15000 });
+export const stopYolo = (expectedStartedAt) => request("/yolo/stop", { method: "POST", timeout: 15000,
+  body: expectedStartedAt ? { expected_started_at: expectedStartedAt } : undefined, keepalive: true });
 export const getYoloStreamUrl = () => `/yolo/stream?t=${Date.now()}`;
