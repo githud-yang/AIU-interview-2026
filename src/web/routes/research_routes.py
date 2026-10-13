@@ -120,10 +120,21 @@ async def resume(run_id: str, request: Request, body: ResumeRequest | None = Non
 
 
 @router.get("/api/research/runs/{run_id}/artifacts/{artifact_id}")
-def artifact(run_id: str, artifact_id: str, request: Request):
+def artifact(run_id: str, artifact_id: str, request: Request, preview: bool = False):
     try:
         path = service(request).store.artifact_path(run_id, artifact_id)
-        return FileResponse(path, filename=path.name)
+        headers = {"Cache-Control": "no-cache", "X-Content-Type-Options": "nosniff"}
+        if preview:
+            media_type = {".html": "text/html", ".png": "image/png"}.get(path.suffix.lower())
+            if media_type is None:
+                raise HTTPException(400, "此格式不支持页面内预览，请下载查看")
+            if media_type == "text/html":
+                headers["Content-Security-Policy"] = (
+                    "sandbox; default-src 'none'; img-src data:; style-src 'unsafe-inline'"
+                )
+            return FileResponse(path, filename=path.name, media_type=media_type,
+                                content_disposition_type="inline", headers=headers)
+        return FileResponse(path, filename=path.name, headers=headers)
     except (KeyError, ValueError) as exc:
         raise translate_error(exc) from exc
 

@@ -848,3 +848,54 @@ test("BFCache restoration starts a fresh refresh while the obsolete request is p
   assert.equal(h.timers.size, 1);
   assert.equal(postCalls(h).length, 0);
 });
+
+test("Outputs open beside the graph by default; preview stays on the current run and SSE preserves the chosen tab", async () => {
+  const html = { id: "paper", path: "manuscript/paper.html", kind: "html", name: "paper.html", sha256: "paper-sha", url: "/api/research/runs/run-1/artifacts/paper" };
+  const chart = { id: "chart", path: "experiments/accuracy_latency.png", kind: "png", url: "/api/research/runs/run-1/artifacts/chart" };
+  const { EventSource, sources } = mockEventSources();
+  const h = harness({ EventSource, initialRun: run({ status: "completed", artifacts: [html, chart], outputs: { manuscript: { title: "本次论文", artifacts: [{ path: "D:/workspace/manuscript/paper.html", sha256: html.sha256 }] } } }) });
+  await h.app.ready;
+  assert.equal(h.elements["outcome-pane"].hidden, false);
+  assert.equal(h.elements["node-pane"].hidden, true);
+  assert.equal(h.elements["tab-artifacts"].attributes["aria-selected"], "true");
+  assert.equal(h.elements["outcome-title"].textContent, "本次论文");
+  h.elements["outcome-open"].dispatch("click");
+  assert.equal(h.elements["outcome-preview"].hidden, false);
+  assert.equal(h.elements["outcome-preview-frame"].src, "http://127.0.0.1:8000/api/research/runs/run-1/artifacts/paper?preview=1");
+  assert.equal(h.elements["outcome-preview-frame"].attributes.sandbox, "");
+  h.window.dispatch("keydown", { key: "Escape", preventDefault() {} });
+  assert.equal(h.elements["outcome-preview"].hidden, true);
+  assert.equal(h.elements["outcome-preview-frame"].src, "");
+  assert.equal(h.elements["outcome-open"].focused, true);
+  h.elements["inspector-tab-node"].dispatch("click");
+  sources[0].emit("snapshot", { run: { ...h.server.run, summary: "updated" }, events: [], last_seq: 0 });
+  assert.equal(h.elements["node-pane"].hidden, false);
+  assert.equal(h.elements["outcome-pane"].hidden, true);
+  h.elements["inspector-tab-node"].dispatch("keydown", { key: "Home", preventDefault() {} });
+  assert.equal(h.elements["outcome-pane"].hidden, false);
+  assert.equal(postCalls(h).length, 0);
+});
+
+test("Changing runs closes an old paper preview and removes every previous output link and chart", async () => {
+  const html = { id: "paper", path: "manuscript/paper.html", kind: "html", name: "paper.html", sha256: "paper-sha", url: "/api/research/runs/run-1/artifacts/paper" };
+  const csv = { id: "csv", path: "experiments/metrics.csv", kind: "csv", url: "/api/research/runs/run-1/artifacts/csv" };
+  const chart = { id: "chart", path: "experiments/robustness.png", kind: "png", url: "/api/research/runs/run-1/artifacts/chart" };
+  const h = harness({ initialRun: run({ status: "completed", artifacts: [html, csv, chart], outputs: { manuscript: { title: "Previous paper", artifacts: [{ path: "manuscript/paper.html", sha256: html.sha256 }] } } }),
+    customFetch: (url, _options, { response }) => url === "/api/research/runs/run-2" ? response(run({ id: "run-2", status: "running" })) : undefined });
+  await h.app.ready;
+  h.elements["outcome-open"].dispatch("click");
+  assert.equal(h.elements["outcome-preview"].hidden, false);
+  h.app.state.savedRunID = "run-2";
+  await h.app.refresh();
+  assert.equal(h.elements["outcome-preview"].hidden, true);
+  assert.equal(h.elements["outcome-preview-frame"].src, "");
+  assert.equal(h.elements["outcome-open"].disabled, true);
+  assert.equal(h.elements["outcome-chart"].hidden, true);
+  assert.equal(h.elements["outcome-chart"].src, "");
+  for (const type of ["pdf", "csv", "bundle"]) {
+    assert.equal(h.elements[`outcome-${type}`].hidden, true);
+    assert.equal(h.elements[`outcome-${type}`].href, "");
+  }
+  assert.equal(h.elements["outcome-pane"].hidden, false);
+  assert.equal(postCalls(h).length, 0);
+});

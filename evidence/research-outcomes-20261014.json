@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-14",
+  "scope": "科研成果与节点画布并列，当前运行的论文、图表和下载优先展示",
+  "changes": [
+    "右栏默认研究成果，点击节点切换详情，可返回成果页签",
+    "底部默认论文与材料，保留实验、文献和日志页签",
+    "当前中文稿优先，引用按登记路径及SHA关联，不误选初版",
+    "完整材料优先当前latest_export，换运行关闭旧预览并清除旧链接",
+    "HTML和PNG预览仍通过原登记文件路径及哈希校验，HTML使用sandbox CSP",
+    "761至980px的画布和成果并列；窄屏成果在画布前方"
+  ],
+  "automated": {
+    "python": {"total": 178, "passed": 176, "skipped": 2},
+    "node": {"total": 89, "passed": 89},
+    "new_coverage": "当前版本/旧稿拒绝、最新材料包、安全URL、页内预览、SSE页签保留、换运行清理、HTML/PNG响应及哈希拒绝"
+  },
+  "browser": {
+    "surface": "现有正常Codex in-app showcase#harness页",
+    "displayed_run": "bd8c2a7ccaff4ae4b3be7f7e6fa13c43",
+    "checks": ["默认成果及论文材料页签", "中文论文页内正文实际加载", "关闭回到工作区", "图表实际加载", "节点与成果切换", "当前窗口阅读按钮无需滚动可见", "小屏中文预览"],
+    "responsive": [
+      {"window_width": 917, "iframe_width": 809, "page_horizontal_overflow": false, "read_button_visible": true},
+      {"window_width": 1440, "iframe_width": 1119, "page_horizontal_overflow": false, "figure_visible": true},
+      {"window_width": 320, "iframe_width": 257, "page_horizontal_overflow": false, "outcomes_before_canvas": true}
+    ],
+    "viewport_restored": "917x871",
+    "console_errors": 0,
+    "screenshot": "research-outcomes-20261014.jpg"
+  },
+  "latest_user_run_files": {
+    "run_id": "dd252c99babc4070a20918a0b8dafba2",
+    "artifact_count": 315,
+    "verified_sha256_downloads": ["reading_zh_v2/paper.zh.html", "reading_zh_v2/paper.zh.pdf", "reading_zh_v2/accuracy_latency.zh.png", "experiments/metrics.csv", "research_bundle.zip"],
+    "html_png_inline_verified": true
+  },
+  "runtime": {
+    "existing_run_count": 5,
+    "new_research_runs": 0,
+    "new_model_calls": 0,
+    "new_training": 0,
+    "camera_running_after_checks": false,
+    "service_restarted_only_while_idle": true,
+    "original_train_sha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7",
+    "served_assets_equal_disk": ["research.html", "research.css", "research-stage.css", "research.js", "research-outcomes.js"]
+  },
+  "limits": "本轮只改成果呈现和登记文件预览；候选稿不表示外部评审、真实投稿或录用。"
+}

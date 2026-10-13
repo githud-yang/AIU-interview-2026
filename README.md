@@ -4,7 +4,7 @@
 
 启元把智能体、视觉感知、创作应用、校园服务、科研自动化与实物作品放进同一个实践体系：从问题与想法出发，完成系统实现、交互展示和运行验证。本仓库提供统一演示入口、模块化源码、训练成果与工程记录，用于AIU创智部二面及后续项目迭代。逐项状态见[交付核对](docs/submission-readiness.md)和[主清单](docs/checklist.md)。
 
-面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品集开场点击“开始演示”，或[直接进入操作区](http://127.0.0.1:8000/showcase#agent)。作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、实物展示、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。[科研区](http://127.0.0.1:8000/showcase#harness)使用常驻节点工作台：左侧选题与任务，中间12阶段画布，右侧节点输入/输出/证据，底部真实日志与材料。灵感和期刊资料在内部打开，可带入可编辑的分析重点。进入YOLO区自动开启摄像头，选择“行人视频案例”立即切换逐帧实时检测；离开释放本页启动的来源。工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
+面试直接打开[统一展示台](http://127.0.0.1:8000/showcase)：作品集开场点击“开始演示”，或[直接进入操作区](http://127.0.0.1:8000/showcase#agent)。作品和结果排在同一张固定连续页面，顶部导航分别直达智能体、YOLO、萤火、墨我知兮、企业协作、实物展示、科研与工程。文字冒险与YOLO在本页操作，训练曲线直接显示；萤火点击加载后保留在同页固定区域，沿用当前浏览器中的本地数据，[墨我知兮简介](http://127.0.0.1:8000/showcase#mowozhixi)只展示链接与简介。[科研区](http://127.0.0.1:8000/showcase#harness)使用常驻节点工作台：左侧选题与任务，中间12阶段画布，右侧默认展示论文、图表和关键结果，可直接页内阅读或下载PDF、实验数据和完整材料；点击节点切换输入/输出/证据。底部默认“论文与材料”，日志可另选。灵感和期刊资料在内部打开，可带入可编辑的分析重点。进入YOLO区自动开启摄像头，选择“行人视频案例”立即切换逐帧实时检测；离开释放本页启动的来源。工程资料收在页底。建议演示6–8分钟，具体操作见[demo.md](docs/demo.md)。
 
 创意作品新增：[萤火随笔与英语学习应用](showcases/yinghuo/README.md)，独立源码已纳入`showcases/yinghuo`。后端AI/SSE、Key设置、虚构演示与说明已补齐，完成5次真实DeepSeek调用；[评估和验收](docs/yinghuo-assessment.md)分别记录软件检查与浏览器待验收项。
 
@@ -114,7 +114,7 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 
 - 本地Ollama + qwen2.5:7b、工具调用、游戏API已有真实验证。
 - YOLO保留本人原始13行训练脚本：`yolo11n.pt`、`african-wildlife.yaml`、`epochs=10`、`imgsz=640`、`batch=28`、`cache="ram"`、`workers=1`；展示原项目同参数`train12`保存的10轮CSV和曲线。摄像头/行人视频实时检测使用独立的通用检测权重，已有摄像头连续读帧、动态视频HTTP双流与本地短视频实测；摄像头和案例均逐帧现算。
-- 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。最新YOLO为202秒、6次模型请求、5个评测作业、0次训练；追加中文阅读版后331个登记产物哈希一致，原始实验不变。选参选择480，但第二拆分未复现其速度优势。COCO128可能与预训练重叠，不是独立泛化证据。
+- 科研完成digits高斯增强和YOLO固定权重320/480/640两个任务的12阶段运行。已归档的YOLO示例为202秒、6次模型请求、5个评测作业、0次训练；追加中文阅读版后331个登记产物哈希一致，原始实验不变。该示例选参选择480，但第二拆分未复现其速度优势。每次运行的结果与材料分别展示。COCO128可能与预训练重叠，不是独立泛化证据。
 - 科研论文模块支持在本机配置DeepSeek Key，测试并保存后即时切换；模型接口与运行记录见科研模块说明。萤火是独立应用，已完成5类真实DeepSeek请求。
 - 灵感/期刊首批资料与编辑草稿已整理；自动全文差异矩阵、自动背调决策、便携冻结重放、外部科学评价及真实投稿未完成。
 
@@ -124,11 +124,11 @@ showcases/campus-assistant/ 校园智能体企业协作案例与演示简介
 
 ```powershell
 ./.venv/Scripts/python.exe -X utf8 scripts/verify.py
-node --test tests/test_frontend.mjs tests/test_research_frontend.mjs tests/test_showcase_frontend.mjs tests/test_showcase_live.mjs tests/test_showcase_navigation.mjs tests/test_showcase_research_frontend.mjs tests/test_research_workflow.mjs
+node --test tests/test_frontend.mjs tests/test_research_frontend.mjs tests/test_showcase_frontend.mjs tests/test_showcase_live.mjs tests/test_showcase_navigation.mjs tests/test_showcase_research_frontend.mjs tests/test_research_workflow.mjs tests/test_research_outcomes.mjs
 ```
 
 上述命令是自动化回归，默认不占用摄像头、不调用云端模型。显式设置`YOLO_RUNTIME_TEST=1`才运行真实YOLO测试，该测试采用公开图和临时视频。**应用运行行为不同：进入展示台YOLO区或打开独立`/yolo`页即自动开启运行服务的电脑上的摄像头；选择“行人视频案例”自动换源。** 测试范围见[tests/README.md](tests/README.md)。
 
-2026-10-14复核：Python171项中169通过、2项条件跳过，Node82项通过。摄像头连续读帧、动态视频与换源于2026-10-13实测，2026-10-14获本人页面确认，见[换源验收](evidence/showcase-live-sources-20261013.json)。八项导航、小屏、萤火白天载入及科研任务/阶段/事件/材料、双语报告和期刊表另有[浏览器记录](evidence/research-stage-20261011.json)。实际投屏与本人讲解、论文Key设置完整浏览器流程、萤火编辑/刷新持久化/备份仍单独核验。准确交付范围见[交付核对](docs/submission-readiness.md)。
+2026-10-14复核：Python178项中176通过、2项条件跳过，Node89项通过。摄像头连续读帧、动态视频与换源于2026-10-13实测，2026-10-14获本人页面确认，见[换源验收](evidence/showcase-live-sources-20261013.json)。八项导航、小屏、萤火白天载入及科研任务/阶段/事件/材料、双语报告和期刊表另有[浏览器记录](evidence/research-stage-20261011.json)。实际投屏与本人讲解、论文Key设置完整浏览器流程、萤火编辑/刷新持久化/备份仍单独核验。准确交付范围见[交付核对](docs/submission-readiness.md)。
 
 仓库：[AIU-interview-2026](https://github.com/githud-yang/AIU-interview-2026)。

@@ -1,6 +1,7 @@
 /** Research workspace UI: render server records and dispatch user commands. */
 import { createResearchTransport } from "./research-transport.js";
 import { createResearchWorkflow } from "./research-workflow.js?v=workflow-20261014-c";
+import { createResearchOutcomes } from "./research-outcomes.js?v=outcomes-20261014-a";
 
 const STORAGE_KEY = "aiu.research.workspace.v1";
 const PRESENTATION_STORAGE_KEY = "aiu.research.presentation.v1";
@@ -107,8 +108,9 @@ export function createResearchApp(dependencies = {}) {
     writerSettings: null, writerMutation: null, writerInputDirty: false,
     writerSettingsRevision: 0, writerActionGeneration: 0, writerSettingsLoadFailed: false,
   };
+  const outcomes = createResearchOutcomes({ document: doc, window: win, baseURL });
   const workflow = typeof doc.createElementNS === "function" && el("workflow-viewport")
-    ? createResearchWorkflow({ document: doc, window: win, onSelect: () => closePlanning() }) : null;
+    ? createResearchWorkflow({ document: doc, window: win, onSelect: () => { closePlanning(); outcomes.showTab("node"); } }) : null;
 
   function closePlanning() {
     el("planning-pane").hidden = true;
@@ -117,6 +119,7 @@ export function createResearchApp(dependencies = {}) {
   }
   function openPlanning(name) {
     if (!["ideas", "venues"].includes(name)) return;
+    outcomes.closePreview(false);
     const frame = el("planning-frame");
     el("planning-title").textContent = name === "ideas" ? "灵感与选题" : "目标期刊背调";
     frame.src = `/research/strategy?embed=1#${name}-title`;
@@ -578,6 +581,7 @@ export function createResearchApp(dependencies = {}) {
     renderLiterature(run.outputs?.reading?.records ? run.outputs.reading : run.outputs?.literature);
     renderArtifacts(artifacts, run.outputs);
     renderManuscript(run.outputs);
+    outcomes.update(run);
     renderInterventions(run);
     if (ACTIVE_STATUSES.has(run.status) && !el("research-goal").value) el("research-goal").value = run.goal || "";
     updateGoalCount();
@@ -808,7 +812,7 @@ export function createResearchApp(dependencies = {}) {
     } finally { state.mutation = false; updateControls(); subscribeUpdates(0); }
   }
   function updateGoalCount() { write("goal-count", `${el("research-goal").value.length} / 4000`); }
-  const tabNames = ["experiments", "literature", "artifacts", "events"];
+  const tabNames = ["artifacts", "experiments", "literature", "events"];
   function selectTab(name, focus = false) {
     for (const tab of tabNames) {
       const button = el(`tab-${tab}`);
@@ -858,6 +862,8 @@ export function createResearchApp(dependencies = {}) {
   win.addEventListener("pagehide", (event) => {
     state.paused = true; state.generation += 1; state.writerActionGeneration += 1;
     el("writer-api-key").value = ""; stopSubscription();
+    outcomes.closePreview(false);
+    if (!event?.persisted) outcomes.destroy();
     if (!event?.persisted && workflow) { workflow.destroy(); win.removeEventListener("message", receivePlanningFocus); }
   });
   win.addEventListener("pageshow", (event) => { if (event.persisted) { state.paused = false; void refresh(); } });
@@ -867,14 +873,14 @@ export function createResearchApp(dependencies = {}) {
     doc.title = "科研工作台";
     el("presentation-heading").hidden = false;
   }
-  if (workflow) selectTab("events");
+  selectTab("artifacts");
   load();
   if (requestedRunID && !entryRunID) showNotice("研究运行链接无效；已查询当前工作台可用的运行记录。", "warning");
   if (!el("writer-model-input").value) el("writer-model-input").value = "deepseek-flash";
   updateGoalCount();
   updateControls();
   const ready = refresh();
-  return { ready, state, refresh, start, action, poll, selectTab, writerAction, workflow, openPlanning, closePlanning };
+  return { ready, state, refresh, start, action, poll, selectTab, writerAction, workflow, outcomes, openPlanning, closePlanning };
 }
 
 if (typeof document !== "undefined" && typeof window !== "undefined") createResearchApp();

@@ -3,14 +3,14 @@ html[data-presentation="true"] .workspace-rail { display: none; }
 html[data-presentation="true"] .topbar { padding-inline: 18px; }
 html[data-presentation="true"] .workspace-heading .eyebrow { display: none; }
 html[data-presentation="true"] .presentation-heading { display: none !important; }
-html[data-presentation="true"] .workspace-content { --left-width: 254px; --right-width: 280px; }
+html[data-presentation="true"] .workspace-content { --left-width: 254px; --right-width: 340px; }
 html[data-presentation="true"] .workspace-subtitle { max-width: 470px; }
 @media (max-width: 1150px) {
-  html[data-presentation="true"] .workspace-content { --left-width: 230px; --right-width: 256px; }
+  html[data-presentation="true"] .workspace-content { --left-width: 230px; --right-width: 300px; }
   html[data-presentation="true"] .workspace-subtitle { display: none; }
 }
-@media (max-width: 980px) {
-  html[data-presentation="true"] .workspace-content { --left-width: 230px; --right-width: 250px; }
+@media (min-width: 761px) and (max-width: 980px) {
+  html[data-presentation="true"] .workspace-content { --right-width: 280px; }
 }
 @media (max-width: 760px) {
   html[data-presentation="true"] .topbar { padding-inline: 12px; }

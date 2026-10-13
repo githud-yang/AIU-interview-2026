@@ -4,6 +4,7 @@
 - `yolo.html`、`yolo.js`：独立检测页通过ID映射复用showcase-yolo控制器，保持同一自动启停/切换行为。
 - `research.html`、`research.js`：科研节点工作台外壳与原API/SSE协调，保留任务、恢复、模型设置、结果和日志。
 - `research-workflow.js`：纯UI节点画布、平移缩放、键盘选择与检查器；只读取真实阶段和登记产物，不改变后端执行图。
+- `research-outcomes.js`：画布旁默认成果栏与页内论文阅读；按当前运行及稿件路径/哈希关联登记文件，显示实测摘要、图表和下载，换运行清除旧产物。
 - `research-planning.js`：内部策划资料的方向/期刊选择，通过限定同源消息带入可编辑分析重点，不自动启动任务或改执行配方。
 - `api.js`、`yolo-transport.js`、`research-transport.js`：HTTP命令与订阅适配，集中处理网络边界。
 - `style.css`、`research.css`：独立应用样式及科研深色固定工作区；`research-stage.css`适配`?presentation=1`嵌入，复用同一控制器与API，独立保存恢复记录。
