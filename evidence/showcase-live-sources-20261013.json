@@ -94,7 +94,14 @@
   },
   "browser": {
     "automation": "not performed; enabled browser surfaces remain old connection-error pages restricted by URL policy; no workaround attempted",
-    "new_layout_and_switch_feedback": "requested from user, pending"
+    "new_layout_and_switch_feedback": "user confirmed automatic camera and dynamic case switching on 2026-10-14; research layout and projection were not included in this confirmation",
+    "user_confirmation": {
+      "date": "2026-10-14",
+      "page": "http://127.0.0.1:8000/showcase#yolo",
+      "reply": "摄像头和案例都正常",
+      "method": "user manual browser verification",
+      "scope": ["automatic camera display", "switching to the moving pedestrian detection case"]
+    }
   },
   "research_runs_unchanged": true,
   "served_file_byte_checks": 9
