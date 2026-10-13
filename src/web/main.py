@@ -22,7 +22,7 @@ def create_app(*, research_root: Path | None = None) -> FastAPI:
         settings_path=PROJECT_ROOT / "configs" / ".env",
         yolo_manager=yolo_routes.yolo_manager,
     )
-    app = FastAPI(lifespan=lifespan, title="AIU 创智部二面 · 综合演示")
+    app = FastAPI(lifespan=lifespan, title="启元 · 智能系统与创新实践平台")
 
     # 挂载静态文件和模板
     static_dir = BASE_DIR / "static"

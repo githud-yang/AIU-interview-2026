@@ -12,6 +12,8 @@
 
 `yinghuo/` 是“萤火”的独立可运行源码快照，对应二面第五项创意作品。原项目保留在 `D:/03_项目与代码/创作项目/荧火`；主工作台与萤火分别启动，二者没有相互调用或共享密钥。
 
+新机推荐Node.js 22.12+的兼容LTS版本，构建依赖按锁文件安装；运行配置见[环境说明](../docs/runtime-environment.md)。另开终端执行：
+
 ```powershell
 cd showcases/yinghuo
 npm ci

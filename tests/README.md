@@ -4,10 +4,10 @@
 
 ```powershell
 ./.venv/Scripts/python.exe -X utf8 scripts/verify.py
-node --test tests/test_frontend.mjs tests/test_research_frontend.mjs tests/test_showcase_frontend.mjs tests/test_showcase_live.mjs
+node --test tests/test_frontend.mjs tests/test_research_frontend.mjs tests/test_showcase_frontend.mjs tests/test_showcase_live.mjs tests/test_showcase_navigation.mjs tests/test_showcase_research_frontend.mjs
 ```
 
-`test_agent*`检查智能体，`test_yolo*`检查视觉与证据，`test_research*`检查进阶流程、设置和前端。默认不调用云端模型，不打开私人摄像头；真实YOLO测试需显式设置`YOLO_RUNTIME_TEST=1`。SSE检查使用受控状态和断开信号，不启动真实研究。
+`test_agent*`检查智能体，`test_yolo*`检查视觉与证据，`test_research*`检查进阶流程、设置和前端。上述自动化回归默认不调用云端模型、不占用摄像头；真实YOLO测试需显式设置`YOLO_RUNTIME_TEST=1`，使用公开图和临时视频。SSE检查使用受控状态和断开信号，不启动真实研究。页面实际运行不同：进入YOLO区或打开独立检测页会自动开启摄像头。
 
 `test_showcase.py`检查公开证据白名单、路径与链接隔离、HTTP响应、预检离线降级和不触发生成/推理的约束。界面布局仍需真实浏览器彩排，HTTP通过不能代替视觉验收。
 

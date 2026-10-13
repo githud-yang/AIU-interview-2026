@@ -1,0 +1,40 @@
+{
+  "checked_date": "2026-10-14",
+  "project_name": "启元 · 智能系统与创新实践平台",
+  "short_name": "QIYUAN",
+  "independent_reviews": 2,
+  "fixed": [
+    "umbrella naming across README and current platform pages",
+    "camera application behavior separated from automated regression behavior",
+    "fresh-machine model/video and independent services preparation",
+    "dynamic-case engineering talk and latest verification counts",
+    "hardware recommendations and historical-material migration boundaries",
+    "PowerShell-compatible complete Node test command"
+  ],
+  "python_tests": {
+    "total": 171,
+    "passed": 169,
+    "skipped": 2
+  },
+  "node_tests": {
+    "passed": 70,
+    "node_version": "20.20.2"
+  },
+  "markdown_local_links_checked": 78,
+  "current_page_dom_ids_preserved": 5,
+  "served_file_byte_checks": 3,
+  "rendered_template_content_checks": 2,
+  "openapi_and_catalog_updated": true,
+  "model_setup_python_syntax_and_global_cache_mock": true,
+  "readme_powershell_blocks_parsed": 4,
+  "fresh_machine_install_performed": false,
+  "hardware_tiers": "engineering recommendations; no cross-device performance guarantee",
+  "training_script_sha256": "775d69aafd348253216d2971cedeeb2cc83fe571cd112e0d134a2aed37aa78a7",
+  "yinghuo_snapshot_files_verified": 96,
+  "camera_opened_in_this_audit": false,
+  "new_training": 0,
+  "new_research": 0,
+  "new_cloud_calls": 0,
+  "browser_visual_verification": "not repeated for textual branding; prior user camera/case confirmation retained",
+  "live_yolo_final_state": "stopped"
+}

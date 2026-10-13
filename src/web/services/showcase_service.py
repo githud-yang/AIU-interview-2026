@@ -18,7 +18,7 @@ FILES = {
     "training": ("docs/wildlife_training_result.json", "application/json"),
     "training-curve": (f"{TRAINING}/results.png", "image/png"),
     "public-detection": ("docs/evidence/yolo-public-sample.jpg", "image/jpeg"),
-    "yolo-proof": ("docs/evidence/yolo-runtime-smoke.json", "application/json"),
+    "yolo-proof": ("evidence/showcase-live-sources-20261013.json", "application/json"),
     "yinghuo-proof": ("evidence/yinghuo-showcase-smoke.json", "application/json"),
     "yinghuo-guide": ("showcases/yinghuo/docs/interview-demo.md", "text/plain"),
     "campus-case": ("showcases/campus-assistant/README.md", "text/plain"),
@@ -55,13 +55,13 @@ def catalog(root: Path = ROOT):
         {"id": "yolo", "title": "YOLO 训练与实时检测", "category": "基础任务", "status": "训练与推理已有证据",
          "summary": "展示原始野生动物训练代码与10轮曲线，再操作通用目标检测。",
          "proof": ["原始13行训练入口：YOLO11n、African Wildlife、10轮、640、batch 28、RAM缓存、workers 1", "原项目train12的CSV、曲线和权重哈希已归档；通用检测双客户端流与短视频另有运行记录"],
-         "talk": ["结合原始代码介绍水牛、大象、犀牛、斑马四类训练，查看同参数train12曲线。", "通用检测演示使用另一套权重：选择“公开静态样例”，启动后展示公交车和行人，再停止。", "说明前端订阅状态/画面，后端共享一个推理worker。"],
+         "talk": ["结合原始代码介绍水牛、大象、犀牛、斑马四类训练，查看同参数train12曲线。", "通用检测演示使用另一套权重：进入YOLO自动开启摄像头，选择“行人视频案例”自动换源并逐帧推理，最后停止。", "说明前端订阅状态/画面，后端共享一个推理worker。"],
          "actions": [{"label": "打开视觉检测", "href": "/yolo"}],
-         "evidence": [{"label": "训练曲线", "id": "training-curve", "kind": "image"}, {"label": "训练参数与记录", "id": "training", "kind": "text"}, {"label": "检测示例", "id": "public-detection", "kind": "image"}, {"label": "推理验收", "id": "yolo-proof", "kind": "text"}],
-         "limitation": "train12验证样图包含训练集图片，日志分数不作独立验证成绩；现场摄像头仍需彩排。"},
+         "evidence": [{"label": "训练曲线", "id": "training-curve", "kind": "image"}, {"label": "训练参数与记录", "id": "training", "kind": "text"}, {"label": "实时换源验收", "id": "yolo-proof", "kind": "text"}],
+         "limitation": "train12验证样图包含训练集图片，日志分数不作独立验证成绩；2026-10-14本人确认摄像头与动态案例页面正常，现场沿用同一入口。"},
         {"id": "yinghuo", "title": "萤火：随笔与英语表达", "category": "创意作品", "status": "5 类真实云调用通过",
          "summary": "中文记录、英语学习、文字知己，展示一个有明确使用场景的产品。",
-         "proof": ["47 项检查：46 通过，1 项系统权限跳过", "翻译/金句、选句、查词、画像、对话 5 次真实 DeepSeek 调用成功"],
+         "proof": ["53 项检查：52 通过，1 项系统权限跳过", "翻译/金句、选句、查词、画像、对话 5 次真实 DeepSeek 调用成功"],
          "talk": ["打开萤火，导入“演示日记集（虚构）”，展示编辑、预写译文和词汇卡片。", "主动提炼一篇虚构随笔，再发送一条知己消息；区分预写样例与刚生成的回复。", "说明 Key 保存在本机后端，随笔平时在浏览器本地，主动请求 AI 时才发送相关内容。"],
          "actions": [{"label": "打开萤火", "href": "http://127.0.0.1:4318/notebook"}],
          "evidence": [{"label": "真实调用与检查", "id": "yinghuo-proof", "kind": "text"}, {"label": "萤火演示提纲", "id": "yinghuo-guide", "kind": "text"}],
@@ -73,7 +73,7 @@ def catalog(root: Path = ROOT):
          "actions": [{"label": "项目网站", "href": "https://hzau.rundecloud.com/"}],
          "evidence": [{"label": "企业协作项目简介", "id": "campus-case", "kind": "text"}],
          "limitation": "阶段规模与实现范围据项目工作简报；校内部署、统一身份认证及2.0能力属于后续计划。"},
-        {"id": "hardware", "title": "硬件作品：现场展示", "category": "进阶加分", "status": "本人确认已完成",
+        {"id": "hardware", "title": "实物展示", "category": "进阶加分", "status": "本人确认已完成",
          "summary": "以你已完成的实物和真实功能为准，现场演示输入到输出。",
          "proof": ["本人于 2026-10-10 确认硬件任务完成", "当前软件项目没有替你推定 PID 或板端模型层级"],
          "talk": ["拿出实物，说明希望解决什么问题，以及输入、控制和输出分别是什么。", "现场操作一次，讲清连接关系及自己做过的调试。", "只介绍实际实现的功能；准备回答一次真实故障和修复过程。"],
@@ -96,9 +96,9 @@ def catalog(root: Path = ROOT):
     for card in cards:
         for evidence in card["evidence"]:
             evidence["available"] = public_file(evidence["id"], root) is not None
-    return {"title": "AIU 二面展示台", "verdict": "原题基础交付已覆盖；现场操作与本人讲解仍需彩排。",
-            "checkedDate": "2026-10-11", "cards": cards,
-            "checklist": ["用自己的话讲一次模型 → 工具 → API → 页面。", "萤火写一段虚构文字，切换/刷新确认保存，再试一次备份。", "现场摄像头先测试；不稳定时使用公开样例或视频并如实说明。", "硬件按实际实物展示，进阶科研展示已有运行即可。"]}
+    return {"title": "启元 · 项目展示", "verdict": "原题基础交付已覆盖；现场操作与本人讲解仍需彩排。",
+            "checkedDate": "2026-10-14", "cards": cards,
+            "checklist": ["用自己的话讲一次模型 → 工具 → API → 页面。", "萤火写一段虚构文字，切换/刷新确认保存，再试一次备份。", "摄像头与动态案例已确认正常，每次上台前再确认设备连接。", "硬件按实际实物展示，进阶科研展示已有运行即可。"]}
 
 
 def preflight(agent, yolo_manager, research_available: bool, *, root: Path = ROOT):

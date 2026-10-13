@@ -1,12 +1,14 @@
 # YOLO训练与推理
 
+进入展示台YOLO区或打开独立`/yolo`页会自动开启运行服务电脑的摄像头，选择“行人视频案例”自动换源并逐帧推理；离开只释放本页创建的运行。
+
 - `train.py`：原样保留的`mytrain.py`训练原稿，训练参数直接在文件中修改。
 - `archive_training.py`：独立归档已完成的训练，保存摘要和最佳权重。
 - `detect_realtime.py`：摄像头/图像/视频推理CLI，界面与推理在后端。
 - `sources.py`：统一摄像头、动态视频案例和本地文件读取。
 - `evidence.py`：训练结果归档、哈希与来源记录。
 
-从仓库根目录安装并验证公开视频，不占用摄像头：
+新机器先按[根README](../../README.md#快速启动)准备通用检测权重；无需为运行演示重训。已有本机权重不覆盖。从仓库根目录安装并验证公开视频，此CLI命令不占用摄像头：
 
 ```powershell
 ./.venv/Scripts/python.exe scripts/setup_yolo_demo.py
@@ -31,7 +33,7 @@
 ./.venv/Scripts/python.exe -m src.yolo.archive_training runs/detect/train
 ```
 
-归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`，同时更新实时检测使用的模型。
+归档会生成训练摘要并复制最佳权重到`assets/models/best.pt`；网页使用该路径时会更新实时检测模型。野生动物模型只包含对应四类，不适合作为通用行人案例权重；保留通用权重副本并用`YOLO_WEIGHTS`指向希望演示的模型。
 
 展示台的训练曲线来自原项目同参数`train12`的完整10轮记录，见[野生动物训练摘要](../../docs/wildlife_training_result.json)。原始脚本与参数、CSV和曲线一起归档。保存的验证样图中，已核对的16个文件名均只存在当前训练目录，因此日志分数不作为独立验证成绩；细节见归档中的`validation-sample-audit.json`。
 

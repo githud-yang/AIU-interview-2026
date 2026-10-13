@@ -1,13 +1,16 @@
 # 记录与证据
 
-面试首入口为[统一展示台](http://127.0.0.1:8000/showcase)：固定连续页内直接操作文字冒险和YOLO，萤火点击后在本页加载，训练曲线和保存研究报告常驻；页内导航仅定位已有区域。建议按基础→YOLO→萤火→硬件→Harness演示6–8分钟，工程与核对资料放在页底。不会因为浏览或定位而启动实验或模型生成；实际生成、检测和云端请求由本人主动操作。
+启元的面试首入口为[统一展示台](http://127.0.0.1:8000/showcase)：固定连续页内直接操作文字冒险和YOLO，萤火点击后在本页加载；训练曲线保留，科研只使用常驻工作台。顶部八项导航定位作品；进入YOLO区自动开启摄像头，选择行人视频案例自动换源，离开释放本页创建的检测。研究和模型生成仍通过各自操作启动。建议按[演示稿](demo.md)走完6–8分钟，工程与核对资料在页底。
 
 - [checklist.md](checklist.md)：唯一主进度清单，区分实现、运行、科学质量和实物验证。
 - [structure.md](structure.md)：六条工程要求对应位置、模块边界与历史归档。
+- [runtime-environment.md](runtime-environment.md)：新机配置、权重/视频准备、独立服务、摄像头权限、历史材料与排障。
+- [../evidence/readme-delivery-audit-20261014.json](../evidence/readme-delivery-audit-20261014.json)：启元命名、文档遗漏、完整回归、命令及当前HTTP核对。
 - [research-workbench.md](research-workbench.md)：科研工作台实际能力、启动、模型配置、MCP/技能、接口和产物。
 - [progress.md](progress.md)：按时间记录工程变更，旧段落描述当时状态。
 - [verification.md](verification.md)：回归、真实运行和人工页面验收及其限制。
-- [training_result.json](training_result.json)：YOLO 真实训练参数、指标及归档位置。
+- [wildlife_training_result.json](wildlife_training_result.json)：当前展示的原13行野生动物训练参数、10轮记录及归档位置。
+- [training_result.json](training_result.json)：此前coco8通用检测实验，区别于原野生动物训练。
 - [demo.md](demo.md)：从统一展示台开始的6–8分钟建议演示顺序及备用材料。
 - [yinghuo-assessment.md](yinghuo-assessment.md)：萤火创意作品评估、工程补齐、源码入口与真实AI验收。
 - [submission-readiness.md](submission-readiness.md)：原题逐项核对、硬件完成记录、交付收尾及自动科研剩余目标。
@@ -30,4 +33,4 @@
 - [../evidence/research-yolo-runtime-smoke.json](../evidence/research-yolo-runtime-smoke.json)：YOLO固定权重尺寸对比的真实12阶段运行、原始指标与306个产物下载核验。
 - [../evidence/research-yolo-export-smoke.json](../evidence/research-yolo-export-smoke.json)：YOLO第三版导出复用冻结测量，旧306个文件保留、累计319下载一致，无新增模型调用或训练。
 
-先前科研桌面布局已经本人确认；最新固定页面展示台、科研订阅改版、小屏，以及萤火完整编辑/刷新持久化和备份下载仍待浏览器核验。上一版展示台d36318f已实际推送，固定页面改版以最新Git记录为准。硬件按本人确认完成；通用自主科研、创新和投稿等探索目标不列为二面基础缺项。
+固定展示页八项导航、小屏及同页科研流程已有2026-10-11浏览器记录；2026-10-14本人确认最新自动摄像头与动态案例切换正常，见[实时换源验收](../evidence/showcase-live-sources-20261013.json)。单一科研工作台布局以HTTP结构检查留证，不能用此前截图替代该次视觉验收。萤火完整编辑/刷新持久化和备份、实际投屏及本人讲解仍单独核验。版本以最新Git记录为准；硬件按本人确认完成，通用自主科研、创新和投稿等探索目标不列为二面基础缺项。
