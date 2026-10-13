@@ -33,11 +33,11 @@
   },
   "browser": {
     "current_automation": "not completed; browser policy rejected binding to an existing connection-error page; no workaround attempted",
-    "manual_refresh_feedback": "requested from user, pending when audit was saved",
+    "manual_refresh_feedback": "user confirmed on 2026-10-13: 能正常打开; fresh page accessibility confirmed by the user, not an automated full interaction test",
     "existing_verified_ui": "2026-10-11 research-stage-20261011.json and showcase-product-20261011.json; not represented as today's fresh browser verification"
   },
   "remaining": {
-    "personal": ["manual page refresh confirmation", "projector walkthrough and ability to explain implementation", "truthful spoken description of AI assistance required by the original interview PDF"],
+    "personal": ["projector walkthrough and ability to explain implementation", "truthful spoken description of AI assistance required by the original interview PDF"],
     "only_if_demonstrated": ["Yinghuo editing, reload persistence and backup", "physical camera demo"],
     "extra_research_objectives": ["automatic full-text novelty comparison and idea elimination", "continuous journal background research influencing protocols", "independent scientific validation", "portable frozen replay and new-environment reproduction", "external evaluation and real submission"]
   },
