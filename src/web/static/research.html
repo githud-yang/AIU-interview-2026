@@ -1,87 +1,37 @@
 <!DOCTYPE html>
-<!-- 界面结构与交互入口；实际计算和状态由后端服务提供。 -->
+<!-- 科研工作流界面：任务配置、节点观察与产物订阅，计算由后端服务执行。 -->
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="color-scheme" content="light" />
-  <meta name="theme-color" content="#172522" />
-  <title>启元 · 科研工作台</title>
-  <link rel="stylesheet" href="/static/research.css" />
-  <link rel="stylesheet" href="/static/research-stage.css?v=stage-live-20261013-c" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#17191f" />
+  <title>启元 · 科研工作流</title>
+  <link rel="stylesheet" href="/static/research.css?v=workflow-20261014-c" />
+  <link rel="stylesheet" href="/static/research-stage.css?v=workflow-20261014-c" />
 </head>
 <body>
-  <a class="skip-link" href="#main">跳到研究工作台</a>
-  <aside class="app-sidebar" aria-label="工作台导航">
-    <a class="brand" href="/research" aria-label="启元科研工作台">
-      <span class="brand-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M16 4 28 16 16 28 4 16 16 4ZM16 10l6 6-6 6-6-6 6-6Z" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/></svg></span>
-      <span><strong>启元</strong><small>RESEARCH WORKSPACE</small></span>
-    </a>
-    <p class="nav-label">工作空间</p>
-    <nav class="workspace-nav" aria-label="应用导航">
-      <a href="/showcase"><span aria-hidden="true">▤</span>二面展示台</a>
-      <a class="selected" href="/research" aria-current="page"><span aria-hidden="true">◈</span>科研工作台</a>
-      <a href="/yolo"><span aria-hidden="true">▣</span>视觉检测</a>
-      <a href="/"><span aria-hidden="true">◇</span>文字冒险</a>
-    </nav>
-    <div class="sidebar-divider"></div>
-    <p class="nav-label">当前研究</p>
-    <nav class="section-nav" aria-label="研究栏目">
-      <a href="#new-research">研究目标<span aria-hidden="true">01</span></a>
-      <a href="#run-section">执行进展<span aria-hidden="true">02</span></a>
-      <a href="#evidence-section">结果与证据<span aria-hidden="true">03</span></a>
-    </nav>
-    <section class="sidebar-environment" aria-labelledby="environment-heading">
-      <h2 id="environment-heading">运行环境</h2>
-      <p class="environment-state"><span id="environment-dot" class="status-dot" data-tone="neutral" aria-hidden="true"></span><span id="environment-status">正在检查</span></p>
-      <p id="environment-model" class="sidebar-muted">读取服务提供的实际能力</p>
-      <p id="environment-note" class="sidebar-muted">工具可用性与研究质量分开核验。</p>
-    </section>
-    <footer class="sidebar-footer"><span class="footer-mark" aria-hidden="true">QY</span><span>启元研究实验室<small>每个结论，都有来源。</small></span></footer>
-  </aside>
-
+  <a class="skip-link" href="#main">跳到科研工作流</a>
   <main id="main" class="app-main">
     <header class="topbar">
-      <div class="breadcrumb"><span>工作空间</span><span aria-hidden="true">/</span><strong>科研工作台</strong></div>
-      <div id="presentation-heading" class="presentation-heading" hidden><h1>科研工作台</h1><nav aria-label="工作台栏目"><a href="#new-research">任务</a><a href="#run-section">进展</a><a href="#evidence-section">结果</a></nav></div>
+      <div class="workspace-heading"><a class="brand-symbol" href="/showcase" target="_top" aria-label="返回启元展示台">Q</a><div><p class="eyebrow">QIYUAN / RESEARCH</p><h1 id="page-title">科研工作流</h1></div><p class="workspace-subtitle">从研究问题到可追溯成果，让每一步研究有据可循。</p></div>
+      <div id="presentation-heading" class="presentation-heading" hidden><h1>科研工作流</h1></div>
       <div class="topbar-actions"><span id="connection-status" class="connection-pill" data-tone="neutral" role="status">连接中</span><button id="refresh-btn" class="button button-outline compact" type="button"><span aria-hidden="true">↻</span> 刷新</button></div>
     </header>
-
     <div class="workspace-content">
-      <section class="page-intro" aria-labelledby="page-title">
-        <div><p class="eyebrow">FROM QUESTION TO EVIDENCE</p><h1 id="page-title">让研究，持续向前。</h1><p class="intro-description">从研究目标出发，追踪每一步实验、每一份证据与每一次修改。</p></div>
-        <div class="intro-badge"><span class="badge-icon" aria-hidden="true">◎</span><div><strong>真实执行记录</strong><span>完成状态由实际产物确认</span></div></div>
-      </section>
-
-      <section class="panel strategy-entry" aria-labelledby="strategy-entry-title"><div><p class="section-kicker">先选值得研究的问题</p><h2 id="strategy-entry-title">灵感、已有工作与目标期刊</h2><p>先查研究差异和投稿要求，再决定做哪些实验。已整理三个候选问题、三个期刊的官方要求及编辑咨询草稿。</p></div><a class="button button-primary" href="/research/strategy">查看选题与投稿策划 ↗</a></section>
-      <div id="notice" class="notice" data-tone="neutral" role="status" hidden><span id="notice-text"></span></div>
-      <div id="request-error" class="notice" data-tone="error" role="alert" hidden><span id="request-error-text"></span><button id="retry-btn" class="text-button" type="button">重新连接</button></div>
-
-      <details id="writer-settings-panel" class="panel writer-settings">
-        <summary><strong>论文模型设置</strong><span id="writer-current-summary">正在读取当前模型</span></summary>
-        <div class="writer-settings-content">
-          <dl class="writer-settings-status"><div><dt>当前论文模型</dt><dd id="writer-current-provider">正在读取</dd></div><div><dt>DeepSeek API Key</dt><dd id="writer-key-status">状态未读取</dd></div></dl>
-          <form id="writer-settings-form" autocomplete="off">
-            <div class="writer-fields">
-              <label for="writer-api-key">DeepSeek API Key<input id="writer-api-key" name="api_key" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="输入新的 API Key；已有配置可留空" aria-describedby="writer-key-help" /></label>
-              <label for="writer-model-input">论文模型<input id="writer-model-input" name="model" type="text" value="deepseek-flash" list="writer-model-options" autocomplete="off" autocapitalize="off" spellcheck="false" /><datalist id="writer-model-options"></datalist></label>
-            </div>
-            <p id="writer-key-help" class="writer-settings-help">仅保存在本机配置，保存后用于后续论文写作与审阅。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer">创建 DeepSeek API Key ↗</a></p>
-            <div class="writer-settings-actions"><button id="writer-test-btn" class="button button-outline compact" type="button" disabled>测试连接</button><button id="writer-save-btn" class="button button-primary compact" type="submit" disabled>保存并启用 DeepSeek</button><span id="writer-edit-note">正在读取设置</span></div>
-          </form>
-          <p id="writer-message" class="writer-message" data-tone="neutral" role="status" hidden></p>
-        </div>
-      </details>
-
-      <section id="new-research" class="panel new-research" aria-labelledby="new-research-title">
-        <div class="panel-heading"><div><p class="section-kicker">01 / RESEARCH BRIEF</p><h2 id="new-research-title">定义这一次研究</h2></div><span class="subtle-tag">方向 → 计划 → 实验 → 成稿</span></div>
+      <aside class="left-panel" aria-label="研究配置与选题">
+        <nav class="workspace-rail" aria-label="工作空间"><a href="/showcase">‹ 展示台</a><a href="/research" aria-current="page">科研</a><a href="/yolo">视觉检测</a></nav>
+        <section class="planning-entry" aria-labelledby="strategy-entry-title"><p class="section-kicker">从值得研究的问题开始</p><h2 id="strategy-entry-title">研究策划</h2><p>先梳理灵感与研究差异，再对照目标期刊确定实验依据。</p><div class="planning-actions"><button id="planning-ideas" class="planning-button" type="button"><span class="planning-icon" aria-hidden="true">✦</span><span><strong>灵感与选题</strong><small>问题 · 已有工作 · 可验证差异</small></span><span aria-hidden="true">↗</span></button><button id="planning-venues" class="planning-button" type="button"><span class="planning-icon" aria-hidden="true">▤</span><span><strong>目标期刊背调</strong><small>范围 · 投稿要求 · 选刊依据</small></span><span aria-hidden="true">↗</span></button></div></section>
+        <details class="task-settings" open><summary>任务设置<span>目标与执行条件</span></summary><div class="task-settings-content"><section id="new-research" class="panel new-research" aria-labelledby="new-research-title">
+        <div class="panel-heading"><div><p class="section-kicker">RESEARCH TASK</p><h2 id="new-research-title">研究任务</h2></div></div>
         <form id="research-form">
           <label id="research-domain-field" class="domain-field" for="research-domain">可运行的研究任务<select id="research-domain" name="domain" disabled><option value="">正在获取任务</option></select></label>
-          <section id="task-preview" class="task-preview" aria-labelledby="task-question" hidden>
+          <details id="task-preview" class="task-preview" aria-labelledby="task-preview-title" hidden>
+            <summary id="task-preview-title">实验方案与数据</summary><div class="task-preview-content">
             <p class="task-kicker">本次实际实验</p><h3 id="task-question"></h3><p id="task-description" class="task-description"></p>
             <dl class="task-facts"><div id="task-dataset-row"><dt>使用数据</dt><dd id="task-dataset"></dd></div><div id="task-comparison-row"><dt>比较方案</dt><dd id="task-comparison"></dd></div><div id="task-metrics-row"><dt>测量指标</dt><dd id="task-metrics"></dd></div><div id="task-outputs-row"><dt>生成材料</dt><dd id="task-outputs"></dd></div></dl>
             <p id="task-availability" class="task-availability" hidden></p>
-          </section>
+          </div></details>
           <div class="goal-heading"><label class="field-label" for="research-goal">这次实验要重点分析什么<span>填写你希望讨论的问题</span></label><button id="fill-example-btn" class="text-button" type="button" disabled>填入示例</button></div>
           <textarea id="research-goal" name="goal" rows="3" maxlength="4000" required placeholder="例如：比较同一 YOLO 模型在 320、480、640 输入尺寸下的检测精度与速度，分析哪种设置更适合实时检测。" autocomplete="off"></textarea>
           <div class="goal-footer"><span id="goal-help">正在读取任务范围与可执行步骤。</span><span id="goal-count">0 / 4000</span></div>
@@ -99,38 +49,67 @@
           </div>
         </form>
         <div id="capability-summary" class="capability-summary"><span class="status-dot" data-tone="neutral" aria-hidden="true"></span><p>正在读取当前可自动执行的环节。</p></div>
-      </section>
-
-      <section id="run-section" class="run-section" aria-labelledby="run-title">
-        <div class="section-heading"><div><p class="section-kicker">02 / EXECUTION</p><h2 id="run-title">执行进展</h2></div><div class="run-actions"><button id="resume-btn" class="button button-outline compact" type="button" disabled>恢复运行</button><button id="cancel-btn" class="button button-outline compact danger" type="button" disabled>取消运行</button></div></div>
-        <div class="metrics-grid">
+      </section></div></details>
+        <details id="writer-settings-panel" class="panel writer-settings">
+        <summary><strong>论文模型设置</strong><span id="writer-current-summary">正在读取当前模型</span></summary>
+        <div class="writer-settings-content">
+          <dl class="writer-settings-status"><div><dt>当前论文模型</dt><dd id="writer-current-provider">正在读取</dd></div><div><dt>DeepSeek API Key</dt><dd id="writer-key-status">状态未读取</dd></div></dl>
+          <form id="writer-settings-form" autocomplete="off">
+            <div class="writer-fields">
+              <label for="writer-api-key">DeepSeek API Key<input id="writer-api-key" name="api_key" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="输入新的 API Key；已有配置可留空" aria-describedby="writer-key-help" /></label>
+              <label for="writer-model-input">论文模型<input id="writer-model-input" name="model" type="text" value="deepseek-flash" list="writer-model-options" autocomplete="off" autocapitalize="off" spellcheck="false" /><datalist id="writer-model-options"></datalist></label>
+            </div>
+            <p id="writer-key-help" class="writer-settings-help">仅保存在本机配置，保存后用于后续论文写作与审阅。<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener noreferrer">创建 DeepSeek API Key ↗</a></p>
+            <div class="writer-settings-actions"><button id="writer-test-btn" class="button button-outline compact" type="button" disabled>测试连接</button><button id="writer-save-btn" class="button button-primary compact" type="submit" disabled>保存并启用 DeepSeek</button><span id="writer-edit-note">正在读取设置</span></div>
+          </form>
+          <p id="writer-message" class="writer-message" data-tone="neutral" role="status" hidden></p>
+        </div>
+      </details>
+        <section class="sidebar-environment" aria-labelledby="environment-heading">
+      <h2 id="environment-heading">运行环境</h2>
+      <p class="environment-state"><span id="environment-dot" class="status-dot" data-tone="neutral" aria-hidden="true"></span><span id="environment-status">正在检查</span></p>
+      <p id="environment-model" class="sidebar-muted">读取服务提供的实际能力</p>
+      <p id="environment-note" class="sidebar-muted">工具可用性与研究质量分开核验。</p>
+    </section>
+      </aside>
+      <section id="run-section" class="workflow-panel" aria-labelledby="run-title">
+        <div class="workflow-toolbar"><div class="workflow-title"><h2 id="run-title">研究画布</h2><p id="stage-progress">正在读取服务支持的阶段</p></div><div class="run-actions"><button id="resume-btn" class="button button-outline compact" type="button" disabled>恢复</button><button id="cancel-btn" class="button button-outline compact danger" type="button" disabled>停止</button></div></div>
+        <div class="workflow-notices"><div id="notice" class="notice" data-tone="neutral" role="status" hidden><span id="notice-text"></span><button id="notice-dismiss" class="notice-dismiss" type="button" aria-label="关闭提示"><span aria-hidden="true">×</span></button></div>
+      <div id="request-error" class="notice" data-tone="error" role="alert" hidden><span id="request-error-text"></span><button id="retry-btn" class="text-button" type="button">重新连接</button></div></div>
+        <div class="workflow-canvas-area">
+          <div class="canvas-caption"><span class="canvas-label"><span class="status-dot" data-tone="success" aria-hidden="true"></span>执行链路</span><span id="stage-total" class="subtle-tag">—</span></div>
+          <div id="workflow-viewport" class="workflow-viewport" tabindex="0" role="region" aria-label="研究工作流画布。可滚动浏览，使用工具栏缩放和定位节点。" aria-describedby="workflow-canvas-help"><div id="workflow-world" class="workflow-world"><svg id="workflow-edges" class="workflow-edges" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"></svg><ol id="stage-list" class="stage-list"><li class="empty-state compact-empty">正在加载研究流程</li></ol></div></div>
+          <p id="workflow-canvas-help" class="canvas-help">拖动画布浏览 · 点击节点查看输入与产物</p>
+          <div class="workflow-controls" role="group" aria-label="画布视图"><button id="workflow-focus-current" type="button" class="button button-outline compact" title="定位当前执行节点">◎ 当前节点</button><div class="zoom-controls"><button id="workflow-zoom-out" type="button" aria-label="缩小画布">−</button><button id="workflow-zoom-reset" type="button" title="恢复原始比例"><span id="workflow-zoom-label">100%</span></button><button id="workflow-zoom-in" type="button" aria-label="放大画布">＋</button></div><button id="workflow-fit" type="button" class="button button-outline compact" title="显示全部流程">适应画布</button></div>
+        </div>
+        <div class="workflow-status-strip"><div class="metrics-grid">
           <article class="metric-card"><div class="metric-label">运行状态<span class="metric-symbol" aria-hidden="true">◉</span></div><strong id="run-status" class="metric-value">尚未启动</strong><span id="run-stage" class="metric-detail">等待研究目标</span></article>
           <article class="metric-card"><div class="metric-label">已用时间<span class="metric-symbol" aria-hidden="true">◷</span></div><strong id="elapsed-value" class="metric-value">—</strong><span id="elapsed-detail" class="metric-detail">运行后显示实际用时</span><div id="elapsed-track" class="budget-track" aria-hidden="true" hidden><span id="elapsed-bar"></span></div></article>
           <article class="metric-card"><div class="metric-label">实验作业<span class="metric-symbol" aria-hidden="true">▥</span></div><strong id="trial-value" class="metric-value">—</strong><span id="trial-detail" class="metric-detail">来自真实实验作业</span></article>
           <article class="metric-card"><div class="metric-label">模型调用<span class="metric-symbol" aria-hidden="true">↗</span></div><strong id="model-call-value" class="metric-value">—</strong><span id="model-call-detail" class="metric-detail">显示实际调用次数</span></article>
           <article class="metric-card"><div class="metric-label">证据与产物<span class="metric-symbol" aria-hidden="true">▤</span></div><strong id="artifact-value" class="metric-value">—</strong><span id="artifact-detail" class="metric-detail">尚无研究产物</span></article>
-        </div>
-
-        <div class="execution-grid">
-          <section class="panel stages-panel" aria-labelledby="stages-title"><div class="panel-heading"><div><h3 id="stages-title">研究流程</h3><p id="stage-progress" class="panel-description">正在读取服务支持的阶段</p></div><span id="stage-total" class="subtle-tag">—</span></div><ol id="stage-list" class="stage-list"><li class="empty-state compact-empty">暂无阶段记录</li></ol></section>
-          <div class="execution-side">
-            <section class="panel current-panel" aria-labelledby="current-title"><div class="panel-heading"><h3 id="current-title">当前运行</h3><span id="run-quality" class="quality-pill">未评定</span></div><h4 id="current-goal" class="current-goal">你的下一次研究，从这里开始。</h4><p id="current-summary" class="current-summary">启动后显示实际执行结果。流程完成、内部核验与外部评审分别记录。</p><dl class="run-metadata"><div><dt>运行编号</dt><dd id="run-id">—</dd></div><div><dt>最后更新</dt><dd id="run-updated">—</dd></div><div><dt>使用模型</dt><dd id="run-model">—</dd></div></dl><p id="run-blocker" class="run-blocker" hidden></p></section>
-            <section class="panel intervention-panel" aria-labelledby="intervention-title"><div class="panel-heading"><h3 id="intervention-title">人工介入</h3><span id="intervention-count" class="subtle-tag">—</span></div><p class="panel-description">记录人类提供的方向、修改和补充材料，区分自主执行与协作研究。</p><ul id="intervention-list" class="intervention-list"><li class="empty-state compact-empty">启动后读取服务端记录</li></ul></section>
-          </div>
-        </div>
+        </div></div>
+        <span id="workflow-announcement" class="sr-only" role="status" aria-live="polite"></span>
       </section>
-
+      <aside id="workflow-inspector" class="workflow-inspector" aria-labelledby="inspector-title">
+        <div class="inspector-header"><h2 id="inspector-title">节点检查器</h2><span class="inspector-indicator" aria-hidden="true">◈</span></div>
+        <div class="inspector-scroll"><section id="node-detail" class="node-detail" aria-labelledby="node-title"><div class="node-heading"><span class="section-kicker">SELECTED NODE</span><span id="node-status" class="state-tag">待选择</span></div><h3 id="node-title">选择一个研究节点</h3><p id="node-summary" class="panel-description">查看执行条件、运行过程与产物来源。</p><p id="node-empty" class="node-empty">点击画布中的任意节点，展开这一步研究的输入与结果。</p><div class="node-data-section"><h4>输入</h4><ul id="node-inputs" class="node-data-list"></ul></div><div class="node-data-section"><h4>输出</h4><ul id="node-outputs" class="node-data-list"></ul></div><div class="node-data-section"><h4>关联产物</h4><ul id="node-artifacts" class="node-data-list"></ul></div></section>
+        <details class="run-detail" open><summary>当前运行</summary><section class="panel current-panel" aria-labelledby="current-title"><div class="panel-heading"><h3 id="current-title">当前运行</h3><span id="run-quality" class="quality-pill">未评定</span></div><h4 id="current-goal" class="current-goal">你的下一次研究，从这里开始。</h4><p id="current-summary" class="current-summary">启动后显示实际执行结果。流程完成、内部核验与外部评审分别记录。</p><dl class="run-metadata"><div><dt>运行编号</dt><dd id="run-id">—</dd></div><div><dt>最后更新</dt><dd id="run-updated">—</dd></div><div><dt>使用模型</dt><dd id="run-model">—</dd></div></dl><p id="run-blocker" class="run-blocker" hidden></p></section></details>
+        <details class="intervention-detail"><summary>协作与人工介入</summary><section class="panel intervention-panel" aria-labelledby="intervention-title"><div class="panel-heading"><h3 id="intervention-title">人工介入</h3><span id="intervention-count" class="subtle-tag">—</span></div><p class="panel-description">待处理事项与已登记的协作记录。</p><ul id="intervention-list" class="intervention-list"><li class="empty-state compact-empty">启动后读取服务端记录</li></ul></section></details></div>
+        <section id="planning-pane" class="planning-pane" aria-label="研究策划" hidden><header><strong id="planning-title">研究策划</strong><button id="planning-close" type="button" class="button button-outline compact" aria-label="关闭研究策划">关闭</button></header><iframe id="planning-frame" title="灵感与目标期刊研究策划" loading="lazy"></iframe></section>
+      </aside>
       <section id="evidence-section" class="panel evidence-panel" aria-labelledby="evidence-title">
-        <div class="panel-heading"><div><p class="section-kicker">03 / EVIDENCE & OUTPUTS</p><h2 id="evidence-title">结果与证据</h2></div><span id="evidence-updated" class="muted small">等待研究运行</span></div>
-        <div class="tab-list" role="tablist" aria-label="研究结果分类"><button id="tab-experiments" class="tab active" type="button" role="tab" aria-selected="true" aria-controls="pane-experiments" data-tab="experiments">实验结果<span id="experiment-count">0</span></button><button id="tab-literature" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-literature" tabindex="-1" data-tab="literature">文献资料<span id="literature-count">0</span></button><button id="tab-artifacts" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-artifacts" tabindex="-1" data-tab="artifacts">论文与材料<span id="output-count">0</span></button><button id="tab-events" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-events" tabindex="-1" data-tab="events">执行事件<span id="event-count">0</span></button></div>
-        <div id="pane-experiments" class="tab-pane" role="tabpanel" aria-labelledby="tab-experiments"><p id="experiment-context" class="output-context" hidden></p><div id="experiment-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">▥</span><strong>实验还未开始</strong><p>运行后展示各次试验的配置、真实指标与执行状态。</p></div><div id="experiment-table-wrap" class="table-wrap" hidden><table><thead><tr><th scope="col">试验 / 方法</th><th scope="col">状态</th><th scope="col">配置</th><th scope="col">指标</th><th scope="col">记录</th></tr></thead><tbody id="experiment-list"></tbody></table></div></div>
+        <div class="panel-heading"><div><h2 id="evidence-title">运行输出</h2></div><span id="evidence-updated" class="muted small">等待研究运行</span></div>
+        <div class="tab-list" role="tablist" aria-label="研究结果分类"><button id="tab-experiments" class="tab" type="button" role="tab" aria-selected="false" tabindex="-1" aria-controls="pane-experiments" data-tab="experiments">实验结果<span id="experiment-count">0</span></button><button id="tab-literature" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-literature" tabindex="-1" data-tab="literature">文献资料<span id="literature-count">0</span></button><button id="tab-artifacts" class="tab" type="button" role="tab" aria-selected="false" aria-controls="pane-artifacts" tabindex="-1" data-tab="artifacts">论文与材料<span id="output-count">0</span></button><button id="tab-events" class="tab active" type="button" role="tab" aria-selected="true" aria-controls="pane-events" data-tab="events">运行日志<span id="event-count">0</span></button></div>
+        <div id="pane-experiments" class="tab-pane" role="tabpanel" aria-labelledby="tab-experiments" hidden><p id="experiment-context" class="output-context" hidden></p><div id="experiment-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">▥</span><strong>实验还未开始</strong><p>运行后展示各次试验的配置、真实指标与执行状态。</p></div><div id="experiment-table-wrap" class="table-wrap" hidden><table><thead><tr><th scope="col">试验 / 方法</th><th scope="col">状态</th><th scope="col">配置</th><th scope="col">指标</th><th scope="col">记录</th></tr></thead><tbody id="experiment-list"></tbody></table></div></div>
         <div id="pane-literature" class="tab-pane" role="tabpanel" aria-labelledby="tab-literature" hidden><div id="literature-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">▤</span><strong>暂无获取的文献</strong><p>检索与阅读记录保留来源、获取范围和未解决的问题。</p></div><ul id="literature-list" class="literature-list"></ul></div>
         <div id="pane-artifacts" class="tab-pane" role="tabpanel" aria-labelledby="tab-artifacts" hidden><div class="output-note"><span aria-hidden="true">◎</span><p>生成稿件与论文质量分别评价。内部检查通过的稿件仍需要外部专业评价。</p></div><section id="manuscript-result" class="manuscript-result" hidden aria-label="稿件与审查"><h3 id="manuscript-title"></h3><p id="manuscript-summary"></p><details><summary>查看分析与质量核验记录</summary><pre id="manuscript-checks"></pre></details></section><div id="artifact-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">▧</span><strong>暂无研究产物</strong><p>产物准备好后，可下载论文、图表、实验日志与复现材料。</p></div><ul id="artifact-list" class="artifact-list"></ul></div>
-        <div id="pane-events" class="tab-pane" role="tabpanel" aria-labelledby="tab-events" hidden><div id="event-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">≋</span><strong>暂无执行事件</strong><p>这里显示真实的阶段推进、工具执行、错误和恢复记录。</p></div><ol id="event-list" class="event-list"></ol></div>
+        <div id="pane-events" class="tab-pane" role="tabpanel" aria-labelledby="tab-events"><div id="event-empty" class="empty-state"><span class="empty-icon" aria-hidden="true">≋</span><strong>暂无执行事件</strong><p>这里显示真实的阶段推进、工具执行、错误和恢复记录。</p></div><ol id="event-list" class="event-list"></ol></div>
       </section>
-      <footer class="workspace-footer"><span>启元 · QIYUAN RESEARCH LAB</span><span id="footer-state">当前页面尚无研究运行</span></footer>
     </div>
+    <footer class="workspace-footer"><span>启元 · RESEARCH WORKFLOW</span><span id="footer-state">当前页面尚无研究运行</span></footer>
+  <span id="stages-title" hidden></span>
   </main>
-  <script type="module" src="/static/research.js?v=stage-live-20261013-c"></script>
+  <script type="module" src="/static/research.js?v=workflow-20261014-c"></script>
 </body>
 </html>

@@ -1,0 +1,72 @@
+{
+  "checked_date": "2026-10-14",
+  "ui": "ComfyUI-inspired node canvas with a Codex-style inspector and event console",
+  "design_reference": "https://docs.comfy.org/interface/overview",
+  "cache_version": "workflow-20261014-c",
+  "registered_stage_count": 12,
+  "runtime_unchanged": {
+    "runs": 4,
+    "latest_artifacts": 331,
+    "new_research": 0,
+    "new_training": 0,
+    "new_cloud_calls": 0,
+    "camera_opened": false,
+    "yolo_final_state": "stopped"
+  },
+  "python_tests": {
+    "total": 171,
+    "passed": 169,
+    "skipped": 2
+  },
+  "node_tests": {
+    "passed": 82,
+    "workflow_cases": 8,
+    "planning_and_bfcache_cases": 4
+  },
+  "http_asset_byte_checks": 8,
+  "browser": {
+    "performed": true,
+    "entry": "http://127.0.0.1:8000/showcase#harness",
+    "standalone_checked": true,
+    "errors": [],
+    "checks": [
+      "12 live persisted nodes and explicit overview zoom",
+      "node selection and keyboard navigation",
+      "Chinese manuscript downloads precede English history",
+      "planning directions replace editable goal without starting research",
+      "venue requirements append with preserved source date",
+      "experiment table and keyboard result tabs",
+      "cross-project navigation retains selected node and editable focus",
+      "dismissible notice and cleared QA goal input",
+      "responsive iframe viewport widths 257,695,1119 without document horizontal overflow"
+    ],
+    "tested_window_sizes": [
+      [
+        320,
+        780
+      ],
+      [
+        801,
+        900
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "viewport_restored": [
+      917,
+      871
+    ],
+    "temporary_standalone_tab_closed": true
+  },
+  "screenshot": "evidence/research-workflow-20261014.jpg",
+  "screenshot_sha256": "2b21ecfec78a5ba43b4f3612d3ab19f97f781fe7af4732c902dc156e86f97a7d",
+  "boundaries": [
+    "Graph inspects registered backend workflow; it does not change execution by rewiring nodes",
+    "Planning adoption supplies editable analysis context; it does not automatically alter the fixed experiment protocol",
+    "Venue materials retain 2026-10-11 manual-source review date; no automatic policy update or external sending"
+  ],
+  "training_script_unchanged": true,
+  "yinghuo_snapshot_files_verified": 96
+}

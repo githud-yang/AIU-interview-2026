@@ -1,5 +1,6 @@
 /** Research workspace UI: render server records and dispatch user commands. */
 import { createResearchTransport } from "./research-transport.js";
+import { createResearchWorkflow } from "./research-workflow.js?v=workflow-20261014-c";
 
 const STORAGE_KEY = "aiu.research.workspace.v1";
 const PRESENTATION_STORAGE_KEY = "aiu.research.presentation.v1";
@@ -101,11 +102,46 @@ export function createResearchApp(dependencies = {}) {
   const el = (id) => doc.getElementById(id);
   const state = {
     capabilities: null, run: null, pending: null, savedRunID: null, entryRunID: null,
-    mutation: false, refreshPromise: null, pollBusy: false, paused: false,
+    mutation: false, refreshPromise: null, refreshGeneration: null, pollBusy: false, paused: false,
     generation: 0, events: [], lastSeq: 0, connected: false, initialized: false,
     writerSettings: null, writerMutation: null, writerInputDirty: false,
     writerSettingsRevision: 0, writerActionGeneration: 0, writerSettingsLoadFailed: false,
   };
+  const workflow = typeof doc.createElementNS === "function" && el("workflow-viewport")
+    ? createResearchWorkflow({ document: doc, window: win, onSelect: () => closePlanning() }) : null;
+
+  function closePlanning() {
+    el("planning-pane").hidden = true;
+    el("node-detail").hidden = false;
+    for (const name of ["ideas", "venues"]) el(`planning-${name}`).setAttribute("aria-pressed", "false");
+  }
+  function openPlanning(name) {
+    if (!["ideas", "venues"].includes(name)) return;
+    const frame = el("planning-frame");
+    el("planning-title").textContent = name === "ideas" ? "灵感与选题" : "目标期刊背调";
+    frame.src = `/research/strategy?embed=1#${name}-title`;
+    el("planning-pane").hidden = false;
+    el("node-detail").hidden = true;
+    for (const mode of ["ideas", "venues"]) el(`planning-${mode}`).setAttribute("aria-pressed", String(mode === name));
+    el("planning-close").focus();
+  }
+  function receivePlanningFocus(event) {
+    if (event.origin !== pageURL.origin || event.source !== el("planning-frame").contentWindow || event.data?.type !== "qiyuan:planning-focus") return;
+    if (state.mutation || ACTIVE_STATUSES.has(state.run?.status) || state.pending) { showNotice("当前运行保持原设置，完成后可采用新的研究重点。", "warning"); return; }
+    const focus = event.data.focus;
+    if (typeof focus !== "string" || !focus.trim() || focus.length > 1800 || event.data.domain !== "yolo_tradeoff") return;
+    const domain = listFrom(state.capabilities?.domains, []).find((item) => item.id === "yolo_tradeoff" && item.available !== false);
+    if (!domain) { showNotice("YOLO任务尚未就绪，恢复执行环境后可采用该重点。", "warning"); return; }
+    const previous = el("research-goal").value.trim();
+    const value = event.data.mode === "append" && previous ? `${previous}\n\n${focus.trim()}` : focus.trim();
+    if (value.length > 4000) { showNotice("当前分析重点已较长，请先精简后再加入期刊要求。", "warning"); return; }
+    el("research-domain").value = "yolo_tradeoff";
+    el("research-goal").value = value;
+    renderSelectedTask(); updateGoalCount(); updateControls();
+    closePlanning();
+    showNotice("已加入本次分析重点，可编辑后启动任务。实验范围以任务方案为准。");
+    el("research-goal").focus();
+  }
 
   function element(tag, className, text) {
     const node = doc.createElement(tag);
@@ -344,6 +380,10 @@ export function createResearchApp(dependencies = {}) {
     write("stage-total", stages.length ? `${completed} / ${stages.length}` : "暂无阶段");
     const progress = run && Number.isFinite(Number(run.progress)) ? ` · 服务端进度 ${Math.max(0, Math.min(100, Number(run.progress))).toFixed(0)}%` : "";
     write("stage-progress", run ? `已完成 ${completed} 个阶段${progress}` : "运行前预览当前服务已接入的阶段");
+    if (workflow) {
+      workflow.update({ stages, run, events: state.events, capabilities: state.capabilities });
+      return;
+    }
     const nodes = stages.map((stage, index) => {
       const row = element("li", "stage-row");
       row.dataset.status = stage.status || "pending";
@@ -556,6 +596,7 @@ export function createResearchApp(dependencies = {}) {
       return item;
     });
     el("event-list").replaceChildren(...nodes);
+    if (workflow && state.run) workflow.update({ stages: listFrom(state.run.stages, []), run: state.run, events: state.events, capabilities: state.capabilities });
   }
   function appendEvents(data) {
     const known = new Set(state.events.map((event) => event.seq));
@@ -679,11 +720,12 @@ export function createResearchApp(dependencies = {}) {
     } finally { state.mutation = false; updateControls(); }
   }
   async function refresh() {
-    if (state.refreshPromise) return state.refreshPromise;
     if (state.paused) return;
+    if (state.refreshPromise && state.refreshGeneration === state.generation) return state.refreshPromise;
     stopSubscription();
     state.generation += 1;
     const generation = state.generation;
+    state.refreshGeneration = generation;
     el("refresh-btn").disabled = true;
     state.refreshPromise = (async () => {
       try {
@@ -715,8 +757,11 @@ export function createResearchApp(dependencies = {}) {
         updateControls();
       } finally {
         if (generation === state.generation && !state.paused) subscribeUpdates(state.connected ? ACTIVE_STATUSES.has(state.run?.status) ? 2500 : 10000 : 7000);
-        state.refreshPromise = null;
-        el("refresh-btn").disabled = false;
+        if (state.refreshGeneration === generation) {
+          state.refreshPromise = null;
+          state.refreshGeneration = null;
+          el("refresh-btn").disabled = false;
+        }
       }
     })();
     return state.refreshPromise;
@@ -802,11 +847,19 @@ export function createResearchApp(dependencies = {}) {
   });
   el("refresh-btn").addEventListener("click", () => { void refresh(); });
   el("retry-btn").addEventListener("click", () => { void refresh(); });
+  el("notice-dismiss").addEventListener("click", () => showNotice(""));
   el("cancel-btn").addEventListener("click", () => { void action("cancel"); });
   el("resume-btn").addEventListener("click", () => { void action("resume"); });
+  for (const name of ["ideas", "venues"]) el(`planning-${name}`).addEventListener("click", () => openPlanning(name));
+  el("planning-close").addEventListener("click", () => { closePlanning(); el("planning-ideas").focus(); });
+  win.addEventListener("message", receivePlanningFocus);
   win.addEventListener("offline", () => { stopSubscription(); setConnection(false); updateControls(); showError("网络已断开。后台研究可能仍在执行，重新连接后会查询实际状态。"); });
   win.addEventListener("online", () => { void refresh(); });
-  win.addEventListener("pagehide", () => { state.paused = true; state.generation += 1; state.writerActionGeneration += 1; el("writer-api-key").value = ""; stopSubscription(); });
+  win.addEventListener("pagehide", (event) => {
+    state.paused = true; state.generation += 1; state.writerActionGeneration += 1;
+    el("writer-api-key").value = ""; stopSubscription();
+    if (!event?.persisted && workflow) { workflow.destroy(); win.removeEventListener("message", receivePlanningFocus); }
+  });
   win.addEventListener("pageshow", (event) => { if (event.persisted) { state.paused = false; void refresh(); } });
   doc.addEventListener("visibilitychange", () => { if (doc.hidden) stopSubscription(); else if (!state.paused) void refresh(); });
   if (presentation) {
@@ -814,13 +867,14 @@ export function createResearchApp(dependencies = {}) {
     doc.title = "科研工作台";
     el("presentation-heading").hidden = false;
   }
+  if (workflow) selectTab("events");
   load();
   if (requestedRunID && !entryRunID) showNotice("研究运行链接无效；已查询当前工作台可用的运行记录。", "warning");
   if (!el("writer-model-input").value) el("writer-model-input").value = "deepseek-flash";
   updateGoalCount();
   updateControls();
   const ready = refresh();
-  return { ready, state, refresh, start, action, poll, selectTab, writerAction };
+  return { ready, state, refresh, start, action, poll, selectTab, writerAction, workflow, openPlanning, closePlanning };
 }
 
 if (typeof document !== "undefined" && typeof window !== "undefined") createResearchApp();

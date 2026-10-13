@@ -4,3 +4,37 @@
 @media(max-width:900px){.grid{grid-template-columns:1fr}.card{padding:28px}.card p,.card li{font-size:16px}main{padding-top:48px}.intro>p:not(.eyebrow){font-size:18px}h2{font-size:28px}}
 @media(max-width:480px){html{scroll-padding-top:110px}header{align-items:flex-start;flex-direction:column;gap:0;padding:10px 20px}header nav{gap:8px}header strong{font-size:16px}main{padding:34px 20px 44px}h1{letter-spacing:-1px;font-size:36px}h2{font-size:26px}section{margin-top:46px}.callout{padding:24px;margin:30px 0 46px}.callout>strong{font-size:19px}.card{padding:24px}.links{gap:10px}.button{padding:10px 16px}footer{margin-top:48px}}
 @media print{header,.links{display:none}body,main{background:white}main{max-width:none;padding:0}section{break-inside:avoid}.grid{display:block}.card{box-shadow:none;border:1px solid #ddd;margin-bottom:14px}.table-wrap{overflow:visible}table{min-width:0}th,td{padding:12px}h1{font-size:30px}h2{font-size:24px}}
+
+/* Planning stays inside the graph workspace; source dates remain visible. */
+html[data-embed="true"] { color-scheme: dark; background: #15181e; color: #e5e8f0; --blue: #9bb3ff; --muted: #a7aebb; --line: #343b49; }
+html[data-embed="true"] body { background: #15181e; }
+html[data-embed="true"] header, html[data-embed="true"] a[href^="/research"], html[data-embed="true"] a[href^="/showcase"] { display: none; }
+html[data-embed="true"] main { padding: 28px; max-width: 1208px; }
+html[data-embed="true"] h1 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1px; }
+html[data-embed="true"] h2 { font-size: 25px; }
+html[data-embed="true"] h3 { font-size: 20px; }
+html[data-embed="true"] section { margin-top: 36px; }
+html[data-embed="true"] .intro > p:not(.eyebrow), html[data-embed="true"] .card strong, html[data-embed="true"] pre { color: #c4cbd7; }
+html[data-embed="true"] .intro > p:not(.eyebrow) { font-size: 15px; }
+html[data-embed="true"] .callout { background: #202a40; border: 1px solid #35415d; padding: 22px; margin: 28px 0 36px; border-radius: 14px; }
+html[data-embed="true"] .card, html[data-embed="true"] details, html[data-embed="true"] .table-wrap, html[data-embed="true"] .button { background: #212630; color: #dfe5ef; border: 1px solid #343b49; border-radius: 12px; }
+html[data-embed="true"] .card { padding: 22px; box-shadow: none; }
+html[data-embed="true"] .card .status, html[data-embed="true"] th, html[data-embed="true"] td, html[data-embed="true"] footer { border-color: #343b49; }
+html[data-embed="true"] .status { color: #a7aebb; }
+html[data-embed="true"] th { background: #272e3b; color: #c4cbd7; }
+html[data-embed="true"] .button.primary { background: #5d6cf0; color: #fff; border-color: #8390ff; }
+html[data-embed="true"] .button:hover { background: #30394c; }
+html[data-embed="true"] .button.primary:hover { background: #6a79ff; }
+.planning-use { margin-top: 16px; font-family: inherit; cursor: pointer; white-space: normal; }
+@media (max-width: 600px) { html[data-embed="true"] main { padding: 20px; } }
+@media (max-width: 900px) {
+  html[data-embed="true"] .table-wrap { background: transparent; border: 0; overflow: visible; }
+  html[data-embed="true"] table, html[data-embed="true"] tbody { display: block; min-width: 0; width: 100%; }
+  html[data-embed="true"] thead { display: none; }
+  html[data-embed="true"] tr { display: block; padding: 18px; margin-bottom: 16px; background: #212630; border: 1px solid #343b49; border-radius: 12px; }
+  html[data-embed="true"] td, html[data-embed="true"] td:first-child { display: block; width: 100%; padding: 10px 0; border: 0; font-size: 14px; }
+  html[data-embed="true"] td:not(:first-child)::before { display: block; margin-bottom: 8px; color: #9bb3ff; font-size: 12px; font-weight: 600; }
+  html[data-embed="true"] td:nth-child(2)::before { content: "官方要求摘要"; }
+  html[data-embed="true"] td:nth-child(3)::before { content: "当前研究适配"; }
+  html[data-embed="true"] td:nth-child(4)::before { content: "联系与材料"; }
+}

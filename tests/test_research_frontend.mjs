@@ -776,3 +776,75 @@ test("Malformed or mismatched SSE data cannot replace a run and exposes fallback
   assert.match(h.elements["notice-text"].textContent, /格式异常/);
   assert.equal(h.timers.size, 1);
 });
+
+test("Planning opens inside the workspace and adopts an editable focus without starting research", async () => {
+  const h = harness({ caps: yoloCapabilities });
+  await h.app.ready;
+  const source = {};
+  h.elements["planning-frame"].contentWindow = source;
+  h.app.openPlanning("ideas");
+  assert.equal(h.elements["planning-frame"].src, "/research/strategy?embed=1#ideas-title");
+  assert.equal(h.elements["planning-pane"].hidden, false);
+  h.window.dispatch("message", { origin: "http://127.0.0.1:8000", source, data: { type: "qiyuan:planning-focus", domain: "yolo_tradeoff", mode: "replace", focus: "研究输入尺寸与实时截止时间的关系" } });
+  assert.equal(h.elements["research-goal"].value, "研究输入尺寸与实时截止时间的关系");
+  assert.equal(h.elements["research-domain"].value, "yolo_tradeoff");
+  assert.equal(h.elements["planning-pane"].hidden, true);
+  assert.equal(h.elements["research-goal"].focused, true);
+  assert.equal(postCalls(h).length, 0);
+});
+
+test("Only the same-origin planning frame can amend the focus, and venue context preserves existing text", async () => {
+  const h = harness({ caps: yoloCapabilities });
+  await h.app.ready;
+  const source = {};
+  h.elements["planning-frame"].contentWindow = source;
+  h.elements["research-goal"].value = "自己的研究问题";
+  const data = { type: "qiyuan:planning-focus", domain: "yolo_tradeoff", mode: "append", focus: "目标期刊需要明确实时问题" };
+  h.window.dispatch("message", { origin: "https://other.example", source, data });
+  h.window.dispatch("message", { origin: "http://127.0.0.1:8000", source: {}, data });
+  assert.equal(h.elements["research-goal"].value, "自己的研究问题");
+  h.window.dispatch("message", { origin: "http://127.0.0.1:8000", source, data });
+  assert.equal(h.elements["research-goal"].value, "自己的研究问题\n\n目标期刊需要明确实时问题");
+  assert.equal(postCalls(h).length, 0);
+});
+
+test("Planning cannot change a running study or overflow the goal length", async () => {
+  const h = harness({ caps: yoloCapabilities, initialRun: run({ domain: "yolo_tradeoff" }) });
+  await h.app.ready;
+  const source = {};
+  h.elements["planning-frame"].contentWindow = source;
+  const previous = h.elements["research-goal"].value;
+  const data = { type: "qiyuan:planning-focus", domain: "yolo_tradeoff", mode: "replace", focus: "新方向" };
+  h.window.dispatch("message", { origin: "http://127.0.0.1:8000", source, data });
+  assert.equal(h.elements["research-goal"].value, previous);
+  assert.match(h.elements["notice-text"].textContent, /保持原设置/);
+  h.app.state.run.status = "completed";
+  h.elements["research-goal"].value = "题".repeat(4000);
+  h.window.dispatch("message", { origin: "http://127.0.0.1:8000", source, data: { ...data, mode: "append" } });
+  assert.equal(h.elements["research-goal"].value.length, 4000);
+  assert.equal(postCalls(h).length, 0);
+});
+
+test("BFCache restoration starts a fresh refresh while the obsolete request is pending", async () => {
+  const first = deferred();
+  const second = deferred();
+  let reads = 0;
+  const h = harness({ initialRun: run(), customFetch: (url, _options, { response }) => {
+    if (url === "/api/research/capabilities") return (++reads === 1 ? first.promise : second.promise).then(() => response(capabilities));
+  } });
+  assert.equal(reads, 1);
+  h.window.dispatch("pagehide", { persisted: true });
+  h.window.dispatch("pageshow", { persisted: true });
+  assert.equal(reads, 2);
+  const fresh = h.app.state.refreshPromise;
+  first.resolve();
+  await h.app.ready;
+  assert.equal(h.app.state.refreshPromise, fresh);
+  assert.equal(h.elements["refresh-btn"].disabled, true);
+  second.resolve();
+  await fresh;
+  assert.equal(h.app.state.connected, true);
+  assert.equal(h.app.state.refreshPromise, null);
+  assert.equal(h.timers.size, 1);
+  assert.equal(postCalls(h).length, 0);
+});
