@@ -1,5 +1,5 @@
 {
-  "name": "萤火二面源码快照",
+  "name": "萤火二面展示源码",
   "files": [
     {
       "path": ".env.example",
@@ -67,7 +67,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "418bc6aeeb2375c5d6ad3df5bf6226e7f86a88f3c2f26870456a1234c522bb7d"
+      "sha256": "9d3782c2d8185e8d74f612b2cbfe4ce18c3208949dbd3792c6e33c81de8eaaf0"
     },
     {
       "path": "scripts/build-gaokao3500.mjs",
@@ -187,7 +187,7 @@
     },
     {
       "path": "src/components/notebook/Sidebar.tsx",
-      "sha256": "e6f3cbd36b3bda47bf58158d1cfbdd4c9996172677fbb920c4e686c15dcbfe1e"
+      "sha256": "50710b3d2605ff117e7ca7c6df92b166be840a7e0cd58963d5dc153d76e37882"
     },
     {
       "path": "src/components/notebook/TranslationPanel.tsx",
@@ -251,7 +251,7 @@
     },
     {
       "path": "src/index.css",
-      "sha256": "d84346ca65a9d2b979d0a6a0273490b97b1c695930668414f1b948648bd30d97"
+      "sha256": "2c3b1b3b4e2547daa5cda5804e9fb735b3c24c2f3954b4ecd990624d2e58c2ef"
     },
     {
       "path": "src/main.tsx",
@@ -267,7 +267,7 @@
     },
     {
       "path": "src/routes/NotebookPage.tsx",
-      "sha256": "19f5879bfd3a6941ca92722e06c6cacbad2531dae83818dc915a636775a272e5"
+      "sha256": "45cad2eb60cc127b1f1c2ab1d7c1e520c487ca0177af83acaf9cc1c4cc0b14fa"
     },
     {
       "path": "src/routes/README.md",
@@ -387,5 +387,32 @@
     }
   ],
   "source": "D:\\03_项目与代码\\创作项目\\荧火",
-  "exportedAt": "2026-10-11T14:40:50.1286668+08:00"
+  "exportedAt": "2026-10-11T14:40:50.1286668+08:00",
+  "modifiedAt": "2026-10-15T20:57:04.238538+08:00",
+  "localChanges": [
+    {
+      "path": "README.md",
+      "imported_sha256": "418bc6aeeb2375c5d6ad3df5bf6226e7f86a88f3c2f26870456a1234c522bb7d",
+      "sha256": "9d3782c2d8185e8d74f612b2cbfe4ce18c3208949dbd3792c6e33c81de8eaaf0",
+      "reason": "2026-10-15 展示副本窄屏布局及运行说明"
+    },
+    {
+      "path": "src/components/notebook/Sidebar.tsx",
+      "imported_sha256": "e6f3cbd36b3bda47bf58158d1cfbdd4c9996172677fbb920c4e686c15dcbfe1e",
+      "sha256": "50710b3d2605ff117e7ca7c6df92b166be840a7e0cd58963d5dc153d76e37882",
+      "reason": "2026-10-15 展示副本窄屏布局及运行说明"
+    },
+    {
+      "path": "src/index.css",
+      "imported_sha256": "d84346ca65a9d2b979d0a6a0273490b97b1c695930668414f1b948648bd30d97",
+      "sha256": "2c3b1b3b4e2547daa5cda5804e9fb735b3c24c2f3954b4ecd990624d2e58c2ef",
+      "reason": "2026-10-15 展示副本窄屏布局及运行说明"
+    },
+    {
+      "path": "src/routes/NotebookPage.tsx",
+      "imported_sha256": "19f5879bfd3a6941ca92722e06c6cacbad2531dae83818dc915a636775a272e5",
+      "sha256": "45cad2eb60cc127b1f1c2ab1d7c1e520c487ca0177af83acaf9cc1c4cc0b14fa",
+      "reason": "2026-10-15 展示副本窄屏布局及运行说明"
+    }
+  ]
 }

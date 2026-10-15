@@ -74,7 +74,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className="flex flex-col h-full"
+      className="notebook-sidebar flex flex-col h-full"
       style={{
         width: 240,
         minWidth: 240,
@@ -83,7 +83,7 @@ export default function Sidebar() {
       }}
     >
       {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-4"
+      <div className="notebook-sidebar-brand flex items-center gap-2 px-4 py-4"
         style={{ borderBottom: '1px solid var(--yh-line-010)' }}>
         <Flame size={16} style={{ color: 'var(--yh-accent)' }} />
         <span style={{ color: 'var(--yh-accent)', fontFamily: 'Georgia, serif', fontSize: '0.95rem', letterSpacing: '0.1em' }}>
@@ -94,7 +94,7 @@ export default function Sidebar() {
       {error && <p role="alert" className="px-4 py-2" style={{ color: 'var(--yh-error)', fontSize: 'var(--yh-font-07)' }}>{error}</p>}
 
       {/* Progress / Level */}
-      <div className="px-4 py-4" style={{ borderBottom: '1px solid var(--yh-line-035)' }}>
+      <div className="notebook-sidebar-progress px-4 py-4" style={{ borderBottom: '1px solid var(--yh-line-035)' }}>
         <div className="flex items-center justify-between mb-2">
           <span style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-08)', letterSpacing: '0.15em', fontFamily: 'Georgia, serif' }}>
             {currentLevel.name}
@@ -115,7 +115,7 @@ export default function Sidebar() {
       </div>
 
       {/* Projects header */}
-      <div className="flex items-center justify-between px-4 py-2.5">
+      <div className="notebook-sidebar-heading flex items-center justify-between px-4 py-2.5">
         <span style={{ color: 'var(--yh-accent)', fontSize: 'var(--yh-font-072)', fontWeight: 700, letterSpacing: '0.2em' }}>
           日记集
         </span>
@@ -130,7 +130,7 @@ export default function Sidebar() {
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-2 pb-2">
+      <div className="notebook-sidebar-list flex-1 overflow-y-auto px-2 pb-2">
         <AnimatePresence>
           {projects.map(project => (
             <motion.div

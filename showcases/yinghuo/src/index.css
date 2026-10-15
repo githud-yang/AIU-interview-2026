@@ -702,3 +702,136 @@
   outline: 2px solid var(--yh-accent);
   outline-offset: 3px;
 }
+
+/* 在嵌入展示台和手机上纵向展开，避免固定侧栏挤压编辑区。 */
+.notebook-workspace {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+.notebook-topbar,
+.notebook-actions,
+.editor-toolbar,
+.editor-toolbar > div {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.notebook-actions > *,
+.editor-toolbar button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.notebook-sidebar-list > div {
+  min-width: 0;
+}
+
+/* “新建随笔”的缩进计入宽度，避免 w-full 加外边距溢出。 */
+.notebook-sidebar-list > div > button {
+  width: calc(100% - 1rem);
+}
+
+@media (max-width: 1100px) {
+  .notebook-workspace {
+    height: auto;
+    min-height: 100dvh;
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .notebook-workspace > .notebook-sidebar {
+    display: grid;
+    grid-template-columns: minmax(80px, 1fr) minmax(0, 2fr);
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto;
+    flex-shrink: 0;
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--yh-line-012);
+  }
+
+  .notebook-sidebar-brand,
+  .notebook-sidebar-progress {
+    padding: 10px 16px;
+  }
+
+  .notebook-sidebar-heading,
+  .notebook-sidebar-list,
+  .notebook-sidebar > [role="alert"] {
+    grid-column: 1 / -1;
+  }
+
+  .notebook-sidebar-list {
+    height: 132px;
+    min-height: 80px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .notebook-sidebar .project-actions {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .notebook-sidebar button {
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .notebook-workspace > .notebook-editor {
+    flex: none;
+    width: 100%;
+    height: max(680px, 90dvh);
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--yh-line-012);
+  }
+
+  .notebook-topbar {
+    align-items: flex-start;
+    padding: 12px 16px;
+  }
+
+  .notebook-actions {
+    width: 100%;
+    gap: 12px 16px;
+  }
+
+  .notebook-workspace > .notebook-analysis {
+    width: 100% !important;
+    min-width: 0;
+    height: max(640px, 85dvh);
+    flex: none;
+  }
+
+  .notebook-analysis-content,
+  .notebook-analysis-content > div {
+    min-width: 0;
+  }
+
+  .notebook-analysis p,
+  .notebook-editor .ProseMirror {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 480px) {
+  .notebook-editor .editor-toolbar {
+    padding-inline: 12px;
+  }
+
+  .notebook-editor > div > .px-8,
+  .notebook-editor > div > div.px-8 {
+    padding-inline: 16px;
+  }
+
+  .notebook-editor .editor-toolbar > div {
+    max-width: 100%;
+  }
+
+  .notebook-analysis .agent-profile {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+}

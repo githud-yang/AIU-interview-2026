@@ -52,7 +52,7 @@ export default function NotebookPage() {
 
   return (
     <div
-      className="flex h-screen w-screen overflow-hidden"
+      className="notebook-workspace flex h-screen w-screen overflow-hidden"
       style={{ background: 'var(--yh-workspace)' }}
     >
       {/* Subtle background gradient */}
@@ -68,7 +68,7 @@ export default function NotebookPage() {
 
       {/* Main Editor Area */}
       <main
-        className="flex-1 flex flex-col min-w-0 relative"
+        className="notebook-editor flex-1 flex flex-col min-w-0 relative"
         style={{ borderRight: '1px solid var(--yh-line-008)' }}
       >
         {/* Top Nav */}
@@ -116,7 +116,7 @@ export default function NotebookPage() {
 
       {/* Right Panel */}
       <aside
-        className="flex flex-col shrink-0"
+        className="notebook-analysis flex flex-col shrink-0"
         style={{
           width: 360,
           background: 'var(--yh-panel)',
@@ -158,7 +158,7 @@ export default function NotebookPage() {
         </div>
 
         {/* Tab Content */}
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="notebook-analysis-content flex-1 min-h-0 overflow-hidden">
           <AnimatePresence mode="wait">
             {rightTab === 'analysis' ? (
               <motion.div

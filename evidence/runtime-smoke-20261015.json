@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-15",
+  "request": "打开全部本地应用并试运行",
+  "services": {"main_port": 8000, "yinghuo_port": 4318, "ollama_port": 11434, "left_running": true},
+  "opened_pages": ["http://127.0.0.1:8000/showcase#harness", "http://127.0.0.1:8000/research?run_id=dd252c99babc4070a20918a0b8dafba2", "http://127.0.0.1:4318/notebook?theme=day"],
+  "actual_interaction": {
+    "adventure": "点击看看终端屏幕，收到本地模型实际回复",
+    "camera": "自动启动后连续出帧；观察到87帧及267帧的摄像头运行，未保存摄像头像素",
+    "video": {"source": "demo", "observed_fps": 7.93, "observed_frame_count": 499, "two_mjpeg_frames_different": true, "image_loaded": true},
+    "research": "嵌入工作台连接正常、12阶段可见；独立页实际阅读digits英文历史稿及当前YOLO中文稿。没有新建研究或训练",
+    "yinghuo": "在明确标记的虚构示例50上点击提炼金句，实际返回DeepSeek译文、2条金句及词汇；标题编辑刷新后保留，随后恢复原标题并再次确认，分析结果也保留",
+    "privacy": "未读取个人随笔或密钥值，未修改原萤火项目；仅使用已有配置状态及虚构演示资料"
+  },
+  "downloads": {"run_id": "dd252c99babc4070a20918a0b8dafba2", "registered_artifacts": 315, "verified_sha256": ["中文HTML", "中文PDF", "中文图表", "metrics.csv", "完整ZIP"], "inline_html_png": true},
+  "layout_fix": {
+    "issue": "约529px嵌入宽度下固定左右栏挤压主编辑区",
+    "change": "展示副本在1100px及以下纵排导航、编辑、分析，按钮换行；桌面保留三栏",
+    "checked_widths": [316, 529, 593, 1440],
+    "horizontal_page_overflow": false,
+    "desktop_columns": [240, 840, 360],
+    "original_public_source_files_unchanged": 96,
+    "showcase_manifest_records_local_changes": true,
+    "browser_limit": "内嵌萤火的按钮自动点击被浏览器桥接报告目标不可用，未据此声称内嵌动作点通；内嵌加载/排版已确认，独立页演示按钮及保存/分析实际操作通过"
+  },
+  "checks": {"yinghuo_build": "passed", "yinghuo_lint": "passed", "yinghuo_tests": {"total": 53, "passed": 52, "skipped": 1}, "console_errors": 0, "service_log_error_markers": 0},
+  "final_state": {"research_runs": 5, "new_research_runs": 0, "new_training": 0, "camera_released": true, "temporary_browser_tabs_closed": true, "formal_browser_pages_kept": 3, "viewport_override_reset": true},
+  "screenshots": ["runtime-chat-20261015.jpg", "runtime-yolo-20261015.jpg", "runtime-research-20261015.jpg", "runtime-showcase-20261015.jpg", "runtime-yinghuo-20261015.jpg"],
+  "limits": "本轮核对启动与主要交互；未验证个人正文完整编辑、备份导入导出、现场投屏、外部项目登录、真实投稿或全新研究运行。"
+}
